@@ -33,7 +33,7 @@ public class JSFunctions {
 	private File forgeModsIn;
 	//private File forgeModsOut;
 	private JSObject javaApp;
-	String javaHome = System.getenv("JAVA_HOME");
+	private String javaHome = System.getenv("JAVA_HOME");
 
 	public JSFunctions(Main main) {
 		this.main = main;
@@ -86,7 +86,7 @@ public class JSFunctions {
 		}
 
 		try {
-			JavaHelper.runCMD(forgeDir, "\"C:\\Program Files\\Java\\jdk1.8.0_60/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient");
+			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient", false);
 		}catch(Exception e) {
 			PLog.error(e, "Failed to start forge!");
 		}
