@@ -1,0 +1,15 @@
+[
+{
+  "modid": "fs",
+  "name": "Forge Scratch Developer Kit",
+  "description": "The base mod for ForgeScratch",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Eric Golde", "Peter Golde"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
