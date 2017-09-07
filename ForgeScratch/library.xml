@@ -1209,4 +1209,54 @@
         <field name="HUE">230</field>
       </block>
     </value>
+  </block><block type="factory_base" id="5cDsUgG()PVH]lKW6b-}" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcaction_spawnitem</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_value" id="FKrs)uy5B(jB}i*#AFB-">
+        <field name="INPUTNAME">ITEM</field>
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="!o!AG6W4,!i231@s^pL/">
+            <field name="TEXT">Spawn Item</field>
+          </block>
+        </statement>
+        <value name="TYPE">
+          <shadow type="type_null" id="t|iZb/5wIF$QJ/Av@npN"></shadow>
+          <block type="type_other" id="D(D5gaDQXRFDenUJGF|.">
+            <field name="TYPE">mcitem</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="cXCQFkT#j%R~Yo2fd5He" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="yq-jdEarWF;gZekw]dWg" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="v%`c/-3ic|;trC}b75m$"></shadow>
+      <block type="type_other" id="KvQ3,|qZE`]|/vF=q/H(">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="08k7z3bf^NuTg}6-wLUl"></shadow>
+      <block type="type_other" id="g,L,rx%|]gjt.Ff(wxOh">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="Q|T[ii3l4h@,84yrt@}s">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
   </block></xml>

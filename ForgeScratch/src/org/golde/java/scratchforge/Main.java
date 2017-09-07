@@ -43,6 +43,8 @@ import netscape.javascript.JSObject;
  *
  */
 public class Main implements ActionListener{
+	
+	public final String VERSION = "1.0 alpha";
 
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
@@ -161,7 +163,7 @@ public class Main implements ActionListener{
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.add(mHelpAbout);
 		mHelpAbout.addActionListener(this);
-		mHelpAbout.setEnabled(false);
+		//mHelpAbout.setEnabled(false);
 		menuBar.add(helpMenu);
 
 		frame.setJMenuBar(menuBar);
@@ -236,6 +238,22 @@ public class Main implements ActionListener{
 				else if(source == mOptionsModTextures) {
 					
 					new WindowEditTexture(Main.this);
+				}
+				else if(source == mHelpAbout) {
+					String[] aboutTextList = {
+							"ScratchForge v" + VERSION,
+							" ",
+							"Created By Eric Golde",
+							" ",
+							"Special thanks to:",
+							"  Peter Golde",
+							"  Google - Blockly",
+							"  Sri Harsha Chilakapati - Image Tool",
+							"  Forge Mod Developers",
+							"  Mojang"
+					};
+					String aboutText = JavaHelper.joinStrings(aboutTextList, "\n", 0);
+					JOptionPane.showMessageDialog(null, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 

@@ -5,6 +5,7 @@ goog.require('Blockly.Blocks');
 //Blockly.Blocks.colour.HUE = 20;
 
 /*
+
 Blockly.Blocks['name'] = {
   
   init: function() {
@@ -12,6 +13,14 @@ Blockly.Blocks['name'] = {
       
     });
   }
+};
+
+
+
+Blockly.Java['name'] = function(block) {
+  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
+  var code = '...;\n';
+  return code;
 };
 
 */
@@ -1154,11 +1163,13 @@ Blockly.Blocks['mcitem'] = {
   "args0": [
     {
       "type": "field_dropdown",
-      "name": "item",
+      "name": "ITEM",
       "options": [
         ["Apple","apple"],
         ["Arrow","arrow"],
         ["Baked Potato","baked_potato"],
+        ["Bed","bed"],
+        ["Beef","beef"]/*,
         ["option","OPTIONNAME"],
         ["option","OPTIONNAME"],
         ["option","OPTIONNAME"],
@@ -1189,9 +1200,7 @@ Blockly.Blocks['mcitem'] = {
         ["option","OPTIONNAME"],
         ["option","OPTIONNAME"],
         ["option","OPTIONNAME"],
-        ["option","OPTIONNAME"],
-        ["option","OPTIONNAME"],
-        ["option","OPTIONNAME"]
+        ["option","OPTIONNAME"]*/
         
       ]
     }
@@ -1202,4 +1211,43 @@ Blockly.Blocks['mcitem'] = {
   "helpUrl": ""
     });
   }
+};
+
+
+Blockly.Java['mcitem'] = function(block) {
+  var dropdown_item = block.getFieldValue('ITEM');
+  
+  var code = 'Items.' + dropdown_item;
+
+  return code;
+};
+
+
+
+Blockly.Blocks['mcaction_spawnitem'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_spawnitem",
+  "message0": "Spawn Item %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "ITEM",
+      "check": "mcitem"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_spawnitem'] = function(block) {
+  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
+  var code = 'world.spawnEntityInWorld(new EntityItem(world, x, y+2, z, ' + valueItem + '));;\n';
+  return code;
 };

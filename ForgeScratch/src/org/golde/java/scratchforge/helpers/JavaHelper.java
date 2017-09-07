@@ -48,8 +48,9 @@ public class JavaHelper {
 		files = new ArrayList<File>();
 		File[] listOfFiles = folder.listFiles();
 		if(listOfFiles == null) {
-			PLog.error("Directory " + folder.getAbsolutePath() + " is missing!!! Returning a blank list so that we do not crash!");
-			return files;
+			PLog.error("Directory " + folder.getAbsolutePath() + " is missing!!! Making folder and trying again...");
+			folder.mkdir();
+			return listFilesForFolder(folder);
 		}
 		for (final File fileEntry : listOfFiles) {
 			if (fileEntry.isDirectory()) {
@@ -111,4 +112,22 @@ public class JavaHelper {
 
 		return false;
 	}
+	
+	public static String joinStrings(String[] aboutTextList, String conjunction, int iequals)
+	{
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for(int i = iequals; i < aboutTextList.length; ++i)
+		{
+			String item = aboutTextList[i];
+
+			if (first)
+				first = false;
+			else
+				sb.append(conjunction);
+			sb.append(item);
+		}
+		return sb.toString();
+	}
+
 }
