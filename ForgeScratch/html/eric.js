@@ -1218,8 +1218,7 @@ Blockly.Java['mcitem'] = function(block) {
   var dropdown_item = block.getFieldValue('ITEM');
   
   var code = 'Items.' + dropdown_item;
-
-  return code;
+  return [code, Blockly.Java.ORDER_NONE];
 };
 
 
@@ -1233,7 +1232,7 @@ Blockly.Blocks['mcaction_spawnitem'] = {
   "args0": [
     {
       "type": "input_value",
-      "name": "ITEM",
+      "name": "input",
       "check": "mcitem"
     }
   ],
@@ -1247,7 +1246,7 @@ Blockly.Blocks['mcaction_spawnitem'] = {
 };
 
 Blockly.Java['mcaction_spawnitem'] = function(block) {
-  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
-  var code = 'world.spawnEntityInWorld(new EntityItem(world, x, y+2, z, ' + valueItem + '));;\n';
+  var value_item = Blockly.Java.valueToCode(block, 'input', Blockly.Java.ORDER_ATOMIC);
+  var code = 'world.spawnEntityInWorld(new EntityItem(world, x, y+2, z, ' + value_item + '));\n';
   return code;
 };
