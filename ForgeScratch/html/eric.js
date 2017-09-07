@@ -1247,6 +1247,8 @@ Blockly.Blocks['mcaction_spawnitem'] = {
 
 Blockly.Java['mcaction_spawnitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'input', Blockly.Java.ORDER_ATOMIC);
-  var code = 'world.spawnEntityInWorld(new EntityItem(world, x, y+2, z, ' + value_item + '));\n';
+  var code = 
+  'if(world.isRemote()){return;}\n' +
+  'world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n';
   return code;
 };

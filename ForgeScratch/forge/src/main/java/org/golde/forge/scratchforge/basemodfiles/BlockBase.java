@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.base;
+package org.golde.forge.scratchforge.basemodfiles;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;

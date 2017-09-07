@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.base;
+package org.golde.forge.scratchforge.basemodfiles;
 
 /**
  * A simple logging class that tells the class and line number things were logged at!

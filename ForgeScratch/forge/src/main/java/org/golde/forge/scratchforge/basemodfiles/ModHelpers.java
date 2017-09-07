@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.base;
+package org.golde.forge.scratchforge.basemodfiles;
 
 import java.util.HashMap;
 import java.util.List;

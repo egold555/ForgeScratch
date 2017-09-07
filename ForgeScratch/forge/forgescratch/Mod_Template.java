@@ -1,6 +1,6 @@
 package org.golde.forge.scratchforge.mods;
 
-import org.golde.forge.scratchforge.base.*;
+import org.golde.forge.scratchforge.basemodfiles.*;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
