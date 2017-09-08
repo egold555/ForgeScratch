@@ -28,7 +28,7 @@ public class Mod {
 		
 		scanModFile();
 		
-		PLog.info("Read mod file: " + file.getAbsolutePath());
+		/*PLog.info("Read mod file: " + file.getAbsolutePath());
 		PLog.info("Enabled: " + enabled);
 		PLog.info("Mod name: " + getModName());
 		PLog.info("Prefix: " + getPrefix());
@@ -38,7 +38,7 @@ public class Mod {
 			PLog.info("  textureName: " + t.getTextureName());
 			PLog.info("  file: " + t.getFile().getAbsolutePath());
 			PLog.info("");
-		}
+		}*/
 	}
 
 	public String getModName() {
