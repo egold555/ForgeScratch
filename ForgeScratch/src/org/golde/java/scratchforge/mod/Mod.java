@@ -28,17 +28,6 @@ public class Mod {
 		
 		scanModFile();
 		
-		/*PLog.info("Read mod file: " + file.getAbsolutePath());
-		PLog.info("Enabled: " + enabled);
-		PLog.info("Mod name: " + getModName());
-		PLog.info("Prefix: " + getPrefix());
-		PLog.info("Textures: ");
-		for (Texture t: getTextures()) {
-			PLog.info("  displayName: " + t.getDisplayName());
-			PLog.info("  textureName: " + t.getTextureName());
-			PLog.info("  file: " + t.getFile().getAbsolutePath());
-			PLog.info("");
-		}*/
 	}
 
 	public String getModName() {
@@ -100,8 +89,7 @@ public class Mod {
 		try {
 			lines = Files.readAllLines(modFile.toPath(), StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			PLog.error(e, "Failed to read mod!");
 			return;
 		}
 		
@@ -169,7 +157,7 @@ public class Mod {
 		
 		@Override
 		public String toString() {
-			return textureName + " (" + (hasBeenCreated() ? "Edit existing Image" : "CreateNew Image") + ")";
+			return textureName + " (" + (hasBeenCreated() ? "Edit existing Image" : "Create New Image") + ")";
 		}
 		
 	}
