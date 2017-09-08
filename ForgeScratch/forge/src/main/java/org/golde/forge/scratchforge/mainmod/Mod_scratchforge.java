@@ -118,6 +118,7 @@ public class Mod_scratchforge {
 			SetMultimap<String,ResourceLocation> map = (SetMultimap<String,ResourceLocation>)field.get(client);
 			for(ResourceLocation s: map.values()) {
 				failedTextures.add(s.getResourcePath().replace("textures/blocks/", "").replace(".png", "").replace("_", " "));
+				failedTextures.add(s.getResourcePath().replace("textures/items/", "").replace(".png", "").replace("_", " "));
 			}
 		}
 		catch(Exception e) {
@@ -125,7 +126,7 @@ public class Mod_scratchforge {
 		}
 
 		if(failedTextures.size() > 0) {
-			String failed = ModHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
+			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
 			ModHelpers.sendChatMessage(event.player, EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.RESET + failed + EnumChatFormatting.GOLD + "." );
 		}
 	}

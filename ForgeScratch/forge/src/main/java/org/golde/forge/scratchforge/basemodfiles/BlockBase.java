@@ -17,7 +17,7 @@ public class BlockBase extends Block{
 	
 	public BlockBase(String blockId, CreativeTabs creatibeTab, String rawName, Material material, SoundType sound) {
 		super(material);
-		String name = ModHelpers.makeJavaId(rawName);
+		String name = JavaHelpers.makeJavaId(rawName);
 		setBlockName(name);
 		setBlockTextureName(blockId + name);
 		this.setHardness(1.5f);

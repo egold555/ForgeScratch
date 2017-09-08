@@ -15,8 +15,8 @@ public class ItemBase extends Item{
 		setCreativeTab(creatibeTab);
 		setMaxStackSize(maxStackSize);
 		canRepair = false;
-		
-		String name = rawName.replace(" ", "_");
+
+		String name = JavaHelpers.makeJavaId(rawName);
 		setUnlocalizedName(name);
 		setTextureName(id + name);
 		

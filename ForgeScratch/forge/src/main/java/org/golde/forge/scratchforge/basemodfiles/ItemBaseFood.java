@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.basemodfiles;
+/*package org.golde.forge.scratchforge.basemodfiles;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,9 +30,10 @@ public class ItemBaseFood extends ItemFood{
 	@Override
 	protected void onFoodEaten(ItemStack itemstack, World world, EntityPlayer player) {
 		
-		/* Code here */
+		 //Code here 
 		
 		super.onFoodEaten(itemstack, world, player);
 	}
 
 }
+*/
