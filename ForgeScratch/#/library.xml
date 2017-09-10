@@ -12,19 +12,18 @@
           </block>
         </statement>
         <next>
-          <block type="input_dummy" id="WsPCfVRM?[#QQN]t)(+{">
+          <block type="input_value" id="#{6$B]SyZs[]W#3VpIL$">
+            <field name="INPUTNAME">NAME</field>
             <field name="ALIGN">LEFT</field>
             <statement name="FIELDS">
               <block type="field_static" id="Jw0@g}?5VQc69MIu2f!O">
                 <field name="TEXT">Name:</field>
-                <next>
-                  <block type="field_input" id="5i0ujILqEO9-FDf}trq.">
-                    <field name="TEXT">change_me</field>
-                    <field name="FIELDNAME">NAME</field>
-                  </block>
-                </next>
               </block>
             </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="m)(nf3_XGMk6nA*Y=-r8"></shadow>
+              <block type="type_string" id="1/=WMoiW#dLS;~1t`]g6"></block>
+            </value>
             <next>
               <block type="input_dummy" id="=id2],T=},i@Ao_^NO?W">
                 <field name="ALIGN">LEFT</field>
@@ -1164,8 +1163,143 @@
       </block>
     </value>
   </block><block type="factory_base" id="~2ks{N~=W[f{b?E1fclq" deletable="false" movable="false" x="0" y="0">
-    <mutation connections="LEFT"></mutation>
+    <mutation connections="NONE"></mutation>
     <field name="NAME">mcitem</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">NONE</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="59k|+/GLOPu1:mD`{zms">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="osi0N=~G.S]$Ck]l8?`p">
+            <field name="TEXT">Minecraft Item</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_dummy" id="jh?6s*Wxe2ZyihJC-(0m">
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="cc99jnwa*rdwcTN8YdM%">
+                <field name="TEXT">Name: </field>
+                <next>
+                  <block type="field_input" id="Gk5ZC#+Kw?9xeF+i~Q6l">
+                    <field name="TEXT">change_me</field>
+                    <field name="FIELDNAME">NAME</field>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="input_dummy" id="3Ao#QMI1Ap$Yb-Pszr{F">
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="SE;p8$7{ZA`NwCU$$|n)">
+                    <field name="TEXT">Max Stack Size:</field>
+                    <next>
+                      <block type="field_input" id="_ibJ{xsA!p`ie$;JPt[p">
+                        <field name="TEXT">64</field>
+                        <field name="FIELDNAME">AMOUNT</field>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <next>
+                  <block type="input_dummy" id="yS#ifLtSwCUfSN9:-HO/">
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id="mZQdp38*PW][_Wj5%r3N">
+                        <field name="TEXT">Options:</field>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="input_statement" id="/6j!v*Nb;+6jxRX.Uia^">
+                        <field name="INPUTNAME">CODE</field>
+                        <field name="ALIGN">LEFT</field>
+                        <value name="TYPE">
+                          <shadow type="type_null" id="*L(;Zr}}_}%fDVg|/A~Y"></shadow>
+                          <block type="type_other" id="GB3$Ex;O-c!t@ndlQ}H4">
+                            <field name="TYPE">actionitem</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="sNrU``C^$o`DQ|!P{Ttk" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="yti7C5.Tbhi8~}#f6B~U" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="L2XknSKP{2+EN/P?5LQ)">
+        <mutation colour="#a5745b"></mutation>
+        <field name="HUE">20</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="5cDsUgG()PVH]lKW6b-}" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcaction_spawnitem</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_value" id="FKrs)uy5B(jB}i*#AFB-">
+        <field name="INPUTNAME">ITEM</field>
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="!o!AG6W4,!i231@s^pL/">
+            <field name="TEXT">Spawn Item</field>
+          </block>
+        </statement>
+        <value name="TYPE">
+          <shadow type="type_null" id="t|iZb/5wIF$QJ/Av@npN"></shadow>
+          <block type="type_other" id="D(D5gaDQXRFDenUJGF|.">
+            <field name="TYPE">mciteminput</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="cXCQFkT#j%R~Yo2fd5He" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="yq-jdEarWF;gZekw]dWg" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="v%`c/-3ic|;trC}b75m$"></shadow>
+      <block type="type_other" id="KvQ3,|qZE`]|/vF=q/H(">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="08k7z3bf^NuTg}6-wLUl"></shadow>
+      <block type="type_other" id="g,L,rx%|]gjt.Ff(wxOh">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="Q|T[ii3l4h@,84yrt@}s">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="~2ks{N~=W[f{b?E1fclq" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="LEFT"></mutation>
+    <field name="NAME">mciteminput</field>
     <field name="INLINE">AUTO</field>
     <field name="CONNECTIONS">LEFT</field>
     <statement name="INPUTS">
@@ -1209,54 +1343,59 @@
         <field name="HUE">230</field>
       </block>
     </value>
-  </block><block type="factory_base" id="5cDsUgG()PVH]lKW6b-}" deletable="false" movable="false" x="0" y="0">
+  </block><block type="factory_base" id="(wP]r^S}G6}?SM3ugA@9" deletable="false" movable="false" x="0" y="0">
     <mutation connections="BOTH"></mutation>
-    <field name="NAME">mcaction_spawnitem</field>
+    <field name="NAME">mcitemoptions_rightclick</field>
     <field name="INLINE">AUTO</field>
     <field name="CONNECTIONS">BOTH</field>
     <statement name="INPUTS">
-      <block type="input_value" id="FKrs)uy5B(jB}i*#AFB-">
-        <field name="INPUTNAME">ITEM</field>
+      <block type="input_dummy" id="kr`O$/d-UipTf/AY1ZK}">
         <field name="ALIGN">LEFT</field>
         <statement name="FIELDS">
-          <block type="field_static" id="!o!AG6W4,!i231@s^pL/">
-            <field name="TEXT">Spawn Item</field>
+          <block type="field_static" id="dr-)nzslQp?J]wcZg@O#">
+            <field name="TEXT">On Right Click</field>
           </block>
         </statement>
-        <value name="TYPE">
-          <shadow type="type_null" id="t|iZb/5wIF$QJ/Av@npN"></shadow>
-          <block type="type_other" id="D(D5gaDQXRFDenUJGF|.">
-            <field name="TYPE">mcitem</field>
+        <next>
+          <block type="input_statement" id="vofw*Q@?znI1Jt9)Bn|$">
+            <field name="INPUTNAME">CODE</field>
+            <field name="ALIGN">LEFT</field>
+            <value name="TYPE">
+              <shadow type="type_null" id="6F|$[uFh~(|q}D_9{}^j"></shadow>
+              <block type="type_other" id="d=2d@}S4;d]3p/a-OywG">
+                <field name="TYPE">actionitem</field>
+              </block>
+            </value>
           </block>
-        </value>
+        </next>
       </block>
     </statement>
     <value name="TOOLTIP">
-      <block type="text" id="cXCQFkT#j%R~Yo2fd5He" deletable="false" movable="false">
+      <block type="text" id="#B@G?zfLH^+i!kx{;sj9" deletable="false" movable="false">
         <field name="TEXT"></field>
       </block>
     </value>
     <value name="HELPURL">
-      <block type="text" id="yq-jdEarWF;gZekw]dWg" deletable="false" movable="false">
+      <block type="text" id="uswDpKGYAUKK`SDG7Ls1" deletable="false" movable="false">
         <field name="TEXT"></field>
       </block>
     </value>
     <value name="TOPTYPE">
-      <shadow type="type_null" id="v%`c/-3ic|;trC}b75m$"></shadow>
-      <block type="type_other" id="KvQ3,|qZE`]|/vF=q/H(">
-        <field name="TYPE">action</field>
+      <shadow type="type_null" id="=f4PWX0sdi7YUa+(^:v#"></shadow>
+      <block type="type_other" id="3;x+{|bxSnARK!/bxlT.">
+        <field name="TYPE">actionitem</field>
       </block>
     </value>
     <value name="BOTTOMTYPE">
-      <shadow type="type_null" id="08k7z3bf^NuTg}6-wLUl"></shadow>
-      <block type="type_other" id="g,L,rx%|]gjt.Ff(wxOh">
-        <field name="TYPE">action</field>
+      <shadow type="type_null" id="ob%)QG`?GmxbSYIbX_lR"></shadow>
+      <block type="type_other" id="1jWtU_XR[[+^8v`qmfSN">
+        <field name="TYPE">actionitem</field>
       </block>
     </value>
     <value name="COLOUR">
-      <block type="colour_hue" id="Q|T[ii3l4h@,84yrt@}s">
-        <mutation colour="#5b67a5"></mutation>
-        <field name="HUE">230</field>
+      <block type="colour_hue" id=";DIUT@eYsut3:`.2ibu^">
+        <mutation colour="#a5745b"></mutation>
+        <field name="HUE">20</field>
       </block>
     </value>
   </block></xml>
