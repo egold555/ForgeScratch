@@ -60,8 +60,12 @@ public class JSFunctions {
 	public void run(String code) {
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
-			// 1. Search code for classes to get list of all blocks into a string list.
-			List<String> blockNames = findBlockNames(code);
+			// 1. Search code for classes to get list of all blocks/items into a string list.
+			List<String> blockNames = findNames(code, false);
+			List<String> itemNames = findNames(code, true);
+			
+			//PLog.info("Block Amount: " + blockNames.size());
+			//PLog.info("Item Amount: " + itemNames.size());
 
 			// 2. Read Mod_Template into a string.
 			String modTemplate = JavaHelper.readFile(new File(forgeScratch,"Mod_Template.java"));
@@ -70,8 +74,11 @@ public class JSFunctions {
 			modTemplate = modTemplate.replace("Mod_Template", "Mod_" + projectName);
 			modTemplate = modTemplate.replace("Mod Template", main.MOD_NAME);
 
-			modTemplate = modTemplate.replace("/*Variables*/", variables(blockNames));
-			modTemplate = modTemplate.replace("/*Constructor calls*/", constructorCalls(blockNames));
+			modTemplate = modTemplate.replace("/*Variables - Block*/", variables(blockNames, false));
+			modTemplate = modTemplate.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, false));
+			
+			modTemplate = modTemplate.replace("/*Variables - Item*/", variables(itemNames, true));
+			modTemplate = modTemplate.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, true));
 
 			modTemplate = modTemplate.replace("/*Classes*/", fixCode(code));
 
@@ -92,9 +99,9 @@ public class JSFunctions {
 		}
 	}
 
-	private List<String> findBlockNames(String code) {
+	private List<String> findNames(String code, boolean isItem) {
 		List<String> result = new ArrayList<String>();
-		Pattern pattern = Pattern.compile("public class Mcblock_(.*?) extends BlockBase");
+		Pattern pattern = Pattern.compile("public class Mc" + (isItem ? "item" : "block") + "_(.*?) extends " + (isItem ? "Item" : "Block") + "Base");
 
 		Matcher matcher = pattern.matcher(code);
 		while (matcher.find()) {
@@ -104,22 +111,22 @@ public class JSFunctions {
 		return result;
 	}
 
-	private String variables(List<String> blockNames) {
+	private String variables(List<String> blockNames, boolean isItem) {
 		String result = "";
 
 		for (String blockName: blockNames) {
-			result += "static " + className(blockName) + " " + variableName(blockName) + ";" + "\n";
+			result += "static " + className(blockName, isItem) + " " + variableName(blockName, isItem) + ";" + "\n";
 		}
 
 		return result;
 	}
 
 
-	private String constructorCalls(List<String> blockNames) {
+	private String constructorCalls(List<String> names, boolean isItem) {
 		String result = "";
 
-		for (String blockName: blockNames) {
-			result += variableName(blockName) + " = new " + className(blockName) + "();" + "\n";
+		for (String name: names) {
+			result += variableName(name, isItem) + " = new " + className(name, isItem) + "();" + "\n";
 		}
 
 		return result;
@@ -133,14 +140,14 @@ public class JSFunctions {
 		return code;
 	}
 
-	private String variableName(String blockName)
+	private String variableName(String name, boolean isItem)
 	{
-		return "mcblock_" + blockName;
+		return "mcblock_" + (isItem ? "item_" : "block_") + name;
 	}
 
-	private String className(String blockName)
+	private String className(String name, boolean isItem)
 	{
-		return "Mcblock_" + blockName;
+		return "Mc" + (isItem ? "item_" : "block_") + name;
 	}
 
 	
@@ -179,6 +186,10 @@ public class JSFunctions {
 
 	public void log(String msg) {
 		PLog.info("[JS] " + msg);
+	}
+	
+	public void displayFSError(String msg) {
+		log("[FS-Error] " + msg);
 	}
 
 }

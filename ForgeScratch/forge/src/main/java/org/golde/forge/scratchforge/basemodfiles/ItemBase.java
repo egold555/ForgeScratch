@@ -10,9 +10,9 @@ import net.minecraft.world.World;
 
 public class ItemBase extends Item{
 
-	public ItemBase(CreativeTabs creatibeTab, String id, String rawName, int maxStackSize) {
+	public ItemBase(String id, CreativeTabs creativeTab, String rawName, int maxStackSize) {
 		
-		setCreativeTab(creatibeTab);
+		setCreativeTab(creativeTab);
 		setMaxStackSize(maxStackSize);
 		canRepair = false;
 

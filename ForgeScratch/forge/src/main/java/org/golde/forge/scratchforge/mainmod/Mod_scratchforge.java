@@ -117,8 +117,13 @@ public class Mod_scratchforge {
 			field.setAccessible(true);
 			SetMultimap<String,ResourceLocation> map = (SetMultimap<String,ResourceLocation>)field.get(client);
 			for(ResourceLocation s: map.values()) {
-				failedTextures.add(s.getResourcePath().replace("textures/blocks/", "").replace(".png", "").replace("_", " "));
-				failedTextures.add(s.getResourcePath().replace("textures/items/", "").replace(".png", "").replace("_", " "));
+				failedTextures.add(
+						s.getResourcePath()
+						.replace("textures/blocks/", "")
+						.replace("textures/items/", "")
+						.replace(".png", "")
+						.replace("_", " ")
+						);
 			}
 		}
 		catch(Exception e) {
@@ -165,9 +170,5 @@ public class Mod_scratchforge {
 			}
 		}
 	}
-
-
-
-
 
 }

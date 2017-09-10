@@ -93,9 +93,9 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod(modid = Mod_Template.MOD_ID, name=Mod_Template.MOD_NAME, version="1.0")
-public class Mod_Template {
-	public static final String MOD_NAME = "Mod Template";
+@Mod(modid = Mod_test.MOD_ID, name=Mod_test.MOD_NAME, version="1.0")
+public class Mod_test {
+	public static final String MOD_NAME = "test";
 	public static final String MOD_ID = "sf_" + MOD_NAME;
 	public static final String BLOCK_ID = MOD_ID + ":";
 
@@ -115,22 +115,36 @@ public class Mod_Template {
 	}
 
 	/* Block Variables */
-	/*Variables - Block*/
+	
 	
 	/* Item Variables */
-	/*Variables - Item*/
+	static Mcitem_change_me mcblock_item_change_me;
+
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
 		
 		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
+		
 		
 		/* Item Constructor Calls */
-		/*Constructor calls - Item*/
+		mcblock_item_change_me = new Mcitem_change_me();
+
 		
 	}
 
-	/*Classes*/
+	
+
+
+
+
+
+    public class Mcitem_change_me extends ItemBase {
+        public Mcitem_change_me() {
+            super(BLOCK_ID, CREATIVE_TAB, "change_me", 64);
+        }
+
+    }
+
 }

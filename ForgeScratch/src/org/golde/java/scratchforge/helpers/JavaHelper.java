@@ -99,7 +99,7 @@ public class JavaHelper {
 			}
 		}
 
-		return result;
+		return result.toLowerCase();
 	}
 
 	public static boolean isJavaId(char c) {

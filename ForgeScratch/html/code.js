@@ -457,7 +457,12 @@ Code.runJS = function() {
     Blockly.Java.fileHeader = "";
     java_app.run(Blockly.Java.workspaceToCode(Code.workspace));
   }catch(err){
-    log("Error: " + err);
+    if(err.startsWith("FS")){
+      sendJavaError(err);
+    }else{
+      log("Error: " + err);
+    }
+    
   }
 };
 
@@ -496,4 +501,8 @@ function saveXML(){
 
 function log(msg){
   java_app.log(msg);
+}
+
+function sendJavaError(error){
+  java_app.displayFSError(error.replace("FS ", ""));
 }

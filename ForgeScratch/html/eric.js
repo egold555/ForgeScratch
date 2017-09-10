@@ -25,6 +25,12 @@ Blockly.Java['name'] = function(block) {
 
 */
 
+function showError(block, msg){
+  var nice = msg.replace("FS ", "");
+  block.setWarningText(nice);
+  throw("FS " + msg); //code.js will catch this and forward msg on to Java
+};
+
 
 Blockly.Blocks['mcblock'] = {
   
@@ -113,7 +119,6 @@ Blockly.Java['mcblock'] = function(block) {
   var raw_value_name = block.getFieldValue('NAME');
   var dropdown_material = block.getFieldValue('MATERIAL');
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
-  // TODO: Assemble Java into code variable.
   var code = 
     '    public class Mcblock_' + value_name + ' extends BlockBase {\n' +
     '        public Mcblock_' + value_name + '() {\n' +
@@ -1154,11 +1159,11 @@ Blockly.Java['mcaction_playsound'] = function(block) {
 
 
 
-Blockly.Blocks['mcitem'] = {
+Blockly.Blocks['mciteminput'] = {
   
   init: function() {
     this.jsonInit({
-      "type": "mcitem",
+      "type": "mciteminput",
   "message0": "Item %1",
   "args0": [
     {
@@ -1349,7 +1354,7 @@ Blockly.Blocks['mcitem'] = {
 };
 
 
-Blockly.Java['mcitem'] = function(block) {
+Blockly.Java['mciteminput'] = function(block) {
   var dropdown_item = block.getFieldValue('ITEM');
   
   var code = 'Items.' + dropdown_item;
@@ -1368,7 +1373,7 @@ Blockly.Blocks['mcaction_spawnitem'] = {
     {
       "type": "input_value",
       "name": "input",
-      "check": "mcitem"
+      "check": "mciteminput"
     }
   ],
   "previousStatement": "action",
@@ -1386,4 +1391,101 @@ Blockly.Java['mcaction_spawnitem'] = function(block) {
   'if(world.isRemote){return true;}\n' +
   'world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n';
   return code;
+};
+
+
+
+Blockly.Blocks['mcitem'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitem",
+  "message0": "Minecraft Item %1 Name:  %2 %3 Max Stack Size: %4 %5 Options: %6 %7",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "change_me"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "AMOUNT",
+      "text": "64"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "actionitem"
+    }
+  ],
+  "inputsInline": false,
+  "colour": 20,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcitem'] = function(block) {
+  var value_name = make_java_id(block.getFieldValue('NAME'));
+  var raw_value_name = block.getFieldValue('NAME');
+  var value_amount = block.getFieldValue('AMOUNT');
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+
+  if(isNaN(parseInt(value_amount))){
+    showError(block, "Max Stack Size must be a number!");
+  }
+
+
+
+  var code = 
+  '    public class Mcitem_' + value_name + ' extends ItemBase {\n' + 
+  '        public Mcitem_' + value_name + '() {\n' +
+  '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + value_amount + '); \n' +
+  '        }\n\n' +
+          statements_code +
+    '    }\n';
+  return code;
+};
+
+
+
+
+
+Blockly.Blocks['mcitemoptions_rightclick'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemoptions_rightclick",
+  "message0": "(NI) On Right Click %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "actionitem"
+    }
+  ],
+  "previousStatement": "actionitem",
+  "nextStatement": "actionitem",
+  "colour": 20,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
 };
