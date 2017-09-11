@@ -31,6 +31,8 @@ function showError(block, msg){
   throw("FS " + msg); //code.js will catch this and forward msg on to Java
 };
 
+var RETURNS = '/*returns*/';
+
 
 Blockly.Blocks['mcblock'] = {
   
@@ -263,6 +265,8 @@ Blockly.Blocks['mcblockoptions_click_right'] = {
 Blockly.Java['mcblockoptions_click_right'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
+  statements_code.replace(RETURNS, 'true');
+
   var code = 
   '    @Override\n' +
   '    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {\n' +
@@ -300,7 +304,7 @@ Blockly.Blocks['mcblockoptions_click_left'] = {
 
 Blockly.Java['mcblockoptions_click_left'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  
+  statements_code.replace(RETURNS, '');
   var code = 
   '    @Override\n' +
   '    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {\n' +
@@ -337,7 +341,8 @@ Blockly.Blocks['mcblockoptions_blockplaced'] = {
 
 Blockly.Java['mcblockoptions_blockplaced'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  
+  statements_code.replace(RETURNS, '');
+
   var code = 
   '    @Override\n' +
   '    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {\n' +
@@ -375,7 +380,8 @@ Blockly.Blocks['mcblockoptions_block_broken_player'] = {
 
 Blockly.Java['mcblockoptions_block_broken_player'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  
+  statements_code.replace(RETURNS, '');
+
   var code = 
   '    @Override\n' +
   '    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {\n' +
@@ -413,7 +419,8 @@ Blockly.Blocks['mcblockoptions_block_broken_explosion'] = {
 
 Blockly.Java['mcblockoptions_block_broken_explosion'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  
+  statements_code.replace(RETURNS, '');
+
   var code = 
   '    @Override\n' +
   '    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {\n' +
@@ -450,7 +457,8 @@ Blockly.Blocks['mcblockoptions_walkthrough'] = {
 
 Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  
+  statements_code.replace(RETURNS, '');
+
   var code = 
   '    @Override\n' +
   '    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {\n' +
@@ -1388,8 +1396,9 @@ Blockly.Blocks['mcaction_spawnitem'] = {
 Blockly.Java['mcaction_spawnitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'input', Blockly.Java.ORDER_ATOMIC);
   var code = 
-  'if(world.isRemote){return true;}\n' +
-  'world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n';
+  'if(world.isRemote){\n' +
+  '    world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n' +
+  'return ' + RETURNS + ';}';
   return code;
 };
 
@@ -1488,4 +1497,18 @@ Blockly.Blocks['mcitemoptions_rightclick'] = {
   "helpUrl": ""
     });
   }
+};
+
+Blockly.Java['mcitemoptions_rightclick'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  statement_code.replace(RETURNS, 'itemStack')
+
+  var code = 
+  'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
+  '    ' + statements_code + '\n' +
+  '}'
+  ;
+
+  return code;
 };
