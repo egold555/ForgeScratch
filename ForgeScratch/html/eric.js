@@ -16,13 +16,6 @@ Blockly.Blocks['name'] = {
 };
 
 
-
-Blockly.Java['name'] = function(block) {
-  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
-  var code = '...;\n';
-  return code;
-};
-
 */
 
 function showError(block, msg){
@@ -39,7 +32,7 @@ Blockly.Blocks['mcblock'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblock",
-  "message0": "Minecraft Block %1 Name: %2 %3 Properties: %4 %5 Options %6 %7",
+  "message0": "Minecraft Block %1 Name: %2 %3 Properties: %4 %5 Unbreakable %6 %7 Explosion Resistant %8 %9 Options %10 %11",
   "args0": [
     {
       "type": "input_dummy"
@@ -73,6 +66,22 @@ Blockly.Blocks['mcblock'] = {
           "Material.glass"
         ]
       ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "UNBREAKABLE",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "EXPLOSION",
+      "checked": false
     },
     {
       "type": "input_dummy"
@@ -120,11 +129,22 @@ Blockly.Java['mcblock'] = function(block) {
   var value_name = make_java_id(block.getFieldValue('NAME'));
   var raw_value_name = block.getFieldValue('NAME');
   var dropdown_material = block.getFieldValue('MATERIAL');
+  var checkbox_unbreakable = block.getFieldValue('UNBREAKABLE') == 'TRUE';
+  var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
   var code = 
     '    public class Mcblock_' + value_name + ' extends BlockBase {\n' +
     '        public Mcblock_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_material + '); \n' +
+    '\n'+
+    'if(' + checkbox_unbreakable + '){\n' +
+    '    setHardness(-1.0F);\n' +
+    '}\n' +
+    
+    'if(' + checkbox_explosion + '){\n' +
+    '    setResistance(6000000.0F);\n' +
+    '}\n' +
+
     '        }\n\n' +
           statements_options +
     '    }\n';
@@ -462,11 +482,14 @@ Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {\n' +
-  '        ' + statements_code + '\n' +
+  '        if(entity instanceof EntityPlayer){\n' +
+  '            EntityPlayer player = (EntityPlayer)entity;\n' + 
+  '            ' + statements_code + '\n' +
+  '        }\n' +
   '    }\n' +
   '\n' +
   '    @Override\n' +
-  '    public AxisAlignedBB getCollisionBoundingBoxFromPool(){return null;}\n' +
+  '    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_){return null;}\n' +
   '\n' +
   '    @Override\n' +
   '    public boolean renderAsNormalBlock(){return false;}\n'
@@ -770,7 +793,7 @@ Blockly.Blocks['mcaction_explosion'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_explosion",
-  "message0": "Explosion %1 Power %2 Smoke %3 %4 Fire %5",
+  "message0": "Explosion %1 Power %2 Location X %3 Location Y %4 Location Z %5 Smoke %6 %7 Fire %8",
   "args0": [
     {
       "type": "input_dummy"
@@ -778,6 +801,21 @@ Blockly.Blocks['mcaction_explosion'] = {
     {
       "type": "input_value",
       "name": "POWER",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
       "check": "Number"
     },
     {
@@ -809,8 +847,11 @@ Blockly.Java['mcaction_explosion'] = function(block) {
   var value_power = Blockly.Java.valueToCode(block, 'POWER', Blockly.Java.ORDER_ATOMIC);
   var checkbox_smoke = block.getFieldValue('SMOKE') == 'TRUE';
   var checkbox_fire = block.getFieldValue('FIRE') == 'TRUE';
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.newExplosion((Entity)null, x, y, z, ' + (value_power + 1) + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');\n';
+  var code = 'world.newExplosion((Entity)null, ' + value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 0.5f, ' + value_loc_z + ' + 0.5f, ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');\n';
   return code;
 };
 
@@ -1354,7 +1395,7 @@ Blockly.Blocks['mciteminput'] = {
     }
   ],
   "output": "mciteminput",
-  "colour": 20,
+  "colour": 290,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -1376,12 +1417,30 @@ Blockly.Blocks['mcaction_spawnitem'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_spawnitem",
-  "message0": "Spawn Item %1",
+  "message0": "Spawn Item %1 Item %2 Location X %3 Location Y %4 Location Z %5",
   "args0": [
     {
+      "type": "input_dummy"
+    },
+    {
       "type": "input_value",
-      "name": "input",
+      "name": "ITEM",
       "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
     }
   ],
   "previousStatement": "action",
@@ -1395,9 +1454,15 @@ Blockly.Blocks['mcaction_spawnitem'] = {
 
 Blockly.Java['mcaction_spawnitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'input', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+
+
+
   var code = 
   'if(world.isRemote){\n' +
-  '    world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n' +
+  '    world.spawnEntityInWorld(new EntityItem(world, '+ value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 1, ' + value_loc_z + ' + 0.5f, new ItemStack' + value_item + '));\n' +
   '}';
   return code;
 };
@@ -1507,9 +1572,164 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
   var code = 
   'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
   '    ' + statements_code + '\n' +
-  '    return itemStack;' +
+  '    return itemStack;\n' +
   '}'
   ;
 
+  return code;
+};
+
+
+
+
+Blockly.Blocks['location_player_x'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_player_x",
+  "message0": "Player X",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_player_x'] = function(block) {
+  return ['player.posX', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_player_y'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_player_y",
+  "message0": "Player Y",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_player_y'] = function(block) {
+  return ['player.posY', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_player_z'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_player_z",
+  "message0": "Player Z",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_player_z'] = function(block) {
+  return ['player.posZ', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_block_x'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_block_x",
+  "message0": "Block X",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_block_x'] = function(block) {
+  return ['x', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+
+
+Blockly.Blocks['location_block_y'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_block_y",
+  "message0": "Block Y",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_block_y'] = function(block) {
+  return ['y', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+
+Blockly.Blocks['location_block_z'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_block_z",
+  "message0": "Block Z",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_block_z'] = function(block) {
+  return ['z', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['mcaction_giveitem'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_giveitem",
+  "message0": "Give Player Item %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "ITEM",
+      "check": "mciteminput"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_giveitem'] = function(block) {
+  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');\n';
   return code;
 };

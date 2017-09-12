@@ -115,22 +115,22 @@ public class Mod_test {
 	}
 
 	/* Block Variables */
-	
+	static Mcblock_trampoline mcblock_block_trampoline;
+
 	
 	/* Item Variables */
-	static Mcitem_change_me mcblock_item_change_me;
-
+	
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
 		
 		/* Block Constructor Calls */
-		
+		mcblock_block_trampoline = new Mcblock_trampoline();
+
 		
 		/* Item Constructor Calls */
-		mcblock_item_change_me = new Mcitem_change_me();
-
+		
 		
 	}
 
@@ -140,11 +140,32 @@ public class Mod_test {
 
 
 
-    public class Mcitem_change_me extends ItemBase {
-        public Mcitem_change_me() {
-            super(BLOCK_ID, CREATIVE_TAB, "change_me", 64);
+    public class Mcblock_trampoline extends BlockBase {
+        public Mcblock_trampoline() {
+            super(BLOCK_ID, CREATIVE_TAB, "trampoline", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
         }
 
+        @Override
+        public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+            if(entity instanceof EntityPlayer){
+                EntityPlayer player = (EntityPlayer)entity;
+                    world.newExplosion((Entity)null, (x) + 0.5f, (y) + 0.5f, (z) + 0.5f, 2, false, false);
+                    
+            }
+        }
+
+        @Override
+        public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_){return null;}
+
+        @Override
+        public boolean renderAsNormalBlock(){return false;}
     }
 
 }
