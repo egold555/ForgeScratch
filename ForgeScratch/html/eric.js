@@ -265,7 +265,7 @@ Blockly.Blocks['mcblockoptions_click_right'] = {
 Blockly.Java['mcblockoptions_click_right'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
-  statements_code.replace(RETURNS, 'true');
+  statements_code = statements_code.replace(RETURNS, 'true');
 
   var code = 
   '    @Override\n' +
@@ -304,7 +304,7 @@ Blockly.Blocks['mcblockoptions_click_left'] = {
 
 Blockly.Java['mcblockoptions_click_left'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  statements_code.replace(RETURNS, '');
+  statements_code = statements_code.replace(RETURNS, '');
   var code = 
   '    @Override\n' +
   '    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {\n' +
@@ -341,7 +341,7 @@ Blockly.Blocks['mcblockoptions_blockplaced'] = {
 
 Blockly.Java['mcblockoptions_blockplaced'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  statements_code.replace(RETURNS, '');
+  statements_code = statements_code.replace(RETURNS, '');
 
   var code = 
   '    @Override\n' +
@@ -380,7 +380,7 @@ Blockly.Blocks['mcblockoptions_block_broken_player'] = {
 
 Blockly.Java['mcblockoptions_block_broken_player'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  statements_code.replace(RETURNS, '');
+  statements_code = statements_code.replace(RETURNS, '');
 
   var code = 
   '    @Override\n' +
@@ -419,7 +419,7 @@ Blockly.Blocks['mcblockoptions_block_broken_explosion'] = {
 
 Blockly.Java['mcblockoptions_block_broken_explosion'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  statements_code.replace(RETURNS, '');
+  statements_code = statements_code.replace(RETURNS, '');
 
   var code = 
   '    @Override\n' +
@@ -457,7 +457,7 @@ Blockly.Blocks['mcblockoptions_walkthrough'] = {
 
 Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
-  statements_code.replace(RETURNS, '');
+  statements_code = statements_code.replace(RETURNS, '');
 
   var code = 
   '    @Override\n' +
@@ -1353,7 +1353,7 @@ Blockly.Blocks['mciteminput'] = {
       ]
     }
   ],
-  "output": null,
+  "output": "mciteminput",
   "colour": 20,
   "tooltip": "",
   "helpUrl": ""
@@ -1398,7 +1398,7 @@ Blockly.Java['mcaction_spawnitem'] = function(block) {
   var code = 
   'if(world.isRemote){\n' +
   '    world.spawnEntityInWorld(new EntityItem(world, x+0.5f, y+1, z+0.5f, new ItemStack' + value_item + '));\n' +
-  'return ' + RETURNS + ';}';
+  '}';
   return code;
 };
 
@@ -1436,7 +1436,7 @@ Blockly.Blocks['mcitem'] = {
     {
       "type": "input_statement",
       "name": "CODE",
-      "check": "actionitem"
+      "check": "optionitem"
     }
   ],
   "inputsInline": false,
@@ -1479,7 +1479,7 @@ Blockly.Blocks['mcitemoptions_rightclick'] = {
   init: function() {
     this.jsonInit({
       "type": "mcitemoptions_rightclick",
-  "message0": "(NI) On Right Click %1 %2",
+  "message0": "On Right Click %1 %2",
   "args0": [
     {
       "type": "input_dummy"
@@ -1487,11 +1487,11 @@ Blockly.Blocks['mcitemoptions_rightclick'] = {
     {
       "type": "input_statement",
       "name": "CODE",
-      "check": "actionitem"
+      "check": "action"
     }
   ],
-  "previousStatement": "actionitem",
-  "nextStatement": "actionitem",
+  "previousStatement": "optionitem",
+  "nextStatement": "optionitem",
   "colour": 20,
   "tooltip": "",
   "helpUrl": ""
@@ -1502,11 +1502,12 @@ Blockly.Blocks['mcitemoptions_rightclick'] = {
 Blockly.Java['mcitemoptions_rightclick'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
-  statement_code.replace(RETURNS, 'itemStack')
+  statements_code = statements_code.replace(RETURNS, 'itemStack');
 
   var code = 
   'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
   '    ' + statements_code + '\n' +
+  '    return itemStack;' +
   '}'
   ;
 

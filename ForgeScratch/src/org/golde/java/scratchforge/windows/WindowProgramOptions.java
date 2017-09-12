@@ -153,6 +153,8 @@ public class WindowProgramOptions extends JFrame{
 	public void showSettingsMenu() {
 		try {
 			comboBoxRam.setSelectedIndex(Integer.valueOf(config.get(ConfigProperty.MCRAM)));
+			chckbxMultiplayerEnabled.setSelected(Boolean.valueOf(config.get(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED)));
+			chckbxMultiplayerLimited.setSelected(Boolean.valueOf(config.get(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED)));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to load config file. I Don't think they have saved any settings yet");

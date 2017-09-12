@@ -15,23 +15,28 @@ public class Config {
 	private OutputStream output = null;
 	private InputStream input = null;
 	private final String CONFIG_NAME = "config.properties";
-	
+
 	public Config() {
 		try {
-			//Make config file if it does not exist already
-			new File("config.properties").createNewFile();
+			if(!new File(CONFIG_NAME).exists()) {
+				//Make config file if it does not exist already
+				new File(CONFIG_NAME).createNewFile();
+				set(ConfigProperty.MCRAM, "8");
+				set(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, Boolean.toString(true));
+				set(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, Boolean.toString(false));
+			}
 		}
 		catch(Exception e) {
 			PLog.error(e, "Could not create Config!");
 		}
 	}
-	
+
 	public enum ConfigProperty {
 		MCRAM, 
 		CLIENT_MULTIPLAYER_ENABLED, 
 		CLIENT_MULTIPLAYER_LIMITED
 	}
-	
+
 	public void set(ConfigProperty setting, String to) {
 		try {
 			output = new FileOutputStream(CONFIG_NAME);
@@ -43,7 +48,7 @@ public class Config {
 			PLog.errorPopup(e, "Failed to set " + setting.name() + " to " + to + "!");
 		}
 	}
-	
+
 	public String get(ConfigProperty setting) {
 		try {
 			input = new FileInputStream(CONFIG_NAME);
@@ -57,5 +62,5 @@ public class Config {
 			return null;
 		}
 	}
-	
+
 }
