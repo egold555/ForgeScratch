@@ -93,9 +93,9 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod(modid = Mod_asdasd.MOD_ID, name=Mod_asdasd.MOD_NAME, version="1.0")
-public class Mod_asdasd {
-	public static final String MOD_NAME = "asdasd";
+@Mod(modid = Mod_adsasd.MOD_ID, name=Mod_adsasd.MOD_NAME, version="1.0")
+public class Mod_adsasd {
+	public static final String MOD_NAME = "adsasd";
 	public static final String MOD_ID = "sf_" + MOD_NAME;
 	public static final String BLOCK_ID = MOD_ID + ":";
 
@@ -115,22 +115,22 @@ public class Mod_asdasd {
 	}
 
 	/* Block Variables */
-	
+	static Mcblock_lightning mcblock_block_lightning;
+
 	
 	/* Item Variables */
-	static Mcitem_change_me mcblock_item_change_me;
-
+	
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
 		
 		/* Block Constructor Calls */
-		
+		mcblock_block_lightning = new Mcblock_lightning();
+
 		
 		/* Item Constructor Calls */
-		mcblock_item_change_me = new Mcitem_change_me();
-
+		
 		
 	}
 
@@ -140,15 +140,24 @@ public class Mod_asdasd {
 
 
 
-    public class Mcitem_change_me extends ItemBase {
-        public Mcitem_change_me() {
-            super(BLOCK_ID, CREATIVE_TAB, "change_me", 64);
+    public class Mcblock_lightning extends BlockBase {
+        public Mcblock_lightning() {
+            super(BLOCK_ID, CREATIVE_TAB, "lightning", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
         }
 
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){
-            player.inventory.addItemStackToInventory(new ItemStack(Items.apple));
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+                ModHelpers.strikeLightning(world, (x), (y), (z));
 
-        return itemStack;
-    }    }
+            return true;
+        }
+    }
 
 }

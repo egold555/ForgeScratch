@@ -645,14 +645,16 @@ Blockly.Java['mcaction_time_raw'] = function(block) {
 };
 
 
-
 Blockly.Blocks['mcaction_spawn_mob'] = {
   
   init: function() {
     this.jsonInit({
       "type": "mcaction_spawn_mob",
-  "message0": "Spawn Mob %1",
+  "message0": "Spawn Mob %1 Mob:  %2 %3 Location X: %4 Location Y: %5 Location Z: %6",
   "args0": [
+    {
+      "type": "input_dummy"
+    },
     {
       "type": "field_dropdown",
       "name": "MOB",
@@ -770,11 +772,29 @@ Blockly.Blocks['mcaction_spawn_mob'] = {
           "Villager"
         ]
       ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
     }
   ],
   "previousStatement": "action",
   "nextStatement": "action",
-  "colour": 140,
+  "colour": 120,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -783,8 +803,11 @@ Blockly.Blocks['mcaction_spawn_mob'] = {
 
 Blockly.Java['mcaction_spawn_mob'] = function(block) {
   var dropdown_mob = block.getFieldValue('MOB');
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'ModHelpers.spawnEntityInWorld(world, x, y, z, "' + dropdown_mob + '");\n';
+  var code = 'ModHelpers.spawnEntityInWorld(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', "' + dropdown_mob + '");\n';
   return code;
 };
 
@@ -1731,5 +1754,52 @@ Blockly.Java['mcaction_giveitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   
   var code = 'player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');\n';
+  return code;
+};
+
+
+
+
+Blockly.Blocks['mcaction_lightning'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_lightning",
+  "message0": "Strike Lightning %1 Location X: %2 Location Y: %3 Location Z: %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_lightning'] = function(block) {
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+ 
+  var code = 'ModHelpers.strikeLightning(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');\n';
   return code;
 };

@@ -7,6 +7,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -51,7 +52,7 @@ public class ModHelpers {
 		player.addChatMessage(new ChatComponentText(msg));
 	}
 
-	public static void spawnEntityInWorld(World world, int x, int y, int z, String entity) {
+	public static void spawnEntityInWorld(World world, double x, double y, double z, String entity) {
 		if(world.isRemote) {return;}
 		Entity theEntity = EntityList.createEntityByName(entity, world);
 		if(theEntity == null) {
@@ -64,6 +65,10 @@ public class ModHelpers {
 
 	public static void addPotionToPlayer(EntityPlayer player, int potion, int seconds, int amp, boolean invis) {
 		player.addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+	}
+	
+	public static void strikeLightning(World world, double x, double y, double z){
+		world.addWeatherEffect((new EntityLightningBolt(world, x+0.5 , y , z+0.5)));
 	}
 
 	
