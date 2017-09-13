@@ -24,6 +24,7 @@ public class Config {
 				set(ConfigProperty.MCRAM, "8");
 				set(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, Boolean.toString(true));
 				set(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, Boolean.toString(false));
+				set(ConfigProperty.DARK_MODE, Boolean.toString(false));
 			}
 		}
 		catch(Exception e) {
@@ -34,7 +35,8 @@ public class Config {
 	public enum ConfigProperty {
 		MCRAM, 
 		CLIENT_MULTIPLAYER_ENABLED, 
-		CLIENT_MULTIPLAYER_LIMITED
+		CLIENT_MULTIPLAYER_LIMITED,
+		DARK_MODE
 	}
 
 	public void set(ConfigProperty setting, String to) {

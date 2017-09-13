@@ -1759,7 +1759,6 @@ Blockly.Java['mcaction_giveitem'] = function(block) {
 
 
 
-
 Blockly.Blocks['mcaction_lightning'] = {
   
   init: function() {

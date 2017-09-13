@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.golde.java.scratchforge.Config.ConfigProperty;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.mod.ModManager;
 import org.golde.java.scratchforge.windows.WindowEditTexture;
@@ -43,16 +44,16 @@ import netscape.javascript.JSObject;
  *
  */
 public class Main implements ActionListener{
-	
+
 	public final String VERSION = "1.0 alpha";
 
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
-	
+
 	//Config manager. 
 	//Makes a properties file and simple saving and loading settings
 	public Config config = new Config();
-	
+
 	WindowProgramOptions windowProgramOptions = new WindowProgramOptions(config);
 
 	//Forge directory
@@ -73,7 +74,7 @@ public class Main implements ActionListener{
 
 	//Every thing to put under the "Options - Program" button in the menu bar
 	private JMenuItem mOptionsProgram = new JMenuItem("Program Options");
-	
+
 	//Every thing to put under the "Options - Mod" button in the menu bar
 	private JMenuItem mOptionsModTextures = new JMenuItem("Textures");
 	private JMenuItem mOptionsModEnabled = new JMenuItem("Enabled Mods");
@@ -106,7 +107,7 @@ public class Main implements ActionListener{
 	void initAndShowGUI() {
 		// This has to be called after "forge_folder" is initialized.
 		modManager = new ModManager(this);
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JFXPanel fxPanel = new JFXPanel(){
 
@@ -138,7 +139,7 @@ public class Main implements ActionListener{
 		menuBar.add(fileMenu);
 
 		JMenu mOptionsMenu = new JMenu("Options");
-		
+
 		//Make the menu button "Mod Options" and add elements to it
 		JMenu mOptionsMod = new JMenu("Mod Options");
 		mOptionsMod.add(mOptionsModTextures);
@@ -155,7 +156,7 @@ public class Main implements ActionListener{
 		mOptionsMenu.add(mOptionsProgram);
 		mOptionsProgram.addActionListener(this);
 		mOptionsProgram.setEnabled(true);
-		
+
 		//Add Options menu to menu bar
 		menuBar.add(mOptionsMenu);
 
@@ -191,7 +192,11 @@ public class Main implements ActionListener{
 							window = (JSObject) webEngine.executeScript("window");
 							jsFunctions = new JSFunctions(Main.this);
 							window.setMember("java_app", jsFunctions);
-
+							
+							//TODO: Better Dark Mode
+							if(Boolean.valueOf(config.get(ConfigProperty.DARK_MODE))) {
+								webEngine.executeScript("var newSS,styles=\"* { background: #1A2424 ! important; color: cyan !important } :link, :link * { color: #66FF99 !important } :visited, :visited * { color: #9966CC !important }\";document.createStyleSheet?document.createStyleSheet(\"styles\"):((newSS=document.createElement(\"link\")).rel=\"stylesheet\",newSS.href=\"data:text/css,\"+escape(styles),document.getElementsByTagName(\"head\")[0].appendChild(newSS));");
+							}
 						}
 					}
 				});
@@ -227,7 +232,7 @@ public class Main implements ActionListener{
 				else if (source == mFileExit) {
 					System.exit(0);
 				}
-				
+
 				//Mod Options
 				else if(source == mOptionsModEnabled) {
 					jsFunctions.showEnabledMods(frame);
@@ -236,7 +241,7 @@ public class Main implements ActionListener{
 					windowProgramOptions.showSettingsMenu();
 				}
 				else if(source == mOptionsModTextures) {
-					
+
 					new WindowEditTexture(Main.this);
 				}
 				else if(source == mHelpAbout) {
@@ -255,7 +260,7 @@ public class Main implements ActionListener{
 					String aboutText = JavaHelper.joinStrings(aboutTextList, "\n", 0);
 					JOptionPane.showMessageDialog(null, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
 				}
-				
+
 
 			}
 		});
@@ -348,7 +353,7 @@ public class Main implements ActionListener{
 	public void startupDialog() {
 		JRadioButton newProject = new JRadioButton("New");
 		JRadioButton openProject = new JRadioButton("Open");
-		
+
 		newProject.setSelected(true);
 
 		ButtonGroup bttnGroup = new ButtonGroup();
