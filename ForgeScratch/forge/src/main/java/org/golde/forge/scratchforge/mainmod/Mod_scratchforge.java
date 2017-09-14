@@ -1,72 +1,40 @@
 package org.golde.forge.scratchforge.mainmod;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
-import org.apache.commons.io.Charsets;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.golde.forge.scratchforge.basemodfiles.BlockBase;
+import org.golde.forge.scratchforge.basemodfiles.ItemBase;
 import org.golde.forge.scratchforge.basemodfiles.JavaHelpers;
 import org.golde.forge.scratchforge.basemodfiles.ModHelpers;
 import org.golde.forge.scratchforge.basemodfiles.PLog;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.glu.Project;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.google.common.collect.SetMultimap;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.GuiConfirmation;
-import cpw.mods.fml.client.GuiModList;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.StartupQuery;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiButtonLanguage;
-import net.minecraft.client.gui.GuiConfirmOpenLink;
-import net.minecraft.client.gui.GuiLanguage;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSelectWorld;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.realms.RealmsBridge;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.demo.DemoWorldServer;
-import net.minecraft.world.storage.ISaveFormat;
-import net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -77,22 +45,24 @@ public class Mod_scratchforge {
 	public static final String BLOCK_ID = MOD_ID + ":";
 
 
-	/*public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
+	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
 		@Override
 		public Item getTabIconItem() {
-			return Items.iron_pickaxe;
+			return Items.book;
 		}
 
-	};*/
+	};
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		//ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
+		ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
 
 		//Mod Config Folder -> Minecraft Dir - > For dir -> root
 		PLog.info(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile().getAbsolutePath());
 		Config.load(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile());
+
+		new DebugItem();
 	}
 
 	@EventHandler
@@ -169,6 +139,47 @@ public class Mod_scratchforge {
 				event.gui = new GuiNewMultiplayer();
 			}
 		}
+	}
+
+
+	class DebugItem extends ItemBase{
+
+		public DebugItem() {
+			super(BLOCK_ID, CREATIVE_TAB, "Debugger", 1);
+		}
+
+		@Override
+		public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world,
+				int x, int y, int z, int data, float dx,
+				float dy, float dz) {
+
+			if(world.isRemote) {
+				List<String> l = new ArrayList<String>();
+
+				Block block = world.getBlock(x, y, z);
+
+				if(block != null) {
+					l.add("Block: " + block.getUnlocalizedName() + " (" + block.getLocalizedName() + ")");
+					l.add("Data: " + data);
+				}
+				//l.add("Material: " + block.getMaterial().toString());
+				l.add("X: " + x + " Y: " + y + " Z: " + z);
+				l.add("DX: " + dx + " DY: " + dy + " DZ: " + dz);
+
+
+
+				l.add(" ");
+
+				for(String s:l)
+				{
+					ModHelpers.sendChatMessage(player, s);
+				}
+			}
+
+			return super.onItemUse(itemstack, player, world, x, y, z,
+					data, dx, dy, dz);
+		}
+
 	}
 
 }
