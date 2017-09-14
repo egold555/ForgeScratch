@@ -1604,6 +1604,49 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
 
 
 
+Blockly.Blocks['mcitemoptions_leftclick'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemoptions_leftclick",
+  "message0": "On Left Click %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "action"
+    }
+  ],
+  "previousStatement": "optionitem",
+  "nextStatement": "optionitem",
+  "colour": 20,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemoptions_leftclick'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  statements_code = statements_code.replace(RETURNS, 'itemStack');
+
+  var code = 
+  'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
+  '    ' + statements_code + '\n' +
+  '    return itemStack;\n' +
+  '}'
+  ;
+
+  return code;
+};
+
+
+
+
 
 Blockly.Blocks['location_player_x'] = {
   

@@ -93,9 +93,9 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod(modid = Mod_sdasdad.MOD_ID, name=Mod_sdasdad.MOD_NAME, version="1.0")
-public class Mod_sdasdad {
-	public static final String MOD_NAME = "sdasdad";
+@Mod(modid = Mod_sdasd.MOD_ID, name=Mod_sdasd.MOD_NAME, version="1.0")
+public class Mod_sdasd {
+	public static final String MOD_NAME = "sdasd";
 	public static final String MOD_ID = "sf_" + MOD_NAME;
 	public static final String BLOCK_ID = MOD_ID + ":";
 
@@ -118,7 +118,8 @@ public class Mod_sdasdad {
 	
 	
 	/* Item Variables */
-	
+	static Mcitem_change_me mcblock_item_change_me;
+
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -128,7 +129,8 @@ public class Mod_sdasdad {
 		
 		
 		/* Item Constructor Calls */
-		
+		mcblock_item_change_me = new Mcitem_change_me();
+
 		
 	}
 
@@ -138,5 +140,20 @@ public class Mod_sdasdad {
 
 
 
+    public class Mcitem_change_me extends ItemBase {
+        public Mcitem_change_me() {
+            super(BLOCK_ID, CREATIVE_TAB, "change_me", 64);
+        }
+        
+        @Override
+        public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world,
+        		int x, int y, int z, int side, float dx,
+        		float dy, float dz) {
+        	// TODO Auto-generated method stub
+        	return super.onItemUse(itemstack, player, world, x, y, z,
+        			side, dx, dy, dz);
+        }
+
+    }
 
 }

@@ -194,7 +194,7 @@ public class Main implements ActionListener{
 							window.setMember("java_app", jsFunctions);
 							
 							//TODO: Better Dark Mode
-							if(Boolean.valueOf(config.get(ConfigProperty.DARK_MODE))) {
+							if(Boolean.valueOf(config.getString(ConfigProperty.DARK_MODE))) {
 								webEngine.executeScript("var newSS,styles=\"* { background: #1A2424 ! important; color: cyan !important } :link, :link * { color: #66FF99 !important } :visited, :visited * { color: #9966CC !important }\";document.createStyleSheet?document.createStyleSheet(\"styles\"):((newSS=document.createElement(\"link\")).rel=\"stylesheet\",newSS.href=\"data:text/css,\"+escape(styles),document.getElementsByTagName(\"head\")[0].appendChild(newSS));");
 							}
 						}

@@ -21,10 +21,10 @@ public class Config {
 			if(!new File(CONFIG_NAME).exists()) {
 				//Make config file if it does not exist already
 				new File(CONFIG_NAME).createNewFile();
-				set(ConfigProperty.MCRAM, "8");
-				set(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, Boolean.toString(true));
-				set(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, Boolean.toString(false));
-				set(ConfigProperty.DARK_MODE, Boolean.toString(false));
+				setInt(ConfigProperty.MCRAM, 8);
+				setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, true);
+				setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, false);
+				setBoolean(ConfigProperty.DARK_MODE, false);
 			}
 		}
 		catch(Exception e) {
@@ -38,8 +38,16 @@ public class Config {
 		CLIENT_MULTIPLAYER_LIMITED,
 		DARK_MODE
 	}
+	
+	public void setBoolean(ConfigProperty setting, boolean to) {
+		setString(setting, Boolean.toString(to));
+	}
+	
+	public void setInt(ConfigProperty setting, int to) {
+		setString(setting, ""+to);
+	}
 
-	public void set(ConfigProperty setting, String to) {
+	public void setString(ConfigProperty setting, String to) {
 		try {
 			output = new FileOutputStream(CONFIG_NAME);
 			prop.setProperty(setting.name(), to);
@@ -51,7 +59,15 @@ public class Config {
 		}
 	}
 
-	public String get(ConfigProperty setting) {
+	public boolean getBoolean(ConfigProperty setting) {
+		return Boolean.valueOf(getString(setting));
+	}
+	
+	public int getInt(ConfigProperty setting) {
+		return Integer.parseInt(getString(setting));
+	}
+	
+	public String getString(ConfigProperty setting) {
 		try {
 			input = new FileInputStream(CONFIG_NAME);
 			prop.load(input);

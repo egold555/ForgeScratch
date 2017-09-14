@@ -152,9 +152,9 @@ public class WindowProgramOptions extends JFrame{
 	
 	public void showSettingsMenu() {
 		try {
-			comboBoxRam.setSelectedIndex(Integer.valueOf(config.get(ConfigProperty.MCRAM)));
-			chckbxMultiplayerEnabled.setSelected(Boolean.valueOf(config.get(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED)));
-			chckbxMultiplayerLimited.setSelected(Boolean.valueOf(config.get(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED)));
+			comboBoxRam.setSelectedIndex(config.getInt(ConfigProperty.MCRAM));
+			chckbxMultiplayerEnabled.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED));
+			chckbxMultiplayerLimited.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to load config file. I Don't think they have saved any settings yet");
@@ -164,9 +164,9 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void saveAndCloseSettingsMenu() {
-		config.set(ConfigProperty.MCRAM, String.valueOf(comboBoxRam.getSelectedIndex()));
-		config.set(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, Boolean.toString(chckbxMultiplayerEnabled.isSelected()));
-		config.set(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, Boolean.toString(chckbxMultiplayerLimited.isSelected()));
+		config.setInt(ConfigProperty.MCRAM, comboBoxRam.getSelectedIndex());
+		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, chckbxMultiplayerEnabled.isSelected());
+		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, chckbxMultiplayerLimited.isSelected());
 		setVisible(false);
 	}
 	
