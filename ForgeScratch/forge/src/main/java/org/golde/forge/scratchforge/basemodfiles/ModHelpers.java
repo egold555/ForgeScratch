@@ -1,7 +1,6 @@
 package org.golde.forge.scratchforge.basemodfiles;
 
 import java.util.HashMap;
-import java.util.List;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.creativetab.CreativeTabs;
