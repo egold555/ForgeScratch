@@ -1,6 +1,8 @@
 package org.golde.java.scratchforge.windows;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -19,7 +19,7 @@ import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.mod.Mod;
 import org.golde.java.scratchforge.mod.Mod.Texture;
 
-public class WindowEditTexture extends JFrame implements TreeSelectionListener{
+public class WindowEditTexture extends JFrame {
 
 	private static final long serialVersionUID = -8302074072215275295L;
 	
@@ -35,7 +35,31 @@ public class WindowEditTexture extends JFrame implements TreeSelectionListener{
 		
 		tree = new JTree(populateTreeView(forgeModsIn));
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.addTreeSelectionListener(this);
+		
+		tree.addMouseListener(new MouseAdapter() {
+	        public void mouseClicked(MouseEvent e) {
+	            if (e.getClickCount() == 2) {
+	            	DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+	        	    
+	        	    if (node == null) {
+	        	        return;
+	        	    }
+	        	    
+	        	    Object nodeInfo = node.getUserObject();
+	        		if(nodeInfo instanceof Texture) {
+	        			Texture texture = (Texture)nodeInfo;
+	        			if(!texture.hasBeenCreated()) {
+	        				try {
+	        					texture.createTexture();
+	        				} catch (IOException e1) {
+	        					e1.printStackTrace();
+	        				}
+	        			} 
+	        			JavaHelper.openFileWithDefaultProgram(texture.getFile());
+	        		}
+	            }
+	        }
+	    });
 		
 		JScrollPane treeView = new JScrollPane(tree);
 		treeView.setBounds(12, 39, 420, 213);
@@ -75,25 +99,4 @@ public class WindowEditTexture extends JFrame implements TreeSelectionListener{
 		return top;
 	}
 
-	@Override
-	public void valueChanged(TreeSelectionEvent e) {
-	    DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-	    
-	    if (node == null) {
-	        return;
-	    }
-	    
-	    Object nodeInfo = node.getUserObject();
-		if(nodeInfo instanceof Texture) {
-			Texture texture = (Texture)nodeInfo;
-			if(!texture.hasBeenCreated()) {
-				try {
-					texture.createTexture();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} 
-			JavaHelper.openFileWithDefaultProgram(texture.getFile());
-		}
-	}
 }
