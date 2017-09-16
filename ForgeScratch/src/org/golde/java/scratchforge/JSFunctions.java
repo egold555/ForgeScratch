@@ -60,31 +60,56 @@ public class JSFunctions {
 	public void run(String code) {
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
-			// 1. Search code for classes to get list of all blocks/items into a string list.
+
+			//Setup basic variables
+			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
+			JavaHelper.copyFolder(new File(forgeScratch, "Template"), projectFolder);
+			String fileToReplace = "";
+
+
+
+			//================== [ Forge Mod.java Replacement] ==================
 			List<String> blockNames = findNames(code, false);
 			List<String> itemNames = findNames(code, true);
-			
-			//PLog.info("Block Amount: " + blockNames.size());
-			//PLog.info("Item Amount: " + itemNames.size());
 
-			// 2. Read Mod_Template into a string.
-			String modTemplate = JavaHelper.readFile(new File(forgeScratch,"Mod_Template.java"));
 
-			// 3. Replace stuff in that string.
-			modTemplate = modTemplate.replace("Mod_Template", "Mod_" + projectName);
-			modTemplate = modTemplate.replace("Mod Template", main.MOD_NAME);
+			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
 
-			modTemplate = modTemplate.replace("/*Variables - Block*/", variables(blockNames, false));
-			modTemplate = modTemplate.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, false));
-			
-			modTemplate = modTemplate.replace("/*Variables - Item*/", variables(itemNames, true));
-			modTemplate = modTemplate.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, true));
 
-			modTemplate = modTemplate.replace("/*Classes*/", fixCode(code));
+			fileToReplace = fileToReplace.replace("/*Mod Template*/", main.MOD_NAME);
 
-			// 4. Write string to a new file.
-			JavaHelper.writeFile(new File(forgeModsIn,"Mod_" + projectName + ".java"), modTemplate);
-			
+
+			//write the file
+			JavaHelper.writeFile(new File(projectFolder, "ForgeMod.java"), fileToReplace);
+			//=============================== [ END ] ===============================
+
+
+
+			//================== [ Forge CommonProxy.java Replacement] ==================
+			fileToReplace = JavaHelper.readFile(new File(projectFolder,"CommonProxy.java"));
+
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+
+			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockNames, false));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, false));
+			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, true));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, true));
+			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
+
+			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
+			//=============================== [ END ] ===============================
+
+
+
+			//================== [ Forge ClientProxy.java Replacement] ==================
+			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
+			//=============================== [ END ] ===============================
+
+
+
 			main.modManager.scanDirectoriesForMods();
 
 		}
@@ -137,6 +162,10 @@ public class JSFunctions {
 		code = code.replace("package delete_me;", "");
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
+		
+		//shit fix
+		code = code.replace("BLOCK_ID", "ForgeMod.BLOCK_ID");
+		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;
 	}
 
@@ -150,7 +179,7 @@ public class JSFunctions {
 		return "Mc" + (isItem ? "item_" : "block_") + name;
 	}
 
-	
+
 	public void showEnabledMods(JFrame frame) {
 		//Makes checkbox list
 		List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
@@ -179,7 +208,7 @@ public class JSFunctions {
 			}
 		}
 	}
-	
+
 	public void disguardElements() {
 		javaApp.call("Code.discard");
 	}
@@ -187,7 +216,7 @@ public class JSFunctions {
 	public void log(String msg) {
 		PLog.info("[JS] " + msg);
 	}
-	
+
 	public void displayFSError(String msg) {
 		log("[FS-Error] " + msg);
 	}

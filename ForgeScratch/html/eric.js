@@ -1435,6 +1435,209 @@ Blockly.Java['mciteminput'] = function(block) {
 
 
 
+Blockly.Blocks['mcblockinput'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcblockinput",
+  "message0": "Block %1",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "BLOCK",
+      "options": [
+                ["Acacia Stairs", "acacia_stairs"],
+                ["Activator Rail", "activator_rail"],
+                ["Air", "air"],
+                ["Anvil", "anvil"],
+                ["Beacon", "beacon"],
+                ["Bed", "bed"],
+                ["Bedrock", "bedrock"],
+                ["Birch Stairs", "birch_stairs"],
+                ["Bookshelf", "bookshelf"],
+                ["Brewing Stand", "brewing_stand"],
+                ["Brick", "brick_"],
+                ["Brick Stairs", "brick_stairs"],
+                ["Brown Mushroom", "brown_mushroom"],
+                ["Brown Mushroom", "brown_mushroom_"],
+                ["Cactus", "cactus"],
+                ["Cake", "cake"],
+                ["Carpet", "carpet"],
+                ["Carrots", "carrots"],
+                ["Cauldron", "cauldron"],
+                ["Chest", "chest"],
+                ["Clay", "clay"],
+                ["Coal", "coal_"],
+                ["Coal Ore", "coal_ore"],
+                ["Cobblestone", "cobblestone"],
+                ["Cobblestone Wall", "cobblestone_wall"],
+                ["Cocoa", "cocoa"],
+                ["Command", "command_"],
+                ["Crafting Table", "crafting_table"],
+                ["Dark Oak Stairs", "dark_oak_stairs"],
+                ["Daylight Detector", "daylight_detector"],
+                ["Deadbush", "deadbush"],
+                ["Detector Rail", "detector_rail"],
+                ["Diamond", "diamond_"],
+                ["Diamond Ore", "diamond_ore"],
+                ["Dirt", "dirt"],
+                ["Dispenser", "dispenser"],
+                ["Double Plant", "double_plant"],
+                ["Double Stone Slab", "double_stone_slab"],
+                ["Double Wooden Slab", "double_wooden_slab"],
+                ["Dragon Egg", "dragon_egg"],
+                ["Dropper", "dropper"],
+                ["Emerald", "emerald_"],
+                ["Emerald Ore", "emerald_ore"],
+                ["Enchanting Table", "enchanting_table"],
+                ["End Portal", "end_portal"],
+                ["End Portal Frame", "end_portal_frame"],
+                ["End Stone", "end_stone"],
+                ["Ender Chest", "ender_chest"],
+                ["Farmland", "farmland"],
+                ["Fence", "fence"],
+                ["Fence Gate", "fence_gate"],
+                ["Fire", "fire"],
+                ["Flower Pot", "flower_pot"],
+                ["Flowing Lava", "flowing_lava"],
+                ["Flowing Water", "flowing_water"],
+                ["Furnace", "furnace"],
+                ["Glass", "glass"],
+                ["Glass Pane", "glass_pane"],
+                ["Glowstone", "glowstone"],
+                ["Gold", "gold_"],
+                ["Gold Ore", "gold_ore"],
+                ["Golden Rail", "golden_rail"],
+                ["Grass", "grass"],
+                ["Gravel", "gravel"],
+                ["Hardened Clay", "hardened_clay"],
+                ["Hay", "hay_"],
+                ["Heavy Weighted Pressure Plate", "heavy_weighted_pressure_plate"],
+                ["Hopper", "hopper"],
+                ["Ice", "ice"],
+                ["Iron", "iron_"],
+                ["Iron Bars", "iron_bars"],
+                ["Iron Door", "iron_door"],
+                ["Iron Ore", "iron_ore"],
+                ["Jukebox", "jukebox"],
+                ["Jungle Stairs", "jungle_stairs"],
+                ["Ladder", "ladder"],
+                ["Lapis", "lapis_"],
+                ["Lapis Ore", "lapis_ore"],
+                ["Lava", "lava"],
+                ["Leaves", "leaves"],
+                ["Leaves2", "leaves2"],
+                ["Lever", "lever"],
+                ["Light Weighted Pressure Plate", "light_weighted_pressure_plate"],
+                ["Lit Furnace", "lit_furnace"],
+                ["Lit Pumpkin", "lit_pumpkin"],
+                ["Lit Redstone Lamp", "lit_redstone_lamp"],
+                ["Lit Redstone Ore", "lit_redstone_ore"],
+                ["Log", "log"],
+                ["Log2", "log2"],
+                ["Melon", "melon_"],
+                ["Melon Stem", "melon_stem"],
+                ["Mob Spawner", "mob_spawner"],
+                ["Monster Egg", "monster_egg"],
+                ["Mossy Cobblestone", "mossy_cobblestone"],
+                ["Mycelium", "mycelium"],
+                ["Nether Brick", "nether_brick"],
+                ["Nether Brick Fence", "nether_brick_fence"],
+                ["Nether Brick Stairs", "nether_brick_stairs"],
+                ["Nether Wart", "nether_wart"],
+                ["Netherrack", "netherrack"],
+                ["Note", "note"],
+                ["Oak Stairs", "oak_stairs"],
+                ["Obsidian", "obsidian"],
+                ["Packed Ice", "packed_ice"],
+                ["Piston", "piston"],
+                ["Piston Extension", "piston_extension"],
+                ["Piston Head", "piston_head"],
+                ["Planks", "planks"],
+                ["Portal", "portal"],
+                ["Potatoes", "potatoes"],
+                ["Powered Comparator", "powered_comparator"],
+                ["Powered Repeater", "powered_repeater"],
+                ["Pumpkin", "pumpkin"],
+                ["Pumpkin Stem", "pumpkin_stem"],
+                ["Quartz", "quartz_"],
+                ["Quartz Ore", "quartz_ore"],
+                ["Quartz Stairs", "quartz_stairs"],
+                ["Rail", "rail"],
+                ["Red Flower", "red_flower"],
+                ["Red Mushroom", "red_mushroom"],
+                ["Red Mushroom", "red_mushroom_"],
+                ["Redstone", "redstone_"],
+                ["Redstone Lamp", "redstone_lamp"],
+                ["Redstone Ore", "redstone_ore"],
+                ["Redstone Torch", "redstone_torch"],
+                ["Redstone Wire", "redstone_wire"],
+                ["Reeds", "reeds"],
+                ["Sand", "sand"],
+                ["Sandstone", "sandstone"],
+                ["Sandstone Stairs", "sandstone_stairs"],
+                ["Sapling", "sapling"],
+                ["Skull", "skull"],
+                ["Snow", "snow"],
+                ["Snow Layer", "snow_layer"],
+                ["Soul Sand", "soul_sand"],
+                ["Sponge", "sponge"],
+                ["Spruce Stairs", "spruce_stairs"],
+                ["Stained Glass", "stained_glass"],
+                ["Stained Glass Pane", "stained_glass_pane"],
+                ["Stained Hardened Clay", "stained_hardened_clay"],
+                ["Standing Sign", "standing_sign"],
+                ["Sticky Piston", "sticky_piston"],
+                ["Stone", "stone"],
+                ["Stone Brick Stairs", "stone_brick_stairs"],
+                ["Stone Button", "stone_button"],
+                ["Stone Pressure Plate", "stone_pressure_plate"],
+                ["Stone Slab", "stone_slab"],
+                ["Stone Stairs", "stone_stairs"],
+                ["Stonebrick", "stonebrick"],
+                ["Tallgrass", "tallgrass"],
+                ["Tnt", "tnt"],
+                ["Torch", "torch"],
+                ["Trapdoor", "trapdoor"],
+                ["Trapped Chest", "trapped_chest"],
+                ["Tripwire", "tripwire"],
+                ["Tripwire Hook", "tripwire_hook"],
+                ["Unlit Redstone Torch", "unlit_redstone_torch"],
+                ["Unpowered Comparator", "unpowered_comparator"],
+                ["Unpowered Repeater", "unpowered_repeater"],
+                ["Vine", "vine"],
+                ["Wall Sign", "wall_sign"],
+                ["Water", "water"],
+                ["Waterlily", "waterlily"],
+                ["Web", "web"],
+                ["Wheat", "wheat"],
+                ["Wooden Button", "wooden_button"],
+                ["Wooden Door", "wooden_door"],
+                ["Wooden Pressure Plate", "wooden_pressure_plate"],
+                ["Wooden Slab", "wooden_slab"],
+                ["Wool", "wool"],
+                ["Yellow Flower", "yellow_flower"],   
+      ]
+    }
+  ],
+  "output": "mcblockinput",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcblockinput'] = function(block) {
+  var dropdown_block = block.getFieldValue('BLOCK');
+  
+  var code = 'Blocks.' + dropdown_block;
+  return [code, Blockly.Java.ORDER_NONE];
+};
+
+
+
 Blockly.Blocks['mcaction_spawnitem'] = {
   
   init: function() {
@@ -1609,7 +1812,7 @@ Blockly.Blocks['mcitemoptions_leftclick'] = {
   init: function() {
     this.jsonInit({
       "type": "mcitemoptions_leftclick",
-  "message0": "(NT) On Left Click %1 %2",
+  "message0": "On Left Click %1 %2",
   "args0": [
     {
       "type": "input_dummy"
@@ -1919,3 +2122,209 @@ Blockly.Java['mcaction_chat'] = function(block) {
   '}\n';
   return code;
 };
+
+
+
+
+
+
+Blockly.Blocks['mcaction_placeblock'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_placeblock",
+  "message0": "Place Block %1 Block %2 Location X %3 Location Y %4 Location Z %5",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "BLOCK",
+      "check": "mcblockinput"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcaction_placeblock'] = function(block) {
+  var value_block = Blockly.Java.valueToCode(block, 'BLOCK', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+
+  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', (int)' + value_block + ', 0, 3);\n';
+  return code;
+};
+
+
+
+
+
+
+Blockly.Blocks['mcaction_placeblockmeta'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_placeblockmeta",
+  "message0": "Place Block %1 Block %2 Block Meta %3 Location X %4 Location Y %5 Location Z %6",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "BLOCK",
+      "check": "mcblockinput"
+    },
+    {
+      "type": "input_value",
+      "name": "META",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_placeblockmeta'] = function(block) {
+  var value_block = Blockly.Java.valueToCode(block, 'BLOCK', Blockly.Java.ORDER_ATOMIC);
+  var value_meta = Blockly.Java.valueToCode(block, 'META', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+
+  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', ' + value_meta +', 3);\n';
+  return code;
+};
+
+
+
+
+
+
+Blockly.Blocks['mcaction_breakblock'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_breakblock",
+  "message0": "Break Block %1 Drop Block %2 %3 Location X %4 Location Y %5 Location Z %6",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "DROP",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_breakblock'] = function(block) {
+  var checkbox_drop = block.getFieldValue('DROP') == 'TRUE';
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z +', ' + checkbox_drop + ');\n';
+  return code;
+};
+
+
+
+
+/*Blockly.Blocks['mcvariable_blocktoitem'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcvariable_blocktoitem",
+  "message0": "Block To Item %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "BLOCK",
+      "check": "mcblockinput"
+    }
+  ],
+  "output": "mciteminput",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcvariable_blocktoitem'] = function(block) {
+  var value_block = Blockly.Java.valueToCode(block, 'BLOCK', Blockly.Java.ORDER_ATOMIC);
+
+  var code = '//.dropBlockAsItem(world, ' ;);
+  return [code, Blockly.Java.ORDER_NONE];
+};*/

@@ -46,10 +46,10 @@ public class ModManager {
 	{
 		mods = new HashSet<Mod>();
 		
-		for(File mod: JavaHelper.listFilesForFolder(forgeModsIn)) {
+		for(File mod: JavaHelper.listFoldersInFolder(forgeModsIn)) {
 			mods.add(new Mod(this, mod, true));
 		}
-		for(File mod: JavaHelper.listFilesForFolder(forgeModsOut)) {
+		for(File mod: JavaHelper.listFoldersInFolder(forgeModsOut)) {
 			mods.add(new Mod(this, mod, false));
 		}
 	}

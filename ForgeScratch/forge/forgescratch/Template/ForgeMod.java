@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods;
+package org.golde.forge.scratchforge.mods./*Mod Package*/;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -93,12 +93,17 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod(modid = Mod_Template.MOD_ID, name=Mod_Template.MOD_NAME, version="1.0")
-public class Mod_Template {
-	public static final String MOD_NAME = "Mod Template";
+@Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
+public class ForgeMod {
+    
+	public static final String MOD_NAME = "/*Mod Template*/";
 	public static final String MOD_ID = "sf_" + MOD_NAME;
 	public static final String BLOCK_ID = MOD_ID + ":";
-
+    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods./*Mod Package*/";
+    
+    @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
+	public static CommonProxy PROXY;
+    
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
 		@Override
@@ -110,27 +115,12 @@ public class Mod_Template {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
+        PROXY.init(event);
 	}
-
-	/* Block Variables */
-	/*Variables - Block*/
-	
-	/* Item Variables */
-	/*Variables - Item*/
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		ModHelpers.addTranslation(CREATIVE_TAB.getTranslatedTabLabel(), MOD_NAME);
-		
-		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
-		
-		/* Item Constructor Calls */
-		/*Constructor calls - Item*/
-		
+        PROXY.preInit(event);
 	}
 
-	/*Classes*/
 }

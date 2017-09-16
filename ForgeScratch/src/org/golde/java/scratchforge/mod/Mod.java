@@ -18,12 +18,14 @@ public class Mod {
 	private ModManager modManager;
 	private String modName;
 	private File modFile;
+	private File modFolder;
 	private List<Texture> textures;
 	private boolean enabled;
 	
 	public Mod(ModManager modManager, File file, boolean enabled) {
 		this.modManager = modManager;
-		this.modFile = file;
+		this.modFolder = file;
+		this.modFile = new File(modFolder, "ForgeMod.java");
 		this.enabled = enabled;
 		
 		scanModFile();
@@ -41,6 +43,10 @@ public class Mod {
 
 	public File getModFile() {
 		return modFile;
+	}
+	
+	public File getModFolder() {
+		return modFolder;
 	}
 
 	public Texture[] getTextures() {

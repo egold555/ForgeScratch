@@ -2,8 +2,12 @@ package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -56,6 +60,22 @@ public class JavaHelper {
 			if (fileEntry.isDirectory()) {
 				listFilesForFolder(fileEntry);
 			} else {
+				files.add(fileEntry);
+			}
+		}
+		return files;
+	}
+	
+	public static List<File> listFoldersInFolder(final File folder){
+		files = new ArrayList<File>();
+		File[] listOfFiles = folder.listFiles();
+		if(listOfFiles == null) {
+			PLog.error("Directory " + folder.getAbsolutePath() + " is missing!!! Making folder and trying again...");
+			folder.mkdir();
+			return listFilesForFolder(folder);
+		}
+		for (final File fileEntry : listOfFiles) {
+			if (fileEntry.isDirectory()) {
 				files.add(fileEntry);
 			}
 		}
@@ -128,6 +148,54 @@ public class JavaHelper {
 			sb.append(item);
 		}
 		return sb.toString();
+	}
+	
+	public static void copyFolder(File source, File destination)
+	{
+	    if (source.isDirectory())
+	    {
+	        if (!destination.exists())
+	        {
+	            destination.mkdirs();
+	        }
+
+	        String files[] = source.list();
+
+	        for (String file : files)
+	        {
+	            File srcFile = new File(source, file);
+	            File destFile = new File(destination, file);
+
+	            copyFolder(srcFile, destFile);
+	        }
+	    }
+	    else
+	    {
+	        InputStream in = null;
+	        OutputStream out = null;
+
+	        try
+	        {
+	            in = new FileInputStream(source);
+	            out = new FileOutputStream(destination);
+
+	            byte[] buffer = new byte[1024];
+
+	            int length;
+	            while ((length = in.read(buffer)) > 0)
+	            {
+	                out.write(buffer, 0, length);
+	            }
+	            
+	            in.close();
+	            out.close();
+	            
+	        }
+	        catch (Exception e)
+	        {
+	        	PLog.error(e, "Failed to copy folder!");
+	        }
+	    }
 	}
 
 }
