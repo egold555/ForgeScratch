@@ -24,18 +24,4 @@ public class ItemBase extends Item{
 		ModHelpers.addTranslation(this, rawName);
 	}
 	
-	@Override
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player) {
-
-		return super.onItemRightClick(itemstack, world, player);
-	}
-	
-	@Override
-	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
-		World world = player.worldObj;
-		
-		return super.onBlockStartBreak(itemstack, X, Y, Z, player);
-	}
-	
-	
 }
