@@ -794,7 +794,7 @@ Blockly.Blocks['mcaction_spawn_mob'] = {
   ],
   "previousStatement": "action",
   "nextStatement": "action",
-  "colour": 120,
+  "colour": 140,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -1486,7 +1486,7 @@ Blockly.Java['mcaction_spawnitem'] = function(block) {
   var code = 
   'if(world.isRemote){\n' +
   '    world.spawnEntityInWorld(new EntityItem(world, '+ value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 1, ' + value_loc_z + ' + 0.5f, new ItemStack' + value_item + '));\n' +
-  '}';
+  '}\n';
   return code;
 };
 
@@ -1590,12 +1590,12 @@ Blockly.Blocks['mcitemoptions_rightclick'] = {
 Blockly.Java['mcitemoptions_rightclick'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
-  statements_code = statements_code.replace(RETURNS, 'itemStack');
+  statements_code = statements_code.replace(RETURNS, 'itemstack');
 
   var code = 
-  'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
+  'public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){\n' +
   '    ' + statements_code + '\n' +
-  '    return itemStack;\n' +
+  '    return itemstack;\n' +
   '}'
   ;
 
@@ -1609,7 +1609,7 @@ Blockly.Blocks['mcitemoptions_leftclick'] = {
   init: function() {
     this.jsonInit({
       "type": "mcitemoptions_leftclick",
-  "message0": "On Left Click %1 %2",
+  "message0": "(NT) On Left Click %1 %2",
   "args0": [
     {
       "type": "input_dummy"
@@ -1632,12 +1632,12 @@ Blockly.Blocks['mcitemoptions_leftclick'] = {
 Blockly.Java['mcitemoptions_leftclick'] = function(block) {
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
-  statements_code = statements_code.replace(RETURNS, 'itemStack');
+  statements_code = statements_code.replace(RETURNS, 'true');
 
   var code = 
-  'public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player){\n' +
+  'public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int meta, float dx, float dy, float dz) {\n' +
   '    ' + statements_code + '\n' +
-  '    return itemStack;\n' +
+  '    return true;\n' +
   '}'
   ;
 
@@ -1843,5 +1843,79 @@ Blockly.Java['mcaction_lightning'] = function(block) {
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
  
   var code = 'ModHelpers.strikeLightning(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');\n';
+  return code;
+};
+
+
+
+
+Blockly.Blocks['mcaction_log'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_log",
+  "message0": "Console Log %1 Message:  %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "MSG",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_log'] = function(block) {
+  var value_msg = Blockly.Java.valueToCode(block, 'MSG', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 
+  'if(!world.isRemote){\n' +
+  '    PLog.game(' + value_msg + ');\n' +
+  '}\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcaction_chat'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_log",
+  "message0": "Chat Message %1 Message:  %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "MSG",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_chat'] = function(block) {
+  var value_msg = Blockly.Java.valueToCode(block, 'MSG', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 
+  'if(world.isRemote){\n' +
+  '    ModHelpers.sendChatMessage(player, ' + value_msg + ');\n' + 
+  '}\n';
   return code;
 };

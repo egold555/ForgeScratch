@@ -16,6 +16,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.golde.java.scratchforge.Main;
 import org.golde.java.scratchforge.helpers.JavaHelper;
+import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.mod.Mod;
 import org.golde.java.scratchforge.mod.Mod.Texture;
 
@@ -52,7 +53,7 @@ public class WindowEditTexture extends JFrame {
 	        				try {
 	        					texture.createTexture();
 	        				} catch (IOException e1) {
-	        					e1.printStackTrace();
+	        					PLog.error(e1, "Failed to create texture");
 	        				}
 	        			} 
 	        			JavaHelper.openFileWithDefaultProgram(texture.getFile());
@@ -71,7 +72,7 @@ public class WindowEditTexture extends JFrame {
 		setVisible(true);
 		
 		
-		JLabel lblDoubleClickImage = new JLabel("Click an image to edit it");
+		JLabel lblDoubleClickImage = new JLabel("Double-Click an image to edit it");
 		lblDoubleClickImage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDoubleClickImage.setBounds(12, 13, 420, 16);
 		getContentPane().add(lblDoubleClickImage);

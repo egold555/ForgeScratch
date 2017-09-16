@@ -9,6 +9,10 @@ public class PLog {
 	
 	private static final boolean ENABLED = true;
 
+	public static void game(String msg) {
+		System.out.println("[GAME] " + msg);
+	}
+	
 	public static void info(String msg) {
 		if(!ENABLED) {return;}
 		System.out.println("[INFO]" + format(new Exception()) + msg);

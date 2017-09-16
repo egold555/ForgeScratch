@@ -40,8 +40,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = Mod_scratchforge.MOD_ID, name=Mod_scratchforge.MOD_NAME, version="1.0")
 public class Mod_scratchforge {
-	public static final String MOD_NAME = "Scratch Forge";
-	public static final String MOD_ID = "sf_" + MOD_NAME;
+	public static final String MOD_NAME = "ScratchForge";
+	public static final String MOD_ID = MOD_NAME;
 	public static final String BLOCK_ID = MOD_ID + ":";
 
 
