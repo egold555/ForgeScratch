@@ -2236,7 +2236,7 @@ Blockly.Java['mcaction_placeblockmeta'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', ' + value_meta +', 3);\n';
+  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', (int)' + value_meta +', 3);\n';
   return code;
 };
 

@@ -96,14 +96,14 @@ import io.netty.channel.*;
 public class CommonProxy {
     
     /* Block Variables */
-	static Mcblock_testblock mcblock_block_testblock;
+	static Mcblock_Rainbow_Tower mcblock_block_Rainbow_Tower;
 
 	
 	/* Item Variables */
 	
     public void preInit(FMLPreInitializationEvent event){
         /* Block Constructor Calls */
-		mcblock_block_testblock = new Mcblock_testblock();
+		mcblock_block_Rainbow_Tower = new Mcblock_Rainbow_Tower();
 
 		
 		/* Item Constructor Calls */
@@ -121,9 +121,12 @@ public class CommonProxy {
 
 
 
-    public class Mcblock_testblock extends BlockBase {
-        public Mcblock_testblock() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "testblock", Material.ground);
+protected double i;
+
+
+    public class Mcblock_Rainbow_Tower extends BlockBase {
+        public Mcblock_Rainbow_Tower() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Rainbow Tower", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -134,10 +137,11 @@ if(false){
         }
 
         @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-                world.setBlock((int)(x), (int)((y) + 1), (int)(z), (Blocks.wool), 5, 3);
+        public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
+                for (i = 0; i<=15; i++) {
+            world.setBlock((int)(x), (int)((y) + i), (int)(z), (Blocks.wool), (int)i, 3);
+        } // end for
 
-            return true;
         }
     }
 

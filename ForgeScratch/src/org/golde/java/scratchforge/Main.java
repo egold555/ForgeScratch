@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.golde.java.scratchforge.Config.ConfigProperty;
 import org.golde.java.scratchforge.helpers.JavaHelper;
+import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.mod.ModManager;
 import org.golde.java.scratchforge.windows.WindowEditTexture;
 import org.golde.java.scratchforge.windows.WindowProgramOptions;
@@ -290,9 +291,16 @@ public class Main implements ActionListener{
 		try {
 			String XML = JavaHelper.readFile(new File(name));
 
-			jsFunctions.load(XML);
+			Platform.runLater(new Runnable() {
+		        @Override
+		        public void run() {
+		        	jsFunctions.load(XML);
+		        }
+		   });
+			
 		}
 		catch (Exception e) {
+			PLog.error(e, "File not found: " + name);
 			JOptionPane.showMessageDialog(frame, "File not found: " + name, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -333,6 +341,7 @@ public class Main implements ActionListener{
 				JOptionPane.showMessageDialog(frame, "Saved to " + filename, "Save File", JOptionPane.PLAIN_MESSAGE);
 			}
 			catch (Exception e) {
+				PLog.error(e, "Cannot write to file: " + name);
 				JOptionPane.showMessageDialog(frame, "Cannot write to file: " + name, "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}

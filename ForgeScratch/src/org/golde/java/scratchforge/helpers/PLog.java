@@ -49,7 +49,8 @@ public class PLog {
 		return s + "] ";
 	}
 	
-	public static void errorPopup(Exception e, String message) {
+	/*public static void errorPopup(Exception e, String message) {
+		error(e, message);
 		final JTextArea textArea = new JTextArea();
 		textArea.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
 		textArea.setEditable(false);
@@ -65,6 +66,6 @@ public class PLog {
 		scrollPane.setPreferredSize(new Dimension(350, 150));
 
 		JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
-	}
+	}*/
 	
 }

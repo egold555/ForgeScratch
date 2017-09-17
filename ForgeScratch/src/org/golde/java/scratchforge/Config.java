@@ -55,7 +55,7 @@ public class Config {
 			output.close();
 		}
 		catch(Exception e) {
-			PLog.errorPopup(e, "Failed to set " + setting.name() + " to " + to + "!");
+			PLog.error(e, "Failed to set " + setting.name() + " to " + to + "!");
 		}
 	}
 
