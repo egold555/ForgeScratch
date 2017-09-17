@@ -34,9 +34,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.PromptData;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.Callback;
 import netscape.javascript.JSObject;
 
 /**
@@ -185,6 +189,15 @@ public class Main implements ActionListener{
 		webView.setContextMenuEnabled(false);
 		WebEngine webEngine = webView.getEngine();
 		File f = new File("html\\index.html");
+		
+		webEngine.setPromptHandler(new Callback<PromptData, String>() {
+			
+			@Override
+			public String call(PromptData param) {
+				return JOptionPane.showInputDialog(frame, param.getMessage());
+			}
+		});
+		
 		webEngine.getLoadWorker().stateProperty().addListener(
 				new ChangeListener<Worker.State>() {
 					public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
@@ -207,7 +220,6 @@ public class Main implements ActionListener{
 		root.getChildren().add(webView);
 		return scene;
 	}
-
 
 	// Handle menu events
 	@Override
@@ -290,7 +302,7 @@ public class Main implements ActionListener{
 		}
 		try {
 			String XML = JavaHelper.readFile(new File(name));
-
+			
 			Platform.runLater(new Runnable() {
 		        @Override
 		        public void run() {

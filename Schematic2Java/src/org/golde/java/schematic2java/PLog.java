@@ -1,13 +1,4 @@
-package org.golde.java.scratchforge.helpers;
-
-import java.awt.Dimension;
-import java.awt.Font;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+package org.golde.java.schematic2java;
 
 /**
  * A simple logging class that tells the class and line number things were logged at!
@@ -48,24 +39,5 @@ public class PLog {
 		
 		return s + "] ";
 	}
-	
-	/*public static void errorPopup(Exception e, String message) {
-		error(e, message);
-		final JTextArea textArea = new JTextArea();
-		textArea.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
-		textArea.setEditable(false);
-		StringWriter writer = new StringWriter();
-		PrintWriter printer = new PrintWriter(writer);
-		printer.println(message);
-		printer.println("");
-		e.printStackTrace(printer);
-		
-		textArea.setText(writer.toString());
-
-		JScrollPane scrollPane = new JScrollPane(textArea);		
-		scrollPane.setPreferredSize(new Dimension(350, 150));
-
-		JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
-	}*/
 	
 }
