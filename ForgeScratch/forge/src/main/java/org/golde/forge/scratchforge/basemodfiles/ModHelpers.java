@@ -6,6 +6,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -47,29 +48,26 @@ public class ModHelpers {
 		return translationList.getOrDefault(old, "Failed to find translation!");
 	}
 
-	public static void sendChatMessage(EntityPlayer player, String msg) {
-		player.addChatMessage(new ChatComponentText(msg));
-	}
-
-	public static void spawnEntityInWorld(World world, double x, double y, double z, String entity) {
-		if(world.isRemote) {return;}
+	public static Entity spawnEntityInWorld(World world, double x, double y, double z, String entity) {
+		if(world.isRemote) {return null;}
 		Entity theEntity = EntityList.createEntityByName(entity, world);
 		if(theEntity == null) {
 			PLog.error("Entity '" + entity + "' does not exist!");
-			return;
+			return null;
 		}
 		theEntity.setPosition(x + 0.5f, y + 1, z + 0.5f);
 		world.spawnEntityInWorld(theEntity);
+		return theEntity;
 	}
 
-	public static void addPotionToPlayer(EntityPlayer player, int potion, int seconds, int amp, boolean invis) {
-		player.addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+	public static void addPotionToEntity(Entity entity, int potion, int seconds, int amp, boolean invis) {
+		if(entity instanceof EntityLiving) {
+			((EntityLiving)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+		}
+		else if(entity instanceof EntityPlayer) {
+			((EntityPlayer)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+		}
+		
 	}
-	
-	public static void strikeLightning(World world, double x, double y, double z){
-		world.addWeatherEffect((new EntityLightningBolt(world, x+0.5 , y , z+0.5)));
-	}
-
-	
 
 }

@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.wall;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -93,62 +93,34 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-public class CommonProxy {
+@Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
+public class ForgeMod {
     
-    /* Block Variables */
-	static Mcblock_Trampoline mcblock_block_Trampoline;
+	public static final String MOD_NAME = "wall";
+	public static final String MOD_ID = "sf_" + MOD_NAME;
+	public static final String BLOCK_ID = MOD_ID + ":";
+    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods.wall";
+    
+    @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
+	public static CommonProxy PROXY;
+    
+	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
+		@Override
+		public Item getTabIconItem() {
+			return Items.iron_axe;
+		}
+
+	};
 	
-	/* Item Variables */
-	
-    public void preInit(FMLPreInitializationEvent event){
-        /* Block Constructor Calls */
-		mcblock_block_Trampoline = new Mcblock_Trampoline();
+	@EventHandler
+	public void init(FMLInitializationEvent event) {
+        PROXY.init(event);
+	}
 
-		
-		/* Item Constructor Calls */
-		
-    }
-    
-    public void init(FMLInitializationEvent event){
-        MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
-    }
-    
-    
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+        PROXY.preInit(event);
+	}
 
-
-
-
-
-    public class Mcblock_Trampoline extends BlockBase {
-        public Mcblock_Trampoline() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Trampoline", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-            EntityPlayer player = null;
-            if(entity instanceof EntityPlayer){
-                player = (EntityPlayer)entity;
-            }
-                    if(entity != null){entity.setVelocity(0, 1, 0);}
-
-        }
-
-        @Override
-        public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_){return null;}
-
-        @Override
-        public boolean renderAsNormalBlock(){return false;}
-    }
-
-    
 }

@@ -290,6 +290,7 @@ Blockly.Java['mcblockoptions_click_right'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {\n' +
+  '         Entity entity = null;\n' +
   '        ' + statements_code + '\n' +
   '        return true;\n' +
   '    }\n';
@@ -328,6 +329,7 @@ Blockly.Java['mcblockoptions_click_left'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {\n' +
+'         Entity entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -366,6 +368,7 @@ Blockly.Java['mcblockoptions_blockplaced'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {\n' +
+  '         Entity entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -405,6 +408,7 @@ Blockly.Java['mcblockoptions_block_broken_player'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {\n' +
+  '         Entity entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -444,6 +448,8 @@ Blockly.Java['mcblockoptions_block_broken_explosion'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {\n' +
+  '         EntityPlayer player = null;\n' +
+  '         Entity entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -482,10 +488,11 @@ Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {\n' +
+  '        EntityPlayer player = null;\n' +
   '        if(entity instanceof EntityPlayer){\n' +
-  '            EntityPlayer player = (EntityPlayer)entity;\n' + 
-  '            ' + statements_code + '\n' +
+  '            player = (EntityPlayer)entity;\n' + 
   '        }\n' +
+  '            ' + statements_code + '\n' +
   '    }\n' +
   '\n' +
   '    @Override\n' +
@@ -807,7 +814,7 @@ Blockly.Java['mcaction_spawn_mob'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'ModHelpers.spawnEntityInWorld(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', "' + dropdown_mob + '");\n';
+  var code = 'entity = ModHelpers.spawnEntityInWorld(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', "' + dropdown_mob + '");\n';
   return code;
 };
 
@@ -878,11 +885,11 @@ Blockly.Java['mcaction_explosion'] = function(block) {
   return code;
 };
 
-Blockly.Blocks['mcaction_potion'] = {
+Blockly.Blocks['mcaction_potionplayer'] = {
   
   init: function() {
     this.jsonInit({
-      "type": "mcaction_potion",
+      "type": "mcaction_potionplayer",
   "message0": "Add Potion Effect To Player %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
   "args0": [
     {
@@ -1014,16 +1021,161 @@ Blockly.Blocks['mcaction_potion'] = {
   }
 };
 
-Blockly.Java['mcaction_potion'] = function(block) {
+Blockly.Java['mcaction_potionplayer'] = function(block) {
   var dropdown_potion = block.getFieldValue('POTION');
   var value_time = Blockly.Java.valueToCode(block, 'TIME', Blockly.Java.ORDER_ATOMIC);
   var value_amp = Blockly.Java.valueToCode(block, 'AMP', Blockly.Java.ORDER_ATOMIC);
   var checkbox_invis = block.getFieldValue('INVIS') == 'TRUE';
 
-  var code = 'ModHelpers.addPotionToPlayer(player, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');\n';
+  var code = 'if(player != null){ModHelpers.addPotionToEntity(player, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}\n';
   return code;
 };
 
+Blockly.Blocks['mcaction_potionentity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_potionentity",
+  "message0": "Add Potion Effect To An Mob %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "POTION",
+      "options": [
+        [
+          "Speed",
+          "1"
+        ],
+        [
+          "Slowness",
+          "2"
+        ],
+        [
+          "Haste",
+          "3"
+        ],
+        [
+          "Mining Fatigue",
+          "4"
+        ],
+        [
+          "Strength",
+          "5"
+        ],
+        [
+          "Instant Health",
+          "6"
+        ],
+        [
+          "Instant Damage",
+          "7"
+        ],
+        [
+          "Jump Boost",
+          "8"
+        ],
+        [
+          "Nausea",
+          "9"
+        ],
+        [
+          "Regeneration",
+          "10"
+        ],
+        [
+          "Resistance",
+          "11"
+        ],
+        [
+          "Fire Resistance",
+          "12"
+        ],
+        [
+          "Water Breathing",
+          "13"
+        ],
+        [
+          "Invisibility",
+          "14"
+        ],
+        [
+          "Blindness",
+          "15"
+        ],
+        [
+          "Night Vision",
+          "16"
+        ],
+        [
+          "Hunger",
+          "17"
+        ],
+        [
+          "Weakness",
+          "18"
+        ],
+        [
+          "Poison",
+          "19"
+        ],
+        [
+          "Wither",
+          "20"
+        ],
+        [
+          "Health Boost",
+          "21"
+        ],
+        [
+          "Absorption",
+          "22"
+        ],
+        [
+          "Saturation",
+          "23"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "TIME",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "AMP",
+      "check": "Number"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "INVIS",
+      "checked": true
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_potionentity'] = function(block) {
+  var dropdown_potion = block.getFieldValue('POTION');
+  var value_time = Blockly.Java.valueToCode(block, 'TIME', Blockly.Java.ORDER_ATOMIC);
+  var value_amp = Blockly.Java.valueToCode(block, 'AMP', Blockly.Java.ORDER_ATOMIC);
+  var checkbox_invis = block.getFieldValue('INVIS') == 'TRUE';
+
+  var code = 'if(entity != null) {ModHelpers.addPotionToEntity(entity, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}\n';
+  return code;
+};
 
 
 Blockly.Blocks['mcaction_playsound'] = {
@@ -1225,7 +1377,7 @@ Blockly.Blocks['mcaction_playsound'] = {
 Blockly.Java['mcaction_playsound'] = function(block) {
   var dropdown_sound = block.getFieldValue('SOUND');
 
-  var code = 'world.playSoundAtEntity(player, "' + dropdown_sound + '", 1, 1);\n';
+  var code = 'if(player != null){world.playSoundAtEntity(player, "' + dropdown_sound + '", 1, 1);}\n';
   return code;
 };
 
@@ -1797,6 +1949,7 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
 
   var code = 
   'public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){\n' +
+  '    Entity entity = null;\n' +
   '    ' + statements_code + '\n' +
   '    return itemstack;\n' +
   '}'
@@ -1839,6 +1992,7 @@ Blockly.Java['mcitemoptions_leftclick'] = function(block) {
 
   var code = 
   'public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int meta, float dx, float dy, float dz) {\n' +
+  '    Entity entity = null;\n' +
   '    ' + statements_code + '\n' +
   '    return true;\n' +
   '}'
@@ -1907,6 +2061,66 @@ Blockly.Blocks['location_player_z'] = {
 
 Blockly.Java['location_player_z'] = function(block) {
   return ['player.posZ', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_entity_x'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_entity_x",
+  "message0": "Entity X",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_entity_x'] = function(block) {
+  return ['entity.posX', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_entity_y'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_entity_y",
+  "message0": "Entity Y",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_entity_y'] = function(block) {
+  return ['entity.posY', Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['location_entity_z'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "location_entity_z",
+  "message0": "Entity Z",
+  "output": "Number",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['location_entity_z'] = function(block) {
+  return ['entity.posZ', Blockly.JavaScript.ORDER_NONE];
 };
 
 
@@ -1999,7 +2213,7 @@ Blockly.Blocks['mcaction_giveitem'] = {
 Blockly.Java['mcaction_giveitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');\n';
+  var code = 'if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}\n';
   return code;
 };
 
@@ -2045,7 +2259,7 @@ Blockly.Java['mcaction_lightning'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
  
-  var code = 'ModHelpers.strikeLightning(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');\n';
+  var code = 'world.addWeatherEffect((new EntityLightningBolt(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ')));\n';
   return code;
 };
 
@@ -2118,7 +2332,7 @@ Blockly.Java['mcaction_chat'] = function(block) {
   
   var code = 
   'if(world.isRemote){\n' +
-  '    ModHelpers.sendChatMessage(player, ' + value_msg + ');\n' + 
+  '    if(player != null) {player.addChatMessage(new ChatComponentText(' + value_msg + '));}\n' + 
   '}\n';
   return code;
 };
@@ -2301,30 +2515,187 @@ Blockly.Java['mcaction_breakblock'] = function(block) {
 
 
 
-/*Blockly.Blocks['mcvariable_blocktoitem'] = {
+Blockly.Blocks['mcaction_velocity_player'] = {
   
   init: function() {
     this.jsonInit({
-      "type": "mcvariable_blocktoitem",
-  "message0": "Block To Item %1",
+      "type": "mcaction_velocity_player",
+  "message0": "Set Player Velocity %1 Velocity X %2 Velocity Y %3 Velocity Z %4",
   "args0": [
     {
+      "type": "input_dummy"
+    },
+    {
       "type": "input_value",
-      "name": "BLOCK",
-      "check": "mcblockinput"
+      "name": "VEL_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "VEL_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "VEL_Z",
+      "check": "Number"
     }
   ],
-  "output": "mciteminput",
-  "colour": 290,
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
   "tooltip": "",
   "helpUrl": ""
     });
   }
 };
 
-Blockly.Java['mcvariable_blocktoitem'] = function(block) {
-  var value_block = Blockly.Java.valueToCode(block, 'BLOCK', Blockly.Java.ORDER_ATOMIC);
 
-  var code = '//.dropBlockAsItem(world, ' ;);
-  return [code, Blockly.Java.ORDER_NONE];
-};*/
+Blockly.Java['mcaction_velocity_player'] = function(block) {
+  var value_vel_x = Blockly.Java.valueToCode(block, 'VEL_X', Blockly.Java.ORDER_ATOMIC);
+  var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
+
+  var code = 'if(player != null){player.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +');}\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcaction_velocity_entity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_velocity_entity",
+  "message0": "Set Entity Velocity %1 Velocity X %2 Velocity Y %3 Velocity Z %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "VEL_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "VEL_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "VEL_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_velocity_entity'] = function(block) {
+  var value_vel_x = Blockly.Java.valueToCode(block, 'VEL_X', Blockly.Java.ORDER_ATOMIC);
+  var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
+
+  var code = 'if(entity != null){entity.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +');}\n';
+  return code;
+};
+
+
+
+Blockly.Blocks['mcaction_teleport_player'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_teleport_player",
+  "message0": "Teleport Player %1 Location X %2 Location Y %3 Location Z %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcaction_teleport_player'] = function(block) {
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'if(player != null){player.setPositionAndUpdate(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z +');}\n';
+  return code;
+};
+
+
+
+
+Blockly.Blocks['mcaction_teleport_entity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_teleport_entity",
+  "message0": "Teleport Entity %1 Location X %2 Location Y %3 Location Z %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcaction_teleport_entity'] = function(block) {
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'if(entity != null){((EntityLiving)entity).setPositionAndUpdate(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z +');}\n';
+  return code;
+};

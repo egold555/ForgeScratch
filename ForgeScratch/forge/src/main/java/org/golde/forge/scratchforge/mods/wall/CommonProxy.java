@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.wall;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -96,14 +96,14 @@ import io.netty.channel.*;
 public class CommonProxy {
     
     /* Block Variables */
-	static Mcblock_Trampoline mcblock_block_Trampoline;
+	static Mcblock_wall mcblock_block_wall;
 
 	
 	/* Item Variables */
 	
     public void preInit(FMLPreInitializationEvent event){
         /* Block Constructor Calls */
-		mcblock_block_Trampoline = new Mcblock_Trampoline();
+		mcblock_block_wall = new Mcblock_wall();
 
 		
 		/* Item Constructor Calls */
@@ -121,9 +121,14 @@ public class CommonProxy {
 
 
 
-    public class Mcblock_Trampoline extends BlockBase {
-        public Mcblock_Trampoline() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Trampoline", Material.ground);
+protected double i;
+protected double j;
+protected double k;
+
+
+    public class Mcblock_wall extends BlockBase {
+        public Mcblock_wall() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "wall", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -134,20 +139,16 @@ if(false){
         }
 
         @Override
-        public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-            EntityPlayer player = null;
-            if(entity instanceof EntityPlayer){
-                player = (EntityPlayer)entity;
-            }
-                    if(entity != null){entity.setVelocity(0, 1, 0);}
+        public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
+                for (i = 0; i<=15; i++) {
+            for (j = 0; j<=15; j++) {
+                for (k = 0; k<=15; k++) {
+                    world.setBlock((int)((x) + i), (int)((y) + j), (int)((z) + k), (Blocks.wool), (int)((i + (j + k)) % 16), 3);
+                } // end for
+            } // end for
+        } // end for
 
         }
-
-        @Override
-        public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_){return null;}
-
-        @Override
-        public boolean renderAsNormalBlock(){return false;}
     }
 
     

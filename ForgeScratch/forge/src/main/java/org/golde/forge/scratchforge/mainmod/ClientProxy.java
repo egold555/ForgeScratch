@@ -21,6 +21,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -71,7 +73,8 @@ public class ClientProxy extends CommonProxy{
 
 		if(failedTextures.size() > 0) {
 			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
-			ModHelpers.sendChatMessage(event.player, EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.RESET + failed + EnumChatFormatting.GOLD + "." );
+			EntityPlayer player = event.player;
+			if(player != null) {player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.RESET + failed + EnumChatFormatting.GOLD + "." ));}
 		}
 	}
 

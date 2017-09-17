@@ -407,6 +407,13 @@ public class Main implements ActionListener{
 		int result = JOptionPane.showConfirmDialog(frame, panel, "New Mod", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION && !JavaHelper.isStringEmpty(field1.getText())) {
 			MOD_NAME = field1.getText();
+			Platform.runLater(new Runnable() {
+		        @Override
+		        public void run() {
+		        	jsFunctions.disguardElements();
+		        }
+		   });
+			
 		}else {
 			if(isStarting) {
 				startupDialog();

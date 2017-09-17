@@ -1,6 +1,7 @@
 package org.golde.forge.scratchforge.mainmod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.golde.forge.scratchforge.basemodfiles.ItemBase;
@@ -10,7 +11,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class CommonProxy {
@@ -41,19 +44,22 @@ public class CommonProxy {
 
 				if(block != null) {
 					l.add("Block: " + block.getUnlocalizedName() + " (" + block.getLocalizedName() + ")");
-					l.add("Data: " + data);
+					l.add("Side: " + data);
+					List list = new ArrayList();
+					block.getSubBlocks(Item.getItemFromBlock(block), null, list);
+					l.add("Sub: " + Arrays.asList(list).toString());
 				}
 				//l.add("Material: " + block.getMaterial().toString());
 				l.add("X: " + x + " Y: " + y + " Z: " + z);
 				l.add("DX: " + dx + " DY: " + dy + " DZ: " + dz);
-
+				
 
 
 				l.add(" ");
 
 				for(String s:l)
 				{
-					ModHelpers.sendChatMessage(player, s);
+					if(player != null) {player.addChatMessage(new ChatComponentText(s));}
 				}
 			}
 

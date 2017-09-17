@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.wall;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -93,62 +93,13 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-public class CommonProxy {
+public class ClientProxy extends CommonProxy {
     
-    /* Block Variables */
-	static Mcblock_Trampoline mcblock_block_Trampoline;
-
-	
-	/* Item Variables */
-	
+    @Override
     public void preInit(FMLPreInitializationEvent event){
-        /* Block Constructor Calls */
-		mcblock_block_Trampoline = new Mcblock_Trampoline();
-
-		
-		/* Item Constructor Calls */
-		
+        super.preInit(event);
+        ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
+        
     }
-    
-    public void init(FMLInitializationEvent event){
-        MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
-    }
-    
-    
-
-
-
-
-
-    public class Mcblock_Trampoline extends BlockBase {
-        public Mcblock_Trampoline() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Trampoline", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-            EntityPlayer player = null;
-            if(entity instanceof EntityPlayer){
-                player = (EntityPlayer)entity;
-            }
-                    if(entity != null){entity.setVelocity(0, 1, 0);}
-
-        }
-
-        @Override
-        public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_){return null;}
-
-        @Override
-        public boolean renderAsNormalBlock(){return false;}
-    }
-
     
 }
