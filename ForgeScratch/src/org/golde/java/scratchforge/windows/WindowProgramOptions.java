@@ -14,7 +14,14 @@ import javax.swing.JTextField;
 
 import org.golde.java.scratchforge.Config;
 import org.golde.java.scratchforge.Config.ConfigProperty;
+import org.golde.java.scratchforge.Main;
+import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
 
 public class WindowProgramOptions extends JFrame{
 	
@@ -75,7 +82,7 @@ public class WindowProgramOptions extends JFrame{
 	private JCheckBox chckbxMultiplayerLimited;
 	private JTextField textField;
 	
-	public WindowProgramOptions(Config config) {
+	public WindowProgramOptions(Main main, Config config) {
 		this.config = config;
 		JPanel box1 = new JPanel();
 		box1.setBounds(12, 13, 191, 144);
@@ -90,6 +97,7 @@ public class WindowProgramOptions extends JFrame{
 		box2.setLayout(null);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(12, 42, 231, 22);
 		box2.add(textField);
 		textField.setColumns(10);
@@ -120,6 +128,25 @@ public class WindowProgramOptions extends JFrame{
 		chckbxMultiplayerLimited = new JCheckBox("MultiPlayer Limited");
 		chckbxMultiplayerLimited.setBounds(22, 92, 149, 25);
 		box1.add(chckbxMultiplayerLimited);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Quick Fixes"));
+		panel.setBounds(215, 104, 255, 78);
+		getContentPane().add(panel);
+		
+		JButton btnCleanProject = new JButton("Clean Project");
+		btnCleanProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					JavaHelper.runCMD(main.forge_folder, "gradlew clean", false);
+				} catch (IOException e) {
+					PLog.error(e, "Failed to clean project!");
+				}
+			}
+		});
+		btnCleanProject.setBounds(12, 29, 124, 25);
+		panel.add(btnCleanProject);
 		
 		/*JPanel panel = new JPanel();
 		panel.setLayout(null);

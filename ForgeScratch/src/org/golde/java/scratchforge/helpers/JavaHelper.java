@@ -21,7 +21,7 @@ import java.util.Scanner;
  *
  */
 public class JavaHelper {
-
+	
 	//Opens up a cmd prompt and executes commands. 
 	public static void runCMD(File dir, String cmd, boolean keepOpen) throws IOException {
 		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");

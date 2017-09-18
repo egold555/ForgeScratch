@@ -59,7 +59,7 @@ public class Main implements ActionListener{
 	//Makes a properties file and simple saving and loading settings
 	public Config config = new Config();
 
-	WindowProgramOptions windowProgramOptions = new WindowProgramOptions(config);
+	WindowProgramOptions windowProgramOptions = new WindowProgramOptions(this, config);
 
 	//Forge directory
 	public File forge_folder = new File("forge");
