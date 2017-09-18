@@ -2190,4 +2190,180 @@
         <field name="HUE">290</field>
       </block>
     </value>
+  </block><block type="factory_base" id="EF6n_Dw@e85zyD_ECjen" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcaction_velocity</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="O#y.PjcA!xMO*,tq(#Vt">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="I[=;Fczu$X%k]!GP(+2~">
+            <field name="TEXT">Set Player Velocity</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_value" id="AUnaSSU`@s}OJdtjI^tR">
+            <field name="INPUTNAME">VEL_X</field>
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="J3`*-lZG;YFE7mJ8s:7@">
+                <field name="TEXT">Velocity X</field>
+              </block>
+            </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+              <block type="type_number" id="*bv^DY#]G(Yd/{Qg!Gz["></block>
+            </value>
+            <next>
+              <block type="input_value" id="d!D5qz.2Q=b*{hhEZP@K">
+                <field name="INPUTNAME">VEL_Y</field>
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="!]5sml-UGht!dLH0.3p9">
+                    <field name="TEXT">Velocity Y</field>
+                  </block>
+                </statement>
+                <value name="TYPE">
+                  <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+                  <block type="type_number" id="DKr=sa.|Hv!yJSN#8lNQ"></block>
+                </value>
+                <next>
+                  <block type="input_value" id="ejS#~4t.}B.BH-ldaY5t">
+                    <field name="INPUTNAME">VEL_Z</field>
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id=",NmYD0Z0IpzYe4dBX{4l">
+                        <field name="TEXT">Velocity Z</field>
+                      </block>
+                    </statement>
+                    <value name="TYPE">
+                      <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+                      <block type="type_number" id="H~`vPb6j~%@[~xE#,C!r"></block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="#N=t8Jv{+%pe^^00%rD3" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="v-E^vlTqUiOO}/3`=IT5" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="ZD^ivS]~ctvbotLqzBXX"></shadow>
+      <block type="type_other" id="@NFcTdpG+)ZdqB?;kR/g">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="8z8gqB)8#EP#l$cD|w4I"></shadow>
+      <block type="type_other" id="VAYOij*fHd}`zW1.T6r1">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="rVgI4-Tm8{UzU/*xMR2G">
+        <mutation colour="#5ba574"></mutation>
+        <field name="HUE">140</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="EF6n_Dw@e85zyD_ECjen" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcaction_teleport</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="O#y.PjcA!xMO*,tq(#Vt">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="I[=;Fczu$X%k]!GP(+2~">
+            <field name="TEXT">Teleport Player</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_value" id="AUnaSSU`@s}OJdtjI^tR">
+            <field name="INPUTNAME">LOC_X</field>
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="J3`*-lZG;YFE7mJ8s:7@">
+                <field name="TEXT">Location X</field>
+              </block>
+            </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+              <block type="type_number" id="*bv^DY#]G(Yd/{Qg!Gz["></block>
+            </value>
+            <next>
+              <block type="input_value" id="d!D5qz.2Q=b*{hhEZP@K">
+                <field name="INPUTNAME">LOC_Y</field>
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="!]5sml-UGht!dLH0.3p9">
+                    <field name="TEXT">Location Y</field>
+                  </block>
+                </statement>
+                <value name="TYPE">
+                  <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+                  <block type="type_number" id="DKr=sa.|Hv!yJSN#8lNQ"></block>
+                </value>
+                <next>
+                  <block type="input_value" id="ejS#~4t.}B.BH-ldaY5t">
+                    <field name="INPUTNAME">LOC_Z</field>
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id=",NmYD0Z0IpzYe4dBX{4l">
+                        <field name="TEXT">Location Z</field>
+                      </block>
+                    </statement>
+                    <value name="TYPE">
+                      <shadow type="type_null" id="@[qOn_*(dgq+`0,S8yoU"></shadow>
+                      <block type="type_number" id="H~`vPb6j~%@[~xE#,C!r"></block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="#N=t8Jv{+%pe^^00%rD3" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="v-E^vlTqUiOO}/3`=IT5" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="ZD^ivS]~ctvbotLqzBXX"></shadow>
+      <block type="type_other" id="@NFcTdpG+)ZdqB?;kR/g">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="8z8gqB)8#EP#l$cD|w4I"></shadow>
+      <block type="type_other" id="VAYOij*fHd}`zW1.T6r1">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="rVgI4-Tm8{UzU/*xMR2G">
+        <mutation colour="#5ba574"></mutation>
+        <field name="HUE">140</field>
+      </block>
+    </value>
   </block></xml>
