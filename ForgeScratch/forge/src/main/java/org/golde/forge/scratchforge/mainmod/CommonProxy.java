@@ -45,9 +45,9 @@ public class CommonProxy {
 				if(block != null) {
 					l.add("Block: " + block.getUnlocalizedName() + " (" + block.getLocalizedName() + ")");
 					l.add("Side: " + data);
-					List list = new ArrayList();
+					List<ItemStack> list = new ArrayList<ItemStack>();
 					block.getSubBlocks(Item.getItemFromBlock(block), null, list);
-					l.add("Sub: " + Arrays.asList(list).toString());
+					l.add("Sub: " + Arrays.asList(list));
 				}
 				//l.add("Material: " + block.getMaterial().toString());
 				l.add("X: " + x + " Y: " + y + " Z: " + z);
