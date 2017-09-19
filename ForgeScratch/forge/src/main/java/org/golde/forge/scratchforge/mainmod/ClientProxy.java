@@ -74,7 +74,7 @@ public class ClientProxy extends CommonProxy{
 		if(failedTextures.size() > 0) {
 			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
 			EntityPlayer player = event.player;
-			if(player != null) {player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.RESET + failed + EnumChatFormatting.GOLD + "." ));}
+			if(player != null) {player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.WHITE + failed + EnumChatFormatting.GOLD + "." ));}
 		}
 	}
 

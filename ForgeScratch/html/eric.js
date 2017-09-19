@@ -2698,3 +2698,171 @@ Blockly.Java['mcaction_teleport_entity'] = function(block) {
   var code = 'if(entity != null){((EntityLiving)entity).setPositionAndUpdate(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z +');}\n';
   return code;
 };
+
+
+
+
+Blockly.Blocks['mcaction_firework'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_firework",
+  "message0": "Launch Firework %1 Location X %2 Location Y %3 Location Z %4 Power %5 Flicker %6 %7 Trail %8 %9 Type %10 %11 Color %12",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "LOC_Z",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "POWER",
+      "check": "Number"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "FLICKER",
+      "checked": true
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "TRAIL",
+      "checked": true
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "TYPE",
+      "options": [
+        [
+          "Small Ball",
+          "0"
+        ],
+        [
+          "Large Ball",
+          "1"
+        ],
+        [
+          "Star",
+          "2"
+        ],
+        [
+          "Creeper",
+          "3"
+        ],
+        [
+          "Burst",
+          "4"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "COLOR",
+      "check": [
+        "String",
+        "Array"
+      ]
+    }
+  ],
+  "inputsInline": false,
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_firework'] = function(block) {
+  var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
+  var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
+  var value_power = Blockly.Java.valueToCode(block, 'POWER', Blockly.Java.ORDER_ATOMIC);
+  var checkbox_flicker = block.getFieldValue('FLICKER') == 'TRUE';
+  var checkbox_trail = block.getFieldValue('TRAIL') == 'TRUE';
+  var dropdown_type = block.getFieldValue('TYPE');
+  var value_color = Blockly.Java.valueToCode(block, 'COLOR', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = '/*Firework*/\n';
+  return code;
+};
+
+
+
+
+
+Blockly.Blocks['mcvariable_color_chat'] = {
+  init: function() {
+
+    var colour = new Blockly.FieldColour('#ff0000');
+    colour.setColours(['#f00','#0f0','#00f','#000','#888','#fff']).setColumns(3);
+
+   this.setOutput(true, 'String');
+   this.setColour(290);
+
+    this.appendDummyInput()
+        .appendField('Chat Color:')
+        .appendField(colour, 'COLOR');
+
+  }
+};
+
+Blockly.Java['mcvariable_color_chat'] = function(block) {
+  var colour_color = block.getFieldValue('COLOR');
+  var code = '"' + colour_color + '"';
+  return [code, Blockly.Java.ORDER_NONE];
+};
+
+
+
+
+Blockly.Blocks['mcvariable_color_fireworks'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcvariable_color_fireworks",
+  "message0": "Firework Color: %1",
+  "args0": [
+    {
+      "type": "field_colour",
+      "name": "COLOR",
+      "colour": "#ff0000"
+    }
+  ],
+  "output": "String",
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+Blockly.Java['mcvariable_color_fireworks'] = function(block) {
+  var colour_color = block.getFieldValue('COLOR');
+  var code = '"' + colour_color + '"';
+  return [code, Blockly.Java.ORDER_NONE];
+};

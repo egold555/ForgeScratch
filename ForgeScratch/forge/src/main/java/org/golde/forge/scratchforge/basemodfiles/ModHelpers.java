@@ -1,102 +1,31 @@
 package org.golde.forge.scratchforge.basemodfiles;
 
-import org.golde.forge.scratchforge.basemodfiles.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.*;
-import net.minecraft.client.audio.*;
-import net.minecraft.client.entity.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.achievement.*;
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.client.model.*;
-import net.minecraft.client.multiplayer.*;
-import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.culling.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.renderer.tileentity.*;
-import net.minecraft.client.settings.*;
-import net.minecraft.command.*;
-import net.minecraft.crash.*;
-import net.minecraft.creativetab.*;
-import net.minecraft.dispenser.*;
-import net.minecraft.enchantment.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.boss.*;
-import net.minecraft.entity.effect.*;
-import net.minecraft.entity.item.*;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.init.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraft.network.rcon.*;
-import net.minecraft.pathfinding.*;
-import net.minecraft.potion.*;
-import net.minecraft.profiler.*;
-import net.minecraft.server.*;
-import net.minecraft.server.dedicated.*;
-import net.minecraft.server.gui.*;
-import net.minecraft.server.integrated.*;
-import net.minecraft.server.management.*;
-import net.minecraft.src.*;
-import net.minecraft.stats.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.village.*;
-import net.minecraft.world.*;
-import net.minecraft.world.biome.*;
-import net.minecraft.world.chunk.*;
-import net.minecraft.world.chunk.storage.*;
-import net.minecraft.world.demo.*;
-import net.minecraft.world.gen.*;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.layer.*;
-import net.minecraft.world.gen.structure.*;
-import net.minecraft.world.storage.*;
-
-import net.minecraftforge.classloading.*;
-import net.minecraftforge.client.*;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.event.sound.*;
-import net.minecraftforge.common.*;
-import net.minecraftforge.event.*;
-import net.minecraftforge.event.entity.*;
-import net.minecraftforge.event.entity.item.*;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.minecart.*;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.terraingen.*;
-import net.minecraftforge.event.world.*;
-import net.minecraftforge.oredict.*;
-import net.minecraftforge.transformers.*;
-
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.Mod.*;
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.relauncher.*;
-
-import org.apache.logging.log4j.*;
-
-import java.util.*;
-
-import io.netty.buffer.*;
-import io.netty.channel.*;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 
 public class ModHelpers {
 
 	private static Random random = new Random();
-	
+
 	//                      old,    new
 	private static HashMap<String, String> translationList = new HashMap<String, String>();
 
@@ -147,36 +76,83 @@ public class ModHelpers {
 		else if(entity instanceof EntityPlayer) {
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
 		}
-		
+
+	}
+
+
+	public static EntityFireworkRocket getRandomFirework(World world, double x, double y, double z) {
+		ItemStack firework = new ItemStack(Items.fireworks);
+		firework.stackTagCompound = new NBTTagCompound();
+		NBTTagCompound expl = new NBTTagCompound();
+		expl.setBoolean("Flicker", true);
+		expl.setBoolean("Trail", true);
+
+		int[] colors = new int[random.nextInt(8) + 1];
+		for (int i = 0; i < colors.length; i++) {
+			colors[i] = ItemDye.field_150922_c[random.nextInt(16)];
+		}
+		expl.setIntArray("Colors", colors);
+		byte type = (byte) (random.nextInt(3) + 1);
+		type = type == 3 ? 4 : type;
+		expl.setByte("Type", type);
+
+		NBTTagList explosions = new NBTTagList();
+		explosions.appendTag(expl);
+
+		NBTTagCompound fireworkTag = new NBTTagCompound();
+		fireworkTag.setTag("Explosions", explosions);
+		fireworkTag.setByte("Flight", (byte) 1);
+		firework.stackTagCompound.setTag("Fireworks", fireworkTag);
+
+		return new EntityFireworkRocket(world, x, y, z, firework);
+	}
+	
+	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, List colors, int type, int power) {
+		int[] intColors = new int[colors.size()];
+		for(int i = 0; i < intColors.length; i++) {
+			if(colors.get(i) instanceof String) {
+				try {
+					intColors[i] = JavaHelpers.hexToMinecraftColor((String)colors.get(i));
+				}
+				catch(Exception e) { }
+			}
+		}
+		return getFirework(world, x, y, z, flicker, trail, intColors, type, power);
 	}
 	
 	
-	public static EntityFireworkRocket getRandomFirework(World world, double x, double y, double z) {
-	    ItemStack firework = new ItemStack(Items.fireworks);
-	    firework.stackTagCompound = new NBTTagCompound();
-	    NBTTagCompound expl = new NBTTagCompound();
-	    expl.setBoolean("Flicker", true);
-	    expl.setBoolean("Trail", true);
+	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, String color, int type, int power) {
+		return getFirework(world, x, y, z, flicker, trail, new int[] {JavaHelpers.hexToMinecraftColor(color)}, type, power);
+	}
+	
 
-	    int[] colors = new int[random.nextInt(8) + 1];
-	    for (int i = 0; i < colors.length; i++) {
-	      colors[i] = ItemDye.field_150922_c[random.nextInt(16)];
-	    }
-	    expl.setIntArray("Colors", colors);
-	    byte type = (byte) (random.nextInt(3) + 1);
-	    type = type == 3 ? 4 : type;
-	    expl.setByte("Type", type);
+	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, int color, int type, int power) {
+		return getFirework(world, x, y, z, flicker, trail, new int[] {color}, type, power);
+	}
 
-	    NBTTagList explosions = new NBTTagList();
-	    explosions.appendTag(expl);
+	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, int[] colors, int type, int power) {
+		ItemStack firework = new ItemStack(Items.fireworks);
+		firework.stackTagCompound = new NBTTagCompound();
+		NBTTagCompound expl = new NBTTagCompound();
+		
+		expl.setBoolean("Flicker", flicker);
+		expl.setBoolean("Trail", trail);
+		expl.setIntArray("Colors", colors);
+		expl.setByte("Type", (byte)type);
 
-	    NBTTagCompound fireworkTag = new NBTTagCompound();
-	    fireworkTag.setTag("Explosions", explosions);
-	    fireworkTag.setByte("Flight", (byte) 1);
-	    firework.stackTagCompound.setTag("Fireworks", fireworkTag);
+		NBTTagList explosions = new NBTTagList();
+		explosions.appendTag(expl);
 
-	    EntityFireworkRocket e = new EntityFireworkRocket(world, x, y, z, firework);
-	    return e;
-	  }
+		NBTTagCompound fireworkTag = new NBTTagCompound();
+		fireworkTag.setTag("Explosions", explosions);
+		fireworkTag.setByte("Flight", (byte) power);
+		firework.stackTagCompound.setTag("Fireworks", fireworkTag);
+
+		return new EntityFireworkRocket(world, x, y, z, firework);
+	}
+
+	
+
+
 
 }

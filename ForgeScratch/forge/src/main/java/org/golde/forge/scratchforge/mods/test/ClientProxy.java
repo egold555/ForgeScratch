@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.omi;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 

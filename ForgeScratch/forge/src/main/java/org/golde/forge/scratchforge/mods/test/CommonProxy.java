@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.omi;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -96,14 +96,14 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	static Mcblock_omi mcblock_block_omi;
+	static Mcblock_change_me mcblock_block_change_me;
 
 
 	/* Item Variables */
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_block_omi = new Mcblock_omi();
+		mcblock_block_change_me = new Mcblock_change_me();
 
 
 		/* Item Constructor Calls */
@@ -121,9 +121,9 @@ public class CommonProxy {
 
 
 
-	public class Mcblock_omi extends BlockBase {
-		public Mcblock_omi() {
-			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "omi", Material.ground);
+	public class Mcblock_change_me extends BlockBase {
+		public Mcblock_change_me() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
 			if(false){
 				setHardness(-1.0F);
@@ -135,15 +135,14 @@ public class CommonProxy {
 
 		@Override
 		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-			Entity entity = null;
-			if(!world.isRemote){
-				world.newExplosion((Entity)null, x, y, z, 20, true, true);
-				//world.createExplosion(player, x, y, z, 3, true);
+
+			if(!world.isRemote) {
+				world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new int[] {JavaHelpers.hexToMinecraftColor("ff0000")}, 6, 1));
 			}
 
 			return true;
 		}
+
+
 	}
-
-
 }

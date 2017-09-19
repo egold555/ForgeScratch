@@ -62,4 +62,9 @@ public class JavaHelpers {
 		return false;
 	}
 	
+	public static int hexToMinecraftColor(String hex) {
+		hex = hex.replace("#", "");
+		return (int) Long.parseLong(hex, 16);
+	}
+	
 }
