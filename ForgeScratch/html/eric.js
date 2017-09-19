@@ -2817,8 +2817,8 @@ Blockly.Java['mcaction_firework'] = function(block) {
 Blockly.Blocks['mcvariable_color_chat'] = {
   init: function() {
 
-    var colour = new Blockly.FieldColour('#ff0000');
-    colour.setColours(['#f00','#0f0','#00f','#000','#888','#fff']).setColumns(3);
+    var colour = new Blockly.FieldColour('#AA0000');
+    colour.setColours(['#000', '#0000AA', '#00AA00', '#00AAAA', '#AA0000', '#AA00AA', '#FFAA00', '#AAAAAA', '#555555', '#5555FF', '#55FF55', '#55FFFF', '#FF5555', '#FF55FF', '#FFFF55', '#FFFFFF']).setColumns(4);
 
    this.setOutput(true, 'String');
    this.setColour(290);
