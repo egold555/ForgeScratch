@@ -94,56 +94,54 @@ import io.netty.buffer.*;
 import io.netty.channel.*;
 
 public class CommonProxy {
-
-	/* Block Variables */
+    
+    /* Block Variables */
 	static Mcblock_change_me mcblock_block_change_me;
 
-
+	
 	/* Item Variables */
-
-	public void preInit(FMLPreInitializationEvent event){
-		/* Block Constructor Calls */
+	
+    public void preInit(FMLPreInitializationEvent event){
+        /* Block Constructor Calls */
 		mcblock_block_change_me = new Mcblock_change_me();
 
-
+		
 		/* Item Constructor Calls */
-
-	}
-
-	public void init(FMLInitializationEvent event){
-		MinecraftForge.EVENT_BUS.register(this);
+		
+    }
+    
+    public void init(FMLInitializationEvent event){
+        MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-	}
+    }
+    
+    
 
 
 
 
 
 
+    public class Mcblock_change_me extends BlockBase {
+        public Mcblock_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
-	public class Mcblock_change_me extends BlockBase {
-		public Mcblock_change_me() {
-			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
 
-			if(false){
-				setHardness(-1.0F);
-			}
-			if(false){
-				setResistance(6000000.0F);
-			}
-		}
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             Entity entity = null;
+                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, new LinkedList<Object>(Arrays.asList("#ff0000", "#33ff33")), 0, 1));}
 
-		@Override
-		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+            return true;
+        }
+    }
 
-			if(!world.isRemote) {
-				world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new LinkedList<Object>(Arrays.asList("", "")), 1, 1));
-				//world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new int[] {JavaHelpers.hexToMinecraftColor("ff0000")}, 6, 1));
-			}
-
-			return true;
-		}
-
-
-	}
+    
 }

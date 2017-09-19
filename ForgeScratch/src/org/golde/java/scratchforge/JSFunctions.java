@@ -162,6 +162,29 @@ public class JSFunctions {
 		code = code.replace("package delete_me;", "");
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
+
+	    /*Pattern p = Pattern.compile("(import).*?(;)",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Matcher m = p.matcher(code);
+	    if (m.find())
+	    {
+	        PLog.info("Replacing");
+	    }*/
+		
+		//TODO: Make this regex. (Or edit java_compressed)
+		//Replace import java.* ;(newLine) with ""
+		//This is a horible fix
+		String[] importsToRemove = {
+				"util.Arrays",
+				"util.LinkedList"/*,
+				"text.DecimalFormat"
+				*/
+				};
+		
+		for(String theImport:importsToRemove) {
+			code = code.replace("import java." + theImport + ";", "");
+		}
+		
+		
 		
 		/*
 		 * LinkedList<> is not supported in Java 8 We must use LinkedList<Object>
