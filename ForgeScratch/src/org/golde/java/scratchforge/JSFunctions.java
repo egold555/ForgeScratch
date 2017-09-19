@@ -163,7 +163,17 @@ public class JSFunctions {
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
 		
-		//shit fix
+		/*
+		 * LinkedList<> is not supported in Java 8 We must use LinkedList<Object>
+		 * This should still work on java 7 but its untested
+		 * TODO: Test on Java 7
+		 */
+		code = code.replace("LinkedList<>", "LinkedList<Object>");
+		
+		/*
+		 * Temp fix cause I do not want to replace everything in JS as of now
+		 * TODO: Fix everything is JS and not rely on this patch
+		 */
 		code = code.replace("BLOCK_ID", "ForgeMod.BLOCK_ID");
 		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;

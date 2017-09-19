@@ -122,7 +122,7 @@ public class ModHelpers {
 	
 	
 	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, String color, int type, int power) {
-		return getFirework(world, x, y, z, flicker, trail, new int[] {JavaHelpers.hexToMinecraftColor(color)}, type, power);
+		return getFirework(world, x, y, z, flicker, trail, JavaHelpers.hexToMinecraftColor(color), type, power);
 	}
 	
 

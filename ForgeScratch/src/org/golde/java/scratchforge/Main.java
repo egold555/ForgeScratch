@@ -34,8 +34,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.PromptData;
 import javafx.scene.web.WebEngine;

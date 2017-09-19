@@ -2806,7 +2806,7 @@ Blockly.Java['mcaction_firework'] = function(block) {
   var dropdown_type = block.getFieldValue('TYPE');
   var value_color = Blockly.Java.valueToCode(block, 'COLOR', Blockly.Java.ORDER_ATOMIC);
   
-  var code = '/*Firework*/\n';
+  var code = 'if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', ' + checkbox_flicker + ', ' + checkbox_trail + ', ' + value_color + ', ' + dropdown_type + ', ' + value_power + ');}\n';
   return code;
 };
 

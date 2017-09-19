@@ -137,7 +137,8 @@ public class CommonProxy {
 		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
 
 			if(!world.isRemote) {
-				world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new int[] {JavaHelpers.hexToMinecraftColor("ff0000")}, 6, 1));
+				world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new LinkedList<Object>(Arrays.asList("", "")), 1, 1));
+				//world.spawnEntityInWorld(ModHelpers.getFirework(world, x, y, z, true, true, new int[] {JavaHelpers.hexToMinecraftColor("ff0000")}, 6, 1));
 			}
 
 			return true;

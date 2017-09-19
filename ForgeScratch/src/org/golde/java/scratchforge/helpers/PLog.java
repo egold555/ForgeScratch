@@ -1,14 +1,5 @@
 package org.golde.java.scratchforge.helpers;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
 /**
  * A simple logging class that tells the class and line number things were logged at!
  * @author Eric
