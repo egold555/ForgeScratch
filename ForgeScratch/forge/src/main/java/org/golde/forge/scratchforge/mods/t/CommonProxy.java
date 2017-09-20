@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.t;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -94,52 +94,78 @@ import io.netty.buffer.*;
 import io.netty.channel.*;
 
 public class CommonProxy {
-    
-    /* Block Variables */
-	static Mcblock_change_me mcblock_block_change_me;
 
+	/* Block Variables */
 	
+
+	/* BlockFlower Variables */
+	
+
+	/* BlockPlant Variables */
+	static McblockPlant_change_me mcblock_blockPlant_change_me;
+
+
 	/* Item Variables */
 	
-    public void preInit(FMLPreInitializationEvent event){
-        /* Block Constructor Calls */
-		mcblock_block_change_me = new Mcblock_change_me();
 
+	public void preInit(FMLPreInitializationEvent event){
+		/* Block Constructor Calls */
 		
+
+		/* BlockFlower Constructor Calls */
+		
+
+		/* BlockPlant Constructor Calls */
+		mcblock_blockPlant_change_me = new McblockPlant_change_me();
+
+
 		/* Item Constructor Calls */
 		
-    }
-    
-    public void init(FMLInitializationEvent event){
-        MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	public void init(FMLInitializationEvent event){
+		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-    }
-    
-    public void generateSurface(World world, Random randomGenerator, int chunkX, int chunkZ) {
-    	/*WorldGen - Overworld*/
-    	for (int i = 0; i < 20; i++) {
-			int x = chunkX + randomGenerator.nextInt(16) + 8;
-			int y = randomGenerator.nextInt(128);
-			int z = chunkZ + randomGenerator.nextInt(16) + 8;
+	}
+
+	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
 			
 			/*WorldGen - Overworld - Flowers*/
-			//(new WorldGenFlowers(block)).generate(world, randomGenerator, x, y, z);
+			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
+			
+			/*WorldGen - Overworld - Plant*/
+			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
 		}
-    }
-    
-    public void generateNether(World world, Random random, int chunkX, int chunkZ) {
-    	/*WorldGen - Nether*/
 	}
-    
-    
+
+	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
+			/*WorldGen - Nether - Flowers*/
+			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
+			
+			/*WorldGen - Overworld - Plant*/
+			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+		}
+	}
+
+	
 
 
 
 
 
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
+    public class McblockPlant_change_me extends BlockBasePlant {
+        public McblockPlant_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", EnumPlantType.Plains, true, false, 3);
 
 if(false){
     setHardness(-1.0F);
@@ -151,5 +177,5 @@ if(false){
 
     }
 
-    
+
 }

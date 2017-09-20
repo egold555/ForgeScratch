@@ -21,12 +21,15 @@ public class BlockBasePlant extends BlockReed {
 	private IIcon la;
 	private String texture;
 	private EnumPlantType plantType;
+	private int growHeight = 3;
+	private boolean requiresWater = true;
+	private boolean doesGenerateInWorld = true;
 	
-	public BlockBasePlant(String blockId, CreativeTabs creativeTab, String name, EnumPlantType plantType) {
-		this(blockId, creativeTab, name, plantType, Block.soundTypeStone);
+	public BlockBasePlant(String blockId, CreativeTabs creativeTab, String name, EnumPlantType plantType, boolean doesGenInWorld, boolean needsWaterToGen, int maxGrowHeight) {
+		this(blockId, creativeTab, name, plantType, doesGenInWorld, needsWaterToGen, maxGrowHeight, Block.soundTypeStone);
 	}
 	
-	public BlockBasePlant(String blockId, CreativeTabs creatibeTab, String rawName,EnumPlantType plantType, SoundType sound) {
+	public BlockBasePlant(String blockId, CreativeTabs creatibeTab, String rawName,EnumPlantType plantType, boolean doesGenInWorld, boolean needsWaterToGen, int maxGrowHeight, SoundType sound) {
 		super();
 		this.plantType = plantType;
 		String name = JavaHelpers.makeJavaId(rawName);
@@ -36,6 +39,10 @@ public class BlockBasePlant extends BlockReed {
 		this.setHardness(0.01F);
         this.setResistance(2.0F);
         setCreativeTab(creatibeTab);
+        
+        this.requiresWater = needsWaterToGen;
+        this.doesGenerateInWorld = doesGenInWorld;
+        this.growHeight = maxGrowHeight;
         
         GameRegistry.registerBlock(this, this.getUnlocalizedName().substring(5));
         ModHelpers.addTranslation(this, rawName);
@@ -101,6 +108,18 @@ public class BlockBasePlant extends BlockReed {
 
 	public Item getItemDropped(int par1, Random par2Random, int par3) {
 		return Item.getItemFromBlock(this);
+	}
+	
+	public int getGrowHeight() {
+		return growHeight;
+	}
+	
+	public boolean doesRequireWater() {
+		return requiresWater;
+	}
+	
+	public boolean doesGenerateInWorld() {
+		return doesGenerateInWorld;
 	}
 	
 }

@@ -70,7 +70,15 @@ public class JSFunctions {
 
 			//================== [ Forge Mod.java Replacement] ==================
 			List<String> blockNames = findNames(code, EnumObjectType.Block);
+			List<String> blockFlowerNames = findNames(code, EnumObjectType.BlockFlower);
+			List<String> blockPlantNames = findNames(code, EnumObjectType.BlockPlant);
+
 			List<String> itemNames = findNames(code, EnumObjectType.Item);
+
+			PLog.info("blockNames:" + blockNames.size());
+			PLog.info("blockFlowerNames:" + blockFlowerNames.size());
+			PLog.info("blockPlantNames:" + blockPlantNames.size());
+			PLog.info("itemNames:" + itemNames.size());
 
 
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
@@ -93,8 +101,18 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockNames, EnumObjectType.Block));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, EnumObjectType.Block));
+
+			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerNames, EnumObjectType.BlockFlower));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerNames, EnumObjectType.BlockFlower));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flower*/", worldGenCalls(blockFlowerNames, EnumObjectType.BlockFlower));
+			
+			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantNames, EnumObjectType.BlockPlant));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantNames, EnumObjectType.BlockPlant));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantNames, EnumObjectType.BlockPlant));
+
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, EnumObjectType.Item));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
+
 			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
@@ -130,16 +148,16 @@ public class JSFunctions {
 		BlockPlant("blockPlant", "BlockBasePlant"),
 		Item("item", "ItemBase"),
 		;
-		
+
 		public final String clazz;
 		public final String extendz;
 		EnumObjectType(String clazz, String extendz){
 			this.clazz = clazz;
 			this.extendz = extendz;
 		}
-		
+
 	}
-	
+
 	private List<String> findNames(String code, EnumObjectType type) {
 		List<String> result = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("public class Mc" + type.clazz + "_(.*?) extends " + type.extendz);
@@ -173,6 +191,23 @@ public class JSFunctions {
 		return result;
 	}
 
+	private String worldGenCalls(List<String> names, EnumObjectType type) {
+		String result = "";
+
+		if(type == EnumObjectType.BlockPlant) {
+			for (String name: names) {
+				result += "(new WorldGenFlowers(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
+			}
+		}
+		else if(type == EnumObjectType.BlockFlower) {
+			for (String name: names) {
+				result += "(new WorldGenCustomPlant(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
+			}
+		}
+
+		return result;
+	}
+
 
 	private String fixCode(String code) {
 		code = code.replace("package delete_me;", "");
@@ -181,14 +216,14 @@ public class JSFunctions {
 
 		//Replace glitched imports
 		code = code.replaceAll("import +java\\..*?;", "");
-		
+
 		/*
 		 * LinkedList<> is not supported in Java 8 We must use LinkedList<Object>
 		 * This should still work on java 7 but its untested
 		 * TODO: Test on Java 7
 		 */
 		code = code.replace("LinkedList<>", "LinkedList<Object>");
-		
+
 		/*
 		 * Temp fix cause I do not want to replace everything in JS as of now
 		 * TODO: Fix everything is JS and not rely on this patch
@@ -207,7 +242,6 @@ public class JSFunctions {
 	{
 		return "Mc" + type.clazz + "_" + name;
 	}
-
 
 	public void showEnabledMods(JFrame frame) {
 		//Makes checkbox list

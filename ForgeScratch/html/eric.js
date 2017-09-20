@@ -18,6 +18,12 @@ Blockly.Blocks['name'] = {
 
 */
 
+/*
+  NI: Not implemented
+  NFI: Not fully implemented
+  NT: Not tested
+*/
+
 function showError(block, msg){
   var nice = msg.replace("FS ", "");
   block.setWarningText(nice);
@@ -159,7 +165,7 @@ Blockly.Blocks['mcblockflower'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblockflower",
-  "message0": "(NI) Minecraft Flower %1 Name: %2 %3 Unbreakable %4 %5 Explosion Resistant %6 %7 Options %8 %9",
+  "message0": "(NFI) Minecraft Flower %1 Name: %2 %3 Unbreakable %4 %5 Explosion Resistant %6 %7 Options %8 %9",
   "args0": [
     {
       "type": "input_dummy"
@@ -208,12 +214,28 @@ Blockly.Blocks['mcblockflower'] = {
 
 
 Blockly.Java['mcblockflower'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
+  var value_name = make_java_id(block.getFieldValue('NAME'));
+  var raw_value_name = block.getFieldValue('NAME');
   var checkbox_unbreakable = block.getFieldValue('UNBREAKABLE') == 'TRUE';
   var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
 
-  var code = '/*Flower Code Here*/\n';
+  var code = 
+    '    public class McblockFlower_' + value_name + ' extends BlockBaseFlower {\n' +
+    '        public McblockFlower_' + value_name + '() {\n' +
+    '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '"); \n' +
+    '\n'+
+    'if(' + checkbox_unbreakable + '){\n' +
+    '    setHardness(-1.0F);\n' +
+    '}\n' +
+    
+    'if(' + checkbox_explosion + '){\n' +
+    '    setResistance(6000000.0F);\n' +
+    '}\n' +
+
+    '        }\n\n' +
+          statements_options +
+    '    }\n';
   return code;
 };
 
@@ -225,7 +247,7 @@ Blockly.Blocks['mcblockplant'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblockplant",
-  "message0": "(NI) Minecraft Plant %1 Name: %2 %3 Plant Type %4 %5 Unbreakable %6 %7 Explosion Resistant %8 %9 Options %10 %11",
+  "message0": "Minecraft Plant %1 Name: %2 %3 Plant Type %4 %5 Unbreakable %6 %7 Explosion Resistant %8 %9 World Generation %10 %11 Needs water to generate %12 %13 Plant Max Grow Height: %14 %15 Options %16 %17",
   "args0": [
     {
       "type": "input_dummy"
@@ -288,6 +310,30 @@ Blockly.Blocks['mcblockplant'] = {
       "type": "input_dummy"
     },
     {
+      "type": "field_checkbox",
+      "name": "GEN",
+      "checked": true
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "WATERGEN",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "HEIGHT",
+      "text": "3"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
       "type": "input_dummy"
     },
     {
@@ -305,13 +351,36 @@ Blockly.Blocks['mcblockplant'] = {
 };
 
 Blockly.Java['mcblockplant'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
+  var value_name = make_java_id(block.getFieldValue('NAME'));
+  var raw_value_name = block.getFieldValue('NAME');
   var dropdown_type = block.getFieldValue('TYPE');
   var checkbox_unbreakable = block.getFieldValue('UNBREAKABLE') == 'TRUE';
   var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
+  var checkbox_gen = block.getFieldValue('GEN') == 'TRUE';
+  var checkbox_watergen = block.getFieldValue('WATERGEN') == 'TRUE';
+  var value_height = block.getFieldValue('HEIGHT');
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
 
-  var code = '/*Plant Code Here*/\n';
+  if(isNaN(parseInt(value_height))){
+    showError(block, "Max Plant Grow Height must be a number!");
+  }
+
+  var code = 
+    '    public class McblockPlant_' + value_name + ' extends BlockBasePlant {\n' +
+    '        public McblockPlant_' + value_name + '() {\n' +
+    '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_type + ', ' + checkbox_gen + ', ' + checkbox_watergen + ', ' + value_height + '); \n' +
+    '\n'+
+    'if(' + checkbox_unbreakable + '){\n' +
+    '    setHardness(-1.0F);\n' +
+    '}\n' +
+    
+    'if(' + checkbox_explosion + '){\n' +
+    '    setResistance(6000000.0F);\n' +
+    '}\n' +
+
+    '        }\n\n' +
+          statements_options +
+    '    }\n';
   return code;
 };
 

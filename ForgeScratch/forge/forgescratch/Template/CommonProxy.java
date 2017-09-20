@@ -94,33 +94,66 @@ import io.netty.buffer.*;
 import io.netty.channel.*;
 
 public class CommonProxy {
-    
-    /* Block Variables */
+
+	/* Block Variables */
 	/*Variables - Block*/
-	
+
+	/* BlockFlower Variables */
+	/*Variables - BlockFlower*/
+
+	/* BlockPlant Variables */
+	/*Variables - BlockPlant*/
+
 	/* Item Variables */
 	/*Variables - Item*/
-    public void preInit(FMLPreInitializationEvent event){
-        /* Block Constructor Calls */
+
+	public void preInit(FMLPreInitializationEvent event){
+		/* Block Constructor Calls */
 		/*Constructor calls - Block*/
-		
+
+		/* BlockFlower Constructor Calls */
+		/*Constructor calls - BlockFlower*/
+
+		/* BlockPlant Constructor Calls */
+		/*Constructor calls - BlockPlant*/
+
 		/* Item Constructor Calls */
 		/*Constructor calls - Item*/
-    }
-    
-    public void init(FMLInitializationEvent event){
-        MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
-    }
-    
-    public void generateSurface(World world, Random randomGenerator, int chunkX, int chunkZ) {
-    	/*WorldGen - Overworld*/
-    }
-    
-    public void generateNether(World world, Random random, int chunkX, int chunkZ) {
-    	/*WorldGen - Nether*/
 	}
-    
-    /*Classes*/
-    
+
+	public void init(FMLInitializationEvent event){
+		MinecraftForge.EVENT_BUS.register(this);
+		FMLCommonHandler.instance().bus().register(this);
+	}
+
+	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
+			/*WorldGen - Overworld - Flowers*/
+			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
+			
+			/*WorldGen - Overworld - Plant*/
+			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+		}
+	}
+
+	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
+			/*WorldGen - Nether - Flowers*/
+			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
+			
+			/*WorldGen - Overworld - Plant*/
+			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+		}
+	}
+
+	/*Classes*/
+
 }
