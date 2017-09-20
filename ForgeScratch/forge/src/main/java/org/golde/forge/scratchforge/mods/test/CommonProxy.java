@@ -96,18 +96,20 @@ import io.netty.channel.*;
 public class CommonProxy {
     
     /* Block Variables */
-	static Mcblock_change_me mcblock_block_change_me;
+	static Mcblock_firework2 mcblock_block_firework2;
 
 	
 	/* Item Variables */
-	
+	static Mcitem_firework mcblock_item_firework;
+
     public void preInit(FMLPreInitializationEvent event){
         /* Block Constructor Calls */
-		mcblock_block_change_me = new Mcblock_change_me();
+		mcblock_block_firework2 = new Mcblock_firework2();
 
 		
 		/* Item Constructor Calls */
-		
+		mcblock_item_firework = new Mcitem_firework();
+
     }
     
     public void init(FMLInitializationEvent event){
@@ -122,9 +124,9 @@ public class CommonProxy {
 
 
 
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
+    public class Mcblock_firework2 extends BlockBase {
+        public Mcblock_firework2() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "firework2", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -137,10 +139,17 @@ if(false){
         @Override
         public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
              Entity entity = null;
-                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, new LinkedList<Object>(Arrays.asList("#ff0000", "#33ff33")), 0, 1));}
+                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, new LinkedList<Object>(Arrays.asList("#ff0000", "#ffffff", "#3366ff")), 1, 1));}
 
             return true;
         }
+    }
+
+    public class Mcitem_firework extends ItemBase {
+        public Mcitem_firework() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "firework", 64);
+        }
+
     }
 
     
