@@ -89,6 +89,7 @@ public class WindowEditTexture extends JFrame {
 		for(Mod mod: main.modManager.allMods()) {
 			DefaultMutableTreeNode modNode = new DefaultMutableTreeNode(mod.getModName());
 			modNode.setUserObject(mod);
+			PLog.info("Textures: " + mod.getTextures().length);
 			for(Texture texture:mod.getTextures()) {
 				DefaultMutableTreeNode textureNode = new DefaultMutableTreeNode(texture.getDisplayName());
 				textureNode.setUserObject(texture);

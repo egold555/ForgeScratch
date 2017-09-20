@@ -169,3 +169,171 @@ public class Mod {
 	}
 	
 }
+
+/*
+ public class Mod {
+	private ModManager modManager;
+	private String modName;
+	private File modFile_ForgeMod;
+	private File modFile_CommonProxy;
+	private File modFolder;
+	private List<Texture> textures;
+	private boolean enabled;
+	
+	public Mod(ModManager modManager, File file, boolean enabled) {
+		this.modManager = modManager;
+		this.modFolder = file;
+		this.modFile_ForgeMod = new File(modFolder, "ForgeMod.java");
+		this.modFile_CommonProxy = new File(modFolder, "CommonProxy.java");
+		this.enabled = enabled;
+		
+		scanModFile();
+		
+	}
+
+	public String getModName() {
+		return modName;
+	}
+	
+	public String getPrefix()
+	{
+		return "sf_" + JavaHelper.makeJavaId(modName);
+	}
+	
+	public File getModFolder() {
+		return modFolder;
+	}
+	
+	public File getModFile_CommonProxy() {
+		return modFile_CommonProxy;
+	}
+	
+	public File getModFile_ForgeMod() {
+		return modFile_ForgeMod;
+	}
+
+	public Texture[] getTextures() {
+		return textures.toArray(new Texture[0]);
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	public void delete() {
+		modFile_ForgeMod.delete();
+		modManager.removeMod(this);
+	}
+	
+	@Override
+	public String toString() {
+		return modName;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		File newFile;
+		if (enabled == true && this.enabled == false) {
+			// Move mod to the enabled folder.
+			newFile = new File(modManager.forgeModsIn, modFolder.getName());
+		}
+		else if (enabled == false && this.enabled == true) {
+			// Move mod to the disabled folder.
+			newFile = new File(modManager.forgeModsOut, modFolder.getName());
+		}
+		else {
+			return;
+		}
+		
+		// Move the file.
+		try {
+			Files.move(modFolder.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			PLog.error(e, "Failed to move mod!");
+		}
+		modFolder = newFile;
+		this.enabled = enabled;
+	}
+	
+	private void scanModFile()
+	{
+		List<String> lines;
+		
+		
+		try {
+			lines = Files.readAllLines(modFile_CommonProxy.toPath(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			PLog.error(e, "Failed to read mod!");
+			return;
+		}
+		
+		textures = new ArrayList<Texture>();
+		
+		for(String line: lines) {
+			if (line.contains("public static final String MOD_NAME")) {
+				int startIndex = line.indexOf("\"") + 1;
+				int endIndex = line.indexOf("\"", startIndex);
+				this.modName = line.substring(startIndex, endIndex);
+			}
+			
+			if (line.contains("super(BLOCK_ID, CREATIVE_TAB,")) {
+				int startIndex = line.indexOf("\"") + 1;
+				int endIndex = line.indexOf("\"", startIndex);
+				String blockName = line.substring(startIndex, endIndex);
+				textures.add(new Texture(blockName, true));
+				
+			}
+		}
+	}
+
+	
+	public class Texture {
+		private String textureName;
+		private boolean isBlock;
+		private File file;
+		
+		public Texture(String textureName, boolean isBlock) {
+			this.textureName = textureName;
+			this.isBlock = isBlock;
+		
+			file = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix() + "\\textures\\" + (isBlock ? "blocks" : "items") + "\\" + getTextureName() + ".png");
+		}
+
+		public boolean hasBeenCreated() {
+			return file.exists();
+		}
+		
+		public File getFile() {
+			return file;
+		}
+		
+		public String getTextureName() {
+			return JavaHelper.makeJavaId(textureName);
+		}
+		
+		public String getDisplayName() {
+			return textureName;
+		}
+		
+		public boolean isBlock() {
+			return isBlock;
+		}
+		
+		public void createTexture() throws IOException {
+			createTexture(16);
+		}
+		
+		public void createTexture(int size) throws IOException {
+			BufferedImage image = ImageTool.toBufferedImage(ImageTool.getEmptyImage(size, size));
+			file.getParentFile().mkdirs();
+			ImageIO.write(image, "png", file);
+		}
+		
+		@Override
+		public String toString() {
+			return textureName + " (" + (hasBeenCreated() ? "Edit existing Image" : "Create New Image") + ")";
+		}
+		
+	}
+	
+}
+  */
