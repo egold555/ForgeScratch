@@ -152,6 +152,171 @@ Blockly.Java['mcblock'] = function(block) {
   return code;
 };
 
+
+
+Blockly.Blocks['mcblockflower'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcblockflower",
+  "message0": "(NI) Minecraft Flower %1 Name: %2 %3 Unbreakable %4 %5 Explosion Resistant %6 %7 Options %8 %9",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "change_me"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "UNBREAKABLE",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "EXPLOSION",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "Options",
+      "check": "mcblockoptions"
+    }
+  ],
+  "inputsInline": false,
+  "colour": 315,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+
+Blockly.Java['mcblockflower'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var checkbox_unbreakable = block.getFieldValue('UNBREAKABLE') == 'TRUE';
+  var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
+  var statements_options = Blockly.Java.statementToCode(block, 'Options');
+
+  var code = '/*Flower Code Here*/\n';
+  return code;
+};
+
+
+
+
+Blockly.Blocks['mcblockplant'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcblockplant",
+  "message0": "(NI) Minecraft Plant %1 Name: %2 %3 Plant Type %4 %5 Unbreakable %6 %7 Explosion Resistant %8 %9 Options %10 %11",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "change_me"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "TYPE",
+      "options": [
+        [
+          "Plains",
+          "EnumPlantType.Plains"
+        ],
+        [
+          "Desert",
+          "EnumPlantType.Desert"
+        ],
+        [
+          "Beach",
+          "EnumPlantType.Beach"
+        ],
+        [
+          "Cave",
+          "EnumPlantType.Cave"
+        ],
+        [
+          "Water",
+          "EnumPlantType.Water"
+        ],
+        [
+          "Crop",
+          "EnumPlantType.Crop"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "UNBREAKABLE",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "EXPLOSION",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "Options",
+      "check": "mcblockoptions"
+    }
+  ],
+  "inputsInline": false,
+  "colour": 315,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcblockplant'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var dropdown_type = block.getFieldValue('TYPE');
+  var checkbox_unbreakable = block.getFieldValue('UNBREAKABLE') == 'TRUE';
+  var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
+  var statements_options = Blockly.Java.statementToCode(block, 'Options');
+
+  var code = '/*Plant Code Here*/\n';
+  return code;
+};
+
+
+
 Blockly.Blocks['mcblockoptions_quantity'] = {
   
   init: function() {
@@ -1882,7 +2047,7 @@ Blockly.Blocks['mcitem'] = {
     }
   ],
   "inputsInline": false,
-  "colour": 20,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -2001,7 +2166,36 @@ Blockly.Java['mcitemoptions_leftclick'] = function(block) {
 };
 
 
+Blockly.Blocks['mcitemoptions_lore'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemoptions_lore",
+  "message0": "(NI) Lore %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "LORE",
+      "check": [
+        "Array",
+        "String"
+      ]
+    }
+  ],
+  "previousStatement": "optionitem",
+  "nextStatement": "optionitem",
+  "colour": 20,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
 
+Blockly.Java['mcitemoptions_lore'] = function(block) {
+    var value_name = Blockly.Java.valueToCode(block, 'LORE', Blockly.Java.ORDER_ATOMIC);
+    var code = '/*Lore Code*/\n';
+    return code;
+}
 
 
 Blockly.Blocks['location_player_x'] = {

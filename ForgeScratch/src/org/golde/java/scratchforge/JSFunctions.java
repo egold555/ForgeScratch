@@ -163,6 +163,7 @@ public class JSFunctions {
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
 
+		//Replace glitched imports
 		code = code.replaceAll("import +java\\..*?;", "");
 		
 		/*

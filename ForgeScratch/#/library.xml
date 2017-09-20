@@ -2590,4 +2590,290 @@
         <field name="HUE">230</field>
       </block>
     </value>
+  </block><block type="factory_base" id="9*pa0c7Ku:_FIQ04h|M?" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcitemoptions_lore</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_value" id="d`JCkae3k5-#hx:Gt9]*">
+        <field name="INPUTNAME">NAME</field>
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="Uy?Psfoq%GSmmrnRF^zP">
+            <field name="TEXT">Lore</field>
+          </block>
+        </statement>
+        <value name="TYPE">
+          <shadow type="type_null" id=",lMzW^V;]BMkIV@i.C(?"></shadow>
+          <block type="type_group" id="L/]NQEMpFq(-Pufwc4sC">
+            <mutation types="2"></mutation>
+            <value name="TYPE0">
+              <block type="type_list" id="V}6j[S$u%nd^}uxg8a_V"></block>
+            </value>
+            <value name="TYPE1">
+              <block type="type_string" id="CkW:Y;au@[a*bYfl}sW1"></block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="?)=A-,fmX|!U+KAMlu,u" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="ZoYds}6rkf|T:_.Q.Hh#" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="uPng.G{N3Bue.C`hW.:4"></shadow>
+      <block type="type_other" id="I${BT3eL=(HcT~djAu3T">
+        <field name="TYPE">optionitem</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="mF4wuzHeaO3Dz!eFFD8E"></shadow>
+      <block type="type_other" id="ICIcGqAVst7op!wzcahz">
+        <field name="TYPE">optionitem</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id=")%:|iU?Sn3;y@-Pz(nlh">
+        <mutation colour="#a5745b"></mutation>
+        <field name="HUE">20</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="M$7C0u}/Cpi4U%WU?z%w" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="NONE"></mutation>
+    <field name="NAME">MCBlockflower</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">NONE</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="0(WPV_:zJ4Yj;PH+e1!I">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="!5)(EK}J*6k;z_Nmbp7.">
+            <field name="TEXT">Minecraft Flower</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_dummy" id="qT9S4]kA~*X5o-r{VTw3">
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="Jw0@g}?5VQc69MIu2f!O">
+                <field name="TEXT">Name:</field>
+                <next>
+                  <block type="field_input" id="~n/4o?;`.KO0!u0Yb%9m">
+                    <field name="TEXT">change_me</field>
+                    <field name="FIELDNAME">NAME</field>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="input_dummy" id="4d1fhbhHjSe.5:V}J6|;">
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="fsEo8@5;IPMqdpw45{gn">
+                    <field name="TEXT">Unbreakable</field>
+                    <next>
+                      <block type="field_checkbox" id="OtvNBzK6X!mZOMkq_-4h">
+                        <field name="CHECKED">FALSE</field>
+                        <field name="FIELDNAME">UNBREAKABLE</field>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <next>
+                  <block type="input_dummy" id="mK?4q]gHut#Gr*)-H.Il">
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id="-6o8+bac=:6PSAhB8;79">
+                        <field name="TEXT">Explosion Resistant</field>
+                        <next>
+                          <block type="field_checkbox" id="[sNvbZuxD^mo/o=$kzI=">
+                            <field name="CHECKED">FALSE</field>
+                            <field name="FIELDNAME">EXPLOSION</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="input_dummy" id="fPhl=g:1ZjKPaHB^`?.P">
+                        <field name="ALIGN">LEFT</field>
+                        <statement name="FIELDS">
+                          <block type="field_static" id="xNueO.4,YQTZR0HQRCtI">
+                            <field name="TEXT">Options</field>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="input_statement" id="?+;GhZi9@mk/-FHhLH6?">
+                            <field name="INPUTNAME">Options</field>
+                            <field name="ALIGN">LEFT</field>
+                            <value name="TYPE">
+                              <shadow type="type_null" id="5]?}^u%%4_KKt9t`=3Sp"></shadow>
+                              <block type="type_other" id="o0}9A$gAnP]5{E5KRUWr">
+                                <field name="TYPE">mcblockoptions</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="z}9_-R|lY`+Zm8V}nKi-" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="iAK7iTB3;ty{yI`DE{(7" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="8[i3;jt:B+eOmW}nvc;E">
+        <mutation colour="#a55b93"></mutation>
+        <field name="HUE">315</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="M$7C0u}/Cpi4U%WU?z%w" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="NONE"></mutation>
+    <field name="NAME">MCBlockplant</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">NONE</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="0(WPV_:zJ4Yj;PH+e1!I">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="!5)(EK}J*6k;z_Nmbp7.">
+            <field name="TEXT">Minecraft Plant</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_dummy" id="qT9S4]kA~*X5o-r{VTw3">
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="Jw0@g}?5VQc69MIu2f!O">
+                <field name="TEXT">Name:</field>
+                <next>
+                  <block type="field_input" id="~n/4o?;`.KO0!u0Yb%9m">
+                    <field name="TEXT">change_me</field>
+                    <field name="FIELDNAME">NAME</field>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="input_dummy" id="=id2],T=},i@Ao_^NO?W">
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="Z^x_VPKiE(ecx!N6p3Y9">
+                    <field name="TEXT">Plant Type</field>
+                    <next>
+                      <block type="field_dropdown" id="7`fB*@X87]`P/OLBg?Ac">
+                        <mutation options="[&quot;text&quot;,&quot;text&quot;,&quot;text&quot;,&quot;text&quot;,&quot;text&quot;,&quot;text&quot;]"></mutation>
+                        <field name="FIELDNAME">TYPE</field>
+                        <field name="USER0">Plains</field>
+                        <field name="CPU0">EnumPlantType.Plains</field>
+                        <field name="USER1">Desert</field>
+                        <field name="CPU1">EnumPlantType.Desert</field>
+                        <field name="USER2">Beach</field>
+                        <field name="CPU2">EnumPlantType.Beach</field>
+                        <field name="USER3">Cave</field>
+                        <field name="CPU3">EnumPlantType.Cave</field>
+                        <field name="USER4">Water</field>
+                        <field name="CPU4">EnumPlantType.Water</field>
+                        <field name="USER5">Crop</field>
+                        <field name="CPU5">EnumPlantType.Crop</field>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <next>
+                  <block type="input_dummy" id="4d1fhbhHjSe.5:V}J6|;">
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id="fsEo8@5;IPMqdpw45{gn">
+                        <field name="TEXT">Unbreakable</field>
+                        <next>
+                          <block type="field_checkbox" id="OtvNBzK6X!mZOMkq_-4h">
+                            <field name="CHECKED">FALSE</field>
+                            <field name="FIELDNAME">UNBREAKABLE</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="input_dummy" id="mK?4q]gHut#Gr*)-H.Il">
+                        <field name="ALIGN">LEFT</field>
+                        <statement name="FIELDS">
+                          <block type="field_static" id="-6o8+bac=:6PSAhB8;79">
+                            <field name="TEXT">Explosion Resistant</field>
+                            <next>
+                              <block type="field_checkbox" id="[sNvbZuxD^mo/o=$kzI=">
+                                <field name="CHECKED">FALSE</field>
+                                <field name="FIELDNAME">EXPLOSION</field>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="input_dummy" id="fPhl=g:1ZjKPaHB^`?.P">
+                            <field name="ALIGN">LEFT</field>
+                            <statement name="FIELDS">
+                              <block type="field_static" id="xNueO.4,YQTZR0HQRCtI">
+                                <field name="TEXT">Options</field>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="input_statement" id="?+;GhZi9@mk/-FHhLH6?">
+                                <field name="INPUTNAME">Options</field>
+                                <field name="ALIGN">LEFT</field>
+                                <value name="TYPE">
+                                  <shadow type="type_null" id="5]?}^u%%4_KKt9t`=3Sp"></shadow>
+                                  <block type="type_other" id="o0}9A$gAnP]5{E5KRUWr">
+                                    <field name="TYPE">mcblockoptions</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="z}9_-R|lY`+Zm8V}nKi-" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="iAK7iTB3;ty{yI`DE{(7" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="8[i3;jt:B+eOmW}nvc;E">
+        <mutation colour="#a55b93"></mutation>
+        <field name="HUE">315</field>
+      </block>
+    </value>
   </block></xml>

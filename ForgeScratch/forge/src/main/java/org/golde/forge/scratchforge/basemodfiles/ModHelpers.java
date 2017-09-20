@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -29,7 +30,7 @@ public class ModHelpers {
 	//                      old,    new
 	private static HashMap<String, String> translationList = new HashMap<String, String>();
 
-	public static void addTranslation(BlockBase block, String to) {
+	public static void addTranslation(Block block, String to) {
 		ItemStack item = new ItemStack(block, 1, 0);
 		String from = item.getItem().getUnlocalizedName(item);
 		from+=".name";

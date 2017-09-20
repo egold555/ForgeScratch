@@ -94,7 +94,7 @@ import io.netty.buffer.*;
 import io.netty.channel.*;
 
 @Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
-public class ForgeMod {
+public class ForgeMod implements IWorldGenerator{
     
 	public static final String MOD_NAME = "test";
 	public static final String MOD_ID = "sf_" + MOD_NAME;
@@ -113,8 +113,24 @@ public class ForgeMod {
 
 	};
 	
+	@Override
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+
+		chunkX = chunkX * 16;
+		chunkZ = chunkZ * 16;
+		if (world.provider.dimensionId == -1) {
+			PROXY.generateNether(world, random, chunkX, chunkZ);
+		}	
+		if (world.provider.dimensionId == 0) {
+			PROXY.generateSurface(world, random, chunkX, chunkZ);
+		}
+		
+
+	}
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		GameRegistry.registerWorldGenerator(this, 1);
         PROXY.init(event);
 	}
 

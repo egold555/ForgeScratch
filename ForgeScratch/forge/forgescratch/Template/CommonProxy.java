@@ -113,6 +113,14 @@ public class CommonProxy {
 		FMLCommonHandler.instance().bus().register(this);
     }
     
+    public void generateSurface(World world, Random randomGenerator, int chunkX, int chunkZ) {
+    	/*WorldGen - Overworld*/
+    }
+    
+    public void generateNether(World world, Random random, int chunkX, int chunkZ) {
+    	/*WorldGen - Nether*/
+	}
+    
     /*Classes*/
     
 }
