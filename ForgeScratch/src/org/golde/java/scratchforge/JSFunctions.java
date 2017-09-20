@@ -69,8 +69,8 @@ public class JSFunctions {
 
 
 			//================== [ Forge Mod.java Replacement] ==================
-			List<String> blockNames = findNames(code, false);
-			List<String> itemNames = findNames(code, true);
+			List<String> blockNames = findNames(code, EnumObjectType.Block);
+			List<String> itemNames = findNames(code, EnumObjectType.Item);
 
 
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
@@ -91,10 +91,10 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
 
-			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockNames, false));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, false));
-			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, true));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, true));
+			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockNames, EnumObjectType.Block));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, EnumObjectType.Block));
+			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, EnumObjectType.Item));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
 			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
@@ -124,9 +124,25 @@ public class JSFunctions {
 		}
 	}
 
-	private List<String> findNames(String code, boolean isItem) {
+	enum EnumObjectType{
+		Block("block", "BlockBase"),
+		BlockFlower("blockFlower", "BlockBaseFlower"),
+		BlockPlant("blockPlant", "BlockBasePlant"),
+		Item("item", "ItemBase"),
+		;
+		
+		public final String clazz;
+		public final String extendz;
+		EnumObjectType(String clazz, String extendz){
+			this.clazz = clazz;
+			this.extendz = extendz;
+		}
+		
+	}
+	
+	private List<String> findNames(String code, EnumObjectType type) {
 		List<String> result = new ArrayList<String>();
-		Pattern pattern = Pattern.compile("public class Mc" + (isItem ? "item" : "block") + "_(.*?) extends " + (isItem ? "Item" : "Block") + "Base");
+		Pattern pattern = Pattern.compile("public class Mc" + type.clazz + "_(.*?) extends " + type.extendz);
 
 		Matcher matcher = pattern.matcher(code);
 		while (matcher.find()) {
@@ -136,22 +152,22 @@ public class JSFunctions {
 		return result;
 	}
 
-	private String variables(List<String> blockNames, boolean isItem) {
+	private String variables(List<String> blockNames, EnumObjectType type) {
 		String result = "";
 
 		for (String blockName: blockNames) {
-			result += "static " + className(blockName, isItem) + " " + variableName(blockName, isItem) + ";" + "\n";
+			result += "static " + className(blockName, type) + " " + variableName(blockName, type) + ";" + "\n";
 		}
 
 		return result;
 	}
 
 
-	private String constructorCalls(List<String> names, boolean isItem) {
+	private String constructorCalls(List<String> names, EnumObjectType type) {
 		String result = "";
 
 		for (String name: names) {
-			result += variableName(name, isItem) + " = new " + className(name, isItem) + "();" + "\n";
+			result += variableName(name, type) + " = new " + className(name, type) + "();" + "\n";
 		}
 
 		return result;
@@ -182,14 +198,14 @@ public class JSFunctions {
 		return code;
 	}
 
-	private String variableName(String name, boolean isItem)
+	private String variableName(String name, EnumObjectType type)
 	{
-		return "mcblock_" + (isItem ? "item_" : "block_") + name;
+		return "mcblock_" + type.clazz + "_" + name;
 	}
 
-	private String className(String name, boolean isItem)
+	private String className(String name, EnumObjectType type)
 	{
-		return "Mc" + (isItem ? "item_" : "block_") + name;
+		return "Mc" + type.clazz + "_" + name;
 	}
 
 
