@@ -99,10 +99,11 @@ public class CommonProxy {
 	
 
 	/* BlockFlower Variables */
-	
+	static McblockFlower_flower mcblock_blockFlower_flower;
+
 
 	/* BlockPlant Variables */
-	static McblockPlant_change_me mcblock_blockPlant_change_me;
+	static McblockPlant_plant mcblock_blockPlant_plant;
 
 
 	/* Item Variables */
@@ -113,10 +114,11 @@ public class CommonProxy {
 		
 
 		/* BlockFlower Constructor Calls */
-		
+		mcblock_blockFlower_flower = new McblockFlower_flower();
+
 
 		/* BlockPlant Constructor Calls */
-		mcblock_blockPlant_change_me = new McblockPlant_change_me();
+		mcblock_blockPlant_plant = new McblockPlant_plant();
 
 
 		/* Item Constructor Calls */
@@ -134,26 +136,30 @@ public class CommonProxy {
 			int y = random.nextInt(128);
 			int z = chunkZ + random.nextInt(16) + 8;
 
+			/*Overworld world generation for flowers*/
+			(new WorldGenFlowers(mcblock_blockFlower_flower)).generate(world, random, x, y, z); 
+
 			
-			/*WorldGen - Overworld - Flowers*/
-			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
+			/*Overworld world generation for plants*/
+			(new WorldGenCustomPlant(mcblock_blockPlant_plant)).generate(world, random, x, y, z); 
+
 			
-			/*WorldGen - Overworld - Plant*/
-			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
 		}
 	}
 
+	//TODO: Implement nether plant generation?
 	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
 		for (int i = 0; i < 20; i++) {
 			int x = chunkX + random.nextInt(16) + 8;
 			int y = random.nextInt(128);
 			int z = chunkZ + random.nextInt(16) + 8;
 
+			/*Nether generation for flowers*/
 			/*WorldGen - Nether - Flowers*/
-			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
 			
-			/*WorldGen - Overworld - Plant*/
-			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+			/*Nether generation for plants*/
+			/*WorldGen - Nether - Plant*/
+			
 		}
 	}
 
@@ -163,9 +169,9 @@ public class CommonProxy {
 
 
 
-    public class McblockPlant_change_me extends BlockBasePlant {
-        public McblockPlant_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", EnumPlantType.Plains, true, false, 3);
+    public class McblockPlant_plant extends BlockBasePlant {
+        public McblockPlant_plant() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "plant", EnumPlantType.Plains, true, false, 3);
 
 if(false){
     setHardness(-1.0F);
@@ -175,6 +181,28 @@ if(false){
 }
         }
 
+        @Override
+        public int getLightValue() {
+            return Math.min(15, Math.max(0,(int)15));
+        }
+    }
+
+    public class McblockFlower_flower extends BlockBaseFlower {
+        public McblockFlower_flower() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "flower");
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public int getLightValue() {
+            return Math.min(15, Math.max(0,(int)15));
+        }
     }
 
 

@@ -165,7 +165,7 @@ Blockly.Blocks['mcblockflower'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblockflower",
-  "message0": "(NFI) Minecraft Flower %1 Name: %2 %3 Unbreakable %4 %5 Explosion Resistant %6 %7 Options %8 %9",
+  "message0": "Minecraft Flower %1 Name: %2 %3 Unbreakable %4 %5 Explosion Resistant %6 %7 Options %8 %9",
   "args0": [
     {
       "type": "input_dummy"

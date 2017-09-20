@@ -132,25 +132,28 @@ public class CommonProxy {
 			int y = random.nextInt(128);
 			int z = chunkZ + random.nextInt(16) + 8;
 
+			/*Overworld world generation for flowers*/
 			/*WorldGen - Overworld - Flowers*/
-			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
 			
+			/*Overworld world generation for plants*/
 			/*WorldGen - Overworld - Plant*/
-			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+			
 		}
 	}
 
+	//TODO: Implement nether plant generation?
 	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
 		for (int i = 0; i < 20; i++) {
 			int x = chunkX + random.nextInt(16) + 8;
 			int y = random.nextInt(128);
 			int z = chunkZ + random.nextInt(16) + 8;
 
+			/*Nether generation for flowers*/
 			/*WorldGen - Nether - Flowers*/
-			//(new WorldGenFlowers(block)).generate(world, random, x, y, z);
 			
-			/*WorldGen - Overworld - Plant*/
-			//(new WorldGenCustomPlant(block)).generate(world, random, x, y, z);
+			/*Nether generation for plants*/
+			/*WorldGen - Nether - Plant*/
+			
 		}
 	}
 

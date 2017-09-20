@@ -104,7 +104,7 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerNames, EnumObjectType.BlockFlower));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerNames, EnumObjectType.BlockFlower));
-			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flower*/", worldGenCalls(blockFlowerNames, EnumObjectType.BlockFlower));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerNames, EnumObjectType.BlockFlower));
 			
 			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantNames, EnumObjectType.BlockPlant));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantNames, EnumObjectType.BlockPlant));
@@ -193,17 +193,21 @@ public class JSFunctions {
 
 	private String worldGenCalls(List<String> names, EnumObjectType type) {
 		String result = "";
-
-		if(type == EnumObjectType.BlockPlant) {
+		//PLog.info("====WorldGen====");
+		//PLog.info("  Type: " + type.name());
+		//PLog.info("  Names: " + names.toString() );
+		if(type == EnumObjectType.BlockFlower) {
 			for (String name: names) {
 				result += "(new WorldGenFlowers(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
 			}
 		}
-		else if(type == EnumObjectType.BlockFlower) {
+		else if(type == EnumObjectType.BlockPlant) {
 			for (String name: names) {
 				result += "(new WorldGenCustomPlant(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
 			}
 		}
+		//PLog.info("Result: " + result);
+		//PLog.info(" ");
 
 		return result;
 	}
