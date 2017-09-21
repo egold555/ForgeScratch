@@ -21,7 +21,7 @@ import java.util.Scanner;
  *
  */
 public class JavaHelper {
-	
+
 	//Opens up a cmd prompt and executes commands. 
 	public static void runCMD(File dir, String cmd, boolean keepOpen) throws IOException {
 		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");
@@ -65,7 +65,7 @@ public class JavaHelper {
 		}
 		return files;
 	}
-	
+
 	public static List<File> listFoldersInFolder(final File folder){
 		files = new ArrayList<File>();
 		File[] listOfFiles = folder.listFiles();
@@ -90,7 +90,7 @@ public class JavaHelper {
 
 		return false;
 	}
-	
+
 	public static void openFileWithDefaultProgram(File file) {
 		try {
 			Desktop.getDesktop().open(file);
@@ -98,15 +98,15 @@ public class JavaHelper {
 			PLog.error(e, "Failed to open file!");
 		}
 	}
-	
+
 	public static String base64Encode(String toEncode) {
 		return Base64.getEncoder().encodeToString(toEncode.getBytes());
 	}
-	
+
 	public static String base64Decode(String toDecode) {
 		return new String(Base64.getDecoder().decode(toDecode));
 	}
-	
+
 	public static String makeJavaId(String name) {
 		String result = "";
 		for (int i = 0; i < name.length(); ++i) {
@@ -132,7 +132,7 @@ public class JavaHelper {
 
 		return false;
 	}
-	
+
 	public static String joinStrings(String[] aboutTextList, String conjunction, int iequals)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -149,53 +149,65 @@ public class JavaHelper {
 		}
 		return sb.toString();
 	}
-	
+
 	public static void copyFolder(File source, File destination)
 	{
-	    if (source.isDirectory())
-	    {
-	        if (!destination.exists())
-	        {
-	            destination.mkdirs();
-	        }
+		if (source.isDirectory())
+		{
+			if (!destination.exists())
+			{
+				destination.mkdirs();
+			}
 
-	        String files[] = source.list();
+			String files[] = source.list();
 
-	        for (String file : files)
-	        {
-	            File srcFile = new File(source, file);
-	            File destFile = new File(destination, file);
+			for (String file : files)
+			{
+				File srcFile = new File(source, file);
+				File destFile = new File(destination, file);
 
-	            copyFolder(srcFile, destFile);
-	        }
-	    }
-	    else
-	    {
-	        InputStream in = null;
-	        OutputStream out = null;
+				copyFolder(srcFile, destFile);
+			}
+		}
+		else
+		{
+			InputStream in = null;
+			OutputStream out = null;
 
-	        try
-	        {
-	            in = new FileInputStream(source);
-	            out = new FileOutputStream(destination);
+			try
+			{
+				in = new FileInputStream(source);
+				out = new FileOutputStream(destination);
 
-	            byte[] buffer = new byte[1024];
+				byte[] buffer = new byte[1024];
 
-	            int length;
-	            while ((length = in.read(buffer)) > 0)
-	            {
-	                out.write(buffer, 0, length);
-	            }
-	            
-	            in.close();
-	            out.close();
-	            
-	        }
-	        catch (Exception e)
-	        {
-	        	PLog.error(e, "Failed to copy folder!");
-	        }
-	    }
+				int length;
+				while ((length = in.read(buffer)) > 0)
+				{
+					out.write(buffer, 0, length);
+				}
+
+				in.close();
+				out.close();
+
+			}
+			catch (Exception e)
+			{
+				PLog.error(e, "Failed to copy folder!");
+			}
+		}
 	}
 
+	public static boolean deleteDirectory(File dir) { 
+		if (dir.isDirectory()) { 
+			File[] children = dir.listFiles(); 
+			for (int i = 0; i < children.length; i++) { 
+				boolean success = deleteDirectory(children[i]); 
+				if (!success) {
+					return false;
+				}
+			} 
+		} // either file or an empty directory 
+		return dir.delete(); 
+	}
 }

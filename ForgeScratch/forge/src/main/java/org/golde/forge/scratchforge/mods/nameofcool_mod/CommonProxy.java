@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.t;
+package org.golde.forge.scratchforge.mods.nameofcool_mod;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -96,30 +96,28 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	
+	static Mcblock_change_me mcblock_block_change_me;
+
 
 	/* BlockFlower Variables */
-	static McblockFlower_flower mcblock_blockFlower_flower;
-
+	
 
 	/* BlockPlant Variables */
-	static McblockPlant_plant mcblock_blockPlant_plant;
-
+	
 
 	/* Item Variables */
 	
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_block_change_me = new Mcblock_change_me();
+
 
 		/* BlockFlower Constructor Calls */
-		mcblock_blockFlower_flower = new McblockFlower_flower();
-
+		
 
 		/* BlockPlant Constructor Calls */
-		mcblock_blockPlant_plant = new McblockPlant_plant();
-
+		
 
 		/* Item Constructor Calls */
 		
@@ -137,12 +135,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			(new WorldGenFlowers(mcblock_blockFlower_flower)).generate(world, random, x, y, z); 
-
+			
 			
 			/*Overworld world generation for plants*/
-			(new WorldGenCustomPlant(mcblock_blockPlant_plant)).generate(world, random, x, y, z); 
-
+			
 			
 		}
 	}
@@ -169,9 +165,9 @@ public class CommonProxy {
 
 
 
-    public class McblockPlant_plant extends BlockBasePlant {
-        public McblockPlant_plant() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "plant", EnumPlantType.Plains, true, false, 3);
+    public class Mcblock_change_me extends BlockBase {
+        public Mcblock_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -181,28 +177,6 @@ if(false){
 }
         }
 
-        @Override
-        public int getLightValue() {
-            return Math.min(15, Math.max(0,(int)15));
-        }
-    }
-
-    public class McblockFlower_flower extends BlockBaseFlower {
-        public McblockFlower_flower() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "flower");
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public int getLightValue() {
-            return Math.min(15, Math.max(0,(int)15));
-        }
     }
 
 

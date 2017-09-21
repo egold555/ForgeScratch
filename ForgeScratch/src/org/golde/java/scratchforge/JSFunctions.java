@@ -2,6 +2,7 @@ package org.golde.java.scratchforge;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -270,7 +271,11 @@ public class JSFunctions {
 			for(JCheckBox checkbox: checkboxes) {
 				Mod mod = main.modManager.getMod(checkbox.getText());
 				if (mod != null) {
-					mod.setEnabled(checkbox.isSelected());
+					try {
+						mod.setEnabled(checkbox.isSelected());
+					} catch (IOException e) {
+						PLog.error(e, "Failed to move mod!");
+					}
 				}
 			}
 		}
