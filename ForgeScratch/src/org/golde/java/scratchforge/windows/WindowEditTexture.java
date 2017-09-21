@@ -1,5 +1,6 @@
 package org.golde.java.scratchforge.windows;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.golde.java.scratchforge.Main;
@@ -34,6 +36,7 @@ public class WindowEditTexture extends JFrame {
 		
 		JTree tree = new JTree(populateTreeView(forgeModsIn));
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.setCellRenderer(new MyTreeCellRenderer());
 		
 		tree.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
@@ -99,5 +102,19 @@ public class WindowEditTexture extends JFrame {
 		
 		return top;
 	}
+	
+	class MyTreeCellRenderer extends DefaultTreeCellRenderer {
 
+		private static final long serialVersionUID = -3533994315548188299L;
+
+		@Override
+		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean exp, boolean leaf, int row, boolean hasFocus) {
+			super.getTreeCellRendererComponent(tree, value, sel, exp, leaf, row, hasFocus);
+
+			Object obj = ((DefaultMutableTreeNode) value).getUserObject();
+			//TODO: change icons?
+
+			return this;
+		}
+	}
 }

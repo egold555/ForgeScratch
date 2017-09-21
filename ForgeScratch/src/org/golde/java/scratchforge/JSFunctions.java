@@ -1,23 +1,13 @@
 package org.golde.java.scratchforge;
 
-import java.awt.Dimension;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
-import org.golde.java.scratchforge.mod.Mod;
 
 import netscape.javascript.JSObject;
 
@@ -247,39 +237,6 @@ public class JSFunctions {
 	{
 		return "Mc" + type.clazz + "_" + name;
 	}
-
-	/*public void showEnabledMods(JFrame frame) {
-		//Makes checkbox list
-		List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
-		JPanel listOfFiles = new JPanel();
-		listOfFiles.setLayout(new BoxLayout(listOfFiles, BoxLayout.Y_AXIS));
-
-		for(Mod mod: main.modManager.allMods()) {
-			JCheckBox checkbox = new JCheckBox(mod.getModName());
-			checkbox.setSelected(mod.isEnabled());
-			checkboxes.add(checkbox);
-			listOfFiles.add(checkbox);
-		}
-
-		JScrollPane scrollPane = new JScrollPane(listOfFiles);		
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension(350, 150));
-
-		int result = JOptionPane.showConfirmDialog(frame, scrollPane, "Enabled Mods", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-		if (result == JOptionPane.OK_OPTION) {
-			for(JCheckBox checkbox: checkboxes) {
-				Mod mod = main.modManager.getMod(checkbox.getText());
-				if (mod != null) {
-					try {
-						mod.setEnabled(checkbox.isSelected());
-					} catch (IOException e) {
-						PLog.error(e, "Failed to move mod!");
-					}
-				}
-			}
-		}
-	}*/
 
 	public void disguardElements() {
 		javaApp.call("Code.discard");
