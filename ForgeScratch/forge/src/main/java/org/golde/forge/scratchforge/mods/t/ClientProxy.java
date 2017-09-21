@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.t;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -93,91 +93,13 @@ import java.util.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-public class CommonProxy {
-
-	/* Block Variables */
-	static Mcblock_change_me mcblock_block_change_me;
-
-
-	/* BlockFlower Variables */
-	
-
-	/* BlockPlant Variables */
-	
-
-	/* Item Variables */
-	
-
-	public void preInit(FMLPreInitializationEvent event){
-		/* Block Constructor Calls */
-		mcblock_block_change_me = new Mcblock_change_me();
-
-
-		/* BlockFlower Constructor Calls */
-		
-
-		/* BlockPlant Constructor Calls */
-		
-
-		/* Item Constructor Calls */
-		
-	}
-
-	public void init(FMLInitializationEvent event){
-		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
-	}
-
-	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
-		for (int i = 0; i < 20; i++) {
-			int x = chunkX + random.nextInt(16) + 8;
-			int y = random.nextInt(128);
-			int z = chunkZ + random.nextInt(16) + 8;
-
-			/*Overworld world generation for flowers*/
-			
-			
-			/*Overworld world generation for plants*/
-			
-			
-		}
-	}
-
-	//TODO: Implement nether plant generation?
-	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
-		for (int i = 0; i < 20; i++) {
-			int x = chunkX + random.nextInt(16) + 8;
-			int y = random.nextInt(128);
-			int z = chunkZ + random.nextInt(16) + 8;
-
-			/*Nether generation for flowers*/
-			/*WorldGen - Nether - Flowers*/
-			
-			/*Nether generation for plants*/
-			/*WorldGen - Nether - Plant*/
-			
-		}
-	}
-
-	
-
-
-
-
-
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
+public class ClientProxy extends CommonProxy {
+    
+    @Override
+    public void preInit(FMLPreInitializationEvent event){
+        super.preInit(event);
+        ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
+        
     }
-
-
+    
 }
