@@ -13,14 +13,18 @@ import com.google.common.collect.SetMultimap;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.GuiConfirmation;
+import cpw.mods.fml.client.GuiIngameModOptions;
+import cpw.mods.fml.client.GuiNotification;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.StartupQuery;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -36,17 +40,17 @@ public class ClientProxy extends CommonProxy{
 		//Mod Config Folder -> Minecraft Dir - > For dir -> root
 		PLog.info(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile().getAbsolutePath());
 		Config.load(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile());
-		
+
 		ModHelpers.addTranslation(ForgeModScratchForge.CREATIVE_TAB.getTranslatedTabLabel(), ForgeModScratchForge.MOD_NAME);
 	}
-	
+
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
-	
+
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		//Let people know that they are missing textures
@@ -81,6 +85,10 @@ public class ClientProxy extends CommonProxy{
 	@SubscribeEvent
 	public void onGuiChange(GuiOpenEvent event) {
 
+		if(event.gui != null) {
+			PLog.info("Gui Change: " + event.gui.getClass().getName());
+		}
+
 		//Remove the missing blocks message that forge puts
 		//Kids might get confused so we will just remove it
 		if(event.gui instanceof GuiConfirmation) {
@@ -101,6 +109,45 @@ public class ClientProxy extends CommonProxy{
 			}
 			event.gui = null; //Don't display the screen
 		}
+		
+		
+		/*This is a pain in the ass
+		 * Can't get to to work what so ever
+		 * Might require some byte code manipulation
+		 */
+		
+		if(event.gui instanceof GuiNotification) {
+			
+			StartupQuery query = null;
+			
+			try {
+				GuiNotification gui = (GuiNotification)event.gui;
+				Class clazz = gui.getClass();
+				Field field = JavaHelpers.getField(clazz, "query");
+				field.setAccessible(true);
+				query = (StartupQuery) field.get(gui);
+			}
+			catch(Exception e) {
+				PLog.error(e, "Failed to do reflection!");
+			}
+			
+			if(query != null) {
+				
+				if(query.getText().contains("The world state is utterly corrupted and this save is NOT loadable")) {
+					PLog.info("Detected");
+					
+					/*GuiScreen alert = new GuiScreenBlockToItemError(null);
+					FMLClientHandler.instance().showGuiScreen(alert);
+					event.gui = alert;
+					Minecraft.getMinecraft().currentScreen = alert;*/
+					//query.finish();
+					
+				}
+				
+			}
+			
+			//The world state is utterly corrupted and this save is NOT loadable\n\nThere is a high probability that a mod has broken the\nID map and there is\nNOTHING FML or Forge can do to recover this save.\n\nIf you changed your mods, try reverting the change
+		}
 
 		if(event.gui instanceof GuiMainMenu) {
 			event.gui = new GuiNewMainMenu();
@@ -112,5 +159,5 @@ public class ClientProxy extends CommonProxy{
 			}
 		}
 	}
-	
+
 }

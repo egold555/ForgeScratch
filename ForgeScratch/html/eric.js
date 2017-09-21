@@ -1270,7 +1270,7 @@ Blockly.Blocks['mcaction_potionentity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_potionentity",
-  "message0": "Add Potion Effect To An Mob %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
+  "message0": "Add Potion Effect To A Mob %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
   "args0": [
     {
       "type": "input_dummy"

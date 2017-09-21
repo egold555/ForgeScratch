@@ -57,14 +57,19 @@ public class ModHelpers {
 		}
 		return translationList.getOrDefault(old, "Failed to find translation!");
 	}
-
-	public static Entity spawnEntityInWorld(World world, double x, double y, double z, String entity) {
-		if(world.isRemote) {return null;}
+	
+	public static Entity getEntity(World world, String entity) {
 		Entity theEntity = EntityList.createEntityByName(entity, world);
 		if(theEntity == null) {
 			PLog.error("Entity '" + entity + "' does not exist!");
 			return null;
 		}
+		return theEntity;
+	}
+
+	public static Entity spawnEntityInWorld(World world, double x, double y, double z, String entity) {
+		if(world.isRemote) {return null;}
+		Entity theEntity = getEntity(world, entity);
 		theEntity.setPosition(x + 0.5f, y + 1, z + 0.5f);
 		world.spawnEntityInWorld(theEntity);
 		return theEntity;

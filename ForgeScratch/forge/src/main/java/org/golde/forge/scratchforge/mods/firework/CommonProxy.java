@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.nameofcool_mod;
+package org.golde.forge.scratchforge.mods.firework;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -96,31 +96,33 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	static Mcblock_change_me mcblock_block_change_me;
+	static Mcblock_firework mcblock_block_firework;
+	static Mcblock_mob mcblock_block_mob;
 
 
 	/* BlockFlower Variables */
-	
+
 
 	/* BlockPlant Variables */
-	
+
 
 	/* Item Variables */
-	
+
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_block_change_me = new Mcblock_change_me();
+		mcblock_block_firework = new Mcblock_firework();
+		mcblock_block_mob = new Mcblock_mob();
 
 
 		/* BlockFlower Constructor Calls */
-		
+
 
 		/* BlockPlant Constructor Calls */
-		
+
 
 		/* Item Constructor Calls */
-		
+
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -135,11 +137,11 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			
-			
+
+
 			/*Overworld world generation for plants*/
-			
-			
+
+
 		}
 	}
 
@@ -152,32 +154,80 @@ public class CommonProxy {
 
 			/*Nether generation for flowers*/
 			/*WorldGen - Nether - Flowers*/
-			
+
 			/*Nether generation for plants*/
 			/*WorldGen - Nether - Plant*/
-			
+
 		}
 	}
 
-	
 
 
 
 
 
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
 
-    }
+	protected double i;
+	protected double j;
+
+
+	public class Mcblock_firework extends BlockBase {
+		public Mcblock_firework() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "firework", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(false){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			Entity entity = null;
+			for (i = -3; i<=3; i++) {
+				for (j = -3; j<=3; j++) {
+					if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, ((x) + i), (y), ((z) + j), true, true, new LinkedList<Object>(Arrays.asList("#ff0000", "#ff9900", "#ffcc66", "#ffff00", "#33ff33", "#66cccc", "#33ccff", "#6666cc", "#cc66cc")), 1, 1));}
+				} // end for
+			} // end for
+
+			return true;
+		}
+	}
+
+	public class Mcblock_mob extends BlockBase {
+		public Mcblock_mob() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "mob", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(false){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			if(world.isRemote) {return true;}
+			//Bat
+			Entity entityX1 = ModHelpers.getEntity(world, "Bat");
+			entityX1.setPosition(x+0.5, y+1, z+0.5);
+
+
+			//Creeper
+			Entity entityX2 = ModHelpers.spawnEntityInWorld(world, x, y+1, z, "Creeper");
+			  
+
+
+			entityX2.mountEntity(entityX1);
+
+			world.spawnEntityInWorld(entityX1);   
+			return true;
+		}
+	}
 
 
 }
