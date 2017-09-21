@@ -148,10 +148,10 @@ public class WindowToggleMods extends JFrame{
 				
 				if (leaf && mod.getDisplayName().startsWith("✔")) {
 					
-					setForeground(new Color(66, 244, 89)); //Green
+					setForeground(new Color(39,174,96)); //Green
 				}
 				else if (leaf && mod.getDisplayName().startsWith("✘")) {
-					setForeground(new Color(244, 113, 65)); //Red
+					setForeground(new Color(231,76,60)); //Red
 				}
 			}
 
