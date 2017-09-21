@@ -38,6 +38,10 @@ public class Mod {
 	public String getModName() {
 		return modName;
 	}
+	
+	public String getDisplayName() {
+		return (enabled ? "✔" : "✘") + " " + modName;
+	}
 
 	public String getPrefix()
 	{
@@ -70,7 +74,7 @@ public class Mod {
 		return modName;
 	}
 
-	public void setEnabled(boolean enabled) throws IOException {
+	public void setEnabled(boolean enabled) {
 		File newFile;
 		if (enabled == true && this.enabled == false) {
 			// Move mod to the enabled folder.
@@ -85,7 +89,12 @@ public class Mod {
 		}
 
 		// Move the file.
-		Files.move(modFolder.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		try {
+			Files.move(modFolder.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch(Exception e) {
+			PLog.error(e, "Failed to toggle mod '" + modName + "' to " + enabled + "!");
+		}
 		modFolder = newFile;
 		this.enabled = enabled;
 	}

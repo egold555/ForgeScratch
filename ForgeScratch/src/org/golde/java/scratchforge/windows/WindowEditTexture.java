@@ -23,8 +23,6 @@ import org.golde.java.scratchforge.mod.Mod.Texture;
 public class WindowEditTexture extends JFrame {
 
 	private static final long serialVersionUID = -8302074072215275295L;
-	
-	private JTree tree;
 	private Main main;
 	
 	public WindowEditTexture(Main main) {
@@ -34,7 +32,7 @@ public class WindowEditTexture extends JFrame {
 		this.setResizable(false);
 		getContentPane().setLayout(null);
 		
-		tree = new JTree(populateTreeView(forgeModsIn));
+		JTree tree = new JTree(populateTreeView(forgeModsIn));
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		
 		tree.addMouseListener(new MouseAdapter() {
@@ -67,6 +65,7 @@ public class WindowEditTexture extends JFrame {
 		
 		getContentPane().add(treeView);
 		
+		setLocationRelativeTo(null);
 		
 		pack();
 		setVisible(true);
@@ -89,7 +88,7 @@ public class WindowEditTexture extends JFrame {
 		for(Mod mod: main.modManager.allMods()) {
 			DefaultMutableTreeNode modNode = new DefaultMutableTreeNode(mod.getModName());
 			modNode.setUserObject(mod);
-			PLog.info("Textures: " + mod.getTextures().length);
+			//PLog.info("Textures: " + mod.getTextures().length);
 			for(Texture texture:mod.getTextures()) {
 				DefaultMutableTreeNode textureNode = new DefaultMutableTreeNode(texture.getDisplayName());
 				textureNode.setUserObject(texture);

@@ -27,6 +27,7 @@ import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.mod.ModManager;
 import org.golde.java.scratchforge.windows.WindowEditTexture;
 import org.golde.java.scratchforge.windows.WindowProgramOptions;
+import org.golde.java.scratchforge.windows.WindowToggleMods;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -80,8 +81,7 @@ public class Main implements ActionListener{
 
 	//Every thing to put under the "Options - Mod" button in the menu bar
 	private JMenuItem mOptionsModTextures = new JMenuItem("Textures");
-	private JMenuItem mOptionsModEnabled = new JMenuItem("Enabled Mods");
-	private JMenuItem mOptionsModExport = new JMenuItem("Export Mod");
+	private JMenuItem mOptionsModManager = new JMenuItem("Mod Manager");
 
 	//Every thing to put under the "Help" button in the menu bar
 	private JMenuItem mHelpAbout = new JMenuItem("About");
@@ -146,13 +146,10 @@ public class Main implements ActionListener{
 		//Make the menu button "Mod Options" and add elements to it
 		JMenu mOptionsMod = new JMenu("Mod Options");
 		mOptionsMod.add(mOptionsModTextures);
-		mOptionsMod.add(mOptionsModEnabled);
-		mOptionsMod.add(mOptionsModExport);
+		mOptionsMod.add(mOptionsModManager);
 		mOptionsModTextures.addActionListener(this);
 		mOptionsModTextures.setEnabled(true);
-		mOptionsModEnabled.addActionListener(this);
-		mOptionsModExport.addActionListener(this);
-		mOptionsModExport.setEnabled(false);
+		mOptionsModManager.addActionListener(this);
 		mOptionsMenu.add(mOptionsMod);
 
 		//Make the menu button "Program Options" and add elements to it
@@ -245,8 +242,9 @@ public class Main implements ActionListener{
 				}
 
 				//Mod Options
-				else if(source == mOptionsModEnabled) {
-					jsFunctions.showEnabledMods(frame);
+				else if(source == mOptionsModManager) {
+					//jsFunctions.showEnabledMods(frame);
+					new WindowToggleMods(Main.this);
 				}
 				else if(source == mOptionsProgram) {
 					windowProgramOptions.showSettingsMenu();

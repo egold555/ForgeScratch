@@ -248,7 +248,7 @@ public class JSFunctions {
 		return "Mc" + type.clazz + "_" + name;
 	}
 
-	public void showEnabledMods(JFrame frame) {
+	/*public void showEnabledMods(JFrame frame) {
 		//Makes checkbox list
 		List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 		JPanel listOfFiles = new JPanel();
@@ -279,7 +279,7 @@ public class JSFunctions {
 				}
 			}
 		}
-	}
+	}*/
 
 	public void disguardElements() {
 		javaApp.call("Code.discard");
