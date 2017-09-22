@@ -33,7 +33,7 @@ public class Mod {
 		this.enabled = enabled;
 
 		scanModFile();
-		assetsDirectory = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix());
+		
 		
 		JavaHelper.copyFolder(new File(modManager.forgeScratch, "Template Assets"), assetsDirectory);
 	}
@@ -112,7 +112,7 @@ public class Mod {
 					this.modName = line.substring(startIndex, endIndex);
 				}
 			}
-
+			assetsDirectory = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix());
 			textures = new ArrayList<Texture>();
 			for(String line: Files.readAllLines(modFile_CommonProxy.toPath(), StandardCharsets.UTF_8)) {
 				if (line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,")) {
@@ -129,9 +129,6 @@ public class Mod {
 			return;
 		}
 	}
-
-
-
 
 	public class Texture {
 		private String textureName;
