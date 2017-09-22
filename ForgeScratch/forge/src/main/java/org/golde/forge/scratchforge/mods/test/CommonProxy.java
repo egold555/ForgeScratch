@@ -99,7 +99,8 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	
+	static Mcblock_Cool_Block mcblock_Cool_Block;
+
 
 	/* BlockFlower Variables */
 	
@@ -116,7 +117,8 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_Cool_Block = new Mcblock_Cool_Block();
+
 
 		/* BlockFlower Constructor Calls */
 		
@@ -129,7 +131,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S);
+		createEntity(Mcentity_Cool_Cow.class, Mcentity_Cool_Cow.RAW_NAME, Mcentity_Cool_Cow.NAME, Mcentity_Cool_Cow.EGG_P, Mcentity_Cool_Cow.EGG_S);
 
 	}
 
@@ -398,15 +400,36 @@ public class CommonProxy {
 
 
 
-public static class Mcentity_Mob_Name extends EntityCreature {
-    public static final String RAW_NAME = "Mob Name";
-    public static final String NAME = "Mob_Name";
-    public static final String MODEL = "Bat";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xff0000;
-    public static final int EGG_S = 0x33ff33;
+    public class Mcblock_Cool_Block extends BlockBase {
+        public Mcblock_Cool_Block() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Cool Block", Material.ground);
 
-    public Mcentity_Mob_Name(World world){
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));
+
+            return true;
+        }
+    }
+
+public static class Mcentity_Cool_Cow extends EntityCreature {
+    public static final String RAW_NAME = "Cool Cow";
+    public static final String NAME = "Cool_Cow";
+    public static final String MODEL = "Cow";
+    public static final boolean SPAWN_NATURALLY = false;
+    public static final int EGG_P = 0x33ffff;
+    public static final int EGG_S = 0xff6600;
+
+    public Mcentity_Cool_Cow(World world){
         super(world);
     }
 
