@@ -25,6 +25,26 @@ public class Mod {
 	private File assetsDirectory;
 	private boolean enabled;
 
+
+	enum EnumTextureType {
+		Block("blocks", 16, 16),
+		Item("items", 16, 16),
+		Entity_64_32("entity", 64, 32),
+		Entity_64_64("entity", 64, 64),
+		Entity_64_128("entity", 64, 128),
+		Entity_128_128("entity", 128, 128),
+		Entity_256_256("entity", 256, 256),
+		;
+
+		public final String folder;
+		public final int x, y;
+		EnumTextureType(String folder, int x, int y){
+			this.folder = folder;
+			this.x = x;
+			this.y = y;
+		}
+	}
+
 	public Mod(ModManager modManager, File file, boolean enabled) {
 		this.modManager = modManager;
 		this.modFolder = file;
@@ -33,15 +53,14 @@ public class Mod {
 		this.enabled = enabled;
 
 		scanModFile();
-		
-		
+
 		JavaHelper.copyFolder(new File(modManager.forgeScratch, "Template Assets"), assetsDirectory);
 	}
 
 	public String getModName() {
 		return modName;
 	}
-	
+
 	public String getDisplayName() {
 		return (enabled ? "✔" : "✘") + " " + modName;
 	}
@@ -115,12 +134,52 @@ public class Mod {
 			assetsDirectory = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix());
 			textures = new ArrayList<Texture>();
 			for(String line: Files.readAllLines(modFile_CommonProxy.toPath(), StandardCharsets.UTF_8)) {
-				if (line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,")) {
-					int startIndex = line.indexOf("\"") + 1;
-					int endIndex = line.indexOf("\"", startIndex);
-					String blockName = line.substring(startIndex, endIndex);
-					textures.add(new Texture(blockName, true));
+				if(line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,") || line.contains("createEntity(Mcentity_")) {
+					int startIndex;
+					int endIndex;
+					String objName;
+					if (line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,") && !line.contains("Spawn Egg")) {
+						startIndex = line.indexOf("\"") + 1;
+						endIndex = line.indexOf("\"", startIndex);
+						objName = line.substring(startIndex, endIndex);
+						if(line.contains("Material.")) {
+							//Blocks
+							//16 x 16
+							textures.add(new Texture(objName, EnumTextureType.Block));
+						}
+						else {
+							//Items
+							//16 x 16
+							textures.add(new Texture(objName, EnumTextureType.Item));
+						}
+					}
+					else {
+						//Entities
+						/*startIndex = line.indexOf("createEntity(") + "createEntity(".length();
+						endIndex = line.indexOf(".class", startIndex);
+						objName = line.substring(startIndex, endIndex);
 
+						if(line.contains("Dragon")) {
+							//256 x 256
+							textures.add(new Texture(objName, EnumTextureType.Entity_256_256));
+						}
+						else if(line.contains("IronGolem") || line.contains("Horse")) {
+							//128 x 128
+							textures.add(new Texture(objName, EnumTextureType.Entity_128_128));
+						}
+						else if(line.contains("Witch")) {
+							//64 x 128
+							textures.add(new Texture(objName, EnumTextureType.Entity_64_128));
+						}
+						else if(line.contains("Villager") || line.contains("Bat") || line.contains("Wither") || line.contains("Zombie")) {
+							//64 x 64
+							textures.add(new Texture(objName, EnumTextureType.Entity_64_64));
+						}else {
+							//64 x 32
+							textures.add(new Texture(objName, EnumTextureType.Entity_64_32));
+						}*/
+						
+					}
 				}
 			}
 
@@ -132,14 +191,14 @@ public class Mod {
 
 	public class Texture {
 		private String textureName;
-		private boolean isBlock;
+		private EnumTextureType type;
 		private File file;
 
-		public Texture(String textureName, boolean isBlock) {
+		public Texture(String textureName, EnumTextureType type) {
 			this.textureName = textureName;
-			this.isBlock = isBlock;
+			this.type = type;
 
-			file = new File(assetsDirectory, "textures\\" + (isBlock ? "blocks" : "items") + "\\" + getTextureName() + ".png");
+			file = new File(assetsDirectory, "textures\\" + type.folder + "\\" + getTextureName() + ".png");
 		}
 
 		public boolean hasBeenCreated() {
@@ -158,16 +217,12 @@ public class Mod {
 			return textureName;
 		}
 
-		public boolean isBlock() {
-			return isBlock;
+		public EnumTextureType getType() {
+			return type;
 		}
 
 		public void createTexture() throws IOException {
-			createTexture(16);
-		}
-
-		public void createTexture(int size) throws IOException {
-			BufferedImage image = ImageTool.toBufferedImage(ImageTool.getEmptyImage(size, size));
+			BufferedImage image = ImageTool.toBufferedImage(ImageTool.getEmptyImage(type.x, type.y));
 			file.getParentFile().mkdirs();
 			ImageIO.write(image, "png", file);
 		}
