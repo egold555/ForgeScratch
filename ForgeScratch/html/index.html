@@ -6,8 +6,19 @@
   <link rel="stylesheet" href="style.css">
   <script src="blockly_compressed.js"></script>
   <script src="blocks_compressed.js"></script>
-  <script src="java_compressed.js"></script>
   <script src="javascript_compressed.js"></script>
+  <!-- Import java compilier -->
+  <!-- <script src="java_compressed.js"></script> -->
+  <script src="java/colour.js"></script>
+  <script src="java/java.js"></script>
+  <script src="java/lists.js"></script>
+  <script src="java/logic.js"></script>
+  <script src="java/loops.js"></script>
+  <script src="java/maps.js"></script>
+  <script src="java/math.js"></script>
+  <script src="java/procedures.js"></script>
+  <script src="java/text.js"></script>
+  <script src="java/variables.js"></script>
   <script src="eric.js"></script>
   <script src="code.js"></script>
 </head>
@@ -97,12 +108,15 @@
       <block type="mcaction_giveitem"></block>
       <block type="mcaction_velocity_player"></block>
       <block type="mcaction_teleport_player"></block>
+      <block type="mcaction_sethealth_player"></block>
     </category>
 
     <category name="Minecraft Entity Actions" colour="140">
       <block type="mcaction_potionentity"></block>
       <block type="mcaction_velocity_entity"></block>
       <block type="mcaction_teleport_entity"></block>
+      <block type="mcaction_rename_entity"></block>
+      <block type="mcaction_sethealth_entity"></block>
     </category>
 
     <category name="Minecraft World Actions" colour="140">

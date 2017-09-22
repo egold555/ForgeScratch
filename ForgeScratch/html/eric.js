@@ -524,7 +524,7 @@ Blockly.Java['mcblockoptions_click_right'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {\n' +
-  '         Entity entity = null;\n' +
+  '         EntityLiving entity = null;\n' +
   '        ' + statements_code + '\n' +
   '        return true;\n' +
   '    }\n';
@@ -563,7 +563,7 @@ Blockly.Java['mcblockoptions_click_left'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {\n' +
-'         Entity entity = null;\n' +
+'         EntityLiving entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -602,7 +602,7 @@ Blockly.Java['mcblockoptions_blockplaced'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {\n' +
-  '         Entity entity = null;\n' +
+  '         EntityLiving entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -642,7 +642,7 @@ Blockly.Java['mcblockoptions_block_broken_player'] = function(block) {
   var code = 
   '    @Override\n' +
   '    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {\n' +
-  '         Entity entity = null;\n' +
+  '         EntityLiving entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -683,7 +683,7 @@ Blockly.Java['mcblockoptions_block_broken_explosion'] = function(block) {
   '    @Override\n' +
   '    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {\n' +
   '         EntityPlayer player = null;\n' +
-  '         Entity entity = null;\n' +
+  '         EntityLiving entity = null;\n' +
   '        ' + statements_code + '\n' +
   '    }\n';
   return code;
@@ -721,9 +721,13 @@ Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
 
   var code = 
   '    @Override\n' +
-  '    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {\n' +
+  '    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity genericEntity) {\n' +
   '        EntityPlayer player = null;\n' +
-  '        if(entity instanceof EntityPlayer){\n' +
+  '        EntityLiving entity = null;\n' +
+  '        if(genericEntity instanceof EntityPlayer){\n' +
+  '            player = (EntityPlayer)entity;\n' + 
+  '        }\n' +
+    '      else if(genericEntity instanceof EntityLiving){\n' +
   '            player = (EntityPlayer)entity;\n' + 
   '        }\n' +
   '            ' + statements_code + '\n' +
@@ -1853,7 +1857,7 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Cauldron", "cauldron"],
                 ["Chest", "chest"],
                 ["Clay", "clay"],
-                ["Coal", "coal"],
+                ["Coal", "coal_block"],
                 ["Coal Ore", "coal_ore"],
                 ["Cobblestone", "cobblestone"],
                 ["Cobblestone Wall", "cobblestone_wall"],
@@ -1864,7 +1868,7 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Daylight Detector", "daylight_detector"],
                 ["Deadbush", "deadbush"],
                 ["Detector Rail", "detector_rail"],
-                ["Diamond", "diamond"],
+                ["Diamond", "diamond_block"],
                 ["Diamond Ore", "diamond_ore"],
                 ["Dirt", "dirt"],
                 ["Dispenser", "dispenser"],
@@ -1873,7 +1877,7 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Double Wooden Slab", "double_wooden_slab"],
                 ["Dragon Egg", "dragon_egg"],
                 ["Dropper", "dropper"],
-                ["Emerald", "emerald"],
+                ["Emerald", "emerald_block"],
                 ["Emerald Ore", "emerald_ore"],
                 ["Enchanting Table", "enchanting_table"],
                 ["End Portal", "end_portal"],
@@ -1891,7 +1895,7 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Glass", "glass"],
                 ["Glass Pane", "glass_pane"],
                 ["Glowstone", "glowstone"],
-                ["Gold", "gold"],
+                ["Gold", "gold_block"],
                 ["Gold Ore", "gold_ore"],
                 ["Golden Rail", "golden_rail"],
                 ["Grass", "grass"],
@@ -1901,14 +1905,14 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Heavy Weighted Pressure Plate", "heavy_weighted_pressure_plate"],
                 ["Hopper", "hopper"],
                 ["Ice", "ice"],
-                ["Iron", "iron"],
+                ["Iron", "iron_block"],
                 ["Iron Bars", "iron_bars"],
                 ["Iron Door", "iron_door"],
                 ["Iron Ore", "iron_ore"],
                 ["Jukebox", "jukebox"],
                 ["Jungle Stairs", "jungle_stairs"],
                 ["Ladder", "ladder"],
-                ["Lapis", "lapis_"],
+                ["Lapis", "lapis_block"],
                 ["Lapis Ore", "lapis_ore"],
                 ["Lava", "lava"],
                 ["Leaves", "leaves"],
@@ -1946,13 +1950,13 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Powered Repeater", "powered_repeater"],
                 ["Pumpkin", "pumpkin"],
                 ["Pumpkin Stem", "pumpkin_stem"],
-                ["Quartz", "quartz"],
+                ["Quartz", "quartz_block"],
                 ["Quartz Ore", "quartz_ore"],
                 ["Quartz Stairs", "quartz_stairs"],
                 ["Rail", "rail"],
                 ["Red Flower", "red_flower"],
                 ["Red Mushroom", "red_mushroom"],
-                ["Redstone", "redstone"],
+                ["Redstone", "redstone_block"],
                 ["Redstone Lamp", "redstone_lamp"],
                 ["Redstone Ore", "redstone_ore"],
                 ["Redstone Torch", "redstone_torch"],
@@ -2182,7 +2186,7 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
 
   var code = 
   'public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){\n' +
-  '    Entity entity = null;\n' +
+  '    EntityLiving entity = null;\n' +
   '    ' + statements_code + '\n' +
   '    return itemstack;\n' +
   '}'
@@ -2225,7 +2229,7 @@ Blockly.Java['mcitemoptions_leftclick'] = function(block) {
 
   var code = 
   'public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int meta, float dx, float dy, float dz) {\n' +
-  '    Entity entity = null;\n' +
+  '    EntityLiving entity = null;\n' +
   '    ' + statements_code + '\n' +
   '    return true;\n' +
   '}'
@@ -2651,7 +2655,7 @@ Blockly.Java['mcaction_placeblock'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', (int)' + value_block + ', 0, 3);\n';
+  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', 0, 3);\n';
   return code;
 };
 
@@ -3128,4 +3132,108 @@ Blockly.Java['mcvariable_color_fireworks'] = function(block) {
   var colour_color = block.getFieldValue('COLOR');
   var code = '"' + colour_color + '"';
   return [code, Blockly.Java.ORDER_NONE];
+};
+
+
+
+
+
+Blockly.Blocks['mcaction_rename_entity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_rename_entity",
+  "message0": "Rename Mob %1 Name: %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "NAME",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_rename_entity'] = function(block) {
+  var value_name = Blockly.Java.valueToCode(block, 'NAME', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 
+  'if(entity != null){\n' +
+  '    entity.setCustomNameTag(' + value_name + ');\n' +
+  '    entity.setAlwaysRenderNameTag(true);\n' +
+  '}\n'
+  ;
+  return code;
+};
+
+
+
+
+Blockly.Blocks['mcaction_sethealth_entity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_sethealth_entity",
+  "message0": "Set Mob Health %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "HEALTH",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_sethealth_entity'] = function(block) {
+  var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'entity.setHealth(' + value_health + ');\n';
+  return code;
+};
+
+
+
+Blockly.Blocks['mcaction_sethealth_player'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_sethealth_player",
+  "message0": "Set Player Health %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "HEALTH",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_sethealth_entity'] = function(block) {
+  var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'player.setHealth(' + value_health + ');\n';
+  return code;
 };

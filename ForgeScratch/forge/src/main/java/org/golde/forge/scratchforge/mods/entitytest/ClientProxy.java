@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.t;
+package org.golde.forge.scratchforge.mods.entitytest;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -88,9 +88,7 @@ import cpw.mods.fml.relauncher.*;
 
 import org.apache.logging.log4j.*;
 
-import java.text.*;
 import java.util.*;
-import java.lang.*;
 
 import io.netty.buffer.*;
 import io.netty.channel.*;

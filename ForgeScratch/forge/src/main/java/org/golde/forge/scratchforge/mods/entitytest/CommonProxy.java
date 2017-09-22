@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.entitytest;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -98,29 +98,31 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	/*Variables - Block*/
+	static Mcblock_Entity_Test mcblock_block_Entity_Test;
+
 
 	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
+	
 
 	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
+	
 
 	/* Item Variables */
-	/*Variables - Item*/
+	
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
+		mcblock_block_Entity_Test = new Mcblock_Entity_Test();
+
 
 		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
+		
 
 		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
+		
 
 		/* Item Constructor Calls */
-		/*Constructor calls - Item*/
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -135,10 +137,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			/*WorldGen - Overworld - Flowers*/
+			
 			
 			/*Overworld world generation for plants*/
-			/*WorldGen - Overworld - Plant*/
+			
 			
 		}
 	}
@@ -159,6 +161,81 @@ public class CommonProxy {
 		}
 	}
 
-	/*Classes*/
+	
+
+
+
+
+
+
+protected double i;
+protected double j;
+/**
+ * Description goes here
+ *
+ * @param object
+ * @return String
+ */
+public static String blocklyToString(Object object) {
+    String result;
+    if (object instanceof String) {
+        result = (String) object;
+    } else {
+        // must be a number
+        // might be a double
+        try {
+            Double d = (Double) object;
+            // it was a double, so keep going
+            NumberFormat formatter = new DecimalFormat("#.#####");
+            result = formatter.format(d);
+
+        } catch (Exception ex) {
+            // not a double, see if it is an integer
+            try {
+                Integer i = (Integer) object;
+                // format should be number with a decimal point
+                result = i.toString();
+            } catch (Exception ex2) {
+                // not a double or integer
+                result = "UNKNOWN";
+            }
+        }
+    }
+
+  return result;
+}
+
+
+    public class Mcblock_Entity_Test extends BlockBase {
+        public Mcblock_Entity_Test() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity Test", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
+             EntityLiving entity = null;
+                for (i = -10; i<=10; i++) {
+            for (j = -10; j<=10; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    world.setBlock((int)((x) + i), (int)(y), (int)((z) + j), (Blocks.gold_block), 0, 3);
+                    entity = ModHelpers.spawnEntityInWorld(world, ((x) + i), ((y) + 2), ((z) + j), "PigZombie");
+                    if(entity != null){
+                        entity.setCustomNameTag(("Bob" + blocklyToString(j)));
+                        entity.setAlwaysRenderNameTag(true);
+                    }
+                }
+            } // end for
+        } // end for
+
+        }
+    }
+
 
 }

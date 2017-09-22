@@ -88,7 +88,9 @@ import cpw.mods.fml.relauncher.*;
 
 import org.apache.logging.log4j.*;
 
+import java.text.*;
 import java.util.*;
+import java.lang.*;
 
 import io.netty.buffer.*;
 import io.netty.channel.*;
@@ -165,6 +167,43 @@ public class CommonProxy {
 
 
 
+protected double i;
+/**
+ * Description goes here
+ *
+ * @param object
+ * @return String
+ */
+public static String blocklyToString(Object object) {
+    String result;
+    if (object instanceof String) {
+        result = (String) object;
+    } else {
+        // must be a number
+        // might be a double
+        try {
+            Double d = (Double) object;
+            // it was a double, so keep going
+            NumberFormat formatter = new DecimalFormat("#.#####");
+            result = formatter.format(d);
+
+        } catch (Exception ex) {
+            // not a double, see if it is an integer
+            try {
+                Integer i = (Integer) object;
+                // format should be number with a decimal point
+                result = i.toString();
+            } catch (Exception ex2) {
+                // not a double or integer
+                result = "UNKNOWN";
+            }
+        }
+    }
+
+  return result;
+}
+
+
     public class Mcblock_change_me extends BlockBase {
         public Mcblock_change_me() {
             super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
@@ -178,11 +217,15 @@ if(false){
         }
 
         @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             Entity entity = null;
-                
+        public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
+             EntityLiving entity = null;
+                for (i = 1; i<=10; i++) {
+            if(entity != null){
+                entity.setCustomNameTag(("Bob: " + blocklyToString(i) + "#ff0000"));
+                entity.setAlwaysRenderNameTag(true);
+            }
+        } // end for
 
-            return true;
         }
     }
 

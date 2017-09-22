@@ -149,6 +149,10 @@ public class ClientProxy extends CommonProxy{
 			//The world state is utterly corrupted and this save is NOT loadable\n\nThere is a high probability that a mod has broken the\nID map and there is\nNOTHING FML or Forge can do to recover this save.\n\nIf you changed your mods, try reverting the change
 		}
 
+		if(event.gui instanceof GuiIngameModOptions) {
+			event.gui = new GuiScreenBlockToItemError(null);
+		}
+		
 		if(event.gui instanceof GuiMainMenu) {
 			event.gui = new GuiNewMainMenu();
 		}

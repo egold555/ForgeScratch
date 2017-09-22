@@ -88,9 +88,7 @@ import cpw.mods.fml.relauncher.*;
 
 import org.apache.logging.log4j.*;
 
-import java.text.*;
 import java.util.*;
-import java.lang.*;
 
 import io.netty.buffer.*;
 import io.netty.channel.*;

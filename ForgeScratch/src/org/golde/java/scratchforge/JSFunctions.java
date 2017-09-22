@@ -210,14 +210,14 @@ public class JSFunctions {
 		code = code.substring(0, code.length() - 4);
 
 		//Replace glitched imports
-		code = code.replaceAll("import +java\\..*?;", "");
+		//code = code.replaceAll("import +java\\..*?;", "");
 
 		/*
 		 * LinkedList<> is not supported in Java 8 We must use LinkedList<Object>
 		 * This should still work on java 7 but its untested
 		 * TODO: Test on Java 7
 		 */
-		code = code.replace("LinkedList<>", "LinkedList<Object>");
+		//code = code.replace("LinkedList<>", "LinkedList<Object>");
 
 		/*
 		 * Temp fix cause I do not want to replace everything in JS as of now

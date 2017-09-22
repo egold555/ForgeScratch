@@ -12,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -58,24 +59,28 @@ public class ModHelpers {
 		return translationList.getOrDefault(old, "Failed to find translation!");
 	}
 	
-	public static Entity getEntity(World world, String entity) {
+	public static EntityLiving getEntity(World world, String entity) {
 		Entity theEntity = EntityList.createEntityByName(entity, world);
 		if(theEntity == null) {
 			PLog.error("Entity '" + entity + "' does not exist!");
 			return null;
 		}
-		return theEntity;
+		if(!(theEntity instanceof EntityLiving)) {
+			PLog.error("Entity '" + entity + "' does not extend EntityLivingBase!");
+			return null;
+		}
+		return (EntityLiving)theEntity;
 	}
 
-	public static Entity spawnEntityInWorld(World world, double x, double y, double z, String entity) {
+	public static EntityLiving spawnEntityInWorld(World world, double x, double y, double z, String entity) {
 		if(world.isRemote) {return null;}
-		Entity theEntity = getEntity(world, entity);
+		EntityLiving theEntity = getEntity(world, entity);
 		theEntity.setPosition(x + 0.5f, y + 1, z + 0.5f);
 		world.spawnEntityInWorld(theEntity);
 		return theEntity;
 	}
 
-	public static void addPotionToEntity(Entity entity, int potion, int seconds, int amp, boolean invis) {
+	public static void addPotionToEntity(EntityLivingBase entity, int potion, int seconds, int amp, boolean invis) {
 		if(entity instanceof EntityLiving) {
 			((EntityLiving)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
 		}
