@@ -12,7 +12,7 @@ public class ModManager {
 	//private Main main;
 
 	public final File forgeDir;
-	private final File forgeScratch;
+	public final File forgeScratch;
 	public final File forgeModsIn;
 	public final File forgeModsOut;
 

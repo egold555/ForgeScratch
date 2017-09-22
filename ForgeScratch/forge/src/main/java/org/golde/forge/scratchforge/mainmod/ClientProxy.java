@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy{
 	public void onGuiChange(GuiOpenEvent event) {
 
 		if(event.gui != null) {
-			PLog.info("Gui Change: " + event.gui.getClass().getName());
+			//PLog.info("Gui Change: " + event.gui.getClass().getName());
 		}
 
 		//Remove the missing blocks message that forge puts
@@ -108,49 +108,6 @@ public class ClientProxy extends CommonProxy{
 				PLog.error(e, "Failed to do reflection!");
 			}
 			event.gui = null; //Don't display the screen
-		}
-		
-		
-		/*This is a pain in the ass
-		 * Can't get to to work what so ever
-		 * Might require some byte code manipulation
-		 */
-		
-		if(event.gui instanceof GuiNotification) {
-			
-			StartupQuery query = null;
-			
-			try {
-				GuiNotification gui = (GuiNotification)event.gui;
-				Class clazz = gui.getClass();
-				Field field = JavaHelpers.getField(clazz, "query");
-				field.setAccessible(true);
-				query = (StartupQuery) field.get(gui);
-			}
-			catch(Exception e) {
-				PLog.error(e, "Failed to do reflection!");
-			}
-			
-			if(query != null) {
-				
-				if(query.getText().contains("The world state is utterly corrupted and this save is NOT loadable")) {
-					PLog.info("Detected");
-					
-					/*GuiScreen alert = new GuiScreenBlockToItemError(null);
-					FMLClientHandler.instance().showGuiScreen(alert);
-					event.gui = alert;
-					Minecraft.getMinecraft().currentScreen = alert;*/
-					//query.finish();
-					
-				}
-				
-			}
-			
-			//The world state is utterly corrupted and this save is NOT loadable\n\nThere is a high probability that a mod has broken the\nID map and there is\nNOTHING FML or Forge can do to recover this save.\n\nIf you changed your mods, try reverting the change
-		}
-
-		if(event.gui instanceof GuiIngameModOptions) {
-			event.gui = new GuiScreenBlockToItemError(null);
 		}
 		
 		if(event.gui instanceof GuiMainMenu) {

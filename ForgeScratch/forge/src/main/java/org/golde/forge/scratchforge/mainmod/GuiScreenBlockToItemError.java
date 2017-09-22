@@ -1,11 +1,14 @@
 package org.golde.forge.scratchforge.mainmod;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.StartupQuery;
 import net.minecraft.client.gui.GuiScreen;
 
 public class GuiScreenBlockToItemError extends GuiScreenDummy{
 
-	public GuiScreenBlockToItemError(GuiScreen pastScreen) {
+	StartupQuery query;
+	
+	public GuiScreenBlockToItemError(GuiScreen pastScreen, StartupQuery query) {
 		super(pastScreen, new String[] {
 			"The world state is utterly corrupted and this save is NOT loadable",
 			"",
@@ -15,11 +18,13 @@ public class GuiScreenBlockToItemError extends GuiScreenDummy{
 			"",
 			"If you changed your mods, try reverting the change"	
 		});
+		this.query = query;
 	}
 	
 	
 	@Override
 	public void onDoneButtonClicked() {
-		sendBackToPastGuiScreen();
+		FMLClientHandler.instance().showGuiScreen(pastScreen);
+		query.finish();
 	}
 }

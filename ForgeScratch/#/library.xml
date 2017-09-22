@@ -2876,4 +2876,207 @@
         <field name="HUE">315</field>
       </block>
     </value>
+  </block><block type="factory_base" id="`W9RTf6|)wk$-ZbeBu}," deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">mcaction_sethealth_entity</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_value" id="?/A[kZ=r]4HYe9:e]P*k">
+        <field name="INPUTNAME">HEALTH</field>
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="=MvSlnvX9wNqxrHlW]fE">
+            <field name="TEXT">Set Health</field>
+          </block>
+        </statement>
+        <value name="TYPE">
+          <shadow type="type_null" id="GbpDAQ]Mo5l0V?Jl`uiz"></shadow>
+          <block type="type_number" id="VlHRvN(z4lHuqy:@|2m8"></block>
+        </value>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="!nQ|-0]Fe(^~lC`q@aWz" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="t|Yr(aW7dxt@[RpL-J;o" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id=".mdq]v}-FWE2OVqoX[`)"></shadow>
+      <block type="type_other" id="M9,:N!-}r9BdOC8zc-_g">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="sM:KXOH8[pCcPhw1W{+o"></shadow>
+      <block type="type_other" id="._aU:=4/TL*fg8|eO^/Q">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="+5G%autQ8?z6)=phxpN_">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="wQ=7Sjr1`t.xKN]9DxL8" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="NONE"></mutation>
+    <field name="NAME">mcentity</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">NONE</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id=";os(-._GGx|~.8l]*}e1">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="j|085R3N_mf)nq/ylW79">
+            <field name="TEXT">Minecraft Mob</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_dummy" id="0{ULdw9iv3(4-3Wd@5s;">
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="!d9PeGbYuV/3_5w@RTFx">
+                <field name="TEXT">Name:</field>
+                <next>
+                  <block type="field_input" id="*p:$6/@_7Cx_))gPaIK-">
+                    <field name="TEXT">Mob Name</field>
+                    <field name="FIELDNAME">NAME</field>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="input_dummy" id="Z:YC+ccgYU7_$v,jI[L-">
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="^Cq!0(7c*L3#B6AxIzg2">
+                    <field name="TEXT">Model:</field>
+                    <next>
+                      <block type="field_dropdown" id="@S3?G~_eZ]FI5]Oks{QN">
+                        <mutation options="[&quot;text&quot;,&quot;text&quot;,&quot;text&quot;]"></mutation>
+                        <field name="FIELDNAME">MODEL</field>
+                        <field name="USER0">Player</field>
+                        <field name="CPU0">Player</field>
+                        <field name="USER1">Cow</field>
+                        <field name="CPU1">Cow</field>
+                        <field name="USER2">Sheep</field>
+                        <field name="CPU2">Sheep</field>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <next>
+                  <block type="input_dummy" id="+LH!)D+V%4BQ]]Owz;3b">
+                    <field name="ALIGN">LEFT</field>
+                    <statement name="FIELDS">
+                      <block type="field_static" id="AZ?uE`Li/R!g}9z{_cOQ">
+                        <field name="TEXT">Create Spawn Egg</field>
+                        <next>
+                          <block type="field_checkbox" id="**,MY2$Z./~?7.FnHy_B">
+                            <field name="CHECKED">TRUE</field>
+                            <field name="FIELDNAME">MAKE_EGG</field>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="input_dummy" id="{OEmsvC]{2$c{4`#747s">
+                        <field name="ALIGN">LEFT</field>
+                        <statement name="FIELDS">
+                          <block type="field_static" id="(,VH7=$}#_Qih+*ujbc.">
+                            <field name="TEXT">Spawn Egg Primary Color</field>
+                            <next>
+                              <block type="field_colour" id="}XkP(,Dg%5vXN`z8cJLv">
+                                <field name="COLOUR">#ff0000</field>
+                                <field name="FIELDNAME">EGG_P</field>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="input_dummy" id="9WF.X(_4~G~Y[5YR1r(a">
+                            <field name="ALIGN">LEFT</field>
+                            <statement name="FIELDS">
+                              <block type="field_static" id="rPk08CYbqXe(XTy-*G1e">
+                                <field name="TEXT">Spawn Egg Secondary Color</field>
+                                <next>
+                                  <block type="field_colour" id="70wbt!`B+*hNr_|CD8^5">
+                                    <field name="COLOUR">#33ff33</field>
+                                    <field name="FIELDNAME">EGG_S</field>
+                                  </block>
+                                </next>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="input_dummy" id="C~%f(MM*,@sbnp0p^0o?">
+                                <field name="ALIGN">LEFT</field>
+                                <statement name="FIELDS">
+                                  <block type="field_static" id="Rqf(a%xt1{F7/9iXcL4e">
+                                    <field name="TEXT">Spawn Naturally In World</field>
+                                    <next>
+                                      <block type="field_checkbox" id="NR[[V/]NxO6/*=h^~Sdc">
+                                        <field name="CHECKED">FALSE</field>
+                                        <field name="FIELDNAME">SPAWN_NATURALLY</field>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                                <next>
+                                  <block type="input_dummy" id="ifvUy7yV{=,wXj%s.r+r">
+                                    <field name="ALIGN">LEFT</field>
+                                    <statement name="FIELDS">
+                                      <block type="field_static" id="^zM)PrPr$bkogm[aD(iZ">
+                                        <field name="TEXT">Options:</field>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="input_statement" id="67G8mYvn@fQ2@0y$4x5m">
+                                        <field name="INPUTNAME">OPTIONS</field>
+                                        <field name="ALIGN">LEFT</field>
+                                        <value name="TYPE">
+                                          <shadow type="type_null" id="~rM$rY;:I?KURNnm4DvJ"></shadow>
+                                          <block type="type_other" id="3A?I,:i~!{oH2sA[g{mz">
+                                            <field name="TYPE">mcentityoptions</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="9e:wP1sH6}51HGp4iEbd" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="gftB7|olKu7mw_x]V+!I" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="E(LEk}N_0Ex)(=/JBsHP">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
   </block></xml>

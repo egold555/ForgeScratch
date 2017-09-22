@@ -16,6 +16,7 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.*;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.renderer.tileentity.*;
 import net.minecraft.client.settings.*;
 import net.minecraft.command.*;
@@ -105,6 +106,9 @@ public class ForgeMod implements IWorldGenerator{
     
     @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
 	public static CommonProxy PROXY;
+    
+    @Instance(ForgeMod.MOD_ID)
+	public static ForgeMod INSTANCE;
     
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 

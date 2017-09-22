@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public abstract class GuiScreenDummy extends GuiScreen{
 
-	private final GuiScreen pastScreen;
+	public final GuiScreen pastScreen;
 	private final String[] lines;
 	private final ResourceLocation logoTexture = new ResourceLocation(ForgeModScratchForge.MOD_ID.toLowerCase(), "textures/gui/logo.png");
 
@@ -38,9 +38,9 @@ public abstract class GuiScreenDummy extends GuiScreen{
 	
 	public abstract void onDoneButtonClicked();
 	
-	public final void sendBackToPastGuiScreen() {
+	/*public final void sendBackToPastGuiScreen() {
 		Minecraft.getMinecraft().displayGuiScreen(pastScreen);
-	}
+	}*/
 
 	public final void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{

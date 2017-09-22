@@ -3237,3 +3237,135 @@ Blockly.Java['mcaction_sethealth_entity'] = function(block) {
   var code = 'player.setHealth(' + value_health + ');\n';
   return code;
 };
+
+
+
+
+Blockly.Blocks['mcentity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentity",
+  "message0": "Minecraft Mob %1 Name: %2 %3 Model: %4 %5 Create Spawn Egg %6 %7 Spawn Egg Primary Color %8 %9 Spawn Egg Secondary Color %10 %11 (NI) Spawn Naturally In World %12 %13 Options: %14 %15",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "NAME",
+      "text": "Mob Name"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "MODEL",
+      "options": [
+        [
+          "Player",
+          "Player"
+        ],
+        [
+          "Cow",
+          "Cow"
+        ],
+        [
+          "Sheep",
+          "Sheep"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "MAKE_EGG",
+      "checked": true
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_colour",
+      "name": "EGG_P",
+      "colour": "#ff0000"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_colour",
+      "name": "EGG_S",
+      "colour": "#33ff33"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "SPAWN_NATURALLY",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "OPTIONS",
+      "check": "mcentityoptions"
+    }
+  ],
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+
+
+Blockly.Java['mcentity'] = function(block) {
+  var value_name = make_java_id(block.getFieldValue('NAME'));
+  var raw_value_name = block.getFieldValue('NAME');
+  var dropdown_model = block.getFieldValue('MODEL');
+  var checkbox_make_egg = block.getFieldValue('MAKE_EGG') == 'TRUE';
+  var colour_egg_p = block.getFieldValue('EGG_P');
+  var colour_egg_s = block.getFieldValue('EGG_S');
+  var checkbox_spawn_naturally = block.getFieldValue('SPAWN_NATURALLY') == 'TRUE';
+  var statements_options = Blockly.Java.statementToCode(block, 'OPTIONS');
+
+  colour_egg_p = colour_egg_p.replace('#', '0x');
+  colour_egg_s = colour_egg_s.replace('#', '0x');
+
+  if(!checkbox_make_egg){
+    colour_egg_p = -1;
+    colour_egg_s = -1;
+  }
+
+  var code = 
+  'public static class Mcentity_' + value_name + ' extends EntityCreature {\n' +
+  '    public static final String RAW_NAME = "' + raw_value_name + '";\n' +
+  '    public static final String NAME = "' + value_name + '";\n' +
+  '    public static final String MODEL = "' + dropdown_model + '";\n' +
+  '    public static final boolean SPAWN_NATURALLY = ' + checkbox_spawn_naturally + ';\n' +
+  '    public static final int EGG_P = ' + colour_egg_p + ';\n' +
+  '    public static final int EGG_S = ' + colour_egg_s + ';\n' +
+  '\n' +
+  '    public Mcentity_' + value_name + '(World world){\n' +
+  '        super(world);\n' +
+  '    }\n' +
+  '\n' +
+  '        ' + statements_options + '\n' +
+     
+
+  '}\n'
+
+  ;
+  return code;
+};

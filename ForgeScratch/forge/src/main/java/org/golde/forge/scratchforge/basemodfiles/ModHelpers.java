@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -161,9 +162,5 @@ public class ModHelpers {
 
 		return new EntityFireworkRocket(world, x, y, z, firework);
 	}
-
-	
-
-
 
 }

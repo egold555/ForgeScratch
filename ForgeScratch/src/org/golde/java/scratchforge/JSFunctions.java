@@ -47,6 +47,23 @@ public class JSFunctions {
 		main.MOD_NAME = xml.substring(startIndex, endIndex);
 		javaApp.call("loadXML", xml);
 	}
+	
+	enum EnumObjectType{
+		Block("block", "BlockBase"),
+		BlockFlower("blockFlower", "BlockBaseFlower"),
+		BlockPlant("blockPlant", "BlockBasePlant"),
+		Item("item", "ItemBase"),
+		Entity("entity", "EntityCreature"),
+		;
+
+		public final String clazz;
+		public final String extendz;
+		EnumObjectType(String clazz, String extendz){
+			this.clazz = clazz;
+			this.extendz = extendz;
+		}
+
+	}
 
 	public void run(String code) {
 		String projectName = main.MOD_NAME.replace(" ", "_");
@@ -65,6 +82,8 @@ public class JSFunctions {
 			List<String> blockPlantNames = findNames(code, EnumObjectType.BlockPlant);
 
 			List<String> itemNames = findNames(code, EnumObjectType.Item);
+			
+			List<String> entityNames = findNames(code, EnumObjectType.Entity);
 
 			PLog.info("blockNames:" + blockNames.size());
 			PLog.info("blockFlowerNames:" + blockFlowerNames.size());
@@ -104,6 +123,8 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, EnumObjectType.Item));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
 
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityNames, EnumObjectType.Entity));			
+			
 			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
@@ -133,25 +154,9 @@ public class JSFunctions {
 		}
 	}
 
-	enum EnumObjectType{
-		Block("block", "BlockBase"),
-		BlockFlower("blockFlower", "BlockBaseFlower"),
-		BlockPlant("blockPlant", "BlockBasePlant"),
-		Item("item", "ItemBase"),
-		;
-
-		public final String clazz;
-		public final String extendz;
-		EnumObjectType(String clazz, String extendz){
-			this.clazz = clazz;
-			this.extendz = extendz;
-		}
-
-	}
-
 	private List<String> findNames(String code, EnumObjectType type) {
 		List<String> result = new ArrayList<String>();
-		Pattern pattern = Pattern.compile("public class Mc" + type.clazz + "_(.*?) extends " + type.extendz);
+		Pattern pattern = Pattern.compile("class Mc" + type.clazz + "_(.*?) extends " + type.extendz);
 
 		Matcher matcher = pattern.matcher(code);
 		while (matcher.find()) {
@@ -177,6 +182,17 @@ public class JSFunctions {
 
 		for (String name: names) {
 			result += variableName(name, type) + " = new " + className(name, type) + "();" + "\n";
+		}
+
+		return result;
+	}
+	
+	private String registerEntityCalls(List<String> names, EnumObjectType type) {
+		String result = "";
+
+		for (String name: names) {
+			String className = className(name, type);
+			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S);\n";
 		}
 
 		return result;
@@ -209,20 +225,7 @@ public class JSFunctions {
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
 
-		//Replace glitched imports
-		//code = code.replaceAll("import +java\\..*?;", "");
-
-		/*
-		 * LinkedList<> is not supported in Java 8 We must use LinkedList<Object>
-		 * This should still work on java 7 but its untested
-		 * TODO: Test on Java 7
-		 */
-		//code = code.replace("LinkedList<>", "LinkedList<Object>");
-
-		/*
-		 * Temp fix cause I do not want to replace everything in JS as of now
-		 * TODO: Fix everything is JS and not rely on this patch
-		 */
+		
 		code = code.replace("BLOCK_ID", "ForgeMod.BLOCK_ID");
 		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;

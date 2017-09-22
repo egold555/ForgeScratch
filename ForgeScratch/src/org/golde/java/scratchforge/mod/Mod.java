@@ -22,6 +22,7 @@ public class Mod {
 	private File modFile_ForgeMod;
 	private File modFolder;
 	private List<Texture> textures;
+	private File assetsDirectory;
 	private boolean enabled;
 
 	public Mod(ModManager modManager, File file, boolean enabled) {
@@ -32,7 +33,9 @@ public class Mod {
 		this.enabled = enabled;
 
 		scanModFile();
-
+		assetsDirectory = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix());
+		
+		JavaHelper.copyFolder(new File(modManager.forgeScratch, "Template Assets"), assetsDirectory);
 	}
 
 	public String getModName() {
@@ -139,7 +142,7 @@ public class Mod {
 			this.textureName = textureName;
 			this.isBlock = isBlock;
 
-			file = new File(modManager.forgeDir, "src\\main\\resources\\assets\\" + getPrefix() + "\\textures\\" + (isBlock ? "blocks" : "items") + "\\" + getTextureName() + ".png");
+			file = new File(assetsDirectory, "textures\\" + (isBlock ? "blocks" : "items") + "\\" + getTextureName() + ".png");
 		}
 
 		public boolean hasBeenCreated() {

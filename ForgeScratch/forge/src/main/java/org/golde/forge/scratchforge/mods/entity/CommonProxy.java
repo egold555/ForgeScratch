@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.entity;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -99,37 +99,38 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	/*Variables - Block*/
+	
 
 	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
+	
 
 	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
+	
 
 	/* Item Variables */
 	public static SFItemMonsterPlacer scItemMonsterPlacer;
-	/*Variables - Item*/
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
+		
 
 		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
+		
 
 		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
+		
 
 		/* Item Constructor Calls */
 		scItemMonsterPlacer = new SFItemMonsterPlacer();
-		/*Constructor calls - Item*/
+		
 
 		/* Entity Constructor Calls */
-		/*Constructor calls - Entity*/
+		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S);
+
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -144,10 +145,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			/*WorldGen - Overworld - Flowers*/
+			
 
 			/*Overworld world generation for plants*/
-			/*WorldGen - Overworld - Plant*/
+			
 
 		}
 	}
@@ -391,6 +392,26 @@ public class CommonProxy {
 		SFItemMonsterPlacer.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-	/*Classes*/
+	
+
+
+
+
+
+public static class Mcentity_Mob_Name extends EntityCreature {
+    public static final String RAW_NAME = "Mob Name";
+    public static final String NAME = "Mob_Name";
+    public static final String MODEL = "Player";
+    public static final boolean SPAWN_NATURALLY = false;
+    public static final int EGG_P = 0xff0000;
+    public static final int EGG_S = 0x33ff33;
+
+    public Mcentity_Mob_Name(World world){
+        super(world);
+    }
+
+
+}
+
 
 }

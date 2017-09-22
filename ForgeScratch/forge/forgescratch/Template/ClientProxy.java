@@ -16,6 +16,7 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.*;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.renderer.tileentity.*;
 import net.minecraft.client.settings.*;
 import net.minecraft.command.*;
@@ -102,6 +103,8 @@ public class ClientProxy extends CommonProxy {
         super.preInit(event);
         ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
         
+        /* Entity Rendering Code */
+        /*Entity Rendering*/
     }
     
 }
