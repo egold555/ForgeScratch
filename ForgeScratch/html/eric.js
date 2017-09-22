@@ -853,7 +853,7 @@ Blockly.Blocks['mcaction_time_selector'] = {
 Blockly.Java['mcaction_time_selector'] = function(block) {
   var dropdown_time = block.getFieldValue('time');
   
-  var code = 'world.setWorldTime(Math.max(0, (long)' + dropdown_time + '));';
+  var code = 'if(!world.isRemote){world.setWorldTime(Math.max(0, (long)' + dropdown_time + '));}';
 
   return code;
 };
@@ -884,7 +884,7 @@ Blockly.Blocks['mcaction_time_raw'] = {
 Blockly.Java['mcaction_time_raw'] = function(block) {
   var value_time = Blockly.Java.valueToCode(block, 'time', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'world.setWorldTime(Math.max(0, (long)' + value_time + '));';
+  var code = 'if(!world.isRemote){world.setWorldTime(Math.max(0, (long)' + value_time + '));}\n';
 
   return code;
 };
@@ -1052,7 +1052,7 @@ Blockly.Java['mcaction_spawn_mob'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'entity = ModHelpers.spawnEntityInWorld(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', "' + dropdown_mob + '");\n';
+  var code = 'if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', "' + dropdown_mob + '");}\n';
   return code;
 };
 
@@ -1119,7 +1119,7 @@ Blockly.Java['mcaction_explosion'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.newExplosion((Entity)null, ' + value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 0.5f, ' + value_loc_z + ' + 0.5f, ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');\n';
+  var code = 'if(!world.isRemote){world.newExplosion((Entity)null, ' + value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 0.5f, ' + value_loc_z + ' + 0.5f, ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');}\n';
   return code;
 };
 
@@ -1265,7 +1265,7 @@ Blockly.Java['mcaction_potionplayer'] = function(block) {
   var value_amp = Blockly.Java.valueToCode(block, 'AMP', Blockly.Java.ORDER_ATOMIC);
   var checkbox_invis = block.getFieldValue('INVIS') == 'TRUE';
 
-  var code = 'if(player != null){ModHelpers.addPotionToEntity(player, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}\n';
+  var code = 'if(!world.isRemote){if(player != null){ModHelpers.addPotionToEntity(player, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}}\n';
   return code;
 };
 
@@ -1411,7 +1411,7 @@ Blockly.Java['mcaction_potionentity'] = function(block) {
   var value_amp = Blockly.Java.valueToCode(block, 'AMP', Blockly.Java.ORDER_ATOMIC);
   var checkbox_invis = block.getFieldValue('INVIS') == 'TRUE';
 
-  var code = 'if(entity != null) {ModHelpers.addPotionToEntity(entity, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}\n';
+  var code = 'if(!world.isRemote){if(entity != null) {ModHelpers.addPotionToEntity(entity, ' + dropdown_potion + ', ' + value_time +', ' + value_amp +', ' + checkbox_invis +');}}\n';
   return code;
 };
 
@@ -2068,7 +2068,7 @@ Blockly.Blocks['mcaction_spawnitem'] = {
 };
 
 Blockly.Java['mcaction_spawnitem'] = function(block) {
-  var value_item = Blockly.Java.valueToCode(block, 'input', Blockly.Java.ORDER_ATOMIC);
+  var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   var value_loc_x = Blockly.Java.valueToCode(block, 'LOC_X', Blockly.Java.ORDER_ATOMIC);
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
@@ -2076,7 +2076,7 @@ Blockly.Java['mcaction_spawnitem'] = function(block) {
 
 
   var code = 
-  'if(world.isRemote){\n' +
+  'if(!world.isRemote){\n' +
   '    world.spawnEntityInWorld(new EntityItem(world, '+ value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 1, ' + value_loc_z + ' + 0.5f, new ItemStack' + value_item + '));\n' +
   '}\n';
   return code;
@@ -2479,7 +2479,7 @@ Blockly.Blocks['mcaction_giveitem'] = {
 Blockly.Java['mcaction_giveitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}\n';
+  var code = 'if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}}\n';
   return code;
 };
 
@@ -2525,7 +2525,7 @@ Blockly.Java['mcaction_lightning'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
  
-  var code = 'world.addWeatherEffect((new EntityLightningBolt(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ')));\n';
+  var code = 'if(!world.isRemote){world.addWeatherEffect((new EntityLightningBolt(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ')));}\n';
   return code;
 };
 
@@ -2655,7 +2655,7 @@ Blockly.Java['mcaction_placeblock'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', 0, 3);\n';
+  var code = 'if(!world.isRemote){world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', 0, 3);}\n';
   return code;
 };
 
@@ -2716,7 +2716,7 @@ Blockly.Java['mcaction_placeblockmeta'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', (int)' + value_meta +', 3);\n';
+  var code = 'if(!world.isRemote){world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', (int)' + value_meta +', 3);}\n';
   return code;
 };
 
@@ -2774,7 +2774,7 @@ Blockly.Java['mcaction_breakblock'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z +', ' + checkbox_drop + ');\n';
+  var code = 'if(!world.isRemote){world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z +', ' + checkbox_drop + ');}\n';
   return code;
 };
 

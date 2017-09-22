@@ -99,7 +99,14 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	static Mcblock_Cool_Block mcblock_Cool_Block;
+	static Mcblock_Mob mcblock_Mob;
+static Mcblock_Time mcblock_Time;
+static Mcblock_Explosion mcblock_Explosion;
+static Mcblock_Lightning mcblock_Lightning;
+static Mcblock_Place_Block mcblock_Place_Block;
+static Mcblock_Item mcblock_Item;
+static Mcblock_Break_Block mcblock_Break_Block;
+static Mcblock_Firework mcblock_Firework;
 
 
 	/* BlockFlower Variables */
@@ -117,7 +124,14 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_Cool_Block = new Mcblock_Cool_Block();
+		mcblock_Mob = new Mcblock_Mob();
+mcblock_Time = new Mcblock_Time();
+mcblock_Explosion = new Mcblock_Explosion();
+mcblock_Lightning = new Mcblock_Lightning();
+mcblock_Place_Block = new Mcblock_Place_Block();
+mcblock_Item = new Mcblock_Item();
+mcblock_Break_Block = new Mcblock_Break_Block();
+mcblock_Firework = new Mcblock_Firework();
 
 
 		/* BlockFlower Constructor Calls */
@@ -131,8 +145,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Cool_Cow.class, Mcentity_Cool_Cow.RAW_NAME, Mcentity_Cool_Cow.NAME, Mcentity_Cool_Cow.EGG_P, Mcentity_Cool_Cow.EGG_S);
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -400,14 +413,14 @@ public class CommonProxy {
 
 
 
-    public class Mcblock_Cool_Block extends BlockBase {
-        public Mcblock_Cool_Block() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Cool Block", Material.ground);
+    public class Mcblock_Mob extends BlockBase {
+        public Mcblock_Mob() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Mob", Material.ground);
 
 if(false){
     setHardness(-1.0F);
 }
-if(false){
+if(true){
     setResistance(6000000.0F);
 }
         }
@@ -415,26 +428,159 @@ if(false){
         @Override
         public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
              EntityLiving entity = null;
-                world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));
+                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
 
             return true;
         }
     }
 
-public static class Mcentity_Cool_Cow extends EntityCreature {
-    public static final String RAW_NAME = "Cool Cow";
-    public static final String NAME = "Cool_Cow";
-    public static final String MODEL = "Cow";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0x33ffff;
-    public static final int EGG_S = 0xff6600;
+    public class Mcblock_Time extends BlockBase {
+        public Mcblock_Time() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Time", Material.ground);
 
-    public Mcentity_Cool_Cow(World world){
-        super(world);
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
+            return true;
+        }
     }
 
+    public class Mcblock_Explosion extends BlockBase {
+        public Mcblock_Explosion() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Explosion", Material.ground);
 
+if(false){
+    setHardness(-1.0F);
 }
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.newExplosion((Entity)null, (x) + 0.5f, (y) + 0.5f, (z) + 0.5f, 0, false, true);}
+
+            return true;
+        }
+    }
+
+    public class Mcblock_Lightning extends BlockBase {
+        public Mcblock_Lightning() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Lightning", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));}
+
+            return true;
+        }
+    }
+
+    public class Mcblock_Place_Block extends BlockBase {
+        public Mcblock_Place_Block() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Place Block", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.setBlock((int)(x), (int)(y), (int)(z), (Blocks.bedrock), 0, 3);}
+
+            return true;
+        }
+    }
+
+    public class Mcblock_Item extends BlockBase {
+        public Mcblock_Item() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Item", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){
+            world.spawnEntityInWorld(new EntityItem(world, (x) + 0.5f, ((y) + 1) + 1, (z) + 0.5f, new ItemStack(Items.compass)));
+        }
+
+            return true;
+        }
+    }
+
+    public class Mcblock_Break_Block extends BlockBase {
+        public Mcblock_Break_Block() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Break Block", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.func_147480_a((int)(x), (int)(y), (int)(z), true);}
+
+            return true;
+        }
+    }
+
+    public class Mcblock_Firework extends BlockBase {
+        public Mcblock_Firework() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Firework", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(true){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, ("#ff0000"), 1, 0));}
+
+            return true;
+        }
+    }
 
 
 }
