@@ -125,7 +125,10 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityNames, EnumObjectType.Entity));			
 			
+			
 			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
+			
+			String temp = getEntityModelString(fileToReplace);
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
@@ -135,6 +138,7 @@ public class JSFunctions {
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, temp));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
@@ -164,6 +168,16 @@ public class JSFunctions {
 		}
 
 		return result;
+	}
+	
+	private String getEntityModelString(String code) {
+		Pattern pattern = Pattern.compile("public static final String MODEL = \"(.*?)\";");
+
+		Matcher matcher = pattern.matcher(code);
+		while (matcher.find()) {
+			return matcher.group(1);
+		}
+		return "Failed to find String";
 	}
 
 	private String variables(List<String> blockNames, EnumObjectType type) {
@@ -195,6 +209,16 @@ public class JSFunctions {
 			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S);\n";
 		}
 
+		return result;
+	}
+	
+	private String registerEntityRenderer(List<String> names, EnumObjectType type, String model) {
+		String result = "";
+		
+		for(String name:names) {
+			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(name, type) + ".class, new CustomEntityRenderer(new Model" + model + "(), \"" + variableName(name, type) + "\"));\n";
+		}
+		
 		return result;
 	}
 
@@ -233,7 +257,7 @@ public class JSFunctions {
 
 	private String variableName(String name, EnumObjectType type)
 	{
-		return "mcblock_" + type.clazz + "_" + name;
+		return "mc" + type.clazz + "_" + name;
 	}
 
 	private String className(String name, EnumObjectType type)

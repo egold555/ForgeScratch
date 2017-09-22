@@ -3264,17 +3264,126 @@ Blockly.Blocks['mcentity'] = {
       "name": "MODEL",
       "options": [
         [
+          "Bat",
+          "Bat"
+        ],
+        [
           "Player",
-          "Player"
+          "Biped"
+        ],
+        [
+          "Blaze",
+          "Blaze"
+        ],
+        [
+          "Boat",
+          "Boat"
+        ],
+        [
+          "Chicken",
+          "Chicken"
         ],
         [
           "Cow",
           "Cow"
         ],
         [
-          "Sheep",
-          "Sheep"
+          "Creeper",
+          "Creeper"
+        ],
+        [
+          "Dragon",
+          "Dragon"
+        ],
+        [
+          "Enderman",
+          "Enderman"
+        ],
+        [
+          "Ghast",
+          "Ghast"
+        ],
+        [
+          "Horse",
+          "Horse"
+        ],
+        [
+          "Iron Golem",
+          "IronGolem"
+        ],
+        [
+          "Magma Cube",
+          "MagmaCube"
+        ],
+        [
+          "Minecart",
+          "Minecart"
+        ],
+        [
+          "Cat",
+          "Ocelot"
+        ],
+        [
+          "Pig",
+          "Pig"
+        ],
+        [
+          "Sheep1",
+          "Sheep1"
+        ],
+        [
+          "Sheep2",
+          "Sheep2"
+        ],
+        [
+          "Silverfish",
+          "Silverfish"
+        ],
+        [
+          "Skeleton",
+          "Skeleton"
+        ],
+        [
+          "Slime",
+          "Slime"
+        ],
+        [
+          "Snowman",
+          "SnowMan"
+        ],
+        [
+          "Spider",
+          "Spider"
+        ],
+        [
+          "Squid",
+          "Squid"
+        ],
+        [
+          "Villager",
+          "Villager"
+        ],
+        [
+          "Witch",
+          "Witch"
+        ],
+        [
+          "Wither",
+          "Wither"
+        ],
+        [
+          "Wolf",
+          "Wolf"
+        ],
+        [
+          "Zombie",
+          "Zombie"
+        ],
+        [
+          "Zombie Villager",
+          "ZombieVillager"
         ]
+        
       ]
     },
     {

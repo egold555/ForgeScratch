@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.entity;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -80,6 +80,9 @@ import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
 import net.minecraftforge.transformers.*;
 
+import cpw.mods.fml.client.*;
+import cpw.mods.fml.client.event.*;
+import cpw.mods.fml.client.registry.*;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.Mod.*;
@@ -96,53 +99,32 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
-public class ForgeMod implements IWorldGenerator{
+public class ClientProxy extends CommonProxy {
     
-	public static final String MOD_NAME = "entity";
-	public static final String MOD_ID = "sf_" + MOD_NAME;
-	public static final String BLOCK_ID = MOD_ID + ":";
-    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods.entity";
+    @Override
+    public void preInit(FMLPreInitializationEvent event){
+        super.preInit(event);
+        ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
+        
+        /* Entity Rendering Code */
+        RenderingRegistry.registerEntityRenderingHandler(Mcentity_Mob_Name.class, new CustomEntityRenderer(new ModelBiped(), "mcentity_Mob_Name"));
+
+    }
     
-    @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
-	public static CommonProxy PROXY;
-    
-    @Instance(ForgeMod.MOD_ID)
-	public static ForgeMod INSTANCE;
-    
-	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
+    static class CustomEntityRenderer extends RenderLiving{
+
+    	ResourceLocation texture;
+    	
+		public CustomEntityRenderer(ModelBase model, String textureName) {
+			super(model, 0.2f);
+			texture = new ResourceLocation(ForgeMod.MOD_ID, "textures/entities/" + textureName + ".png");
+		}
 
 		@Override
-		public Item getTabIconItem() {
-			return Items.iron_axe;
+		protected ResourceLocation getEntityTexture(Entity arg0) {
+			return texture;
 		}
-
-	};
-	
-	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-
-		chunkX = chunkX * 16;
-		chunkZ = chunkZ * 16;
-		if (world.provider.dimensionId == -1) {
-			PROXY.generateNether(world, random, chunkX, chunkZ);
-		}	
-		if (world.provider.dimensionId == 0) {
-			PROXY.generateSurface(world, random, chunkX, chunkZ);
-		}
-		
-
-	}
-	
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		GameRegistry.registerWorldGenerator(this, 1);
-        PROXY.init(event);
-	}
-
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-        PROXY.preInit(event);
-	}
-
+    	
+    }
+    
 }

@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.entity;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -401,7 +401,7 @@ public class CommonProxy {
 public static class Mcentity_Mob_Name extends EntityCreature {
     public static final String RAW_NAME = "Mob Name";
     public static final String NAME = "Mob_Name";
-    public static final String MODEL = "Player";
+    public static final String MODEL = "Biped";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xff0000;
     public static final int EGG_S = 0x33ff33;
