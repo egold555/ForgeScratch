@@ -107,7 +107,9 @@ public class ClientProxy extends CommonProxy {
         ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
         
         /* Entity Rendering Code */
-        
+        RenderingRegistry.registerEntityRenderingHandler(Mcentity_Mob_2.class, new CustomEntityRenderer(new ModelCow(), "mcentity_mob_2"));
+RenderingRegistry.registerEntityRenderingHandler(Mcentity_Mob_1.class, new CustomEntityRenderer(new ModelBiped(), "mcentity_mob_1"));
+
     }
     
     static class CustomEntityRenderer extends RenderLiving{

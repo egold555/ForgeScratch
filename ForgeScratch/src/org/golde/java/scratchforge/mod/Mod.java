@@ -29,11 +29,11 @@ public class Mod {
 	enum EnumTextureType {
 		Block("blocks", 16, 16),
 		Item("items", 16, 16),
-		Entity_64_32("entity", 64, 32),
-		Entity_64_64("entity", 64, 64),
-		Entity_64_128("entity", 64, 128),
-		Entity_128_128("entity", 128, 128),
-		Entity_256_256("entity", 256, 256),
+		Entity_64_32("entities", 64, 32),
+		Entity_64_64("entities", 64, 64),
+		Entity_64_128("entities", 64, 128),
+		Entity_128_128("entities", 128, 128),
+		Entity_256_256("entities", 256, 256),
 		;
 
 		public final String folder;
@@ -88,6 +88,7 @@ public class Mod {
 
 	public void delete() {
 		JavaHelper.deleteDirectory(modFolder);
+		JavaHelper.deleteDirectory(assetsDirectory);
 		modManager.removeMod(this);
 	}
 
@@ -182,7 +183,8 @@ public class Mod {
 						else if(line.contains("Villager") || line.contains("Bat") || line.contains("Wither") || line.contains("Zombie")) {
 							//64 x 64
 							textures.add(new Texture(objName, EnumTextureType.Entity_64_64));
-						}else {
+						}
+						else {
 							//64 x 32
 							textures.add(new Texture(objName, EnumTextureType.Entity_64_32));
 						}

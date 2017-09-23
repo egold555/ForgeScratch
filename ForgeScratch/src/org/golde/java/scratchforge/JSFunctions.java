@@ -123,12 +123,12 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, EnumObjectType.Item));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
 
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityNames, EnumObjectType.Entity));			
-			
 			
 			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
 			
-			String temp = getEntityModelString(fileToReplace);
+			List<String> models = getEntityModelString(fileToReplace);
+			
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityNames, EnumObjectType.Entity, models));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
@@ -138,7 +138,7 @@ public class JSFunctions {
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
-			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, temp));
+			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, models));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
@@ -170,14 +170,16 @@ public class JSFunctions {
 		return result;
 	}
 	
-	private String getEntityModelString(String code) {
+	private List<String> getEntityModelString(String code) {
 		Pattern pattern = Pattern.compile("public static final String MODEL = \"(.*?)\";");
 
+		List<String> result = new ArrayList<String>();
+		
 		Matcher matcher = pattern.matcher(code);
 		while (matcher.find()) {
-			return matcher.group(1);
+			result.add(matcher.group(1));
 		}
-		return "Failed to find String";
+		return result;
 	}
 
 	private String variables(List<String> blockNames, EnumObjectType type) {
@@ -201,22 +203,22 @@ public class JSFunctions {
 		return result;
 	}
 	
-	private String registerEntityCalls(List<String> names, EnumObjectType type) {
+	private String registerEntityCalls(List<String> names, EnumObjectType type, List<String> model) {
 		String result = "";
 
-		for (String name: names) {
-			String className = className(name, type);
-			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S);\n";
+		for(int i = 0; i < names.size(); i++) {
+			String className = className(names.get(i), type);
+			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S); //" + model.get(i) + "\n";
 		}
 
 		return result;
 	}
 	
-	private String registerEntityRenderer(List<String> names, EnumObjectType type, String model) {
+	private String registerEntityRenderer(List<String> names, EnumObjectType type, List<String> model) {
 		String result = "";
 		
-		for(String name:names) {
-			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(name, type) + ".class, new CustomEntityRenderer(new Model" + model + "(), \"" + variableName(name, type) + "\"));\n";
+		for(int i = 0; i < names.size(); i++) {
+			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(names.get(i), type) + ".class, new CustomEntityRenderer(new Model" + model.get(i) + "(), \"" + variableName(names.get(i), type).toLowerCase() + "\"));\n";
 		}
 		
 		return result;
