@@ -129,7 +129,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S);
+		createEntity(Mcentity_TEST.class, Mcentity_TEST.RAW_NAME, Mcentity_TEST.NAME, Mcentity_TEST.EGG_P, Mcentity_TEST.EGG_S);
 
 	}
 
@@ -398,15 +398,15 @@ public class CommonProxy {
 
 
 
-public static class Mcentity_Mob_Name extends EntityCreature {
-    public static final String RAW_NAME = "Mob Name";
-    public static final String NAME = "Mob_Name";
+public static class Mcentity_TEST extends EntityCreature {
+    public static final String RAW_NAME = "TEST";
+    public static final String NAME = "TEST";
     public static final String MODEL = "Player";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xff0000;
     public static final int EGG_S = 0x33ff33;
 
-    public Mcentity_Mob_Name(World world){
+    public Mcentity_TEST(World world){
         super(world);
     }
 
