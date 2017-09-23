@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,8 @@ public class WindowEditTexture extends JFrame {
 
 	private static final long serialVersionUID = -8302074072215275295L;
 	private Main main;
+	
+	private final String[] texturesToIgnore = {"spawn_egg", "spawn_egg_overlay"};
 	
 	public WindowEditTexture(Main main) {
 		this.main = main;
@@ -93,6 +96,9 @@ public class WindowEditTexture extends JFrame {
 			modNode.setUserObject(mod);
 			//PLog.info("Textures: " + mod.getTextures().length);
 			for(Texture texture:mod.getTextures()) {
+				if(Arrays.asList(texturesToIgnore).contains(texture.getTextureName())) {
+					continue;
+				}
 				DefaultMutableTreeNode textureNode = new DefaultMutableTreeNode(texture.getDisplayName());
 				textureNode.setUserObject(texture);
 				modNode.add(textureNode);

@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.entity;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.basemodfiles.*;
 
@@ -129,7 +129,8 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_TEST.class, Mcentity_TEST.RAW_NAME, Mcentity_TEST.NAME, Mcentity_TEST.EGG_P, Mcentity_TEST.EGG_S);
+		createEntity(Mcentity_Mob_2.class, Mcentity_Mob_2.RAW_NAME, Mcentity_Mob_2.NAME, Mcentity_Mob_2.EGG_P, Mcentity_Mob_2.EGG_S); //Cow
+createEntity(Mcentity_Mob_1.class, Mcentity_Mob_1.RAW_NAME, Mcentity_Mob_1.NAME, Mcentity_Mob_1.EGG_P, Mcentity_Mob_1.EGG_S); //Biped
 
 	}
 
@@ -398,15 +399,30 @@ public class CommonProxy {
 
 
 
-public static class Mcentity_TEST extends EntityCreature {
-    public static final String RAW_NAME = "TEST";
-    public static final String NAME = "TEST";
-    public static final String MODEL = "Player";
+public static class Mcentity_Mob_2 extends EntityCreature {
+    public static final String RAW_NAME = "Mob 2";
+    public static final String NAME = "Mob_2";
+    public static final String MODEL = "Cow";
+    public static final boolean SPAWN_NATURALLY = false;
+    public static final int EGG_P = 0x99ffff;
+    public static final int EGG_S = 0x993399;
+
+    public Mcentity_Mob_2(World world){
+        super(world);
+    }
+
+
+}
+
+public static class Mcentity_Mob_1 extends EntityCreature {
+    public static final String RAW_NAME = "Mob 1";
+    public static final String NAME = "Mob_1";
+    public static final String MODEL = "Biped";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xff0000;
     public static final int EGG_S = 0x33ff33;
 
-    public Mcentity_TEST(World world){
+    public Mcentity_Mob_1(World world){
         super(world);
     }
 

@@ -80,6 +80,9 @@ import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
 import net.minecraftforge.transformers.*;
 
+import cpw.mods.fml.client.*;
+import cpw.mods.fml.client.event.*;
+import cpw.mods.fml.client.registry.*;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.Mod.*;
@@ -105,6 +108,22 @@ public class ClientProxy extends CommonProxy {
         
         /* Entity Rendering Code */
         /*Entity Rendering*/
+    }
+    
+    static class CustomEntityRenderer extends RenderLiving{
+
+    	ResourceLocation texture;
+    	
+		public CustomEntityRenderer(ModelBase model, String textureName) {
+			super(model, 0.2f);
+			texture = new ResourceLocation(ForgeMod.MOD_ID, "textures/entities/" + textureName + ".png");
+		}
+
+		@Override
+		protected ResourceLocation getEntityTexture(Entity arg0) {
+			return texture;
+		}
+    	
     }
     
 }
