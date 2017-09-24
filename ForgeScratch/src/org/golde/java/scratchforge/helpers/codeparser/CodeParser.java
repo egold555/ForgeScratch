@@ -10,7 +10,7 @@ public class CodeParser {
 	// Parse the code into a list of CodeComponents. 
 	public void parseCode(String code)
 	{
-		Pattern patStart = Pattern.compile("\\/\\*START:(.*?)\\*\\/");
+		Pattern patStart = Pattern.compile("\\/\\*BEGIN:(.*?)\\*\\/");
 		Matcher matcherStart = patStart.matcher(code); 
 		Pattern patEnd = Pattern.compile("\\/\\*END:(.*?)\\*\\/");
 		Matcher matcherEnd = patEnd.matcher(code); 
@@ -48,7 +48,7 @@ public class CodeParser {
 		List<CodeComponent> result = new ArrayList<CodeComponent>();
 		
 		for (CodeComponent c: components) {
-			if (c.getType().equals("type")) {
+			if (c.getType().equals(type)) {
 				result.add(c);
 			}
 		}

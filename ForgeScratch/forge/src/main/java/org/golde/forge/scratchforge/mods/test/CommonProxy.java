@@ -102,7 +102,8 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	
+	static Mcblock_Cool_Block mcblock_Cool_Block;
+
 
 	/* BlockFlower Variables */
 	
@@ -112,14 +113,16 @@ public class CommonProxy {
 
 	/* Item Variables */
 	public static SFItemMonsterPlacer scItemMonsterPlacer;
-	
+	static Mcitem_Magical_Item mcitem_Magical_Item;
+
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_Cool_Block = new Mcblock_Cool_Block();
+
 
 		/* BlockFlower Constructor Calls */
 		
@@ -129,10 +132,11 @@ public class CommonProxy {
 
 		/* Item Constructor Calls */
 		scItemMonsterPlacer = new SFItemMonsterPlacer();
-		
+		mcitem_Magical_Item = new Mcitem_Magical_Item();
+
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //Minecart
+		createEntity(Mcentity_ugg.class, Mcentity_ugg.RAW_NAME, Mcentity_ugg.NAME, Mcentity_ugg.EGG_P, Mcentity_ugg.EGG_S); //BatNew
 
 	}
 
@@ -396,25 +400,49 @@ public class CommonProxy {
 	}
 
 	
-
-
-
-
-
-public static class Mcentity_Mob_Name extends EntityCreature {
-    public static final String RAW_NAME = "Mob Name";
-    public static final String NAME = "Mob_Name";
-    public static final String MODEL = "Minecart";
+/*type:entity*/
+/*model:BatNew*/
+public static class Mcentity_ugg extends EntityCreature {
+    public static final String RAW_NAME = "ugg";
+    public static final String NAME = "ugg";
     public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xff0000;
-    public static final int EGG_S = 0x33ff33;
+    public static final int EGG_P = 0xff99ff;
+    public static final int EGG_S = 0xffccff;
 
-    public Mcentity_Mob_Name(World world){
+    public Mcentity_ugg(World world){
         super(world);
     }
 
 
 }
+
+/*type:block*/
+    public class Mcblock_Cool_Block extends BlockBase {
+        public Mcblock_Cool_Block() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Cool Block", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+    }
+
+/*type:item*/
+    public class Mcitem_Magical_Item extends ItemBase {
+        public Mcitem_Magical_Item() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Magical Item", 64);
+        }
+
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){
+        EntityLiving entity = null;
+            if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (player.posX), (player.posY), (player.posZ), true, true, ("#3366ff"), 1, 1));}
+
+        return itemstack;
+    }    }
 
 
 }

@@ -139,6 +139,8 @@ Blockly.Java['mcblock'] = function(block) {
   var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:block*/\n' +
     '    public class Mcblock_' + value_name + ' extends BlockBase {\n' +
     '        public Mcblock_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_material + '); \n' +
@@ -153,7 +155,10 @@ Blockly.Java['mcblock'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n' +
+    '/*END:' + value_name + '*/\n'
+
+    ;
 
   return code;
 };
@@ -221,6 +226,8 @@ Blockly.Java['mcblockflower'] = function(block) {
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
 
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:blockFlower*/\n' +
     '    public class McblockFlower_' + value_name + ' extends BlockBaseFlower {\n' +
     '        public McblockFlower_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '"); \n' +
@@ -235,7 +242,8 @@ Blockly.Java['mcblockflower'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n' +
+    '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -366,6 +374,8 @@ Blockly.Java['mcblockplant'] = function(block) {
   }
 
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:blockPlant*/\n' +
     '    public class McblockPlant_' + value_name + ' extends BlockBasePlant {\n' +
     '        public McblockPlant_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_type + ', ' + checkbox_gen + ', ' + checkbox_watergen + ', ' + value_height + '); \n' +
@@ -380,7 +390,8 @@ Blockly.Java['mcblockplant'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n'+
+    '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -2141,12 +2152,15 @@ Blockly.Java['mcitem'] = function(block) {
 
 
   var code = 
+  '/*BEGIN:' + value_name + '*/\n' +
+  '/*type:item*/\n' +
   '    public class Mcitem_' + value_name + ' extends ItemBase {\n' + 
   '        public Mcitem_' + value_name + '() {\n' +
   '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + value_amount + '); \n' +
   '        }\n\n' +
           statements_code +
-    '    }\n';
+    '    }\n'+
+  '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -2602,9 +2616,6 @@ Blockly.Java['mcaction_chat'] = function(block) {
   '}\n';
   return code;
 };
-
-
-
 
 
 
@@ -3462,10 +3473,12 @@ Blockly.Java['mcentity'] = function(block) {
   }
 
   var code = 
+  '/*BEGIN:' + value_name + '*/\n' +
+  '/*type:entity*/\n' +
+  '/*model:'+ dropdown_model + '*/\n' +
   'public static class Mcentity_' + value_name + ' extends EntityCreature {\n' +
   '    public static final String RAW_NAME = "' + raw_value_name + '";\n' +
   '    public static final String NAME = "' + value_name + '";\n' +
-  '    public static final String MODEL = "' + dropdown_model + '";\n' +
   '    public static final boolean SPAWN_NATURALLY = ' + checkbox_spawn_naturally + ';\n' +
   '    public static final int EGG_P = ' + colour_egg_p + ';\n' +
   '    public static final int EGG_S = ' + colour_egg_s + ';\n' +
@@ -3477,9 +3490,9 @@ Blockly.Java['mcentity'] = function(block) {
   '        ' + statements_options + '\n' +
      
 
-  '}\n'
+  '}\n' +
+  '/*END:' + value_name + '*/\n';
 
-  ;
   return code;
 };
 
@@ -3523,7 +3536,7 @@ Blockly.Java['mcentityoptions_modelscale'] = function(block) {
   var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
   var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
   
-  var code = '//Scale ' + value_x + ',' + value_y + ',' + value_z + ';\n';
+  var code = '/*scalex:' + value_x + '*/ /*scaley:' + value_y + '*/ /*scalez:' + value_z + '*/\n';
   return code;
 };
 
@@ -3567,6 +3580,6 @@ Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
   var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
   var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
   
-  var code = '//Translate ' + value_x + ',' + value_y + ',' + value_z + ';\n';
+  var code = '/*scalex:' + value_x + '*/ /*scaley:' + value_y + '*/ /*scalez:' + value_z + '*/\n';
   return code;
 };
