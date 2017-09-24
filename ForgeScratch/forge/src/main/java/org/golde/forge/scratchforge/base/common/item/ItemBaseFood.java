@@ -1,3 +1,4 @@
+package org.golde.forge.scratchforge.base.common.item;
 /*package org.golde.forge.scratchforge.basemodfiles;
 
 import cpw.mods.fml.common.registry.GameRegistry;

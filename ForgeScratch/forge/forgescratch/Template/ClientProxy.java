@@ -1,6 +1,12 @@
 package org.golde.forge.scratchforge.mods./*Mod Package*/;
 
-import org.golde.forge.scratchforge.basemodfiles.*;
+import org.golde.forge.scratchforge.base.common.block.*;
+import org.golde.forge.scratchforge.base.common.item.*;
+import org.golde.forge.scratchforge.base.common.world.*;
+import org.golde.forge.scratchforge.base.helpers.*;
+import org.golde.forge.scratchforge.base.client.models.*;
+
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
@@ -112,12 +118,25 @@ public class ClientProxy extends CommonProxy {
     
     static class CustomEntityRenderer extends RenderLiving{
 
-    	ResourceLocation texture;
+    	private ResourceLocation texture;
+    	double sx, sy, sz, tx, ty, tz;
     	
-		public CustomEntityRenderer(ModelBase model, String textureName) {
-			super(model, 0.2f);
+		public CustomEntityRenderer(ModelBase model, String textureName, double sx, double sy, double sz, double tx, double ty, double tz) {
+			super(model, 0);
 			texture = new ResourceLocation(ForgeMod.MOD_ID, "textures/entities/" + textureName + ".png");
+			this.sx = sx;
+			this.sy = sy;
+			this.sz = sz;
+			this.tx = tx;
+			this.ty = ty;
+			this.tz = tz;
 		}
+		
+		@Override
+		protected void preRenderCallback(EntityLivingBase entity, float f){
+	    	GL11.glScaled(sx, sy, sz);
+	    	GL11.glTranslated(tx, ty, tz);
+	    }
 
 		@Override
 		protected ResourceLocation getEntityTexture(Entity arg0) {

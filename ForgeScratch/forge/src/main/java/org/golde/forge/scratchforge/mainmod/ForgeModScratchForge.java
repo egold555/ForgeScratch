@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.golde.forge.scratchforge.basemodfiles.ItemBase;
-import org.golde.forge.scratchforge.basemodfiles.JavaHelpers;
-import org.golde.forge.scratchforge.basemodfiles.ModHelpers;
-import org.golde.forge.scratchforge.basemodfiles.PLog;
+import org.golde.forge.scratchforge.base.common.item.ItemBase;
+import org.golde.forge.scratchforge.base.helpers.JavaHelpers;
+import org.golde.forge.scratchforge.base.helpers.ModHelpers;
+import org.golde.forge.scratchforge.base.helpers.PLog;
 
 import com.google.common.collect.SetMultimap;
 

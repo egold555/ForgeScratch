@@ -3263,10 +3263,10 @@ Blockly.Blocks['mcentity'] = {
       "type": "field_dropdown",
       "name": "MODEL",
       "options": [
-        [
+        /*[
           "Bat",
           "Bat"
-        ],
+        ],*/
         [
           "Player",
           "Biped"
@@ -3280,6 +3280,10 @@ Blockly.Blocks['mcentity'] = {
           "Boat"
         ],
         [
+          "Book",
+          "Book"
+        ],
+        [
           "Chicken",
           "Chicken"
         ],
@@ -3291,10 +3295,10 @@ Blockly.Blocks['mcentity'] = {
           "Creeper",
           "Creeper"
         ],
-        [
+        /*[
           "Dragon",
           "Dragon"
-        ],
+        ],*/
         [
           "Enderman",
           "Enderman"
@@ -3303,45 +3307,53 @@ Blockly.Blocks['mcentity'] = {
           "Ghast",
           "Ghast"
         ],
-        [
+        /*[
           "Horse",
           "Horse"
-        ],
+        ],*/
         [
           "Iron Golem",
           "IronGolem"
         ],
         [
+          "Leash Knot",
+          "LeashKnot"
+        ],
+        /*[
           "Magma Cube",
           "MagmaCube"
-        ],
+        ],*/
         [
           "Minecart",
           "Minecart"
         ],
-        [
-          "Cat",
+        /*[
+          "Ocelot",
           "Ocelot"
-        ],
+        ],*/
         [
           "Pig",
           "Pig"
         ],
-        [
+        /*[
           "Sheep1",
           "Sheep1"
         ],
         [
           "Sheep2",
           "Sheep2"
-        ],
+        ],*/
         [
           "Silverfish",
           "Silverfish"
         ],
-        [
+        /*[
           "Skeleton",
           "Skeleton"
+        ],*/
+        [
+          "Skeleton Head",
+          "SkeletonHead"
         ],
         [
           "Slime",
@@ -3367,14 +3379,14 @@ Blockly.Blocks['mcentity'] = {
           "Witch",
           "Witch"
         ],
-        [
+        /*[
           "Wither",
           "Wither"
         ],
         [
           "Wolf",
           "Wolf"
-        ],
+        ],*/
         [
           "Zombie",
           "Zombie"
@@ -3476,5 +3488,93 @@ Blockly.Java['mcentity'] = function(block) {
   '}\n'
 
   ;
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_modelscale'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_modelscale",
+  "message0": "Scale Model %1 Scale X: %2 Scale Y: %3 Scale Z: %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_modelscale'] = function(block) {
+  var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
+  var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
+  var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = '//Scale ' + value_x + ',' + value_y + ',' + value_z + ';\n';
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_modeltranslate'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_modeltranslate",
+  "message0": "Translate Model %1 Move X: %2 Move Y: %3 Move Z: %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
+  var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
+  var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
+  var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = '//Translate ' + value_x + ',' + value_y + ',' + value_z + ';\n';
   return code;
 };

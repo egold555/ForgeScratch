@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.golde.forge.scratchforge.basemodfiles.JavaHelpers;
-import org.golde.forge.scratchforge.basemodfiles.ModHelpers;
-import org.golde.forge.scratchforge.basemodfiles.PLog;
+import org.golde.forge.scratchforge.base.helpers.JavaHelpers;
+import org.golde.forge.scratchforge.base.helpers.ModHelpers;
+import org.golde.forge.scratchforge.base.helpers.PLog;
 
 import com.google.common.collect.SetMultimap;
 

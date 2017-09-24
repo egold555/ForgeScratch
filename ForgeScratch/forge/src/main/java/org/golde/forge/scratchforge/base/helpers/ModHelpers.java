@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.basemodfiles;
+package org.golde.forge.scratchforge.base.helpers;
 
 import java.util.ArrayList;
 import java.util.Arrays;

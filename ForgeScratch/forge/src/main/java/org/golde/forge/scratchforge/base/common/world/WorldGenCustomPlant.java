@@ -1,6 +1,8 @@
-package org.golde.forge.scratchforge.basemodfiles;
+package org.golde.forge.scratchforge.base.common.world;
 
 import java.util.Random;
+
+import org.golde.forge.scratchforge.base.common.block.BlockBasePlant;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;

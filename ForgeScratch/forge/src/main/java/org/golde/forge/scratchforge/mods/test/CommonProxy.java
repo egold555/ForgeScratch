@@ -1,6 +1,9 @@
 package org.golde.forge.scratchforge.mods.test;
 
-import org.golde.forge.scratchforge.basemodfiles.*;
+import org.golde.forge.scratchforge.base.common.block.*;
+import org.golde.forge.scratchforge.base.common.item.*;
+import org.golde.forge.scratchforge.base.common.world.*;
+import org.golde.forge.scratchforge.base.helpers.*;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
@@ -129,8 +132,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_2.class, Mcentity_Mob_2.RAW_NAME, Mcentity_Mob_2.NAME, Mcentity_Mob_2.EGG_P, Mcentity_Mob_2.EGG_S); //Cow
-createEntity(Mcentity_Mob_1.class, Mcentity_Mob_1.RAW_NAME, Mcentity_Mob_1.NAME, Mcentity_Mob_1.EGG_P, Mcentity_Mob_1.EGG_S); //Biped
+		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //Biped
 
 	}
 
@@ -399,30 +401,15 @@ createEntity(Mcentity_Mob_1.class, Mcentity_Mob_1.RAW_NAME, Mcentity_Mob_1.NAME,
 
 
 
-public static class Mcentity_Mob_2 extends EntityCreature {
-    public static final String RAW_NAME = "Mob 2";
-    public static final String NAME = "Mob_2";
-    public static final String MODEL = "Cow";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0x99ffff;
-    public static final int EGG_S = 0x993399;
-
-    public Mcentity_Mob_2(World world){
-        super(world);
-    }
-
-
-}
-
-public static class Mcentity_Mob_1 extends EntityCreature {
-    public static final String RAW_NAME = "Mob 1";
-    public static final String NAME = "Mob_1";
+public static class Mcentity_Mob_Name extends EntityCreature {
+    public static final String RAW_NAME = "Mob Name";
+    public static final String NAME = "Mob_Name";
     public static final String MODEL = "Biped";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xff0000;
     public static final int EGG_S = 0x33ff33;
 
-    public Mcentity_Mob_1(World world){
+    public Mcentity_Mob_Name(World world){
         super(world);
     }
 

@@ -65,7 +65,7 @@ public class JSFunctions {
 
 	}
 
-	public void run(String code) {
+	public void run(String sfGenCode) {
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
 
@@ -77,13 +77,13 @@ public class JSFunctions {
 
 
 			//================== [ Forge Mod.java Replacement] ==================
-			List<String> blockNames = findNames(code, EnumObjectType.Block);
-			List<String> blockFlowerNames = findNames(code, EnumObjectType.BlockFlower);
-			List<String> blockPlantNames = findNames(code, EnumObjectType.BlockPlant);
+			List<String> blockNames = findNames(sfGenCode, EnumObjectType.Block);
+			List<String> blockFlowerNames = findNames(sfGenCode, EnumObjectType.BlockFlower);
+			List<String> blockPlantNames = findNames(sfGenCode, EnumObjectType.BlockPlant);
 
-			List<String> itemNames = findNames(code, EnumObjectType.Item);
+			List<String> itemNames = findNames(sfGenCode, EnumObjectType.Item);
 			
-			List<String> entityNames = findNames(code, EnumObjectType.Entity);
+			List<String> entityNames = findNames(sfGenCode, EnumObjectType.Entity);
 
 			PLog.info("blockNames:" + blockNames.size());
 			PLog.info("blockFlowerNames:" + blockFlowerNames.size());
@@ -124,7 +124,22 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
 
 			
-			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
+			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(sfGenCode));
+			
+			double sx = 1, sy = 1, sz = 1, tx = 0, ty = 0, tz = 0;
+			ThreeDoubleClass scale = getThreeDoubles(sfGenCode, "Scale");
+			if(scale != null) {
+				sx = scale.x;
+				sy = scale.y;
+				sz = scale.z;
+			}
+			
+			ThreeDoubleClass translate = getThreeDoubles(sfGenCode, "Translate");
+			if(translate != null) {
+				tx = translate.x;
+				ty = translate.y;
+				tz = translate.z;
+			}
 			
 			List<String> models = getEntityModelString(fileToReplace);
 			
@@ -138,7 +153,7 @@ public class JSFunctions {
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
-			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, models));
+			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, models, sx, sy, sz, tx, ty, tz));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
@@ -181,6 +196,28 @@ public class JSFunctions {
 		}
 		return result;
 	}
+	
+	private ThreeDoubleClass getThreeDoubles(String code, String lookFor) {
+		Pattern pattern = Pattern.compile("\\/\\/" + lookFor + " (.*?),(.*?),(.*?);");
+
+		Matcher matcher = pattern.matcher(code);
+		ThreeDoubleClass result = new ThreeDoubleClass();
+		if(matcher.find()) {
+			result.x = Double.parseDouble(matcher.group(1));
+			result.y = Double.parseDouble(matcher.group(2));
+			result.z = Double.parseDouble(matcher.group(3));
+			return result;
+		}
+		
+		return null;
+		
+	}
+	
+	 class ThreeDoubleClass{
+		public double x;
+		public double y;
+		public double z;
+	}
 
 	private String variables(List<String> blockNames, EnumObjectType type) {
 		String result = "";
@@ -214,11 +251,11 @@ public class JSFunctions {
 		return result;
 	}
 	
-	private String registerEntityRenderer(List<String> names, EnumObjectType type, List<String> model) {
+	private String registerEntityRenderer(List<String> names, EnumObjectType type, List<String> model, double sx, double sy, double sz, double tx, double ty, double tz) {
 		String result = "";
 		
 		for(int i = 0; i < names.size(); i++) {
-			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(names.get(i), type) + ".class, new CustomEntityRenderer(new Model" + model.get(i) + "(), \"" + variableName(names.get(i), type).toLowerCase() + "\"));\n";
+			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(names.get(i), type) + ".class, new CustomEntityRenderer(new Model" + model.get(i) + "(), \"" + variableName(names.get(i), type).toLowerCase() + "\", " + sx + ", " + sy + ", " + sz + ", " + tx + ", " + ty + ", " + tz + "));\n";
 		}
 		
 		return result;
