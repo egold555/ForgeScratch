@@ -71,7 +71,7 @@ public class JSFunctions {
 
 			//Setup basic variables
 			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
-			JavaHelper.copyFolder(new File(forgeScratch, "Template"), projectFolder);
+			JavaHelper.copyEverythingInAFolder(new File(forgeScratch, "Template"), projectFolder);
 			String fileToReplace = "";
 
 

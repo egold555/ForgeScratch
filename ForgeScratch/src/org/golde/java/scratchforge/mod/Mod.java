@@ -22,26 +22,20 @@ public class Mod {
 	private File modFile_ForgeMod;
 	private File modFolder;
 	private List<Texture> textures;
+	private File templateDirectory;
 	private File assetsDirectory;
 	private boolean enabled;
 
 
 	enum EnumTextureType {
-		Block("blocks", 16, 16),
-		Item("items", 16, 16),
-		Entity_64_32("entities", 64, 32),
-		Entity_64_64("entities", 64, 64),
-		Entity_64_128("entities", 64, 128),
-		Entity_128_128("entities", 128, 128),
-		Entity_256_256("entities", 256, 256),
+		Block("blocks"),
+		Item("items"),
+		Entity("entities"),
 		;
 
 		public final String folder;
-		public final int x, y;
-		EnumTextureType(String folder, int x, int y){
+		EnumTextureType(String folder){
 			this.folder = folder;
-			this.x = x;
-			this.y = y;
 		}
 	}
 
@@ -52,9 +46,11 @@ public class Mod {
 		this.modFile_ForgeMod = new File(modFolder, "ForgeMod.java");
 		this.enabled = enabled;
 
+		templateDirectory = new File(modManager.forgeScratch, "Template Assets");
+		
 		scanModFile();
 
-		JavaHelper.copyFolder(new File(modManager.forgeScratch, "Template Assets"), assetsDirectory);
+		JavaHelper.copyEverythingInAFolder(new File(templateDirectory, "assets"), assetsDirectory);
 	}
 
 	public String getModName() {
@@ -162,28 +158,12 @@ public class Mod {
 						startIndex = line.indexOf("createEntity(") + "createEntity(".length();
 						endIndex = line.indexOf(".class", startIndex);
 						objName = line.substring(startIndex, endIndex);
-
-						if(line.contains("Dragon")) {
-							//256 x 256
-							textures.add(new Texture(objName, EnumTextureType.Entity_256_256));
-						}
-						else if(line.contains("IronGolem") || line.contains("Horse")) {
-							//128 x 128
-							textures.add(new Texture(objName, EnumTextureType.Entity_128_128));
-						}
-						else if(line.contains("Witch")) {
-							//64 x 128
-							textures.add(new Texture(objName, EnumTextureType.Entity_64_128));
-						}
-						else if(line.contains("Villager") || line.contains("Bat") || line.contains("Wither") || line.contains("Zombie")) {
-							//64 x 64
-							textures.add(new Texture(objName, EnumTextureType.Entity_64_64));
-						}
-						else {
-							//64 x 32
-							textures.add(new Texture(objName, EnumTextureType.Entity_64_32));
-						}
 						
+						startIndex = line.indexOf("//") + "//".length();
+						String entityName = line.substring(startIndex);
+						entityName = entityName.replace("New", "");
+						entityName = entityName.toLowerCase();
+						textures.add(new Texture(objName, EnumTextureType.Entity, entityName));
 					}
 				}
 			}
@@ -198,10 +178,19 @@ public class Mod {
 		private String textureName;
 		private EnumTextureType type;
 		private File file;
+		private String entityTexture = null;
 
 		public Texture(String textureName, EnumTextureType type) {
+			this(textureName, type, null);
+		}
+
+		public Texture(String textureName, EnumTextureType type, String entityTexture) {
 			this.textureName = textureName;
 			this.type = type;
+
+			if(type == EnumTextureType.Entity) {
+				this.entityTexture = entityTexture;
+			}
 
 			file = new File(assetsDirectory, "textures\\" + type.folder + "\\" + getTextureName() + ".png");
 		}
@@ -212,6 +201,10 @@ public class Mod {
 
 		public File getFile() {
 			return file;
+		}
+		
+		public boolean delete() {
+			return file.delete();
 		}
 
 		public String getTextureName() {
@@ -227,9 +220,15 @@ public class Mod {
 		}
 
 		public void createTexture() throws IOException {
-			BufferedImage image = ImageTool.toBufferedImage(ImageTool.getEmptyImage(type.x, type.y));
-			file.getParentFile().mkdirs();
-			ImageIO.write(image, "png", file);
+			if(type != EnumTextureType.Entity) {
+				BufferedImage image = ImageTool.toBufferedImage(ImageTool.getEmptyImage(16, 16));
+				file.getParentFile().mkdirs();
+				ImageIO.write(image, "png", file);
+			} 
+			else {
+				file.getParentFile().mkdirs();
+				Files.copy(new File(templateDirectory, "default\\mobs\\" + entityTexture + ".png").toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}
 		}
 
 		@Override

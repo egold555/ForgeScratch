@@ -15,6 +15,11 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
 /**
  * A class to do functions that Java should have built in
  * @author Eric
@@ -150,7 +155,7 @@ public class JavaHelper {
 		return sb.toString();
 	}
 
-	public static void copyFolder(File source, File destination)
+	public static void copyEverythingInAFolder(File source, File destination)
 	{
 		if (source.isDirectory())
 		{
@@ -166,7 +171,7 @@ public class JavaHelper {
 				File srcFile = new File(source, file);
 				File destFile = new File(destination, file);
 
-				copyFolder(srcFile, destFile);
+				copyEverythingInAFolder(srcFile, destFile);
 			}
 		}
 		else
@@ -209,5 +214,15 @@ public class JavaHelper {
 			} 
 		} // either file or an empty directory 
 		return dir.delete(); 
+	}
+
+	public static void deleteSelectedItems(JTree tree) {
+		DefaultMutableTreeNode node;
+		DefaultTreeModel model = (DefaultTreeModel) (tree.getModel());
+		TreePath[] paths = tree.getSelectionPaths();
+		for (int i = 0; i < paths.length; i++) {
+			node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
+			model.removeNodeFromParent(node);
+		}
 	}
 }

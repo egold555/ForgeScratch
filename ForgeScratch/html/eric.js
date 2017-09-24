@@ -3280,10 +3280,6 @@ Blockly.Blocks['mcentity'] = {
           "Boat"
         ],
         [
-          "Book",
-          "Book"
-        ],
-        [
           "Chicken",
           "Chicken"
         ],
@@ -3350,10 +3346,6 @@ Blockly.Blocks['mcentity'] = {
         [
           "Skeleton",
           "SkeletonNew"
-        ],
-        [
-          "Skeleton Head",
-          "SkeletonHead"
         ],
         [
           "Slime",
