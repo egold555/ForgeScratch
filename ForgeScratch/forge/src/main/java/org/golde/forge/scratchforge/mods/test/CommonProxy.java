@@ -132,7 +132,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //Biped
+		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //WolfNew
 
 	}
 
@@ -404,7 +404,7 @@ public class CommonProxy {
 public static class Mcentity_Mob_Name extends EntityCreature {
     public static final String RAW_NAME = "Mob Name";
     public static final String NAME = "Mob_Name";
-    public static final String MODEL = "Biped";
+    public static final String MODEL = "WolfNew";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xff0000;
     public static final int EGG_S = 0x33ff33;

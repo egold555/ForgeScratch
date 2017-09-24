@@ -3263,10 +3263,10 @@ Blockly.Blocks['mcentity'] = {
       "type": "field_dropdown",
       "name": "MODEL",
       "options": [
-        /*[
+        [
           "Bat",
-          "Bat"
-        ],*/
+          "BatNew"
+        ],
         [
           "Player",
           "Biped"
@@ -3327,10 +3327,10 @@ Blockly.Blocks['mcentity'] = {
           "Minecart",
           "Minecart"
         ],
-        /*[
+        [
           "Ocelot",
-          "Ocelot"
-        ],*/
+          "OcelotNew"
+        ],
         [
           "Pig",
           "Pig"
@@ -3347,10 +3347,10 @@ Blockly.Blocks['mcentity'] = {
           "Silverfish",
           "Silverfish"
         ],
-        /*[
+        [
           "Skeleton",
-          "Skeleton"
-        ],*/
+          "SkeletonNew"
+        ],
         [
           "Skeleton Head",
           "SkeletonHead"
@@ -3382,11 +3382,11 @@ Blockly.Blocks['mcentity'] = {
         /*[
           "Wither",
           "Wither"
-        ],
+        ],*/
         [
           "Wolf",
-          "Wolf"
-        ],*/
+          "WolfNew"
+        ],
         [
           "Zombie",
           "Zombie"
