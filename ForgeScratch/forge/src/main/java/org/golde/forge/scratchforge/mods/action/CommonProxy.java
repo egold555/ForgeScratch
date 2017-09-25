@@ -85,6 +85,8 @@ import net.minecraftforge.transformers.*;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.registry.*;
 import cpw.mods.fml.common.network.*;
@@ -100,41 +102,44 @@ import io.netty.buffer.*;
 import io.netty.channel.*;
 
 public class CommonProxy {
+	
+	public static Scheduler scheduler = new Scheduler();
+
 
 	/* Block Variables */
 	static Mcblock_World___Console mcblock_World___Console;
-static Mcblock_World___Time_Dropdown mcblock_World___Time_Dropdown;
-static Mcblock_World___Spawn_Mob mcblock_World___Spawn_Mob;
-static Mcblock_Player___Potion_Effect mcblock_Player___Potion_Effect;
-static Mcblock_Player___Sound mcblock_Player___Sound;
-static Mcblock_Player___Give_item mcblock_Player___Give_item;
-static Mcblock_Player___Chat_Message mcblock_Player___Chat_Message;
-static Mcblock_World___Lightning mcblock_World___Lightning;
-static Mcblock_World___Time mcblock_World___Time;
-static Mcblock_Entity___Health mcblock_Entity___Health;
-static Mcblock_World___Explosion mcblock_World___Explosion;
-static Mcblock_Player___Velocity mcblock_Player___Velocity;
-static Mcblock_Entity___Potion mcblock_Entity___Potion;
-static Mcblock_World___Firework mcblock_World___Firework;
-static Mcblock_Player___Set_Health mcblock_Player___Set_Health;
-static Mcblock_Player___Teleport mcblock_Player___Teleport;
-static Mcblock_World___Spawn_Item mcblock_World___Spawn_Item;
-static Mcblock_Entity___Velocity mcblock_Entity___Velocity;
-static Mcblock_Entity___Name mcblock_Entity___Name;
-static Mcblock_Entity___Teleport mcblock_Entity___Teleport;
-static Mcblock_World___Break_Block mcblock_World___Break_Block;
-static Mcblock_World___Place_Block mcblock_World___Place_Block;
+	static Mcblock_World___Time_Dropdown mcblock_World___Time_Dropdown;
+	static Mcblock_World___Spawn_Mob mcblock_World___Spawn_Mob;
+	static Mcblock_Player___Potion_Effect mcblock_Player___Potion_Effect;
+	static Mcblock_Player___Sound mcblock_Player___Sound;
+	static Mcblock_Player___Give_item mcblock_Player___Give_item;
+	static Mcblock_Player___Chat_Message mcblock_Player___Chat_Message;
+	static Mcblock_World___Lightning mcblock_World___Lightning;
+	static Mcblock_World___Time mcblock_World___Time;
+	static Mcblock_Entity___Health mcblock_Entity___Health;
+	static Mcblock_World___Explosion mcblock_World___Explosion;
+	static Mcblock_Player___Velocity mcblock_Player___Velocity;
+	static Mcblock_Entity___Potion mcblock_Entity___Potion;
+	static Mcblock_World___Firework mcblock_World___Firework;
+	static Mcblock_Player___Set_Health mcblock_Player___Set_Health;
+	static Mcblock_Player___Teleport mcblock_Player___Teleport;
+	static Mcblock_World___Spawn_Item mcblock_World___Spawn_Item;
+	static Mcblock_Entity___Velocity mcblock_Entity___Velocity;
+	static Mcblock_Entity___Name mcblock_Entity___Name;
+	static Mcblock_Entity___Teleport mcblock_Entity___Teleport;
+	static Mcblock_World___Break_Block mcblock_World___Break_Block;
+	static Mcblock_World___Place_Block mcblock_World___Place_Block;
 
 
 	/* BlockFlower Variables */
-	
+
 
 	/* BlockPlant Variables */
-	
+
 
 	/* Item Variables */
 	public static SFItemMonsterPlacer scItemMonsterPlacer;
-	
+
 
 	/* Entity Variables */
 	/*Variables - Entity*/
@@ -142,46 +147,51 @@ static Mcblock_World___Place_Block mcblock_World___Place_Block;
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
 		mcblock_World___Console = new Mcblock_World___Console();
-mcblock_World___Time_Dropdown = new Mcblock_World___Time_Dropdown();
-mcblock_World___Spawn_Mob = new Mcblock_World___Spawn_Mob();
-mcblock_Player___Potion_Effect = new Mcblock_Player___Potion_Effect();
-mcblock_Player___Sound = new Mcblock_Player___Sound();
-mcblock_Player___Give_item = new Mcblock_Player___Give_item();
-mcblock_Player___Chat_Message = new Mcblock_Player___Chat_Message();
-mcblock_World___Lightning = new Mcblock_World___Lightning();
-mcblock_World___Time = new Mcblock_World___Time();
-mcblock_Entity___Health = new Mcblock_Entity___Health();
-mcblock_World___Explosion = new Mcblock_World___Explosion();
-mcblock_Player___Velocity = new Mcblock_Player___Velocity();
-mcblock_Entity___Potion = new Mcblock_Entity___Potion();
-mcblock_World___Firework = new Mcblock_World___Firework();
-mcblock_Player___Set_Health = new Mcblock_Player___Set_Health();
-mcblock_Player___Teleport = new Mcblock_Player___Teleport();
-mcblock_World___Spawn_Item = new Mcblock_World___Spawn_Item();
-mcblock_Entity___Velocity = new Mcblock_Entity___Velocity();
-mcblock_Entity___Name = new Mcblock_Entity___Name();
-mcblock_Entity___Teleport = new Mcblock_Entity___Teleport();
-mcblock_World___Break_Block = new Mcblock_World___Break_Block();
-mcblock_World___Place_Block = new Mcblock_World___Place_Block();
+		mcblock_World___Time_Dropdown = new Mcblock_World___Time_Dropdown();
+		mcblock_World___Spawn_Mob = new Mcblock_World___Spawn_Mob();
+		mcblock_Player___Potion_Effect = new Mcblock_Player___Potion_Effect();
+		mcblock_Player___Sound = new Mcblock_Player___Sound();
+		mcblock_Player___Give_item = new Mcblock_Player___Give_item();
+		mcblock_Player___Chat_Message = new Mcblock_Player___Chat_Message();
+		mcblock_World___Lightning = new Mcblock_World___Lightning();
+		mcblock_World___Time = new Mcblock_World___Time();
+		mcblock_Entity___Health = new Mcblock_Entity___Health();
+		mcblock_World___Explosion = new Mcblock_World___Explosion();
+		mcblock_Player___Velocity = new Mcblock_Player___Velocity();
+		mcblock_Entity___Potion = new Mcblock_Entity___Potion();
+		mcblock_World___Firework = new Mcblock_World___Firework();
+		mcblock_Player___Set_Health = new Mcblock_Player___Set_Health();
+		mcblock_Player___Teleport = new Mcblock_Player___Teleport();
+		mcblock_World___Spawn_Item = new Mcblock_World___Spawn_Item();
+		mcblock_Entity___Velocity = new Mcblock_Entity___Velocity();
+		mcblock_Entity___Name = new Mcblock_Entity___Name();
+		mcblock_Entity___Teleport = new Mcblock_Entity___Teleport();
+		mcblock_World___Break_Block = new Mcblock_World___Break_Block();
+		mcblock_World___Place_Block = new Mcblock_World___Place_Block();
 
 
 		/* BlockFlower Constructor Calls */
-		
+
 
 		/* BlockPlant Constructor Calls */
-		
+
 
 		/* Item Constructor Calls */
 		scItemMonsterPlacer = new SFItemMonsterPlacer();
-		
+
 
 		/* Entity Constructor Calls */
-		
+
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
+	}
+
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		scheduler.update();
 	}
 
 	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
@@ -191,10 +201,10 @@ mcblock_World___Place_Block = new Mcblock_World___Place_Block();
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			
+
 
 			/*Overworld world generation for plants*/
-			
+
 
 		}
 	}
@@ -219,17 +229,17 @@ mcblock_World___Place_Block = new Mcblock_World___Place_Block();
 	 * Based off of Minecrafts Spawn Egg Code
 	 */
 	static class SFItemMonsterPlacer extends ItemBase{
-		
+
 		@SideOnly(Side.CLIENT)
 		private IIcon theIcon;
 
 		public static HashMap entityEggs = new LinkedHashMap();
-		
+
 		public SFItemMonsterPlacer() {
 			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Spawn Egg", 64);
 			setHasSubtypes(true);
 		}
-		
+
 		public String getItemStackDisplayName(ItemStack p_77653_1_)
 		{
 			String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
@@ -421,9 +431,9 @@ mcblock_World___Place_Block = new Mcblock_World___Place_Block();
 			super.registerIcons(p_94581_1_);
 			this.theIcon = p_94581_1_.registerIcon(this.getIconString() + "_overlay");
 		}
-		
+
 	}
-	
+
 	public static void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
 		int id = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
@@ -433,508 +443,508 @@ mcblock_World___Place_Block = new Mcblock_World___Place_Block();
 		}
 		//TODO: Add language
 	}
-	
+
 	private static void createEgg(int id, int solidColor, int spotColor) {
 		SFItemMonsterPlacer.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-	
-/*type:block*/
-    public class Mcblock_World___Console extends BlockBase {
-        public Mcblock_World___Console() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Console", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){
-            PLog.game("Hello!");
-        }
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Time_Dropdown extends BlockBase {
-        public Mcblock_World___Time_Dropdown() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Time Dropdown", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Spawn_Mob extends BlockBase {
-        public Mcblock_World___Spawn_Mob() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Spawn Mob", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Potion_Effect extends BlockBase {
-        public Mcblock_Player___Potion_Effect() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Potion Effect", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){if(player != null){ModHelpers.addPotionToEntity(player, 1, 10, 0, true);}}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Sound extends BlockBase {
-        public Mcblock_Player___Sound() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Sound", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(player != null){world.playSoundAtEntity(player, "ambient.cave", 1, 1);}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Give_item extends BlockBase {
-        public Mcblock_Player___Give_item() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Give item", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack(Items.baked_potato));}}}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Chat_Message extends BlockBase {
-        public Mcblock_Player___Chat_Message() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Chat Message", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(world.isRemote){
-            if(player != null) {player.addChatMessage(new ChatComponentText("A chat message"));}
-        }
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Lightning extends BlockBase {
-        public Mcblock_World___Lightning() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Lightning", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Time extends BlockBase {
-        public Mcblock_World___Time() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Time", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Entity___Health extends BlockBase {
-        public Mcblock_Entity___Health() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Health", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-        entity.setHealth(1);
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Explosion extends BlockBase {
-        public Mcblock_World___Explosion() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Explosion", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                world.createExplosion(null, x , y +1 , z , 245, true);
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Velocity extends BlockBase {
-        public Mcblock_Player___Velocity() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Velocity", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(player != null){player.setVelocity(0, 2, 0);}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Entity___Potion extends BlockBase {
-        public Mcblock_Entity___Potion() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Potion", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-        if(!world.isRemote){if(entity != null) {ModHelpers.addPotionToEntity(entity, 1, 10, 0, true);}}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Firework extends BlockBase {
-        public Mcblock_World___Firework() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Firework", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), ((y) + 1), (z), true, true, ("#ffff00"), 0, 0));}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Set_Health extends BlockBase {
-        public Mcblock_Player___Set_Health() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Set Health", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                player.setHealth(5);
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Player___Teleport extends BlockBase {
-        public Mcblock_Player___Teleport() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Teleport", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(player != null){player.setPositionAndUpdate((player.posX), ((player.posY) + 10), (player.posZ));}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Spawn_Item extends BlockBase {
-        public Mcblock_World___Spawn_Item() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Spawn Item", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){
-            world.spawnEntityInWorld(new EntityItem(world, (x) + 0.5f, ((y) + 1) + 1, (z) + 0.5f, new ItemStack(Items.chicken)));
-        }
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Entity___Velocity extends BlockBase {
-        public Mcblock_Entity___Velocity() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Velocity", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-        if(entity != null){entity.setVelocity(0, 2, 0);}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Entity___Name extends BlockBase {
-        public Mcblock_Entity___Name() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Name", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-        if(entity != null){
-            entity.setCustomNameTag("Bob");
-            entity.setAlwaysRenderNameTag(true);
-        }
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_Entity___Teleport extends BlockBase {
-        public Mcblock_Entity___Teleport() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Teleport", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-        if(entity != null){((EntityLiving)entity).setPositionAndUpdate((entity.posX), ((entity.posY) + 10), (entity.posZ));}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Break_Block extends BlockBase {
-        public Mcblock_World___Break_Block() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Break Block", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.func_147480_a((int)(x), (int)((y) + 1), (int)(z), true);}
-
-            return true;
-        }
-    }
-
-/*type:block*/
-    public class Mcblock_World___Place_Block extends BlockBase {
-        public Mcblock_World___Place_Block() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Place Block", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(true){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                if(!world.isRemote){world.setBlock((int)(x), (int)((y) + 1), (int)(z), (Blocks.wool), (int)3, 3);}
-
-            return true;
-        }
-    }
+
+	/*type:block*/
+	public class Mcblock_World___Console extends BlockBase {
+		public Mcblock_World___Console() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Console", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){
+				PLog.game("Hello!");
+			}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Time_Dropdown extends BlockBase {
+		public Mcblock_World___Time_Dropdown() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Time Dropdown", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Spawn_Mob extends BlockBase {
+		public Mcblock_World___Spawn_Mob() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Spawn Mob", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Potion_Effect extends BlockBase {
+		public Mcblock_Player___Potion_Effect() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Potion Effect", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){if(player != null){ModHelpers.addPotionToEntity(player, 1, 10, 0, true);}}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Sound extends BlockBase {
+		public Mcblock_Player___Sound() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Sound", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(player != null){world.playSoundAtEntity(player, "ambient.cave", 1, 1);}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Give_item extends BlockBase {
+		public Mcblock_Player___Give_item() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Give item", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack(Items.baked_potato));}}}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Chat_Message extends BlockBase {
+		public Mcblock_Player___Chat_Message() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Chat Message", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(world.isRemote){
+				if(player != null) {player.addChatMessage(new ChatComponentText("A chat message"));}
+			}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Lightning extends BlockBase {
+		public Mcblock_World___Lightning() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Lightning", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Time extends BlockBase {
+		public Mcblock_World___Time() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Time", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Entity___Health extends BlockBase {
+		public Mcblock_Entity___Health() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Health", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+			entity.setHealth(1);
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Explosion extends BlockBase {
+		public Mcblock_World___Explosion() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Explosion", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			world.createExplosion(null, x , y +1 , z , 245, true);
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Velocity extends BlockBase {
+		public Mcblock_Player___Velocity() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Velocity", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(false){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(player != null){player.setVelocity(0, 2, 0);}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Entity___Potion extends BlockBase {
+		public Mcblock_Entity___Potion() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Potion", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+			if(!world.isRemote){if(entity != null) {ModHelpers.addPotionToEntity(entity, 1, 10, 0, true);}}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Firework extends BlockBase {
+		public Mcblock_World___Firework() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Firework", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), ((y) + 1), (z), true, true, ("#ffff00"), 0, 0));}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Set_Health extends BlockBase {
+		public Mcblock_Player___Set_Health() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Set Health", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			player.setHealth(5);
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Player___Teleport extends BlockBase {
+		public Mcblock_Player___Teleport() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Player - Teleport", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(player != null){player.setPositionAndUpdate((player.posX), ((player.posY) + 10), (player.posZ));}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Spawn_Item extends BlockBase {
+		public Mcblock_World___Spawn_Item() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Spawn Item", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){
+				world.spawnEntityInWorld(new EntityItem(world, (x) + 0.5f, ((y) + 1) + 1, (z) + 0.5f, new ItemStack(Items.chicken)));
+			}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Entity___Velocity extends BlockBase {
+		public Mcblock_Entity___Velocity() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Velocity", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+			if(entity != null){entity.setVelocity(0, 2, 0);}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Entity___Name extends BlockBase {
+		public Mcblock_Entity___Name() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Name", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+			if(entity != null){
+				entity.setCustomNameTag("Bob");
+				entity.setAlwaysRenderNameTag(true);
+			}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_Entity___Teleport extends BlockBase {
+		public Mcblock_Entity___Teleport() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Entity - Teleport", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+			if(entity != null){((EntityLiving)entity).setPositionAndUpdate((entity.posX), ((entity.posY) + 10), (entity.posZ));}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Break_Block extends BlockBase {
+		public Mcblock_World___Break_Block() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Break Block", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.func_147480_a((int)(x), (int)((y) + 1), (int)(z), true);}
+
+			return true;
+		}
+	}
+
+	/*type:block*/
+	public class Mcblock_World___Place_Block extends BlockBase {
+		public Mcblock_World___Place_Block() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "World - Place Block", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(true){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			EntityLiving entity = null;
+			if(!world.isRemote){world.setBlock((int)(x), (int)((y) + 1), (int)(z), (Blocks.wool), (int)3, 3);}
+
+			return true;
+		}
+	}
 
 
 }

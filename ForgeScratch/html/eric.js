@@ -3583,3 +3583,53 @@ Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
   var code = '/*scalex:' + value_x + '*/ /*scaley:' + value_y + '*/ /*scalez:' + value_z + '*/\n';
   return code;
 };
+
+
+Blockly.Blocks['mcaction_taskdelay'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_taskdelay",
+  "message0": "Delayed Task %1 Delay  (Seconds): %2 Code To Run %3 %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "DELAY",
+      "check": "Number"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "action"
+    }
+  ],
+  "inputsInline": false,
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_taskdelay'] = function(block) {
+  var value_delay = Blockly.Java.valueToCode(block, 'DELAY', Blockly.Java.ORDER_ATOMIC);
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  'scheduler.runTaskLater((long)(' + value_delay + '*1000), new Runnable(){\n'+
+  '    public void run(){\n'+
+  '        ' + statements_code + '\n' + 
+  '    }\n' + 
+  '});'
+  ;
+  
+  return code;
+};

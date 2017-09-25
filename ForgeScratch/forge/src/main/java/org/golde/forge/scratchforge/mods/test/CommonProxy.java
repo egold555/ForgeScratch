@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -106,37 +106,39 @@ public class CommonProxy {
 	public static Scheduler scheduler = new Scheduler();
 	
 	/* Block Variables */
-	/*Variables - Block*/
+	static Mcblock_Firework_Every_Second mcblock_Firework_Every_Second;
+
 
 	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
+	
 
 	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
+	
 
 	/* Item Variables */
 	public static SFItemMonsterPlacer scItemMonsterPlacer;
-	/*Variables - Item*/
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
+		mcblock_Firework_Every_Second = new Mcblock_Firework_Every_Second();
+
 
 		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
+		
 
 		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
+		
 
 		/* Item Constructor Calls */
 		scItemMonsterPlacer = new SFItemMonsterPlacer();
-		/*Constructor calls - Item*/
+		
 
 		/* Entity Constructor Calls */
-		/*Constructor calls - Entity*/
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -156,10 +158,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			/*WorldGen - Overworld - Flowers*/
+			
 
 			/*Overworld world generation for plants*/
-			/*WorldGen - Overworld - Plant*/
+			
 
 		}
 	}
@@ -403,6 +405,34 @@ public class CommonProxy {
 		SFItemMonsterPlacer.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-	/*Classes*/
+	
+/*type:block*/
+    public class Mcblock_Firework_Every_Second extends BlockBase {
+        public Mcblock_Firework_Every_Second() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Firework Every Second", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                for (double i = 1; i<=10; i++) {
+            scheduler.runTaskLater((long)(i*1000), new Runnable(){
+                public void run(){
+                        if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, ("#ff99ff"), 1, 2));}
+
+                }
+            });} // end for
+
+            return true;
+        }
+    }
+
 
 }
