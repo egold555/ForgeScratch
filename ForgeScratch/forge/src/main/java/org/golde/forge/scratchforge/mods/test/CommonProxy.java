@@ -104,7 +104,6 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-	private EntityIdList entityIdList = new EntityIdList();
 
 	/* Block Variables */
 	static Mcblock_change_me mcblock_change_me;
@@ -214,22 +213,20 @@ public class CommonProxy {
 
 		@Override
 		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-			final int randomId = entityIdList.getNextId();
+			final VariableHolder variableHolder = new VariableHolder();
 			
 			for (double i = 0.1; i<=10; i += 1) {
 				scheduler.runTaskLater((long)(i*1000), new Runnable(){
 					public void run(){
 						
-						if(!world.isRemote){entityIdList.setEntity(randomId, ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper"));}
-						if(entityIdList.getEntity(randomId) != null){entityIdList.getEntity(randomId).setVelocity(0, 1, 0);}
+						if(!world.isRemote){variableHolder.entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+						if(variableHolder.entity != null){variableHolder.entity.setVelocity(0, 1, 0);}
 						
-
 					}
 					
 				});} // end for
 
 			
-			//putEntityLiving(randomId, null);
 			return true;
 		}
 	}
