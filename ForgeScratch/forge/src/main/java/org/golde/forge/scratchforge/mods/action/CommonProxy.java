@@ -679,7 +679,7 @@ if(true){
         @Override
         public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
              EntityLiving entity = null;
-                if(!world.isRemote){world.newExplosion((Entity)null, (x) + 0.5f, (y) + 0.5f, (z) + 0.5f, 2, false, true);}
+                world.createExplosion(null, x , y +1 , z , 245, true);
 
             return true;
         }
@@ -693,7 +693,7 @@ if(true){
 if(false){
     setHardness(-1.0F);
 }
-if(true){
+if(false){
     setResistance(6000000.0F);
 }
         }

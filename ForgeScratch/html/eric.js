@@ -1130,7 +1130,7 @@ Blockly.Java['mcaction_explosion'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'if(!world.isRemote){world.newExplosion((Entity)null, ' + value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 0.5f, ' + value_loc_z + ' + 0.5f, ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');}\n';
+  var code = 'if(!world.isRemote){world.newExplosion((Entity)null, ' + value_loc_x + ', ' + value_loc_y + ' + 1, ' + value_loc_z + ', ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');}\n';
   return code;
 };
 
