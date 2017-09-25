@@ -2493,7 +2493,7 @@ Blockly.Blocks['mcaction_giveitem'] = {
 Blockly.Java['mcaction_giveitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}}\n';
+  var code = 'if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}}}\n';
   return code;
 };
 
@@ -3242,7 +3242,7 @@ Blockly.Blocks['mcaction_sethealth_player'] = {
   }
 };
 
-Blockly.Java['mcaction_sethealth_entity'] = function(block) {
+Blockly.Java['mcaction_sethealth_player'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
   var code = 'player.setHealth(' + value_health + ');\n';

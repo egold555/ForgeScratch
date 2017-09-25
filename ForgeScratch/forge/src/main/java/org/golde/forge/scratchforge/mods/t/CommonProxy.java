@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.t;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -102,8 +102,7 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	/* Block Variables */
-	static Mcblock_change_me mcblock_change_me;
-
+	
 
 	/* BlockFlower Variables */
 	
@@ -120,8 +119,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_change_me = new Mcblock_change_me();
-
+		
 
 		/* BlockFlower Constructor Calls */
 		
@@ -397,20 +395,5 @@ public class CommonProxy {
 	}
 
 	
-/*type:block*/
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-    }
-
 
 }

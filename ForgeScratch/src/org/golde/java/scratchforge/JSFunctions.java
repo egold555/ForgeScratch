@@ -63,6 +63,7 @@ public class JSFunctions {
 	}
 
 	public void run(String sfGenCode) {
+		PLog.info("Fixing code....");
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
 			CodeParser codeParser = new CodeParser();
