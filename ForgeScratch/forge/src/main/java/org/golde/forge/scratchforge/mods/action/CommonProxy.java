@@ -243,7 +243,7 @@ public class CommonProxy {
 		public String getItemStackDisplayName(ItemStack p_77653_1_)
 		{
 			String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-			String s1 = EntityList.getStringFromID(p_77653_1_.getItemDamage());
+			String s1 = EntityIdList.getStringFromID(p_77653_1_.getItemDamage());
 
 			if (s1 != null)
 			{
@@ -377,7 +377,7 @@ public class CommonProxy {
 
 				for (int j = 0; j < 1; ++j)
 				{
-					entity = EntityList.createEntityByID(p_77840_1_, p_77840_0_);
+					entity = EntityIdList.createEntityByID(p_77840_1_, p_77840_0_);
 
 					if (entity != null && entity instanceof EntityLivingBase)
 					{
