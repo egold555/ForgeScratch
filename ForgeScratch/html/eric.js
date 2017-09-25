@@ -3214,7 +3214,7 @@ Blockly.Blocks['mcaction_sethealth_entity'] = {
 Blockly.Java['mcaction_sethealth_entity'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'entity.setHealth(' + value_health + ');\n';
+  var code = 'entity.setHealth(' + value_health + 'f);\n';
   return code;
 };
 
@@ -3245,7 +3245,7 @@ Blockly.Blocks['mcaction_sethealth_player'] = {
 Blockly.Java['mcaction_sethealth_player'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'player.setHealth(' + value_health + ');\n';
+  var code = 'player.setHealth(' + value_health + 'f);\n';
   return code;
 };
 
