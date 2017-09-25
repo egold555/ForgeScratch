@@ -139,6 +139,8 @@ Blockly.Java['mcblock'] = function(block) {
   var checkbox_explosion = block.getFieldValue('EXPLOSION') == 'TRUE';
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:block*/\n' +
     '    public class Mcblock_' + value_name + ' extends BlockBase {\n' +
     '        public Mcblock_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_material + '); \n' +
@@ -153,7 +155,10 @@ Blockly.Java['mcblock'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n' +
+    '/*END:' + value_name + '*/\n'
+
+    ;
 
   return code;
 };
@@ -221,6 +226,8 @@ Blockly.Java['mcblockflower'] = function(block) {
   var statements_options = Blockly.Java.statementToCode(block, 'Options');
 
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:blockFlower*/\n' +
     '    public class McblockFlower_' + value_name + ' extends BlockBaseFlower {\n' +
     '        public McblockFlower_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '"); \n' +
@@ -235,7 +242,8 @@ Blockly.Java['mcblockflower'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n' +
+    '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -366,6 +374,8 @@ Blockly.Java['mcblockplant'] = function(block) {
   }
 
   var code = 
+    '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:blockPlant*/\n' +
     '    public class McblockPlant_' + value_name + ' extends BlockBasePlant {\n' +
     '        public McblockPlant_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_type + ', ' + checkbox_gen + ', ' + checkbox_watergen + ', ' + value_height + '); \n' +
@@ -380,7 +390,8 @@ Blockly.Java['mcblockplant'] = function(block) {
 
     '        }\n\n' +
           statements_options +
-    '    }\n';
+    '    }\n'+
+    '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -1119,7 +1130,7 @@ Blockly.Java['mcaction_explosion'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'if(!world.isRemote){world.newExplosion((Entity)null, ' + value_loc_x + ' + 0.5f, ' + value_loc_y + ' + 0.5f, ' + value_loc_z + ' + 0.5f, ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');}\n';
+  var code = 'if(!world.isRemote){world.newExplosion((Entity)null, ' + value_loc_x + ', ' + value_loc_y + ' + 1, ' + value_loc_z + ', ' + value_power + ', ' + checkbox_fire + ', ' + checkbox_smoke + ');}\n';
   return code;
 };
 
@@ -2141,12 +2152,15 @@ Blockly.Java['mcitem'] = function(block) {
 
 
   var code = 
+  '/*BEGIN:' + value_name + '*/\n' +
+  '/*type:item*/\n' +
   '    public class Mcitem_' + value_name + ' extends ItemBase {\n' + 
   '        public Mcitem_' + value_name + '() {\n' +
   '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + value_amount + '); \n' +
   '        }\n\n' +
           statements_code +
-    '    }\n';
+    '    }\n'+
+  '/*END:' + value_name + '*/\n';
   return code;
 };
 
@@ -2479,7 +2493,7 @@ Blockly.Blocks['mcaction_giveitem'] = {
 Blockly.Java['mcaction_giveitem'] = function(block) {
   var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}}\n';
+  var code = 'if(!world.isRemote){{if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}}}\n';
   return code;
 };
 
@@ -2602,9 +2616,6 @@ Blockly.Java['mcaction_chat'] = function(block) {
   '}\n';
   return code;
 };
-
-
-
 
 
 
@@ -3231,7 +3242,7 @@ Blockly.Blocks['mcaction_sethealth_player'] = {
   }
 };
 
-Blockly.Java['mcaction_sethealth_entity'] = function(block) {
+Blockly.Java['mcaction_sethealth_player'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
   var code = 'player.setHealth(' + value_health + ');\n';
@@ -3265,7 +3276,7 @@ Blockly.Blocks['mcentity'] = {
       "options": [
         [
           "Bat",
-          "Bat"
+          "BatNew"
         ],
         [
           "Player",
@@ -3291,10 +3302,10 @@ Blockly.Blocks['mcentity'] = {
           "Creeper",
           "Creeper"
         ],
-        [
+        /*[
           "Dragon",
           "Dragon"
-        ],
+        ],*/
         [
           "Enderman",
           "Enderman"
@@ -3303,45 +3314,49 @@ Blockly.Blocks['mcentity'] = {
           "Ghast",
           "Ghast"
         ],
-        [
+        /*[
           "Horse",
           "Horse"
-        ],
+        ],*/
         [
           "Iron Golem",
           "IronGolem"
         ],
         [
+          "Leash Knot",
+          "LeashKnot"
+        ],
+        /*[
           "Magma Cube",
           "MagmaCube"
-        ],
+        ],*/
         [
           "Minecart",
           "Minecart"
         ],
         [
-          "Cat",
-          "Ocelot"
+          "Ocelot",
+          "OcelotNew"
         ],
         [
           "Pig",
           "Pig"
         ],
-        [
+        /*[
           "Sheep1",
           "Sheep1"
         ],
         [
           "Sheep2",
           "Sheep2"
-        ],
+        ],*/
         [
           "Silverfish",
           "Silverfish"
         ],
         [
           "Skeleton",
-          "Skeleton"
+          "SkeletonNew"
         ],
         [
           "Slime",
@@ -3367,13 +3382,13 @@ Blockly.Blocks['mcentity'] = {
           "Witch",
           "Witch"
         ],
-        [
+        /*[
           "Wither",
           "Wither"
-        ],
+        ],*/
         [
           "Wolf",
-          "Wolf"
+          "WolfNew"
         ],
         [
           "Zombie",
@@ -3458,10 +3473,12 @@ Blockly.Java['mcentity'] = function(block) {
   }
 
   var code = 
+  '/*BEGIN:' + value_name + '*/\n' +
+  '/*type:entity*/\n' +
+  '/*model:'+ dropdown_model + '*/\n' +
   'public static class Mcentity_' + value_name + ' extends EntityCreature {\n' +
   '    public static final String RAW_NAME = "' + raw_value_name + '";\n' +
   '    public static final String NAME = "' + value_name + '";\n' +
-  '    public static final String MODEL = "' + dropdown_model + '";\n' +
   '    public static final boolean SPAWN_NATURALLY = ' + checkbox_spawn_naturally + ';\n' +
   '    public static final int EGG_P = ' + colour_egg_p + ';\n' +
   '    public static final int EGG_S = ' + colour_egg_s + ';\n' +
@@ -3473,8 +3490,146 @@ Blockly.Java['mcentity'] = function(block) {
   '        ' + statements_options + '\n' +
      
 
-  '}\n'
+  '}\n' +
+  '/*END:' + value_name + '*/\n';
 
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_modelscale'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_modelscale",
+  "message0": "Scale Model %1 Scale X: %2 Scale Y: %3 Scale Z: %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_modelscale'] = function(block) {
+  var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
+  var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
+  var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = '/*scalex:' + value_x + '*/ /*scaley:' + value_y + '*/ /*scalez:' + value_z + '*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_modeltranslate'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_modeltranslate",
+  "message0": "Translate Model %1 Move X: %2 Move Y: %3 Move Z: %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
+  var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
+  var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
+  var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = '/*scalex:' + value_x + '*/ /*scaley:' + value_y + '*/ /*scalez:' + value_z + '*/\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcaction_taskdelay'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_taskdelay",
+  "message0": "Delayed Task %1 Delay  (Seconds): %2 Code To Run %3 %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "DELAY",
+      "check": "Number"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "action"
+    }
+  ],
+  "inputsInline": false,
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_taskdelay'] = function(block) {
+  var value_delay = Blockly.Java.valueToCode(block, 'DELAY', Blockly.Java.ORDER_ATOMIC);
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  'scheduler.runTaskLater((long)(' + value_delay + '*1000), new Runnable(){\n'+
+  '    public void run(){\n'+
+  '        ' + statements_code + '\n' + 
+  '    }\n' + 
+  '});'
   ;
+  
   return code;
 };

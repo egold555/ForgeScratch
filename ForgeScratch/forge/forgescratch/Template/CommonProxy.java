@@ -1,6 +1,9 @@
 package org.golde.forge.scratchforge.mods./*Mod Package*/;
 
-import org.golde.forge.scratchforge.basemodfiles.*;
+import org.golde.forge.scratchforge.base.common.block.*;
+import org.golde.forge.scratchforge.base.common.item.*;
+import org.golde.forge.scratchforge.base.common.world.*;
+import org.golde.forge.scratchforge.base.helpers.*;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
@@ -82,6 +85,8 @@ import net.minecraftforge.transformers.*;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.registry.*;
 import cpw.mods.fml.common.network.*;
@@ -98,6 +103,8 @@ import io.netty.channel.*;
 
 public class CommonProxy {
 
+	public static Scheduler scheduler = new Scheduler();
+	
 	/* Block Variables */
 	/*Variables - Block*/
 
@@ -135,6 +142,11 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
+	}
+	
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		scheduler.update();
 	}
 
 	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {

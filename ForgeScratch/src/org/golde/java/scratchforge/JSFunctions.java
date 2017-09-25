@@ -1,13 +1,12 @@
 package org.golde.java.scratchforge;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
+import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
+import org.golde.java.scratchforge.helpers.codeparser.CodeParser;
 
 import netscape.javascript.JSObject;
 
@@ -49,48 +48,44 @@ public class JSFunctions {
 	}
 	
 	enum EnumObjectType{
-		Block("block", "BlockBase"),
-		BlockFlower("blockFlower", "BlockBaseFlower"),
-		BlockPlant("blockPlant", "BlockBasePlant"),
-		Item("item", "ItemBase"),
-		Entity("entity", "EntityCreature"),
+		Block("block"),
+		BlockFlower("blockFlower"),
+		BlockPlant("blockPlant"),
+		Item("item"),
+		Entity("entity"),
 		;
 
 		public final String clazz;
-		public final String extendz;
-		EnumObjectType(String clazz, String extendz){
+		EnumObjectType(String clazz){
 			this.clazz = clazz;
-			this.extendz = extendz;
 		}
 
 	}
 
-	public void run(String code) {
+	public void run(String sfGenCode) {
+		PLog.info("Fixing code....");
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
+			CodeParser codeParser = new CodeParser();
+			codeParser.parseCode(fixCode(sfGenCode));
+			
 
 			//Setup basic variables
 			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
-			JavaHelper.copyFolder(new File(forgeScratch, "Template"), projectFolder);
+			JavaHelper.copyEverythingInAFolder(new File(forgeScratch, "Template"), projectFolder);
 			String fileToReplace = "";
 
 
+			List<CodeComponent> allComponents = codeParser.getComponents();
+			List<CodeComponent> blockComponents = findComponents(codeParser, EnumObjectType.Block);
+			List<CodeComponent> blockFlowerComponents = findComponents(codeParser, EnumObjectType.BlockFlower);
+			List<CodeComponent> blockPlantComponents = findComponents(codeParser, EnumObjectType.BlockPlant);
+			List<CodeComponent> itemComponents = findComponents(codeParser, EnumObjectType.Item);
+			List<CodeComponent> entityComponents = findComponents(codeParser, EnumObjectType.Entity);
+
 
 			//================== [ Forge Mod.java Replacement] ==================
-			List<String> blockNames = findNames(code, EnumObjectType.Block);
-			List<String> blockFlowerNames = findNames(code, EnumObjectType.BlockFlower);
-			List<String> blockPlantNames = findNames(code, EnumObjectType.BlockPlant);
-
-			List<String> itemNames = findNames(code, EnumObjectType.Item);
 			
-			List<String> entityNames = findNames(code, EnumObjectType.Entity);
-
-			PLog.info("blockNames:" + blockNames.size());
-			PLog.info("blockFlowerNames:" + blockFlowerNames.size());
-			PLog.info("blockPlantNames:" + blockPlantNames.size());
-			PLog.info("itemNames:" + itemNames.size());
-
-
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
 
@@ -109,26 +104,23 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
 
-			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockNames, EnumObjectType.Block));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockNames, EnumObjectType.Block));
+			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockComponents));
 
-			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerNames, EnumObjectType.BlockFlower));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerNames, EnumObjectType.BlockFlower));
-			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerNames, EnumObjectType.BlockFlower));
+			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
 			
-			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantNames, EnumObjectType.BlockPlant));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantNames, EnumObjectType.BlockPlant));
-			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantNames, EnumObjectType.BlockPlant));
+			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
 
-			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemNames, EnumObjectType.Item));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemNames, EnumObjectType.Item));
+			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
+			fileToReplace = fileToReplace.replace("/*Classes*/", codes(allComponents));
 			
-			fileToReplace = fileToReplace.replace("/*Classes*/", fixCode(code));
-			
-			List<String> models = getEntityModelString(fileToReplace);
-			
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityNames, EnumObjectType.Entity, models));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityComponents));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
@@ -138,7 +130,7 @@ public class JSFunctions {
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
-			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityNames, EnumObjectType.Entity, models));
+			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityComponents));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
@@ -157,94 +149,85 @@ public class JSFunctions {
 			PLog.error(e, "Failed to start forge!");
 		}
 	}
+	
+	private List<CodeComponent> findComponents(CodeParser codeParser, EnumObjectType type)
+	{
+		return codeParser.getComponentsOfType(type.clazz);
+	}
 
-	private List<String> findNames(String code, EnumObjectType type) {
-		List<String> result = new ArrayList<String>();
-		Pattern pattern = Pattern.compile("class Mc" + type.clazz + "_(.*?) extends " + type.extendz);
+	private String variables(List<CodeComponent> blockComponents) {
+		String result = "";
 
-		Matcher matcher = pattern.matcher(code);
-		while (matcher.find()) {
-			result.add(matcher.group(1));
+		for (CodeComponent component: blockComponents) {
+			result += "static " + className(component) + " " + variableName(component) + ";" + "\n";
+		}
+
+		return result;
+	}
+
+	private String codes(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += component.getCode();
+		}
+
+		return result;		
+	}
+
+	private String constructorCalls(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += variableName(component) + " = new " + className(component) + "();" + "\n";
 		}
 
 		return result;
 	}
 	
-	private List<String> getEntityModelString(String code) {
-		Pattern pattern = Pattern.compile("public static final String MODEL = \"(.*?)\";");
-
-		List<String> result = new ArrayList<String>();
-		
-		Matcher matcher = pattern.matcher(code);
-		while (matcher.find()) {
-			result.add(matcher.group(1));
-		}
-		return result;
-	}
-
-	private String variables(List<String> blockNames, EnumObjectType type) {
+	private String registerEntityCalls(List<CodeComponent> components) {
 		String result = "";
 
-		for (String blockName: blockNames) {
-			result += "static " + className(blockName, type) + " " + variableName(blockName, type) + ";" + "\n";
-		}
-
-		return result;
-	}
-
-
-	private String constructorCalls(List<String> names, EnumObjectType type) {
-		String result = "";
-
-		for (String name: names) {
-			result += variableName(name, type) + " = new " + className(name, type) + "();" + "\n";
+		for (CodeComponent component: components) {
+			String className = className(component);
+			String modelName = component.getValueAsString("model", null);
+			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S); //" + modelName + "\n";
 		}
 
 		return result;
 	}
 	
-	private String registerEntityCalls(List<String> names, EnumObjectType type, List<String> model) {
-		String result = "";
-
-		for(int i = 0; i < names.size(); i++) {
-			String className = className(names.get(i), type);
-			result += "createEntity(" + className + ".class, " + className + ".RAW_NAME, " + className + ".NAME, " + className + ".EGG_P, " + className + ".EGG_S); //" + model.get(i) + "\n";
-		}
-
-		return result;
-	}
-	
-	private String registerEntityRenderer(List<String> names, EnumObjectType type, List<String> model) {
+	private String registerEntityRenderer(List<CodeComponent> components) {
 		String result = "";
 		
-		for(int i = 0; i < names.size(); i++) {
-			result += "RenderingRegistry.registerEntityRenderingHandler(" + className(names.get(i), type) + ".class, new CustomEntityRenderer(new Model" + model.get(i) + "(), \"" + variableName(names.get(i), type).toLowerCase() + "\"));\n";
+		for (CodeComponent component: components) {
+			String className = className(component);
+			String modelName = component.getValueAsString("model", null);
+			double sx = component.getValueAsDouble("scalex", 1.0);
+			double sy = component.getValueAsDouble("scaley", 1.0);
+			double sz = component.getValueAsDouble("scalez", 1.0);
+			double tx = component.getValueAsDouble("translatex", 0.0);
+			double ty = component.getValueAsDouble("translatey", 0.0);
+			double tz = component.getValueAsDouble("translatez", 0.0);
+			result += "RenderingRegistry.registerEntityRenderingHandler(" + className + ".class, new CustomEntityRenderer(new Model" + modelName + "(), \"" + variableName(component).toLowerCase() + "\", " + sx + ", " + sy + ", " + sz + ", " + tx + ", " + ty + ", " + tz + "));\n";
 		}
 		
 		return result;
 	}
 
-	private String worldGenCalls(List<String> names, EnumObjectType type) {
+	private String worldGenCalls(List<CodeComponent> components) {
 		String result = "";
-		//PLog.info("====WorldGen====");
-		//PLog.info("  Type: " + type.name());
-		//PLog.info("  Names: " + names.toString() );
-		if(type == EnumObjectType.BlockFlower) {
-			for (String name: names) {
-				result += "(new WorldGenFlowers(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
+		
+		for (CodeComponent component: components) {
+			if (component.getType().equals(EnumObjectType.BlockFlower.clazz)) {
+				result += "(new WorldGenFlowers(" + variableName(component) + ")).generate(world, random, x, y, z); \n";
+			}
+			else if (component.getType().equals(EnumObjectType.BlockPlant.clazz)) {
+				result += "(new WorldGenCustomPlant(" + variableName(component) + ")).generate(world, random, x, y, z); \n";
 			}
 		}
-		else if(type == EnumObjectType.BlockPlant) {
-			for (String name: names) {
-				result += "(new WorldGenCustomPlant(" + variableName(name, type) + ")).generate(world, random, x, y, z); \n";
-			}
-		}
-		//PLog.info("Result: " + result);
-		//PLog.info(" ");
-
 		return result;
 	}
-
 
 	private String fixCode(String code) {
 		code = code.replace("package delete_me;", "");
@@ -257,14 +240,12 @@ public class JSFunctions {
 		return code;
 	}
 
-	private String variableName(String name, EnumObjectType type)
-	{
-		return "mc" + type.clazz + "_" + name;
+	private String variableName(CodeComponent component) {
+		return "mc" + component.getType() + "_" + component.getName();
 	}
 
-	private String className(String name, EnumObjectType type)
-	{
-		return "Mc" + type.clazz + "_" + name;
+	private String className(CodeComponent component) {
+		return "Mc" + component.getType() + "_" + component.getName();
 	}
 
 	public void disguardElements() {

@@ -20,6 +20,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.golde.java.scratchforge.Main;
+import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.mod.Mod;
 
@@ -95,7 +96,7 @@ public class WindowToggleMods extends JFrame{
 						}
 						else if(action.equals("Delete")) {
 							mod.delete();
-							deleteSelectedItems(tree);
+							JavaHelper.deleteSelectedItems(tree);
 						}
 						PLog.info("Popup menu item ["+ event.getActionCommand() + "] was pressed.");
 					}
@@ -122,15 +123,7 @@ public class WindowToggleMods extends JFrame{
 		}
 		
 	};
-	protected void deleteSelectedItems(JTree tree) {
-	    DefaultMutableTreeNode node;
-	    DefaultTreeModel model = (DefaultTreeModel) (tree.getModel());
-	    TreePath[] paths = tree.getSelectionPaths();
-	    for (int i = 0; i < paths.length; i++) {
-	      node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
-	      model.removeNodeFromParent(node);
-	    }
-	  }
+	
 
 	class MyTreeCellRenderer extends DefaultTreeCellRenderer {
 

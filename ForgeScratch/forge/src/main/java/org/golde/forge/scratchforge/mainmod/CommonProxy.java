@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.golde.forge.scratchforge.basemodfiles.ItemBase;
-import org.golde.forge.scratchforge.basemodfiles.ModHelpers;
+import org.golde.forge.scratchforge.base.common.item.ItemBase;
+import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

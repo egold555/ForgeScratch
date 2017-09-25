@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.golde.forge.scratchforge.basemodfiles.PLog;
+import org.golde.forge.scratchforge.base.helpers.PLog;
 
 public class Config {
 

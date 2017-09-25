@@ -1,6 +1,9 @@
 package org.golde.forge.scratchforge.mods.test;
 
-import org.golde.forge.scratchforge.basemodfiles.*;
+import org.golde.forge.scratchforge.base.common.block.*;
+import org.golde.forge.scratchforge.base.common.item.*;
+import org.golde.forge.scratchforge.base.common.world.*;
+import org.golde.forge.scratchforge.base.helpers.*;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
@@ -82,6 +85,8 @@ import net.minecraftforge.transformers.*;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.registry.*;
 import cpw.mods.fml.common.network.*;
@@ -98,8 +103,11 @@ import io.netty.channel.*;
 
 public class CommonProxy {
 
-	/* Block Variables */
+	public static Scheduler scheduler = new Scheduler();
 	
+	/* Block Variables */
+	static Mcblock_change_me mcblock_change_me;
+
 
 	/* BlockFlower Variables */
 	
@@ -116,7 +124,8 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_change_me = new Mcblock_change_me();
+
 
 		/* BlockFlower Constructor Calls */
 		
@@ -129,14 +138,17 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_2.class, Mcentity_Mob_2.RAW_NAME, Mcentity_Mob_2.NAME, Mcentity_Mob_2.EGG_P, Mcentity_Mob_2.EGG_S); //Cow
-createEntity(Mcentity_Mob_1.class, Mcentity_Mob_1.RAW_NAME, Mcentity_Mob_1.NAME, Mcentity_Mob_1.EGG_P, Mcentity_Mob_1.EGG_S); //Biped
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
+	}
+	
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		scheduler.update();
 	}
 
 	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
@@ -394,40 +406,35 @@ createEntity(Mcentity_Mob_1.class, Mcentity_Mob_1.RAW_NAME, Mcentity_Mob_1.NAME,
 	}
 
 	
+/*type:block*/
+    public class Mcblock_change_me extends BlockBase {
+        public Mcblock_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
-
-
-
-
-public static class Mcentity_Mob_2 extends EntityCreature {
-    public static final String RAW_NAME = "Mob 2";
-    public static final String NAME = "Mob_2";
-    public static final String MODEL = "Cow";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0x99ffff;
-    public static final int EGG_S = 0x993399;
-
-    public Mcentity_Mob_2(World world){
-        super(world);
-    }
-
-
+if(false){
+    setHardness(-1.0F);
 }
-
-public static class Mcentity_Mob_1 extends EntityCreature {
-    public static final String RAW_NAME = "Mob 1";
-    public static final String NAME = "Mob_1";
-    public static final String MODEL = "Biped";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xff0000;
-    public static final int EGG_S = 0x33ff33;
-
-    public Mcentity_Mob_1(World world){
-        super(world);
-    }
-
-
+if(false){
+    setResistance(6000000.0F);
 }
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             EntityLiving entity = null;
+                for (double i = 0.1; i<=10; i += 0.1) {
+            scheduler.runTaskLater((long)(i*1000), new Runnable(){
+                public void run(){
+                        if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+                if(entity != null){entity.setVelocity(0, 1, 0);}
+                entity.setHealth(0.5);
+
+                }
+            });} // end for
+
+            return true;
+        }
+    }
 
 
 }
