@@ -136,13 +136,11 @@ public class Mod {
 			textures = new ArrayList<Texture>();
 			for(String line: Files.readAllLines(modFile_CommonProxy.toPath(), StandardCharsets.UTF_8)) {
 				if(line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,") || line.contains("createEntity(Mcentity_")) {
-					PLog.info("Scanning line: " + line);
 					int startIndex;
 					int endIndex;
 					String objName;
 					if (line.contains("super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB,")) {
 						if(line.contains("Spawn Egg")) {
-							PLog.info("SKIP!");
 							continue;
 						}
 						startIndex = line.indexOf("\"") + 1;
@@ -151,18 +149,15 @@ public class Mod {
 						if(line.contains("Material.")) {
 							//Blocks
 							//16 x 16
-							PLog.info("BLOCK!");
 							textures.add(new Texture(objName, EnumTextureType.Block));
 						}
 						else {
 							//Items
 							//16 x 16
-							PLog.info("ITEM!");
 							textures.add(new Texture(objName, EnumTextureType.Item));
 						}
 					}
 					else {
-						PLog.info("MOB!");
 						//Entities
 						startIndex = line.indexOf("createEntity(") + "createEntity(".length();
 						endIndex = line.indexOf(".class", startIndex);
