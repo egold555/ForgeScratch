@@ -45,9 +45,9 @@ public class ScheduledTask implements Comparable<ScheduledTask>
 	@Override
 	public int compareTo(ScheduledTask other) {
 		if (other.timeToFire > this.timeToFire)
-			return 1;
-		else if (other.timeToFire < this.timeToFire)
 			return -1;
+		else if (other.timeToFire < this.timeToFire)
+			return 1;
 		else
 			return 0;
 	}

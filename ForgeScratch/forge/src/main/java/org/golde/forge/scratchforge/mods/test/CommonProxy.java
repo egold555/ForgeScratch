@@ -106,7 +106,7 @@ public class CommonProxy {
 	public static Scheduler scheduler = new Scheduler();
 	
 	/* Block Variables */
-	static Mcblock_Firework_Every_Second mcblock_Firework_Every_Second;
+	static Mcblock_change_me mcblock_change_me;
 
 
 	/* BlockFlower Variables */
@@ -124,7 +124,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_Firework_Every_Second = new Mcblock_Firework_Every_Second();
+		mcblock_change_me = new Mcblock_change_me();
 
 
 		/* BlockFlower Constructor Calls */
@@ -407,9 +407,9 @@ public class CommonProxy {
 
 	
 /*type:block*/
-    public class Mcblock_Firework_Every_Second extends BlockBase {
-        public Mcblock_Firework_Every_Second() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Firework Every Second", Material.ground);
+    public class Mcblock_change_me extends BlockBase {
+        public Mcblock_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -422,10 +422,12 @@ if(false){
         @Override
         public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
              EntityLiving entity = null;
-                for (double i = 1; i<=10; i++) {
+                for (double i = 0.1; i<=10; i += 0.1) {
             scheduler.runTaskLater((long)(i*1000), new Runnable(){
                 public void run(){
-                        if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, ("#ff99ff"), 1, 2));}
+                        if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
+                if(entity != null){entity.setVelocity(0, 1, 0);}
+                entity.setHealth(0.5);
 
                 }
             });} // end for
