@@ -104,20 +104,20 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-	
+
 	/* Block Variables */
 	static Mcblock_change_me mcblock_change_me;
 
 
 	/* BlockFlower Variables */
-	
+
 
 	/* BlockPlant Variables */
-	
+
 
 	/* Item Variables */
 	public static SFItemMonsterPlacer scItemMonsterPlacer;
-	
+
 
 	/* Entity Variables */
 	/*Variables - Entity*/
@@ -128,24 +128,30 @@ public class CommonProxy {
 
 
 		/* BlockFlower Constructor Calls */
-		
+
 
 		/* BlockPlant Constructor Calls */
-		
+
 
 		/* Item Constructor Calls */
 		scItemMonsterPlacer = new SFItemMonsterPlacer();
-		
+
 
 		/* Entity Constructor Calls */
 		
+		
+		
+		for(int i = 0; i < 100; i++) {
+			entities.add(null);
+		}
+
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
-	
+
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		scheduler.update();
@@ -158,10 +164,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			
+
 
 			/*Overworld world generation for plants*/
-			
+
 
 		}
 	}
@@ -186,17 +192,17 @@ public class CommonProxy {
 	 * Based off of Minecrafts Spawn Egg Code
 	 */
 	static class SFItemMonsterPlacer extends ItemBase{
-		
+
 		@SideOnly(Side.CLIENT)
 		private IIcon theIcon;
 
 		public static HashMap entityEggs = new LinkedHashMap();
-		
+
 		public SFItemMonsterPlacer() {
 			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Spawn Egg", 64);
 			setHasSubtypes(true);
 		}
-		
+
 		public String getItemStackDisplayName(ItemStack p_77653_1_)
 		{
 			String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
@@ -388,9 +394,9 @@ public class CommonProxy {
 			super.registerIcons(p_94581_1_);
 			this.theIcon = p_94581_1_.registerIcon(this.getIconString() + "_overlay");
 		}
-		
+
 	}
-	
+
 	public static void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
 		int id = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
@@ -400,41 +406,60 @@ public class CommonProxy {
 		}
 		//TODO: Add language
 	}
-	
+
 	private static void createEgg(int id, int solidColor, int spotColor) {
 		SFItemMonsterPlacer.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
+
+	/*type:block*/
+	public class Mcblock_change_me extends BlockBase {
+		public Mcblock_change_me() {
+			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
+
+			if(false){
+				setHardness(-1.0F);
+			}
+			if(false){
+				setResistance(6000000.0F);
+			}
+		}
+
+		@Override
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+			final int randomId = world.rand.nextInt(100);
+			
+			for (double i = 0.1; i<=10; i += 1) {
+				scheduler.runTaskLater((long)(i*1000), new Runnable(){
+					public void run(){
+						
+						if(!world.isRemote){putEntityLiving(randomId, ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper"));}
+						if(getEntityLiving(randomId) != null){getEntityLiving(randomId).setVelocity(0, 1, 0);}
+						//getEntityLiving(randomId).setHealth(0.5f);
+						
+
+					}
+					
+				});} // end for
+
+			
+			//putEntityLiving(randomId, null);
+			return true;
+		}
+	}
 	
-/*type:block*/
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             EntityLiving entity = null;
-                for (double i = 0.1; i<=10; i += 0.1) {
-            scheduler.runTaskLater((long)(i*1000), new Runnable(){
-                public void run(){
-                        if(!world.isRemote){entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-                if(entity != null){entity.setVelocity(0, 1, 0);}
-                entity.setHealth(0.5);
-
-                }
-            });} // end for
-
-            return true;
-        }
-    }
+	private List<EntityLiving> entities = new ArrayList<EntityLiving>();
+	public final EntityLiving getEntityLiving(final int id) {
+		try{
+			return entities.get(id);
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public void putEntityLiving(final int id, EntityLiving entity) {
+		entities.add(id, entity);
+	}
 
 
 }
