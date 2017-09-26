@@ -147,5 +147,10 @@ public class ForgeMod implements IWorldGenerator{
 	public void preInit(FMLPreInitializationEvent event) {
         PROXY.preInit(event);
 	}
+	
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		PROXY.serverLoad(event);
+	}
 
 }

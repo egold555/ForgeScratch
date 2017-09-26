@@ -145,6 +145,11 @@ public class CommonProxy {
 		FMLCommonHandler.instance().bus().register(this);
 	}
 	
+	public void serverLoad(FMLServerStartingEvent event) {
+		/* Command Registry */
+		/*Commands*/
+	}
+	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		scheduler.update();
