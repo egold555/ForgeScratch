@@ -149,3 +149,109 @@ p.affiliated {
   margin: 0px 0 0;
   text-align: right;
 }
+
+
+#what-we-do-box {
+    bottom: 0px;
+    box-sizing: border-box;
+    color: rgb(51, 51, 51);
+    float: left;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-kerning: normal;
+    font-size: 16.8px;
+    font-variant: common-ligatures;
+    font-variant-ligatures: common-ligatures;
+    height: 303.6px;
+    left: 0px;
+    line-height: 24px;
+    min-height: 1px;
+    position: relative;
+    right: 0px;
+    text-decoration: none solid rgb(51, 51, 51);
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+    top: 0px;
+    width: 323.325px;
+    column-rule-color: rgb(51, 51, 51);
+    perspective-origin: 161.663px 151.8px;
+    transform-origin: 161.663px 151.8px;
+    caret-color: rgb(51, 51, 51);
+    border: 0px none rgb(51, 51, 51);
+    outline: rgb(51, 51, 51) none 0px;
+    padding: 0px 15px;
+}
+
+#what-we-do-box-icon {
+    box-sizing: border-box;
+    color: rgb(197, 164, 126);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-kerning: normal;
+    font-size: 75px;
+    font-variant: common-ligatures;
+    font-variant-ligatures: common-ligatures;
+    height: 80.8px;
+    line-height: 75px;
+    text-align: center;
+    text-decoration: none solid rgb(197, 164, 126);
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+    width: 293.325px;
+    column-rule-color: rgb(197, 164, 126);
+    perspective-origin: 146.663px 40.4px;
+    transform-origin: 146.663px 40.4px;
+    caret-color: rgb(197, 164, 126);
+    border: 0px none rgb(197, 164, 126);
+    margin: 0px 0px 10px;
+    outline: rgb(197, 164, 126) none 0px;
+}
+
+#what-we-do-box-title {
+    box-sizing: border-box;
+    color: rgb(51, 51, 51);
+    font-family: Verlag-Book, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-kerning: normal;
+    font-size: 27.2px;
+    font-variant: common-ligatures;
+    font-variant-ligatures: common-ligatures;
+    font-weight: normal;
+    height: 28.8px;
+    line-height: 28.8px;
+    text-align: center;
+    text-decoration: none solid rgb(51, 51, 51);
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+    text-transform: capitalize;
+    width: 293.325px;
+    column-rule-color: rgb(51, 51, 51);
+    perspective-origin: 146.663px 14.4px;
+    transform-origin: 146.663px 14.4px;
+    caret-color: rgb(51, 51, 51);
+    border: 0px none rgb(51, 51, 51);
+    margin: 5px 0px 10px;
+    outline: rgb(51, 51, 51) none 0px;
+}
+
+#what-we-do-box-desc {
+    box-sizing: border-box;
+    color: rgb(119, 119, 119);
+    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-kerning: normal;
+    font-size: 16.8px;
+    font-variant: common-ligatures;
+    font-variant-ligatures: common-ligatures;
+    height: 144px;
+    line-height: 24.7582px;
+    min-height: 100px;
+    text-align: center;
+    text-decoration: none solid rgb(119, 119, 119);
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+    width: 293.325px;
+    column-rule-color: rgb(119, 119, 119);
+    perspective-origin: 146.663px 72px;
+    transform-origin: 146.663px 72px;
+    caret-color: rgb(119, 119, 119);
+    border: 0px none rgb(119, 119, 119);
+    margin: 0px 0px 12.6px;
+    outline: rgb(119, 119, 119) none 0px;
+}

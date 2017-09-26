@@ -104,7 +104,7 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-	private EntityIdList entityIdList = new EntityIdList();
+	private VariableHolder variableHolder = new VariableHolder();
 	
 	/* Block Variables */
 	/*Variables - Block*/

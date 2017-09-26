@@ -104,49 +104,54 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-
+	private VariableHolder variableHolder = new VariableHolder();
+	
 	/* Block Variables */
-	static Mcblock_change_me mcblock_change_me;
+	static Mcblock_test mcblock_test;
 
 
 	/* BlockFlower Variables */
-
+	
 
 	/* BlockPlant Variables */
-
+	
 
 	/* Item Variables */
-	private static SpawnEgg spawnEgg;
-
+	public static SpawnEgg spawnEgg;
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_change_me = new Mcblock_change_me();
+		mcblock_test = new Mcblock_test();
 
 
 		/* BlockFlower Constructor Calls */
-
+		
 
 		/* BlockPlant Constructor Calls */
-
+		
 
 		/* Item Constructor Calls */
 		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-
+		
 
 		/* Entity Constructor Calls */
 		
-
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
-
+	
+	public void serverLoad(FMLServerStartingEvent event) {
+		/* Command Registry */
+		/*Commands*/
+	}
+	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		scheduler.update();
@@ -159,10 +164,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-
+			
 
 			/*Overworld world generation for plants*/
-
+			
 
 		}
 	}
@@ -182,7 +187,7 @@ public class CommonProxy {
 
 		}
 	}
-
+	
 	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
 		int id = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
@@ -192,43 +197,33 @@ public class CommonProxy {
 		}
 		//TODO: Add language
 	}
-
+	
 	private void createEgg(int id, int solidColor, int spotColor) {
 		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-
-	/*type:block*/
-	public class Mcblock_change_me extends BlockBase {
-		public Mcblock_change_me() {
-			super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
-
-			if(false){
-				setHardness(-1.0F);
-			}
-			if(false){
-				setResistance(6000000.0F);
-			}
-		}
-
-		@Override
-		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-			final VariableHolder variableHolder = new VariableHolder();
-			
-			for (double i = 0.1; i<=10; i += 1) {
-				scheduler.runTaskLater((long)(i*1000), new Runnable(){
-					public void run(){
-						
-						if(!world.isRemote){variableHolder.entity = ModHelpers.spawnEntityInWorld(world, (x), ((y) + 1), (z), "Creeper");}
-						if(variableHolder.entity != null){variableHolder.entity.setVelocity(0, 1, 0);}
-						
-					}
-					
-				});} // end for
-
-			
-			return true;
-		}
-	}
 	
+/*type:block*/
+    public class Mcblock_test extends BlockBase {
+        public Mcblock_test() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "test", Material.ground);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             final VariableHolder variableHolder = new VariableHolder();
+                if(!world.isRemote){world.newExplosion((Entity)null, (x), (y) + 1, (z), 10, false, true);}
+
+            return true;
+        }
+    }
+
+
 }
