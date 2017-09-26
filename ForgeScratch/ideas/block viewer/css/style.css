@@ -1,0 +1,67 @@
+
+.scene {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -192px 0 0 -192px;
+  width: 384px;
+  height: 384px;
+  background: rgba(100, 100, 255, 0.2);
+  transform: rotateX(60deg) rotateZ(60deg);
+  transform-style: preserve-3d;
+  transform-origin: center;
+}
+
+.block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50% 50%;
+}
+
+.x-axis,
+.y-axis,
+.z-axis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 66px;
+  height: 66px;
+  transform-origin: 50% 50% 50%;
+  pointer-events: none;
+}
+
+.side {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  backface-visibility: hidden;
+  outline: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.block:hover .side {
+  outline: 1px solid rgba(0, 255, 0, 0.5);
+}
+
+.subtraction .block:hover .side {
+  outline: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+.ghost {
+  pointer-events: none;
+}
+
+.ghost .side {
+  opacity: 0.6;
+  pointer-events: none;
+  -webkit-filter: brightness(1.5);
+}
+
+.subtraction .ghost {
+  display: none;
+}
