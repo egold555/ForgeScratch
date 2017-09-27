@@ -3635,13 +3635,12 @@ Blockly.Java['mcaction_taskdelay'] = function(block) {
 };
 
 
-//(NI)
 Blockly.Blocks['mccommand'] = {
   
   init: function() {
     this.jsonInit({
       "type": "mccommand",
-  "message0": "(NI) Custom Command %1 Command:  %2 %3 On Command %4 %5",
+  "message0": "Custom Command %1 Command:  %2 %3 On Command %4 %5",
   "args0": [
     {
       "type": "input_dummy"

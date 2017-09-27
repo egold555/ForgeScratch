@@ -120,7 +120,7 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
-			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", constructorCallsWithoutVariable(commandComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", registerCommandConstructors(commandComponents));
 			
 			fileToReplace = fileToReplace.replace("/*Classes*/", codes(allComponents));
 			
@@ -189,11 +189,21 @@ public class JSFunctions {
 		return result;
 	}
 	
-	private String constructorCallsWithoutVariable(List<CodeComponent> components) {
+	/*private String constructorCallsWithoutVariable(List<CodeComponent> components) {
 		String result = "";
 
 		for (CodeComponent component: components) {
 			result += "new " + className(component) + "();" + "\n";
+		}
+
+		return result;
+	}*/
+	
+	private String registerCommandConstructors(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += "event.registerServerCommand(new " + className(component) + "());" + "\n";
 		}
 
 		return result;
