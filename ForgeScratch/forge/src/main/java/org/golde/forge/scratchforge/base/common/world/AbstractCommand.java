@@ -1,5 +1,6 @@
 package org.golde.forge.scratchforge.base.common.world;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.command.ICommand;
@@ -22,7 +23,7 @@ public abstract class AbstractCommand implements ICommand {
 
 	@Override
 	public List getCommandAliases() {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public abstract class AbstractCommand implements ICommand {
 
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override
