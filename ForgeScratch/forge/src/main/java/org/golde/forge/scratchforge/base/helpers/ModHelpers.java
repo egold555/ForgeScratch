@@ -168,21 +168,21 @@ public class ModHelpers {
 	public static EnumChatFormatting getChatColorFromHex(String hex) {
 		switch(hex) {
 		case "#000": return EnumChatFormatting.BLACK;
-		case "#0000AA": return EnumChatFormatting.DARK_BLUE;
-		case "#00AA00": return EnumChatFormatting.DARK_GREEN;
-		case "#00AAAA": return EnumChatFormatting.DARK_AQUA;
-		case "#AA0000": return EnumChatFormatting.DARK_RED;
-		case "#AA00AA": return EnumChatFormatting.DARK_PURPLE;
-		case "#FFAA00": return EnumChatFormatting.GOLD;
-		case "#AAAAAA": return EnumChatFormatting.GRAY;
+		case "#0000aa": return EnumChatFormatting.DARK_BLUE;
+		case "#00aa00": return EnumChatFormatting.DARK_GREEN;
+		case "#00aaaa": return EnumChatFormatting.DARK_AQUA;
+		case "#aa0000": return EnumChatFormatting.DARK_RED;
+		case "#aa00aa": return EnumChatFormatting.DARK_PURPLE;
+		case "#ffaa00": return EnumChatFormatting.GOLD;
+		case "#aaaaaa": return EnumChatFormatting.GRAY;
 		case "#555555": return EnumChatFormatting.DARK_GRAY;
-		case "#5555FF": return EnumChatFormatting.BLUE;
-		case "#55FF55": return EnumChatFormatting.GREEN;
-		case "#55FFFF": return EnumChatFormatting.AQUA;
-		case "#FF5555": return EnumChatFormatting.RED;
-		case "#FF55FF": return EnumChatFormatting.LIGHT_PURPLE;
-		case "#FFFF55": return EnumChatFormatting.YELLOW;
-		case "#FFFFFF": return EnumChatFormatting.WHITE;
+		case "#5555ff": return EnumChatFormatting.BLUE;
+		case "#55ff55": return EnumChatFormatting.GREEN;
+		case "#55ffff": return EnumChatFormatting.AQUA;
+		case "#ff5555": return EnumChatFormatting.RED;
+		case "#ff55ff": return EnumChatFormatting.LIGHT_PURPLE;
+		case "#ffff55": return EnumChatFormatting.YELLOW;
+		case "#ffffff": return EnumChatFormatting.WHITE;
 		default: return EnumChatFormatting.RESET; 
 		}
 	}

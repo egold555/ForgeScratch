@@ -3102,7 +3102,7 @@ Blockly.Blocks['mcvariable_color_chat'] = {
    this.setColour(290);
 
     this.appendDummyInput()
-        .appendField('(NT) Chat Color:')
+        .appendField('Chat Color:')
         .appendField(colour, 'COLOR');
 
   }

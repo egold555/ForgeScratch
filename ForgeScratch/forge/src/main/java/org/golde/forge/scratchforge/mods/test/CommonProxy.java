@@ -117,7 +117,8 @@ public class CommonProxy {
 
 	/* Item Variables */
 	public static SpawnEgg spawnEgg;
-	
+	static Mcitem_item mcitem_item;
+
 
 	/* Entity Variables */
 	/*Variables - Entity*/
@@ -134,7 +135,8 @@ public class CommonProxy {
 
 		/* Item Constructor Calls */
 		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-		
+		mcitem_item = new Mcitem_item();
+
 
 		/* Entity Constructor Calls */
 		
@@ -147,8 +149,7 @@ public class CommonProxy {
 	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-		event.registerServerCommand(new Mccommand_foo());
-
+		
 	}
 	
 	@SubscribeEvent
@@ -202,30 +203,20 @@ public class CommonProxy {
 	}
 
 	
-/*type:command*/
-    public class Mccommand_foo extends AbstractCommand {
-           @Override
-           public String getCommandName() {
-                 return "foo";
-           }
+/*type:item*/
+    public class Mcitem_item extends ItemBase {
+        public Mcitem_item() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "item", 64);
+        }
 
-           @Override
-           public void run(EntityPlayer player, String[] args) {
-                 final VariableHolder variableHolder = new VariableHolder();
-                 final World world = player.worldObj;
-                     if(world.isRemote){
-        if(player != null) {player.addChatMessage(new ChatComponentText(("#55ff55" + "Test")));}
-    }
-    for (double i = 1; i<=10; i++) {
-        scheduler.runTaskLater((long)(i*1000), new Runnable(){
-            public void run(){
-                    if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (player.posX), (player.posY), (player.posZ), true, true, ("#33ff33"), 1, 1));}
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){
+        final VariableHolder variableHolder = new VariableHolder();
+            if(world.isRemote){
+            if(player != null) {player.addChatMessage(new ChatComponentText((ModHelpers.getChatColorFromHex("#55ffff").toString() + "Testing")));}
+        }
 
-            }
-        });} // end for
-
-           }
-    }
+        return itemstack;
+    }    }
 
 
 }
