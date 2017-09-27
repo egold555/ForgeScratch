@@ -155,7 +155,8 @@ p.affiliated {
     bottom: 0px;
     box-sizing: border-box;
     color: rgb(51, 51, 51);
-    float: left;
+    width: 50%;
+    margin: 0 auto;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-kerning: normal;
     font-size: 16.8px;

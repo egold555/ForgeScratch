@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.golde.java.scratchforge.helpers.PLog;
+
 public class CodeParser {
 	private List<CodeComponent> components;
 	
@@ -23,7 +25,7 @@ public class CodeParser {
 			if (matcherEnd.find(startIndex)) {
 				String endName = matcherEnd.group(1);
 				if (! endName.equals(name)) {
-					System.out.println("END for component: " + name + " has wrong name.");
+					PLog.error("END for component: " + name + " has wrong name.");
 				}
 				int endIndex = matcherEnd.start();
 				String componentCode = code.substring(startIndex, endIndex);
@@ -31,7 +33,7 @@ public class CodeParser {
 				components.add(component);
 			}
 			else {
-				System.out.println("No matching END for component: " + name);
+				PLog.error("No matching END for component: " + name);
 			}
 		}
 	}

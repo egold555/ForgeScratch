@@ -147,7 +147,7 @@ public class CommonProxy {
 	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-		/*Commands*/
+		/*Constructor calls - Command*/
 	}
 	
 	@SubscribeEvent

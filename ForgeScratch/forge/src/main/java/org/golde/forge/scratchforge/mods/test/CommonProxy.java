@@ -107,8 +107,7 @@ public class CommonProxy {
 	private VariableHolder variableHolder = new VariableHolder();
 	
 	/* Block Variables */
-	static Mcblock_test mcblock_test;
-
+	
 
 	/* BlockFlower Variables */
 	
@@ -125,8 +124,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_test = new Mcblock_test();
-
+		
 
 		/* BlockFlower Constructor Calls */
 		
@@ -149,7 +147,8 @@ public class CommonProxy {
 	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-		/*Commands*/
+		new Mccommand_foo();
+
 	}
 	
 	@SubscribeEvent
@@ -203,26 +202,19 @@ public class CommonProxy {
 	}
 
 	
-/*type:block*/
-    public class Mcblock_test extends BlockBase {
-        public Mcblock_test() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "test", Material.ground);
+/*type:command*/
+    public class Mccommand_foo extends AbstractCommand {
+           @Override
+           public String getCommandName() {
+                 return "foo";
+           }
 
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-        @Override
-        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
-             final VariableHolder variableHolder = new VariableHolder();
-                if(!world.isRemote){world.newExplosion((Entity)null, (x), (y) + 1, (z), 10, false, true);}
-
-            return true;
-        }
+           @Override
+           public void run(EntityPlayer player, String[] args) {
+                 final VariableHolder variableHolder = new VariableHolder();
+                 final World world = player.worldObj;
+                     if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
+           }
     }
 
 

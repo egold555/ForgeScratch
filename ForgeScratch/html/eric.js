@@ -3641,7 +3641,7 @@ Blockly.Blocks['mccommand'] = {
   init: function() {
     this.jsonInit({
       "type": "mccommand",
-  "message0": "(NI) Custom Command %1 Command:  %2 %3 Options %4 %5",
+  "message0": "(NI) Custom Command %1 Command:  %2 %3 On Command %4 %5",
   "args0": [
     {
       "type": "input_dummy"
@@ -3659,7 +3659,7 @@ Blockly.Blocks['mccommand'] = {
     },
     {
       "type": "input_statement",
-      "name": "NAME",
+      "name": "CODE",
       "check": "action"
     }
   ],
@@ -3671,9 +3671,26 @@ Blockly.Blocks['mccommand'] = {
 };
 
 Blockly.Java['mccommand'] = function(block) {
+  var value_name = make_java_id(block.getFieldValue('COMMAND'));
   var text_command = block.getFieldValue('COMMAND');
-  var statements_name = Blockly.Java.statementToCode(block, 'NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = '/*Command code*/\n';
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = '/*BEGIN:' + value_name + '*/\n' +
+    '/*type:command*/\n' +
+    '    public class Mccommand_' + value_name + ' extends AbstractCommand {\n' +
+    '           @Override\n' +
+    '           public String getCommandName() {\n' +
+    '                 return "' + text_command + '";\n' + 
+    '           }\n' +
+    '\n' +
+    '           @Override\n' +
+    '           public void run(EntityPlayer player, String[] args) {\n' +
+    '                 final VariableHolder variableHolder = new VariableHolder();\n' +
+    '                 final World world = player.worldObj;\n' +
+    '                 ' + statements_code + '\n' + 
+    '           }\n' +
+    '    }\n' +
+    '/*END:' + value_name + '*/\n'
+    ;
   return code;
 };

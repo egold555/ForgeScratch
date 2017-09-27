@@ -53,6 +53,7 @@ public class JSFunctions {
 		BlockPlant("blockPlant"),
 		Item("item"),
 		Entity("entity"),
+		Command("command")
 		;
 
 		public final String clazz;
@@ -82,6 +83,7 @@ public class JSFunctions {
 			List<CodeComponent> blockPlantComponents = findComponents(codeParser, EnumObjectType.BlockPlant);
 			List<CodeComponent> itemComponents = findComponents(codeParser, EnumObjectType.Item);
 			List<CodeComponent> entityComponents = findComponents(codeParser, EnumObjectType.Entity);
+			List<CodeComponent> commandComponents = findComponents(codeParser, EnumObjectType.Command);
 
 
 			//================== [ Forge Mod.java Replacement] ==================
@@ -118,6 +120,8 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
+			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", constructorCallsWithoutVariable(commandComponents));
+			
 			fileToReplace = fileToReplace.replace("/*Classes*/", codes(allComponents));
 			
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityComponents));
@@ -180,6 +184,16 @@ public class JSFunctions {
 
 		for (CodeComponent component: components) {
 			result += variableName(component) + " = new " + className(component) + "();" + "\n";
+		}
+
+		return result;
+	}
+	
+	private String constructorCallsWithoutVariable(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += "new " + className(component) + "();" + "\n";
 		}
 
 		return result;

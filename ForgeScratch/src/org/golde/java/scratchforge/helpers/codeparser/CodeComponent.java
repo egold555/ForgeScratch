@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.golde.java.scratchforge.helpers.PLog;
+
 public class CodeComponent {
 	private String name;
 	private String code;
@@ -35,7 +37,7 @@ public class CodeComponent {
 				return Integer.parseInt(values.get(key));
 			}
 			catch (NumberFormatException e) {
-				System.out.println("Value for key '" + key + "' is not an integer: " + values.get(key));
+				PLog.error(e, "Value for key '" + key + "' is not an integer: " + values.get(key));
 				return defValue;
 			}
 		}
@@ -51,7 +53,7 @@ public class CodeComponent {
 				return Double.parseDouble(values.get(key));
 			}
 			catch (NumberFormatException e) {
-				System.out.println("Value for key '" + key + "' is not an double: " + values.get(key));
+				PLog.error(e, "Value for key '" + key + "' is not an double: " + values.get(key));
 				return defValue;
 			}
 		}
