@@ -3102,7 +3102,7 @@ Blockly.Blocks['mcvariable_color_chat'] = {
    this.setColour(290);
 
     this.appendDummyInput()
-        .appendField('Chat Color:')
+        .appendField('(NT) Chat Color:')
         .appendField(colour, 'COLOR');
 
   }
@@ -3110,7 +3110,7 @@ Blockly.Blocks['mcvariable_color_chat'] = {
 
 Blockly.Java['mcvariable_color_chat'] = function(block) {
   var colour_color = block.getFieldValue('COLOR');
-  var code = '"' + colour_color + '"';
+  var code = 'ModHelpers.getChatColorFromHex("' + colour_color + '")';
   return [code, Blockly.Java.ORDER_NONE];
 };
 

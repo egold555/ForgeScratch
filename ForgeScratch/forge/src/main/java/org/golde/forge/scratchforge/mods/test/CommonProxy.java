@@ -213,7 +213,17 @@ public class CommonProxy {
            public void run(EntityPlayer player, String[] args) {
                  final VariableHolder variableHolder = new VariableHolder();
                  final World world = player.worldObj;
-                     if(!world.isRemote){world.setWorldTime(Math.max(0, (long)0));}
+                     if(world.isRemote){
+        if(player != null) {player.addChatMessage(new ChatComponentText(("#55ff55" + "Test")));}
+    }
+    for (double i = 1; i<=10; i++) {
+        scheduler.runTaskLater((long)(i*1000), new Runnable(){
+            public void run(){
+                    if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (player.posX), (player.posY), (player.posZ), true, true, ("#33ff33"), 1, 1));}
+
+            }
+        });} // end for
+
            }
     }
 

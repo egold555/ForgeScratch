@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class ModHelpers {
@@ -162,6 +163,28 @@ public class ModHelpers {
 		firework.stackTagCompound.setTag("Fireworks", fireworkTag);
 
 		return new EntityFireworkRocket(world, x, y, z, firework);
+	}
+	
+	public static EnumChatFormatting getChatColorFromHex(String hex) {
+		switch(hex) {
+		case "#000": return EnumChatFormatting.BLACK;
+		case "#0000AA": return EnumChatFormatting.DARK_BLUE;
+		case "#00AA00": return EnumChatFormatting.DARK_GREEN;
+		case "#00AAAA": return EnumChatFormatting.DARK_AQUA;
+		case "#AA0000": return EnumChatFormatting.DARK_RED;
+		case "#AA00AA": return EnumChatFormatting.DARK_PURPLE;
+		case "#FFAA00": return EnumChatFormatting.GOLD;
+		case "#AAAAAA": return EnumChatFormatting.GRAY;
+		case "#555555": return EnumChatFormatting.DARK_GRAY;
+		case "#5555FF": return EnumChatFormatting.BLUE;
+		case "#55FF55": return EnumChatFormatting.GREEN;
+		case "#55FFFF": return EnumChatFormatting.AQUA;
+		case "#FF5555": return EnumChatFormatting.RED;
+		case "#FF55FF": return EnumChatFormatting.LIGHT_PURPLE;
+		case "#FFFF55": return EnumChatFormatting.YELLOW;
+		case "#FFFFFF": return EnumChatFormatting.WHITE;
+		default: return EnumChatFormatting.RESET; 
+		}
 	}
 
 }
