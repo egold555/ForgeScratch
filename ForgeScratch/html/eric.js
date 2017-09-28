@@ -2611,9 +2611,7 @@ Blockly.Java['mcaction_chat'] = function(block) {
   var value_msg = Blockly.Java.valueToCode(block, 'MSG', Blockly.Java.ORDER_ATOMIC);
   
   var code = 
-  'if(world.isRemote){\n' +
-  '    if(player != null) {player.addChatMessage(new ChatComponentText(' + value_msg + '));}\n' + 
-  '}\n';
+  'if(player != null) {player.addChatMessage(new ChatComponentText(' + value_msg + '));}\n';
   return code;
 };
 

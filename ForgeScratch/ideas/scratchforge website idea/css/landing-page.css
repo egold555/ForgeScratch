@@ -142,12 +142,14 @@ footer {
 }
 
 p.copyright {
+  float: left;
   margin: 0px 0 0;
 }
 
 p.affiliated {
+   float: right;
   margin: 0px 0 0;
-  text-align: right;
+  /*text-align: right;*/
 }
 
 
@@ -177,8 +179,6 @@ p.affiliated {
     perspective-origin: 161.663px 151.8px;
     transform-origin: 161.663px 151.8px;
     caret-color: rgb(51, 51, 51);
-    border: 0px none rgb(51, 51, 51);
-    outline: rgb(51, 51, 51) none 0px;
     padding: 0px 15px;
 }
 
@@ -201,9 +201,7 @@ p.affiliated {
     perspective-origin: 146.663px 40.4px;
     transform-origin: 146.663px 40.4px;
     caret-color: rgb(197, 164, 126);
-    border: 0px none rgb(197, 164, 126);
     margin: 0px 0px 10px;
-    outline: rgb(197, 164, 126) none 0px;
 }
 
 #what-we-do-box-title {
@@ -227,9 +225,7 @@ p.affiliated {
     perspective-origin: 146.663px 14.4px;
     transform-origin: 146.663px 14.4px;
     caret-color: rgb(51, 51, 51);
-    border: 0px none rgb(51, 51, 51);
     margin: 5px 0px 10px;
-    outline: rgb(51, 51, 51) none 0px;
 }
 
 #what-we-do-box-desc {
@@ -252,7 +248,5 @@ p.affiliated {
     perspective-origin: 146.663px 72px;
     transform-origin: 146.663px 72px;
     caret-color: rgb(119, 119, 119);
-    border: 0px none rgb(119, 119, 119);
     margin: 0px 0px 12.6px;
-    outline: rgb(119, 119, 119) none 0px;
 }
