@@ -137,7 +137,8 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		
+		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //WolfNew
+
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -147,8 +148,7 @@ public class CommonProxy {
 	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-		event.registerServerCommand(new Mccommand_foo());
-
+		
 	}
 	
 	@SubscribeEvent
@@ -202,27 +202,21 @@ public class CommonProxy {
 	}
 
 	
-/*type:command*/
-    public class Mccommand_foo extends AbstractCommand {
-           @Override
-           public String getCommandName() {
-                 return "foo";
-           }
+/*type:entity*/
+/*model:WolfNew*/
+public static class Mcentity_Mob_Name extends EntityCreature {
+    public static final String RAW_NAME = "Mob Name";
+    public static final String NAME = "Mob_Name";
+    public static final boolean SPAWN_NATURALLY = false;
+    public static final int EGG_P = 0xff0000;
+    public static final int EGG_S = 0x33ff33;
 
-           @Override
-           public void run(EntityPlayer player, String[] args) {
-                 final VariableHolder variableHolder = new VariableHolder();
-                 final World world = player.worldObj;
-                     scheduler.runTaskLater((long)(1*1000), new Runnable(){
-        public void run(){
-                if(world.isRemote){
-            if(player != null) {player.addChatMessage(new ChatComponentText((ModHelpers.getChatColorFromHex("#55ff55").toString() + "Im green da ba dee da ba da")));}
-        }
-
-        }
-    });
-           }
+    public Mcentity_Mob_Name(World world){
+        super(world);
     }
+
+
+}
 
 
 }
