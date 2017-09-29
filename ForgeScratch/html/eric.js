@@ -46,7 +46,7 @@ Blockly.Blocks['mcblock'] = {
     {
       "type": "field_input",
       "name": "NAME",
-      "text": "change_me"
+      "text": "Block Name"
     },
     {
       "type": "input_dummy"
@@ -178,7 +178,7 @@ Blockly.Blocks['mcblockflower'] = {
     {
       "type": "field_input",
       "name": "NAME",
-      "text": "change_me"
+      "text": "Block Flower Name"
     },
     {
       "type": "input_dummy"
@@ -263,7 +263,7 @@ Blockly.Blocks['mcblockplant'] = {
     {
       "type": "field_input",
       "name": "NAME",
-      "text": "change_me"
+      "text": "Block Plant Name"
     },
     {
       "type": "input_dummy"
@@ -2108,7 +2108,7 @@ Blockly.Blocks['mcitem'] = {
     {
       "type": "field_input",
       "name": "NAME",
-      "text": "change_me"
+      "text": "Item Name"
     },
     {
       "type": "input_dummy"
@@ -3646,7 +3646,7 @@ Blockly.Blocks['mccommand'] = {
     {
       "type": "field_input",
       "name": "COMMAND",
-      "text": "foo"
+      "text": "CustomCommand"
     },
     {
       "type": "input_dummy"
@@ -3669,7 +3669,7 @@ Blockly.Blocks['mccommand'] = {
 
 Blockly.Java['mccommand'] = function(block) {
   var value_name = make_java_id(block.getFieldValue('COMMAND'));
-  var text_command = block.getFieldValue('COMMAND');
+  //var text_command = block.getFieldValue('COMMAND');
   var statements_code = Blockly.Java.statementToCode(block, 'CODE');
   
   var code = '/*BEGIN:' + value_name + '*/\n' +
@@ -3677,7 +3677,7 @@ Blockly.Java['mccommand'] = function(block) {
     '    public class Mccommand_' + value_name + ' extends AbstractCommand {\n' +
     '           @Override\n' +
     '           public String getCommandName() {\n' +
-    '                 return "' + text_command + '";\n' + 
+    '                 return "' + value_name + '";\n' + 
     '           }\n' +
     '\n' +
     '           @Override\n' +
