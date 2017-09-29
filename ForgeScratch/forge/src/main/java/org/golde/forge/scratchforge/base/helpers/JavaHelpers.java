@@ -101,7 +101,7 @@ public class JavaHelpers {
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		if(urlParameters != null) {
+		if(urlParameters != null && !urlParameters.equals("null")) {
 			wr.writeBytes(urlParameters);
 		}
 		wr.flush();
