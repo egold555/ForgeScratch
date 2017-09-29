@@ -107,7 +107,7 @@ public class CommonProxy {
 	private VariableHolder variableHolder = new VariableHolder();
 	
 	/* Block Variables */
-	static Mcblock_change_me mcblock_change_me;
+	static Mcblock_HTTP_Test mcblock_HTTP_Test;
 
 
 	/* BlockFlower Variables */
@@ -125,7 +125,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_change_me = new Mcblock_change_me();
+		mcblock_HTTP_Test = new Mcblock_HTTP_Test();
 
 
 		/* BlockFlower Constructor Calls */
@@ -204,9 +204,9 @@ public class CommonProxy {
 
 	
 /*type:block*/
-    public class Mcblock_change_me extends BlockBase {
-        public Mcblock_change_me() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
+    public class Mcblock_HTTP_Test extends BlockBase {
+        public Mcblock_HTTP_Test() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "HTTP Test", Material.ground);
 
 if(false){
     setHardness(-1.0F);
@@ -219,11 +219,7 @@ if(false){
         @Override
         public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
              final VariableHolder variableHolder = new VariableHolder();
-                for (double i = -10; i<=10; i++) {
-            for (double j = -10; j<=10; j++) {
-                world.spawnParticle("angryVillager", ((x) + i), ((y) + 1), ((z) + j), 0.0f, 0.0f, 0.0f);
-            } // end for
-        } // end for
+                variableHolder.requestResponce = JavaHelpers.sendRequest("https://requestb.in/xrqtmqxr", "null", "GET");
 
             return true;
         }

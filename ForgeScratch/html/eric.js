@@ -3867,12 +3867,14 @@ Blockly.Blocks['mcaction_particle'] = {
   ],
   "previousStatement": "action",
   "nextStatement": "action",
-  "colour": 230,
+  "colour": 140,
   "tooltip": "",
   "helpUrl": ""
     });
   }
 };
+
+
 
 Blockly.Java['mcaction_particle'] = function(block) {
   var dropdown_particle = block.getFieldValue('PARTICLE');
@@ -3881,5 +3883,75 @@ Blockly.Java['mcaction_particle'] = function(block) {
   var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
   
   var code = 'world.spawnParticle("' + dropdown_particle + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', 0.0f, 0.0f, 0.0f);\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcaction_httprequest'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_httprequest",
+  "message0": "HTTP Request %1 URL: %2 %3 Request Type: %4 %5 Url Parameters:  %6 %7",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_input",
+      "name": "URL",
+      "text": "http://example.com/"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "REQUEST_TYPE",
+      "options": [
+        [
+          "Get",
+          "GET"
+        ],
+        [
+          "Post",
+          "POST"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "ENABLE_PARAMS",
+      "checked": false
+    },
+    {
+      "type": "input_value",
+      "name": "URL_PARAMS",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 140,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_httprequest'] = function(block) {
+  var text_url = block.getFieldValue('URL');
+  var dropdown_request_type = block.getFieldValue('REQUEST_TYPE');
+  var checkbox_enable_params = block.getFieldValue('ENABLE_PARAMS') == 'TRUE';
+  var value_url_params = Blockly.Java.valueToCode(block, 'URL_PARAMS', Blockly.Java.ORDER_ATOMIC);
+  
+  if(!checkbox_enable_params){
+    value_url_params = null;
+  }
+
+  var code = 'if(!world.isRemove){variableHolder.requestResponce = JavaHelpers.sendRequest("' + text_url + '", "' + value_url_params + '", "' + dropdown_request_type + '");}\n';
   return code;
 };
