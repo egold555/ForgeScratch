@@ -102,7 +102,7 @@ Blockly.Blocks['mcblock'] = {
     }
   ],
   "inputsInline": false,
-  "colour": 315,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -209,7 +209,7 @@ Blockly.Blocks['mcblockflower'] = {
     }
   ],
   "inputsInline": false,
-  "colour": 315,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -351,7 +351,7 @@ Blockly.Blocks['mcblockplant'] = {
     }
   ],
   "inputsInline": false,
-  "colour": 315,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -412,7 +412,7 @@ Blockly.Blocks['mcblockoptions_quantity'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -446,7 +446,7 @@ Blockly.Blocks['mcblockoptions_lightopacity'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -482,7 +482,7 @@ Blockly.Blocks['mcblockoptions_lightvalue'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -520,7 +520,7 @@ Blockly.Blocks['mcblockoptions_click_right'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -561,7 +561,7 @@ Blockly.Blocks['mcblockoptions_click_left'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -599,7 +599,7 @@ Blockly.Blocks['mcblockoptions_blockplaced'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -639,7 +639,7 @@ Blockly.Blocks['mcblockoptions_block_broken_player'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -679,7 +679,7 @@ Blockly.Blocks['mcblockoptions_block_broken_explosion'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -719,7 +719,7 @@ Blockly.Blocks['mcblockoptions_walkthrough'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -763,7 +763,7 @@ Blockly.Blocks['mcblockoptions_transparent'] = {
   "message0": "Render Block Like Glass",
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -794,7 +794,7 @@ Blockly.Blocks['mcblockoptions_experience'] = {
   ],
   "previousStatement": "mcblockoptions",
   "nextStatement": "mcblockoptions",
-  "colour": 330,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -3443,7 +3443,7 @@ Blockly.Blocks['mcentity'] = {
       "check": "mcentityoptions"
     }
   ],
-  "colour": 230,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -3522,7 +3522,7 @@ Blockly.Blocks['mcentityoptions_modelscale'] = {
   ],
   "previousStatement": "mcentityoptions",
   "nextStatement": "mcentityoptions",
-  "colour": 230,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -3566,7 +3566,7 @@ Blockly.Blocks['mcentityoptions_modeltranslate'] = {
   ],
   "previousStatement": "mcentityoptions",
   "nextStatement": "mcentityoptions",
-  "colour": 230,
+  "colour": 20,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -3660,7 +3660,7 @@ Blockly.Blocks['mccommand'] = {
       "check": "action"
     }
   ],
-  "colour": 230,
+  "colour": 15,
   "tooltip": "",
   "helpUrl": ""
     });
