@@ -107,7 +107,8 @@ public class CommonProxy {
 	private VariableHolder variableHolder = new VariableHolder();
 	
 	/* Block Variables */
-	
+	static Mcblock_change_me mcblock_change_me;
+
 
 	/* BlockFlower Variables */
 	
@@ -124,7 +125,8 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_change_me = new Mcblock_change_me();
+
 
 		/* BlockFlower Constructor Calls */
 		
@@ -137,8 +139,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //WolfNew
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -202,21 +203,31 @@ public class CommonProxy {
 	}
 
 	
-/*type:entity*/
-/*model:WolfNew*/
-public static class Mcentity_Mob_Name extends EntityCreature {
-    public static final String RAW_NAME = "Mob Name";
-    public static final String NAME = "Mob_Name";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xff0000;
-    public static final int EGG_S = 0x33ff33;
+/*type:block*/
+    public class Mcblock_change_me extends BlockBase {
+        public Mcblock_change_me() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "change_me", Material.ground);
 
-    public Mcentity_Mob_Name(World world){
-        super(world);
-    }
-
-
+if(false){
+    setHardness(-1.0F);
 }
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             final VariableHolder variableHolder = new VariableHolder();
+                for (double i = -10; i<=10; i++) {
+            for (double j = -10; j<=10; j++) {
+                world.spawnParticle("angryVillager", ((x) + i), ((y) + 1), ((z) + j), 0.0f, 0.0f, 0.0f);
+            } // end for
+        } // end for
+
+            return true;
+        }
+    }
 
 
 }

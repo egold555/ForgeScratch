@@ -3691,3 +3691,195 @@ Blockly.Java['mccommand'] = function(block) {
     ;
   return code;
 };
+
+
+
+Blockly.Blocks['mcaction_particle'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_particle",
+  "message0": "Spawn Particle %1 Particle:  %2 %3 Position X: %4 Position Y: %5 Position Z: %6",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "PARTICLE",
+      "options": [
+        [
+          "Angry villager",
+          "angryVillager"
+        ],
+        [
+          "Bubble",
+          "bubble"
+        ],
+        [
+          "Cloud",
+          "cloud"
+        ],
+        [
+          "Critical Hit",
+          "crit"
+        ],
+        [
+          "Deph Suspend",
+          "dephsuspend"
+        ],
+        [
+          "Dripping Lava",
+          "dripLava"
+        ],
+        [
+          "Dripping Water",
+          "dripWater"
+        ],
+        [
+          "Enchantment Table",
+          "enchantmenttable"
+        ],
+        [
+          "Export",
+          "explode"
+        ],
+        [
+          "Flame",
+          "flame"
+        ],
+        [
+          "Foot Step",
+          "footstep"
+        ],
+        [
+          "Happy Villager",
+          "happyVillager"
+        ],
+        [
+          "Heart",
+          "heart"
+        ],
+        [
+          "Huge Explosion",
+          "hugeexplosion"
+        ],
+        [
+          "Instant Spell",
+          "instantSpell"
+        ],
+        [
+          "Large Explosion",
+          "largeexplode"
+        ],
+        [
+          "Large Smoke",
+          "largesmoke"
+        ],
+        [
+          "Lava",
+          "lava"
+        ],
+        [
+          "Magic Critical Hit",
+          "magicCrit"
+        ],
+        [
+          "Mob Spell",
+          "mobSpell"
+        ],
+        [
+          "Mob Spell Ambient",
+          "mobSpellAmbient"
+        ],
+        [
+          "Noteblock",
+          "note"
+        ],
+        [
+          "Portal",
+          "portal"
+        ],
+        [
+          "Red Dust",
+          "reddust"
+        ],
+        [
+          "Slime",
+          "slime"
+        ],
+        [
+          "Smoke",
+          "smoke"
+        ],
+        [
+          "Snowball Poof",
+          "snowballpoof"
+        ],
+        [
+          "Snow Shovel",
+          "snowshovel"
+        ],
+        [
+          "Spell",
+          "spell"
+        ],
+        [
+          "Splash",
+          "splash"
+        ],
+        [
+          "Suspended",
+          "suspended"
+        ],
+        [
+          "Town Aura",
+          "townaura"
+        ],
+        [
+          "Wake",
+          "wake"
+        ],
+        [
+          "Witch Magic",
+          "witchMagic"
+        ],   
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Z",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_particle'] = function(block) {
+  var dropdown_particle = block.getFieldValue('PARTICLE');
+  var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
+  var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
+  var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'world.spawnParticle("' + dropdown_particle + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', 0.0f, 0.0f, 0.0f);\n';
+  return code;
+};

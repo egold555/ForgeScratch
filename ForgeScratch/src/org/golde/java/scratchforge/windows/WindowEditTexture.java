@@ -55,6 +55,9 @@ public class WindowEditTexture extends JFrame {
 					Object nodeInfo = node.getUserObject();
 					if(nodeInfo instanceof Texture) {
 						Texture texture = (Texture)nodeInfo;
+						if(Arrays.asList(texturesToIgnore).contains(texture.getTextureName())) {
+							return;
+						}
 						if(!texture.hasBeenCreated()) {
 							try {
 								texture.createTexture();
