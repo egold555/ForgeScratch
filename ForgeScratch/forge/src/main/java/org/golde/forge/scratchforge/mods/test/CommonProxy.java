@@ -137,7 +137,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Snow_Golem.class, Mcentity_Snow_Golem.RAW_NAME, Mcentity_Snow_Golem.NAME, Mcentity_Snow_Golem.EGG_P, Mcentity_Snow_Golem.EGG_S); //IronGolemNew
+		createEntity(Mcentity_Ice_Golem.class, Mcentity_Ice_Golem.RAW_NAME, Mcentity_Ice_Golem.NAME, Mcentity_Ice_Golem.EGG_P, Mcentity_Ice_Golem.EGG_S); //IronGolemNew
 
 	}
 
@@ -204,14 +204,14 @@ public class CommonProxy {
 	
 /*type:entity*/
 /*model:IronGolemNew*/
-public static class Mcentity_Snow_Golem extends EntityCreature {
-    public static final String RAW_NAME = "Snow Golem";
-    public static final String NAME = "Snow_Golem";
+public static class Mcentity_Ice_Golem extends EntityCreature {
+    public static final String RAW_NAME = "Ice Golem";
+    public static final String NAME = "Ice_Golem";
     public static final boolean SPAWN_NATURALLY = false;
     public static final int EGG_P = 0xffffff;
     public static final int EGG_S = 0x66ffff;
 
-    public Mcentity_Snow_Golem(World world){
+    public Mcentity_Ice_Golem(World world){
         super(world);
     }
 
