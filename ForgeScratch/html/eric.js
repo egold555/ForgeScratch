@@ -3318,7 +3318,7 @@ Blockly.Blocks['mcentity'] = {
         ],*/
         [
           "Iron Golem",
-          "IronGolem"
+          "IronGolemNew"
         ],
         [
           "Leash Knot",

@@ -38,7 +38,7 @@ public class WindowEditTexture extends JFrame {
 
 		this.setResizable(false);
 		getContentPane().setLayout(null);
-
+		setTitle("Texture Manager");
 		JTree tree = new JTree(populateTreeView(forgeModsIn));
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setCellRenderer(new MyTreeCellRenderer());

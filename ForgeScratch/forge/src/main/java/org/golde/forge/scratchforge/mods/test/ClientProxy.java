@@ -113,7 +113,8 @@ public class ClientProxy extends CommonProxy {
         ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
         
         /* Entity Rendering Code */
-        
+        RenderingRegistry.registerEntityRenderingHandler(Mcentity_Snow_Golem.class, new CustomEntityRenderer(new ModelIronGolemNew(), "mcentity_snow_golem", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0));
+
     }
     
     static class CustomEntityRenderer extends RenderLiving{

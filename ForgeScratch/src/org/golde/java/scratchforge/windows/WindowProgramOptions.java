@@ -82,6 +82,7 @@ public class WindowProgramOptions extends JFrame{
 	private JTextField textField;
 	
 	public WindowProgramOptions(Main main, Config config) {
+		setTitle("Program Options");
 		this.config = config;
 		JPanel box1 = new JPanel();
 		box1.setBounds(12, 13, 191, 144);
