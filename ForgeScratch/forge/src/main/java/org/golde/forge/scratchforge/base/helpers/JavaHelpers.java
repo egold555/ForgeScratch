@@ -85,7 +85,7 @@ public class JavaHelpers {
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to send HTTP Request");
-			return new RequestResponce(-1, "Failed to send HTTP Request! See logger for details!");
+			return null;
 		}
 	}
 
