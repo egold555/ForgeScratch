@@ -64,7 +64,7 @@ public class Main implements ActionListener{
 	public File forge_folder = new File("forge");
 
 	//Main JFame
-	private static JFrame frame = new JFrame("Forge Scratch"); 
+	private static JFrame frame = new JFrame("ScratchForge"); 
 
 	//Menu bar for JFrame
 	private JMenuBar menuBar = new JMenuBar(); 
