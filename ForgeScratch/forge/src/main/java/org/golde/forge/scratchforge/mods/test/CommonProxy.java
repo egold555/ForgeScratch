@@ -107,7 +107,8 @@ public class CommonProxy {
 	private VariableHolder variableHolder = new VariableHolder();
 	
 	/* Block Variables */
-	
+	static Mcblock_Firework mcblock_Firework;
+
 
 	/* BlockFlower Variables */
 	
@@ -124,7 +125,8 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		
+		mcblock_Firework = new Mcblock_Firework();
+
 
 		/* BlockFlower Constructor Calls */
 		
@@ -137,8 +139,7 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Ice_Golem.class, Mcentity_Ice_Golem.RAW_NAME, Mcentity_Ice_Golem.NAME, Mcentity_Ice_Golem.EGG_P, Mcentity_Ice_Golem.EGG_S); //IronGolemNew
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -202,21 +203,27 @@ public class CommonProxy {
 	}
 
 	
-/*type:entity*/
-/*model:IronGolemNew*/
-public static class Mcentity_Ice_Golem extends EntityCreature {
-    public static final String RAW_NAME = "Ice Golem";
-    public static final String NAME = "Ice_Golem";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xffffff;
-    public static final int EGG_S = 0x66ffff;
+/*type:block*/
+    public class Mcblock_Firework extends BlockBase {
+        public Mcblock_Firework() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Firework", Material.ground);
 
-    public Mcentity_Ice_Golem(World world){
-        super(world);
-    }
-
-
+if(false){
+    setHardness(-1.0F);
 }
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             final VariableHolder variableHolder = new VariableHolder();
+                if(!world.isRemote){world.spawnEntityInWorld(ModHelpers.getFirework(world, (x), (y), (z), true, true, ("#ffff00"), 1, 1));}
+
+            return true;
+        }
+    }
 
 
 }

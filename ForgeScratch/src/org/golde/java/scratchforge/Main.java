@@ -1,11 +1,13 @@
 package org.golde.java.scratchforge;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URI;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
@@ -36,6 +38,7 @@ import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.PopupFeatures;
 import javafx.scene.web.PromptData;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -197,6 +200,15 @@ public class Main implements ActionListener{
 				new ChangeListener<Worker.State>() {
 					public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
 						if (newState == Worker.State.SUCCEEDED) {
+							
+							/*if(webEngine.getLocation() != null) {
+								PLog.info("External website: " + webEngine.getLocation());
+								if(!webEngine.getLocation().contains("file:///")){
+									PLog.info("External website: " + webEngine.getLocation());
+									return;
+								}
+							}*/
+							
 							// web page is loaded.
 							window = (JSObject) webEngine.executeScript("window");
 							jsFunctions = new JSFunctions(Main.this);
@@ -206,9 +218,24 @@ public class Main implements ActionListener{
 							if(Boolean.valueOf(config.getString(ConfigProperty.DARK_MODE))) {
 								webEngine.executeScript("var newSS,styles=\"* { background: #1A2424 ! important; color: cyan !important } :link, :link * { color: #66FF99 !important } :visited, :visited * { color: #9966CC !important }\";document.createStyleSheet?document.createStyleSheet(\"styles\"):((newSS=document.createElement(\"link\")).rel=\"stylesheet\",newSS.href=\"data:text/css,\"+escape(styles),document.getElementsByTagName(\"head\")[0].appendChild(newSS));");
 							}
+							
 						}
+						
+						
 					}
 				});
+		
+		//Prevent new windows from opening
+		/*webEngine.setCreatePopupHandler(
+		    new Callback<PopupFeatures, WebEngine>() {
+		        @Override
+		        public WebEngine call(PopupFeatures config) {
+		            
+		            return null;
+		        }
+		    });*/
+		
+		
 
 
 		webEngine.load(f.toURI().toString());
