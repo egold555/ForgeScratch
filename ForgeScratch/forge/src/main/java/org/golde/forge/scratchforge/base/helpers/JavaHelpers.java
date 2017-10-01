@@ -74,22 +74,36 @@ public class JavaHelpers {
 		return (int) Long.parseLong(hex, 16);
 	}
 
-	public static RequestResponce sendRequest(String ip, String args, String getOrPost) {
-		try {
-			if(getOrPost.equals("GET")) {
-				return sendGetRequest(ip);
+	public static void sendRequest(String ip, String args, String getOrPost) {
+
+		new Runnable() {
+
+			@Override
+			public void run() {
+				int code = 0;
+				try {
+					if(getOrPost.equals("GET")) {
+						code = sendGetRequest(ip);
+					}
+					else {
+						code =  sendPostRequest(ip, args);
+					}
+				}
+				catch(Exception e) {
+					PLog.error(e, "Failed to send HTTP Request");
+					return;
+				}
+				if(code != 200) {
+					PLog.warning("Status code returned was: " + code + "! Expecting a 200 responce.");
+				}
 			}
-			else {
-				return sendPostRequest(ip, args);
-			}
-		}
-		catch(Exception e) {
-			PLog.error(e, "Failed to send HTTP Request");
-			return null;
-		}
+
+		}.run();
+
+
 	}
 
-	private static RequestResponce sendPostRequest(String url, String urlParameters) throws Exception{
+	private static int sendPostRequest(String url, String urlParameters) throws Exception{
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -122,10 +136,10 @@ public class JavaHelpers {
 		}
 		in.close();
 
-		return new RequestResponce(responseCode, response.toString());
+		return responseCode;
 	}
 
-	private static RequestResponce sendGetRequest(String url) throws Exception{
+	private static int sendGetRequest(String url) throws Exception{
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -150,7 +164,7 @@ public class JavaHelpers {
 		}
 		in.close();
 
-		return new RequestResponce(responseCode, response.toString());
+		return responseCode;
 	}
 
 }
