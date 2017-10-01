@@ -2415,7 +2415,7 @@ Blockly.Java['mcaction_log'] = function(block) {
   var value_msg = Blockly.Java.valueToCode(block, 'MSG', Blockly.Java.ORDER_ATOMIC);
   
   var code = 
-  '    PLog.game(' + value_msg + ');\n' +
+  '    PLog.game(' + value_msg + ');\n';
   return code;
 };
 
