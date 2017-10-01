@@ -415,10 +415,12 @@ Blockly.Java['math_random_int'] = function(block) {
   var functionName = Blockly.Java.provideFunction_(
       'math_random_int',
       [ 'public static int ' + Blockly.Java.FUNCTION_NAME_PLACEHOLDER_ +
-          '(int a, int b) {',
+          '(double a, double b) {',
+          '  a = (int)a;',
+          '  b = (int)b;',
         '  if (a > b) {',
         '    // Swap a and b to ensure a is smaller.',
-        '    int c = a;',
+        '    int c = (int)a;',
         '    a = b;',
         '    b = c;',
         '  }',

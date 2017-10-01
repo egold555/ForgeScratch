@@ -1700,7 +1700,7 @@ Blockly.Blocks['mcblockinput'] = {
                 ["Brick", "brick_"],
                 ["Brick Stairs", "brick_stairs"],
                 ["Brown Mushroom", "brown_mushroom"],
-                ["Brown Mushroom", "brown_mushroom_"],
+                /*["Brown Mushroom", "brown_mushroom_"],*/
                 ["Cactus", "cactus"],
                 ["Cake", "cake"],
                 ["Carpet", "carpet"],
