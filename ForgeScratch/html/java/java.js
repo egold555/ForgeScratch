@@ -404,7 +404,7 @@ Blockly.Java.provideVarClass = function() {
     ' *',
     ' * @author bmoon',
     ' */',
-    'final class Var implements Comparable {',
+    'final static class Var implements Comparable {',
     '',
     '    public enum Type {',
     '',
@@ -1005,7 +1005,7 @@ Blockly.Java.provideVarClass = function() {
     '',
     '}'
   ];
-    this.classes_['Var'] = VarCode.join('\n')+'\n';
+    this.classes_['Var'] = '/*BEGIN:global_code_after*/\n' + '/*type:global*/\n' + VarCode.join('\n')+'/*END:global_code_after*/\n' + '\n';
   }
 };
 
@@ -1241,7 +1241,7 @@ Blockly.Java.finish = function(code) {
   delete Blockly.Java.definitions_;
   delete Blockly.Java.functionNames_;
   Blockly.Java.variableDB_.reset();
-  return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + code;
+  return '/*BEGIN:global_code_before*/\n' + '/*type:global*/\n' + allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + '\n/*END:global_code_before*/\n\n' + code;
 };
 
 /**
