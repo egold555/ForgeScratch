@@ -139,7 +139,8 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		
+		createEntity(Mcentity_Mob_Name.class, Mcentity_Mob_Name.RAW_NAME, Mcentity_Mob_Name.NAME, Mcentity_Mob_Name.EGG_P, Mcentity_Mob_Name.EGG_S); //ChickenNew
+
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -209,18 +210,20 @@ public class CommonProxy {
 
 
 
-/*type:event*/
-@SubscribeEvent
-public void attackEntityEvent(AttackEntityEvent event) {
-    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {
-         final EntityPlayer player = event.entityPlayer;
-         final World world = player.worldObj;
-         final VariableHolder variableHolder = new VariableHolder();
-         if(event.target instanceof EntityLiving) {variableHolder.entity = (EntityLiving)event.target;}
-             world.spawnEntityInWorld(ModHelpers.getFirework(world, (variableHolder.entity.posX), (variableHolder.entity.posY), (variableHolder.entity.posZ), true, true, ("#ff0000"), 1, (-10)));
-    if(variableHolder.entity != null){variableHolder.entity.setVelocity(0, 2, 0);}
+/*type:entity*/
+/*model:ChickenNew*/
+public static class Mcentity_Mob_Name extends EntityCreature {
+    public static final String RAW_NAME = "Mob Name";
+    public static final String NAME = "Mob_Name";
+    public static final boolean SPAWN_NATURALLY = false;
+    public static final int EGG_P = 0xffff33;
+    public static final int EGG_S = 0x33ff33;
 
-     }
+    public Mcentity_Mob_Name(World world){
+        super(world);
+    }
+
+
 }
 
 
