@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.t;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -85,11 +85,6 @@ import net.minecraftforge.transformers.*;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.eventhandler.*;
-import cpw.mods.fml.common.gameevent.*;
-import cpw.mods.fml.common.gameevent.TickEvent.*;
-import cpw.mods.fml.common.gameevent.InputEvent.*;
-import cpw.mods.fml.common.gameevent.PlayerEvent.*;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.registry.*;
 import cpw.mods.fml.common.network.*;
@@ -104,104 +99,58 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-public class CommonProxy {
+@Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
+public class ForgeMod implements IWorldGenerator{
+    
+	public static final String MOD_NAME = "t";
+	public static final String MOD_ID = "sf_" + MOD_NAME;
+	public static final String BLOCK_ID = MOD_ID + ":";
+    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods.t";
+    
+    @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
+	public static CommonProxy PROXY;
+    
+    @Instance(ForgeMod.MOD_ID)
+	public static ForgeMod INSTANCE;
+    
+	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
-	public static Scheduler scheduler = new Scheduler();
+		@Override
+		public Item getTabIconItem() {
+			return Items.iron_axe;
+		}
+
+	};
 	
-	/* Block Variables */
-	/*Variables - Block*/
+	@Override
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 
-	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
+		chunkX = chunkX * 16;
+		chunkZ = chunkZ * 16;
+		if (world.provider.dimensionId == -1) {
+			PROXY.generateNether(world, random, chunkX, chunkZ);
+		}	
+		if (world.provider.dimensionId == 0) {
+			PROXY.generateSurface(world, random, chunkX, chunkZ);
+		}
+		
 
-	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
-
-	/* Item Variables */
-	public static SpawnEgg spawnEgg;
-	/*Variables - Item*/
-
-	/* Entity Variables */
-	/*Variables - Entity*/
-
-	public void preInit(FMLPreInitializationEvent event){
-		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
-
-		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
-
-		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
-
-		/* Item Constructor Calls */
-		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-		/*Constructor calls - Item*/
-
-		/* Entity Constructor Calls */
-		/*Constructor calls - Entity*/
-	}
-
-	public void init(FMLInitializationEvent event){
-		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
 	}
 	
+	@EventHandler
+	public void init(FMLInitializationEvent event) {
+		GameRegistry.registerWorldGenerator(this, 1);
+        PROXY.init(event);
+	}
+
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+        PROXY.preInit(event);
+	}
+	
+	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
-		/* Command Registry */
-		/*Constructor calls - Command*/
+		PROXY.serverLoad(event);
 	}
-	
-	@SubscribeEvent
-	public void onServerTick(TickEvent.ServerTickEvent event) {
-		scheduler.update();
-	}
-
-	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
-		for (int i = 0; i < 20; i++) {
-			int x = chunkX + random.nextInt(16) + 8;
-			int y = random.nextInt(128);
-			int z = chunkZ + random.nextInt(16) + 8;
-
-			/*Overworld world generation for flowers*/
-			/*WorldGen - Overworld - Flowers*/
-
-			/*Overworld world generation for plants*/
-			/*WorldGen - Overworld - Plant*/
-
-		}
-	}
-
-	//TODO: Implement nether plant generation?
-	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
-		for (int i = 0; i < 20; i++) {
-			int x = chunkX + random.nextInt(16) + 8;
-			int y = random.nextInt(128);
-			int z = chunkZ + random.nextInt(16) + 8;
-
-			/*Nether generation for flowers*/
-			/*WorldGen - Nether - Flowers*/
-
-			/*Nether generation for plants*/
-			/*WorldGen - Nether - Plant*/
-
-		}
-	}
-	
-	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
-		int id = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
-		EntityRegistry.registerModEntity(entityClass, rawEntityName, id, ForgeMod.INSTANCE, 64, 1, true);
-		if(solidColor != -1 && spotColor != -1) {
-			createEgg(id, solidColor, spotColor);
-		}
-		//TODO: Add language
-	}
-	
-	private void createEgg(int id, int solidColor, int spotColor) {
-		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
-	}
-
-	/*Classes*/
 
 }

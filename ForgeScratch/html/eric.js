@@ -36,6 +36,7 @@ var COLOR_CONSTRUCTOR = 15;
 var COLOR_CONSTRUCTOR_OPTION = 40;
 var COLOR_ACTIONS = 140;
 var COLOR_VARIABLES = 290;
+var COLOR_EVENTS = 180;
 
 
 Blockly.Blocks['mcblock'] = {
@@ -3996,4 +3997,708 @@ Blockly.Java['mcsoundinput'] = function(block) {
   
   var code = ""+ dropdown_item;
   return [code, Blockly.Java.ORDER_NONE];
+};
+
+
+
+Blockly.Blocks['mcevent_cancel'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_cancel",
+  "message0": "Cancel Event",
+  "previousStatement": "cancelevent",
+  "colour": COLOR_EVENTS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.JavaScript['mcevent_cancel'] = function(block) {
+  var code = 'event.setCanceled(true);\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcevent_itempickup'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_itempickup",
+  "message0": "Item Pickup Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when any item is about to be picked up by a playe",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_itempickup'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:ItemPickupEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void itemPickupEvent(ItemPickupEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:ItemPickupEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_itemcraft'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_itemcraft",
+  "message0": "Item Craft Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player is about to craft an item",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_itemcraft'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:ItemCraftedEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void itemCraftedEvent(ItemCraftedEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:ItemCraftedEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_itemsmelt'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_itemcraft",
+  "message0": "Item Smelt Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player is about to smelt an item",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_itemsmelt'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:ItemSmeltedEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void itemSmeltedEvent(ItemSmeltedEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:ItemSmeltedEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerjoin'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerjoin",
+  "message0": "Player Join Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a new player is about to connect to the server",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerjoin'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerLoggedInEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerLoggedInEvent(PlayerLoggedInEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerLoggedInEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerleave'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerleave",
+  "message0": "Player Leave Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player is about to disconnect from the server",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerleave'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerLoggedOutEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerLoggedOutEvent(PlayerLoggedOutEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerLoggedOutEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerrespawn'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerrespawn",
+  "message0": "Player Respawn Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player died and is now to be re-spawned",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerrespawn'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerRespawnEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerRespawnEvent(PlayerRespawnEvent event) {\n' + 
+  '    if(event.player != null) {\n' + 
+  '         final EntityPlayer player = event.player;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerRespawnEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerarrowshoot'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerarrowshoot",
+  "message0": "Player Arrow Shoot Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when the player is about to shoot an arrow",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerarrowshoot'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:ArrowNockEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void arrowNockEvent(ArrowNockEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:ArrowNockEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerattack'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerattack",
+  "message0": "Player Attack Entity Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when the player is about to attack an Entity",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerattack'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:AttackEntityEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void attackEntityEvent(AttackEntityEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         variableHolder.entity = event.target;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:AttackEntityEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerbonemeal'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerbonemeal",
+  "message0": "Player Bonemeal Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when the player attempts to use bonemeal on a block",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerbonemeal'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:BonemealEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void bonemealEvent(BonemealEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:BonemealEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerfillbucket'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerfillbucket",
+  "message0": "Player Fill Bucket Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when the player is about to use an empty bucket",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerfillbucket'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:FillBucketEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void fillBucketEvent(FillBucketEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:FillBucketEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playeritembreak'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playeritembreak",
+  "message0": "Player Item Break Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when an item is about to be broken by the player, e.g a sword",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playeritembreak'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerDestroyItemEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerDestroyItemEvent(PlayerDestroyItemEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerDestroyItemEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playeropencontainer'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playeropencontainer",
+  "message0": "Player Open Container Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when the player is about to interact with a container, e.g a chest",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playeropencontainer'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerOpenContainerEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerOpenContainerEvent(PlayerOpenContainerEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerOpenContainerEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerpickxp'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playerpickxp",
+  "message0": "Player Pickup XP Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player collides with an XPOrb on the ground",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerpickxp'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerPickupXpEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerPickupXpEvent(PlayerPickupXpEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerPickupXpEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playersleep'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playersleep",
+  "message0": "Player Sleep Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player attempts to sleep in a bed",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playersleep'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:PlayerSleepInBedEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void playerSleepInBedEvent(PlayerSleepInBedEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         final int x = event.x;\n' + 
+  '         final int y = event.y;\n' + 
+  '         final int z = event.z;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:PlayerSleepInBedEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_playerhoe'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_playersleep",
+  "message0": "Player Hoe Dirt Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a player attempts to use a hoe on a block",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_playerhoe'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:UseHoeEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void useHoeEvent(UseHoeEvent event) {\n' + 
+  '    if(event.entityPlayer != null) {\n' + 
+  '         final EntityPlayer player = event.entityPlayer;\n' + 
+  '         final World world = player.worldObj;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         final int x = event.x;\n' + 
+  '         final int y = event.y;\n' + 
+  '         final int z = event.z;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:UseHoeEvent*/\n';
+  return code;
 };

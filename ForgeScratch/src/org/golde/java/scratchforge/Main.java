@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.golde.java.scratchforge.Config.ConfigProperty;
@@ -111,6 +113,15 @@ public class Main implements ActionListener{
 
 	//Start creation of everything
 	void initAndShowGUI() {
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// This has to be called after "forge_folder" is initialized.
 		modManager = new ModManager(this);
 

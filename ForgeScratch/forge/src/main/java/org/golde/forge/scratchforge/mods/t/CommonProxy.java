@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.t;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -109,37 +109,37 @@ public class CommonProxy {
 	public static Scheduler scheduler = new Scheduler();
 	
 	/* Block Variables */
-	/*Variables - Block*/
+	
 
 	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
+	
 
 	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
+	
 
 	/* Item Variables */
 	public static SpawnEgg spawnEgg;
-	/*Variables - Item*/
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
+		
 
 		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
+		
 
 		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
+		
 
 		/* Item Constructor Calls */
 		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-		/*Constructor calls - Item*/
+		
 
 		/* Entity Constructor Calls */
-		/*Constructor calls - Entity*/
+		
 	}
 
 	public void init(FMLInitializationEvent event){
@@ -149,7 +149,7 @@ public class CommonProxy {
 	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-		/*Constructor calls - Command*/
+		
 	}
 	
 	@SubscribeEvent
@@ -164,10 +164,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			/*WorldGen - Overworld - Flowers*/
+			
 
 			/*Overworld world generation for plants*/
-			/*WorldGen - Overworld - Plant*/
+			
 
 		}
 	}
@@ -202,6 +202,24 @@ public class CommonProxy {
 		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-	/*Classes*/
+	
+/*type:global*/
+
+
+
+
+
+/*type:event*/
+@SubscribeEvent
+public void playerRespawnEvent(PlayerRespawnEvent event) {
+    if(event.player != null) {
+         final EntityPlayer player = event.player;
+         final World world = player.worldObj;
+         final VariableHolder variableHolder = new VariableHolder();
+             world.spawnEntityInWorld(ModHelpers.getFirework(world, (player.posX), (player.posY), (player.posZ), true, true, ("#33ccff"), 0, (-10)));
+
+     }
+}
+
 
 }
