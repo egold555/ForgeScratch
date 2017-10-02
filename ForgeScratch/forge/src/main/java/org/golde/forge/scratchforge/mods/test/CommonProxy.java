@@ -212,12 +212,13 @@ public class CommonProxy {
 /*type:event*/
 @SubscribeEvent
 public void attackEntityEvent(AttackEntityEvent event) {
-    if(event.entityPlayer != null) {
+    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {
          final EntityPlayer player = event.entityPlayer;
          final World world = player.worldObj;
          final VariableHolder variableHolder = new VariableHolder();
-         variableHolder.entity = event.target;
-             if(variableHolder.entity != null){variableHolder.entity.setVelocity(0, 3, 0);}
+         if(event.target instanceof EntityLiving) {variableHolder.entity = (EntityLiving)event.target;}
+             world.spawnEntityInWorld(ModHelpers.getFirework(world, (variableHolder.entity.posX), (variableHolder.entity.posY), (variableHolder.entity.posZ), true, true, ("#ff0000"), 1, (-10)));
+    if(variableHolder.entity != null){variableHolder.entity.setVelocity(0, 2, 0);}
 
      }
 }

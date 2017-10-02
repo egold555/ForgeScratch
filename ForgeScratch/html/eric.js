@@ -2099,7 +2099,7 @@ Blockly.Blocks['mcitemoptions_lore'] = {
   init: function() {
     this.jsonInit({
       "type": "mcitemoptions_lore",
-  "message0": "(NI) Lore %1",
+  "message0": "Lore %1",
   "args0": [
     {
       "type": "input_value",
@@ -2120,8 +2120,45 @@ Blockly.Blocks['mcitemoptions_lore'] = {
 };
 
 Blockly.Java['mcitemoptions_lore'] = function(block) {
-    var value_name = Blockly.Java.valueToCode(block, 'LORE', Blockly.Java.ORDER_ATOMIC);
-    var code = '/*Lore Code*/\n';
+     var value_lore = Blockly.Java.valueToCode(block, 'LORE', Blockly.Java.ORDER_ATOMIC);
+     var codeToAdd = "";
+     if(value_lore.indexOf("Array") >= 0){
+      codeToAdd = '    list.addAll(' + value_lore + ');\n';
+     }
+     else{
+      codeToAdd = '    list.add(' + value_lore + ');\n';
+     }
+     var code = 
+    '@Override\n' +
+    'public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List list, boolean p_77624_4_) {\n' +
+    codeToAdd +
+    '}\n'
+    ;
+    return code;
+}
+
+Blockly.Blocks['mcitemoptions_doesntleave'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemoptions_doesntleave",
+  "message0": "Does Not Leave Crafting Grid",
+  "previousStatement": "optionitem",
+  "nextStatement": "optionitem",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "Make the item not leave the crafting grid when used to craft with",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemoptions_doesntleave'] = function(block) {
+    var code = 
+    '@Override\n' +
+    'public boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_){\n' +
+    '    return false;\n' +
+    '}\n'
+    ;
     return code;
 }
 
