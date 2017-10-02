@@ -4374,7 +4374,7 @@ Blockly.Java['mcevent_playerattack'] = function(block) {
   '         final EntityPlayer player = event.entityPlayer;\n' + 
   '         final World world = player.worldObj;\n' + 
   '         final VariableHolder variableHolder = new VariableHolder();\n' +
-  '         variableHolder.entity = event.target;\n' + 
+  '         if(event.target instanceof EntityLiving) {variableHolder.entity = (EntityLiving)event.target;}\n' + 
   '         ' + statements_code + '\n' + 
   '     }\n' + 
   '}\n' +
