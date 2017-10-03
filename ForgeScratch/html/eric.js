@@ -1009,7 +1009,7 @@ Blockly.Blocks['mcaction_spawn_mob'] = {
         ],
         [
           "Squid",
-          "Squid"
+          "SquidNew"
         ],
         [
           "Wolf",
@@ -4052,7 +4052,7 @@ Blockly.Blocks['mcevent_cancel'] = {
   }
 };
 
-Blockly.JavaScript['mcevent_cancel'] = function(block) {
+Blockly.Java['mcevent_cancel'] = function(block) {
   var code = 'event.setCanceled(true);\n';
   return code;
 };
