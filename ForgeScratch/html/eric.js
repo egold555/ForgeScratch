@@ -4053,7 +4053,7 @@ Blockly.Blocks['mcevent_cancel'] = {
 };
 
 Blockly.Java['mcevent_cancel'] = function(block) {
-  var code = 'event.setCanceled(true);\n';
+  var code = 'if(event.isCancelable()) {event.setCanceled(true);}else {PLog.warning("Attempted to cancel a uncancelable event!");}\n';
   return code;
 };
 

@@ -211,11 +211,24 @@ public class CommonProxy {
 
 /*type:event*/
 @SubscribeEvent
+public void itemCraftedEvent(ItemCraftedEvent event) {
+    if(event.player != null && !event.player.worldObj.isRemote) {
+         final EntityPlayer player = event.player;
+         final World world = player.worldObj;
+         final VariableHolder variableHolder = new VariableHolder();
+             if(event.isCancelable()) {event.setCanceled(true);}else {PLog.warning("Attempted to cancel a uncancelable event: \" \"!");}
+
+     }
+}
+
+/*type:event*/
+@SubscribeEvent
 public void playerLoggedOutEvent(PlayerLoggedOutEvent event) {
     if(event.player != null && !event.player.worldObj.isRemote) {
          final EntityPlayer player = event.player;
          final World world = player.worldObj;
          final VariableHolder variableHolder = new VariableHolder();
+             event.setCanceled(true);
 
      }
 }
