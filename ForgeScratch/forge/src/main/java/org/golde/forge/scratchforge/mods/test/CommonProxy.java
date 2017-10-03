@@ -144,6 +144,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
 	
@@ -211,24 +212,15 @@ public class CommonProxy {
 
 /*type:event*/
 @SubscribeEvent
-public void itemCraftedEvent(ItemCraftedEvent event) {
-    if(event.player != null && !event.player.worldObj.isRemote) {
-         final EntityPlayer player = event.player;
-         final World world = player.worldObj;
+public void noteBlockEventPlay(NoteBlockEvent.Play event) {
+    if(!event.world.isRemote) {
+         final EntityPlayer player = null;
+         final World world = event.world;
          final VariableHolder variableHolder = new VariableHolder();
-             if(event.isCancelable()) {event.setCanceled(true);}else {PLog.warning("Attempted to cancel a uncancelable event: \" \"!");}
-
-     }
-}
-
-/*type:event*/
-@SubscribeEvent
-public void playerLoggedOutEvent(PlayerLoggedOutEvent event) {
-    if(event.player != null && !event.player.worldObj.isRemote) {
-         final EntityPlayer player = event.player;
-         final World world = player.worldObj;
-         final VariableHolder variableHolder = new VariableHolder();
-             event.setCanceled(true);
+         final int x = event.x;
+         final int y = event.y;
+         final int z = event.z;
+             world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));
 
      }
 }

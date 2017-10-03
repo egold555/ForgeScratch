@@ -2659,7 +2659,7 @@ Blockly.Java['mcaction_breakblock'] = function(block) {
   var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
   var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
   
-  var code = '{world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z +', ' + checkbox_drop + ');\n';
+  var code = 'world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z +', ' + checkbox_drop + ');\n';
   return code;
 };
 
@@ -4737,5 +4737,150 @@ Blockly.Java['mcevent_playerhoe'] = function(block) {
   '     }\n' + 
   '}\n' +
   '/*END:UseHoeEvent*/\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcevent_treegen'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_treegen",
+  "message0": "Sapling Grow Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a sapling grows a tree",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_treegen'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:SaplingGrowTreeEvent*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void saplingGrowTreeEvent(SaplingGrowTreeEvent event) {\n' + 
+  '    if(!event.world.isRemote) {\n' + 
+  '         final EntityPlayer player = null;\n' + 
+  '         final World world = event.world;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         final int x = event.x;\n' + 
+  '         final int y = event.y;\n' + 
+  '         final int z = event.z;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:SaplingGrowTreeEvent*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_noteblock_play'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_noteblock_play",
+  "message0": "Note Block Play Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a Noteblock plays its note",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_noteblock_play'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:NoteBlockEventPlay*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void noteBlockEventPlay(NoteBlockEvent.Play event) {\n' + 
+  '    if(!event.world.isRemote) {\n' + 
+  '         final EntityPlayer player = null;\n' + 
+  '         final World world = event.world;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         final int x = event.x;\n' + 
+  '         final int y = event.y;\n' + 
+  '         final int z = event.z;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:NoteBlockEventPlay*/\n';
+  return code;
+};
+
+Blockly.Blocks['mcevent_noteblock_change'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcevent_noteblock_change",
+  "message0": "Note Block Change Event %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": [
+        "action",
+        "cancelevent"
+      ]
+    }
+  ],
+  "colour": COLOR_EVENTS,
+  "tooltip": "Fired when a Noteblock is changed, e.g the pitch altered",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcevent_noteblock_change'] = function(block) {
+  var statements_code = Blockly.Java.statementToCode(block, 'CODE');
+  
+  var code = 
+  '/*BEGIN:NoteBlockEventChange*/\n' +
+  '/*type:event*/\n' + 
+  '@SubscribeEvent\n' +
+  'public void noteBlockEventChange(NoteBlockEvent.Change event) {\n' + 
+  '    if(!event.world.isRemote) {\n' + 
+  '         final EntityPlayer player = null;\n' + 
+  '         final World world = event.world;\n' + 
+  '         final VariableHolder variableHolder = new VariableHolder();\n' +
+  '         final int x = event.x;\n' + 
+  '         final int y = event.y;\n' + 
+  '         final int z = event.z;\n' + 
+  '         ' + statements_code + '\n' + 
+  '     }\n' + 
+  '}\n' +
+  '/*END:NoteBlockEventChange*/\n';
   return code;
 };

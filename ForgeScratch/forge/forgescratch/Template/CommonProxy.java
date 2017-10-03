@@ -144,6 +144,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
 	
