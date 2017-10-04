@@ -210,20 +210,5 @@ public class CommonProxy {
 
 
 
-/*type:event*/
-@SubscribeEvent
-public void noteBlockEventPlay(NoteBlockEvent.Play event) {
-    if(!event.world.isRemote) {
-         final EntityPlayer player = null;
-         final World world = event.world;
-         final VariableHolder variableHolder = new VariableHolder();
-         final int x = event.x;
-         final int y = event.y;
-         final int z = event.z;
-             world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));
-
-     }
-}
-
 
 }

@@ -1,7 +1,5 @@
 package org.golde.scratchforge.installer;
 
-import java.io.File;
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 

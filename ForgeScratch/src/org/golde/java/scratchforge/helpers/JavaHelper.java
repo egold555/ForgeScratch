@@ -1,12 +1,14 @@
 package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -28,9 +30,9 @@ import javax.swing.tree.TreePath;
 public class JavaHelper {
 
 	//Opens up a cmd prompt and executes commands. 
-	public static void runCMD(File dir, String cmd, boolean keepOpen) throws IOException {
+	public static void runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
 		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");
-	}
+	}	
 
 
 	//Write file to system

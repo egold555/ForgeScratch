@@ -140,8 +140,8 @@ public class WindowProgramOptions extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					JavaHelper.runCMD(main.forge_folder, "gradlew clean", false);
-				} catch (IOException e) {
-					PLog.error(e, "Failed to clean project!");
+				} catch (Exception e) {
+					PLog.error(e, "Failed to run project!");
 				}
 			}
 		});
