@@ -33,7 +33,7 @@ public class FrameMainWindow extends JPanel{
 
 		JLabel lblScratchforgeVInstaller = new JLabel("ScratchForge v" + Main.SF_VERSION + " Installer");
 		lblScratchforgeVInstaller.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblScratchforgeVInstaller.setBounds(74, 28, 259, 27);
+		lblScratchforgeVInstaller.setBounds(49, 28, 332, 27);
 		add(lblScratchforgeVInstaller);
 
 		JLabel lblThisInstallerWill = new JLabel("<html><center>This installer will install ScratchForge v" + Main.SF_VERSION + " <br>to the selected directory</center></html>");
