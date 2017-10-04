@@ -33,16 +33,15 @@ public class JavaHelpers {
 		output.flush();
 	}
 
-	public static void unZipIt(File zipFile, String outputFolder) throws Exception {
+	public static void unZipIt(File zipFile, File outputFolder) throws Exception {
 
 		byte[] buffer = new byte[1024];
 
 
 
 		//create output directory is not exists
-		File folder = new File(outputFolder);
-		if(!folder.exists()){
-			folder.mkdir();
+		if(!outputFolder.exists()){
+			outputFolder.mkdir();
 		}
 
 		//get the zip file content
@@ -54,7 +53,7 @@ public class JavaHelpers {
 		while(ze!=null){
 
 			String fileName = ze.getName();
-			File newFile = new File(outputFolder + File.separator + fileName);
+			File newFile = new File(outputFolder, fileName);
 
 			//create all non exists folders
 			//else you will hit FileNotFoundException for compressed folder
@@ -74,5 +73,10 @@ public class JavaHelpers {
 		zis.closeEntry();
 		zis.close();
 	}
+
+	//Opens up a cmd prompt and executes commands. 
+	public static void runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
+		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");
+	}	
 
 }

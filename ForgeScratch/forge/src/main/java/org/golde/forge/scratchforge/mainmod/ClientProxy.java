@@ -92,7 +92,10 @@ public class ClientProxy extends CommonProxy{
 		//Remove the missing blocks message that forge puts
 		//Kids might get confused so we will just remove it
 		if(event.gui instanceof GuiConfirmation) {
-
+			
+			//Make forge not do backups because were skipping the gui screen
+			System.getProperties().setProperty("fml.doNotBackup", "true");
+			
 			//Use reflection to automatically simulate pushing the OK button
 			try {
 				GuiConfirmation gui = (GuiConfirmation)event.gui;

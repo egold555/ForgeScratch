@@ -21,11 +21,12 @@ public class FrameMainWindow extends JPanel{
 
 	private static final long serialVersionUID = -6456622050470062974L;
 	private JTextField textFieldLocation;
-	private File jarFolder;
+	private File installerRunDirectory;
+	private final String dataZipName = "sfdata.zip";
 
 	public FrameMainWindow() throws URISyntaxException {
 
-		jarFolder = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+		installerRunDirectory = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
 		setPreferredSize(new Dimension(404, 236));
 		setLayout(null);
@@ -47,17 +48,17 @@ public class FrameMainWindow extends JPanel{
 		textFieldLocation.setBounds(92, 123, 241, 24);
 		add(textFieldLocation);
 		textFieldLocation.setColumns(10);
-		textFieldLocation.setText(jarFolder.getPath());
+		textFieldLocation.setText(installerRunDirectory.getPath());
 
 		JButton btnNewButton = new JButton("...");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser(jarFolder);
+				JFileChooser fileChooser = new JFileChooser(installerRunDirectory);
 				fileChooser.setFileSelectionMode(1);
 				fileChooser.setAcceptAllFileFilterUsed(false);
 				if (fileChooser.showOpenDialog(FrameMainWindow.this) == 0) {
-					jarFolder = fileChooser.getSelectedFile();
-					textFieldLocation.setText(jarFolder.getPath());
+					installerRunDirectory = fileChooser.getSelectedFile();
+					textFieldLocation.setText(installerRunDirectory.getPath());
 				}
 			}
 		});
@@ -94,23 +95,28 @@ public class FrameMainWindow extends JPanel{
 	}
 
 
-
+	
 	private void install() {
 		//Copy Zip
+		
+		PLog.info("JAR: " + installerRunDirectory.getAbsolutePath());
+		
 		try {
-			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/test.zip", jarFolder);
+			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/test.zip", new File(installerRunDirectory, dataZipName));
 		}
 		catch(Exception e) {
-			PLog.error(e, "Failed to extract ZIP from jar!");
+			PLog.error(e, "Failed to download ZIP!");
+			return;
 		}
 		
-		File dataZip = new File(jarFolder, "data.zip");
+		File dataZip = new File(installerRunDirectory, dataZipName);
 		
 		try {
-			JavaHelpers.unZipIt(dataZip, "ScratchForge");
+			JavaHelpers.unZipIt(dataZip, new File(installerRunDirectory, "ScratchForge"));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to unzip ZIP file!");
+			return;
 		}
 		
 		if(!dataZip.delete()) {
@@ -120,8 +126,16 @@ public class FrameMainWindow extends JPanel{
 		//Run cmd and see if fail -> output context to installer log?
 		//	gradlew decompile
 		//	gradlew eclipse
+		try {
+			JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "gradlew setupDevWorkspace & gradlew eclipse", false);
+		}
+		catch(Exception e) {
+			PLog.error(e, "Failed to run gradlew command line!");
+			return;
+		}
+		
 		//Finish
-
+		JOptionPane.showMessageDialog(this, "Successfully installed ScratchForge v" + Main.SF_VERSION + "!", "Success!", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }
