@@ -22,7 +22,7 @@ public class FrameMainWindow extends JPanel{
 	private static final long serialVersionUID = -6456622050470062974L;
 	private JTextField textFieldLocation;
 	private File installerRunDirectory;
-	private final String dataZipName = "sfdata.zip";
+	private final String DATA_ZIP_NAME = "sfdata.zip";
 
 	public FrameMainWindow() throws URISyntaxException {
 
@@ -99,20 +99,21 @@ public class FrameMainWindow extends JPanel{
 	private void install() {
 		//Copy Zip
 		
-		PLog.info("JAR: " + installerRunDirectory.getAbsolutePath());
+		//PLog.info("JAR: " + installerRunDirectory.getAbsolutePath());
 		
 		try {
-			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/test.zip", new File(installerRunDirectory, dataZipName));
+			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/" + Main.SF_VERSION + ".zip", new File(installerRunDirectory, DATA_ZIP_NAME));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to download ZIP!");
 			return;
 		}
 		
-		File dataZip = new File(installerRunDirectory, dataZipName);
+		File dataZip = new File(installerRunDirectory, DATA_ZIP_NAME);
 		
+		//Unzip file
 		try {
-			JavaHelpers.unZipIt(dataZip, new File(installerRunDirectory, "ScratchForge"));
+			JavaHelpers.extractFolder(dataZip, new File(installerRunDirectory, "ScratchForge"));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to unzip ZIP file!");
@@ -120,7 +121,7 @@ public class FrameMainWindow extends JPanel{
 		}
 		
 		if(!dataZip.delete()) {
-			PLog.error("Failed to delete data.zip");
+			PLog.error("Failed to delete " + DATA_ZIP_NAME);
 		}
 		
 		//Run cmd and see if fail -> output context to installer log?

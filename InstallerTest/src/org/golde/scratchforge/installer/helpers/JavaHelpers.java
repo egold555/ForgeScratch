@@ -1,15 +1,20 @@
 package org.golde.scratchforge.installer.helpers;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+
+import org.golde.scratchforge.installer.Main;
 
 public class JavaHelpers {
 
@@ -32,51 +37,63 @@ public class JavaHelpers {
 		}
 		output.flush();
 	}
+	
+	public static void extractFolder(File zipFile, File to) throws ZipException, IOException 
+	{
+	    int BUFFER = 2048;
 
-	public static void unZipIt(File zipFile, File outputFolder) throws Exception {
+	    ZipFile zip = new ZipFile(zipFile);
+	    to.mkdir();
+	    Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 
-		byte[] buffer = new byte[1024];
+	    // Process each entry
+	    while (zipFileEntries.hasMoreElements())
+	    {
+	        // grab a zip file entry
+	        ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+	        String currentEntry = entry.getName();
+	        File destFile = new File(to, currentEntry);
+	        //destFile = new File(newPath, destFile.getName());
+	        File destinationParent = destFile.getParentFile();
 
+	        // create the parent directory structure if needed
+	        destinationParent.mkdirs();
 
+	        if (!entry.isDirectory())
+	        {
+	            BufferedInputStream is = new BufferedInputStream(zip
+	            .getInputStream(entry));
+	            int currentByte;
+	            // establish buffer for writing file
+	            byte data[] = new byte[BUFFER];
 
-		//create output directory is not exists
-		if(!outputFolder.exists()){
-			outputFolder.mkdir();
-		}
+	            // write the current file to disk
+	            FileOutputStream fos = new FileOutputStream(destFile);
+	            BufferedOutputStream dest = new BufferedOutputStream(fos,
+	            BUFFER);
 
-		//get the zip file content
-		ZipInputStream zis =
-				new ZipInputStream(new FileInputStream(zipFile));
-		//get the zipped file list entry
-		ZipEntry ze = zis.getNextEntry();
+	            // read and write until last byte is encountered
+	            while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+	                dest.write(data, 0, currentByte);
+	            }
+	            dest.flush();
+	            dest.close();
+	            is.close();
+	        }
 
-		while(ze!=null){
-
-			String fileName = ze.getName();
-			File newFile = new File(outputFolder, fileName);
-
-			//create all non exists folders
-			//else you will hit FileNotFoundException for compressed folder
-			new File(newFile.getParent()).mkdirs();
-
-			FileOutputStream fos = new FileOutputStream(newFile);
-
-			int len;
-			while ((len = zis.read(buffer)) > 0) {
-				fos.write(buffer, 0, len);
-			}
-
-			fos.close();
-			ze = zis.getNextEntry();
-		}
-
-		zis.closeEntry();
-		zis.close();
+	        if (currentEntry.endsWith(".zip"))
+	        {
+	            // found a zip file, try to open
+	            extractFolder(destFile, to);
+	        }
+	        
+	    }
+	    zip.close();
 	}
 
 	//Opens up a cmd prompt and executes commands. 
 	public static void runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
-		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");
+		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"ScratchForge v" + Main.SF_VERSION + " Installer\" cmd.exe /c \"" + cmd + "\"");
 	}	
 
 }

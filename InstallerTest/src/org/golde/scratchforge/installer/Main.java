@@ -5,7 +5,7 @@ import javax.swing.UIManager;
 
 public class Main {
 	
-	public static final String SF_VERSION = "1.0";
+	public static final String SF_VERSION = "1.0_Beta";
 	
 	public static void main(String[] args) throws Exception {
 		
