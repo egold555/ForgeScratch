@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 
 import javax.swing.JButton;
@@ -13,9 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import org.golde.scratchforge.installer.helpers.JavaHelpers;
 import org.golde.scratchforge.installer.helpers.PLog;
+
+import javafx.application.Platform;
+
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JTextArea;
 
 public class FrameMainWindow extends JPanel{
 
@@ -23,6 +34,8 @@ public class FrameMainWindow extends JPanel{
 	private JTextField textFieldLocation;
 	private File installerRunDirectory;
 	private final String DATA_ZIP_NAME = "sfdata.zip";
+	private JTextArea textArea;
+	private JScrollPane scroll;
 
 	public FrameMainWindow() throws URISyntaxException {
 
@@ -68,7 +81,14 @@ public class FrameMainWindow extends JPanel{
 		JButton btnInstall = new JButton("Install");
 		btnInstall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				scroll.setVisible(true);
+				textArea.setVisible(true);
+				btnInstall.setVisible(false);
+				btnNewButton.setVisible(false);
+				textFieldLocation.setVisible(false);
+
 				//Install Program
+				printText("Checking java 8...");
 				String JAVA_HOME = checkJDK();
 				if(JAVA_HOME != null) {
 					JOptionPane.showMessageDialog(null, "No JDK found. Your JAVA_HOME variable points to: " + JAVA_HOME + "\nPlease install java JDK > 1.8", "JDK Checker", JOptionPane.ERROR_MESSAGE);
@@ -76,12 +96,31 @@ public class FrameMainWindow extends JPanel{
 					return;
 				}
 
-				install();
-
+				new Thread() {
+					public void run() {
+						install();
+						System.exit(0);
+					}
+				}.start();
+				
+				
 			}
 		});
 		btnInstall.setBounds(158, 198, 97, 25);
 		add(btnInstall);
+		
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(49, 168, 332, 55);
+		textArea.setVisible(false);
+		
+		scroll = new JScrollPane(textArea);
+	    scroll.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    scroll.setBounds(21, 28, 360, 195);
+	    scroll.setVisible(false);
+		add(scroll);
+
+
 	}
 
 	private String checkJDK() {
@@ -95,11 +134,13 @@ public class FrameMainWindow extends JPanel{
 	}
 
 
-	
+
 	private void install() {
 		//Copy Zip
-		
+
 		//PLog.info("JAR: " + installerRunDirectory.getAbsolutePath());
+
+		printText("Downloading zip...");
 		
 		try {
 			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/" + Main.SF_VERSION + ".zip", new File(installerRunDirectory, DATA_ZIP_NAME));
@@ -108,10 +149,12 @@ public class FrameMainWindow extends JPanel{
 			PLog.error(e, "Failed to download ZIP!");
 			return;
 		}
-		
+		printText("Downloaded!");
+
 		File dataZip = new File(installerRunDirectory, DATA_ZIP_NAME);
-		
+
 		//Unzip file
+		printText("Extracting zip...");
 		try {
 			JavaHelpers.extractFolder(dataZip, new File(installerRunDirectory, "ScratchForge"));
 		}
@@ -119,25 +162,50 @@ public class FrameMainWindow extends JPanel{
 			PLog.error(e, "Failed to unzip ZIP file!");
 			return;
 		}
+		printText("Extracted!");
 		
+		printText("Deleting temp zip...");
 		if(!dataZip.delete()) {
 			PLog.error("Failed to delete " + DATA_ZIP_NAME);
 		}
+		printText("Deleted temp zip.");
 		
+		printText("Starting MCP...");
 		//Run cmd and see if fail -> output context to installer log?
 		//	gradlew decompile
 		//	gradlew eclipse
 		try {
-			Process p = JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "gradlew setupDevWorkspace & gradlew eclipse", false);
-			while(p.isAlive()) {Thread.sleep(1);}
+			String line;
+			Process p = JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "echo Running gradlew setupDevWorkspace... & gradlew setupDevWorkspace & echo Running gradlew eclipse... & gradlew eclipse", false);
+			BufferedReader bri = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line = bri.readLine()) != null) {
+				PLog.info(line);
+				printText(line);
+			}
+			bri.close();
+			p.waitFor();
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to run gradlew command line!");
 			return;
 		}
-		
+
 		//Finish
+		printText("Finished.");
 		JOptionPane.showMessageDialog(this, "Successfully installed ScratchForge v" + Main.SF_VERSION + "!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 
+	private void printText(String message) {
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				textArea.setText(textArea.getText() + "\n" + message);
+			}
+			
+		});
+	     
+	}
 }
