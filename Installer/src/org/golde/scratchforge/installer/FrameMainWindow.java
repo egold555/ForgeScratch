@@ -14,19 +14,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.golde.scratchforge.installer.helpers.JavaHelpers;
 import org.golde.scratchforge.installer.helpers.PLog;
-
-import javafx.application.Platform;
-
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JTextArea;
 
 public class FrameMainWindow extends JPanel{
 
