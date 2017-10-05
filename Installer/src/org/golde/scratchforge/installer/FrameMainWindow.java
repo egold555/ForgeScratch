@@ -37,7 +37,7 @@ public class FrameMainWindow extends JPanel{
 		add(lblScratchforgeVInstaller);
 
 		JLabel lblThisInstallerWill = new JLabel("<html><center>This installer will install ScratchForge v" + Main.SF_VERSION + " <br>to the selected directory</center></html>");
-		lblThisInstallerWill.setBounds(74, 68, 241, 27);
+		lblThisInstallerWill.setBounds(74, 68, 241, 45);
 		add(lblThisInstallerWill);
 
 		JLabel lblFolder = new JLabel("Folder");
@@ -128,7 +128,8 @@ public class FrameMainWindow extends JPanel{
 		//	gradlew decompile
 		//	gradlew eclipse
 		try {
-			JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "gradlew setupDevWorkspace & gradlew eclipse", false);
+			Process p = JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "gradlew setupDevWorkspace & gradlew eclipse", false);
+			while(p.isAlive()) {Thread.sleep(1);}
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to run gradlew command line!");

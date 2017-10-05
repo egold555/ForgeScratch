@@ -92,8 +92,8 @@ public class JavaHelpers {
 	}
 
 	//Opens up a cmd prompt and executes commands. 
-	public static void runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
-		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"ScratchForge v" + Main.SF_VERSION + " Installer\" cmd.exe /c \"" + cmd + "\"");
+	public static Process runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
+		return Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & " + cmd);
 	}	
 
 }
