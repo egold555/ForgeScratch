@@ -408,7 +408,7 @@ Blockly.Blocks['mcblockoptions_quantity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblockoptions",
-  "message0": "Amount: %1",
+  "message0": "Amount Dropped: %1",
   "args0": [
     {
       "type": "input_value",
@@ -718,7 +718,7 @@ Blockly.Blocks['mcblockoptions_walkthrough'] = {
   init: function() {
     this.jsonInit({
       "type": "mcblockoptions",
-  "message0": "On Block Walkthough %1 %2",
+  "message0": "On Block Walkthrough %1 %2",
   "args0": [
     {
       "type": "input_dummy"
