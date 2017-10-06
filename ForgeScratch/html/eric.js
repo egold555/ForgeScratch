@@ -4046,7 +4046,7 @@ Blockly.Blocks['mcevent_cancel'] = {
   "message0": "Cancel Event",
   "previousStatement": "cancelevent",
   "colour": COLOR_EVENTS,
-  "tooltip": "",
+  "tooltip": "Cancels the event",
   "helpUrl": ""
     });
   }
@@ -4078,7 +4078,7 @@ Blockly.Blocks['mcevent_itempickup'] = {
     }
   ],
   "colour": COLOR_EVENTS,
-  "tooltip": "Fired when any item is about to be picked up by a playe",
+  "tooltip": "Fired when any item is about to be picked up by a player",
   "helpUrl": ""
     });
   }
