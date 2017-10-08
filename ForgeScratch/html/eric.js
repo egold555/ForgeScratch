@@ -4973,3 +4973,132 @@ Blockly.Java['mcrecipe_crafting_shaped'] = function(block) {
   var code = '/*Replace me*/\n;';
   return code;
 };
+
+
+
+Blockly.Blocks['mcrecipe_crafting_shapeless'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcrecipe_crafting_shapeless",
+  "message0": "Shapeless Crafting Recipe %1 Material 1: %2 Material 2: %3 Material 3: %4 Material 4: %5 Material 5: %6 Material 6: %7 Material 7: %8 Material 8: %9 Material 9: %10 Result: %11",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM1",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM2",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM3",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM4",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM5",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM6",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM7",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM8",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM9",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEMR",
+      "check": "mciteminput"
+    },
+    
+  ],
+  "colour": COLOR_RECIPES,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcrecipe_crafting_shapeless'] = function(block) {
+  var value_tl = Blockly.Java.valueToCode(block, 'ITEM1', Blockly.Java.ORDER_ATOMIC);
+  var value_tc = Blockly.Java.valueToCode(block, 'ITEM2', Blockly.Java.ORDER_ATOMIC);
+  var value_tr = Blockly.Java.valueToCode(block, 'ITEM3', Blockly.Java.ORDER_ATOMIC);
+  var value_ml = Blockly.Java.valueToCode(block, 'ITEM4', Blockly.Java.ORDER_ATOMIC);
+  var value_mc = Blockly.Java.valueToCode(block, 'ITEM5', Blockly.Java.ORDER_ATOMIC);
+  var value_mr = Blockly.Java.valueToCode(block, 'ITEM6', Blockly.Java.ORDER_ATOMIC);
+  var value_bl = Blockly.Java.valueToCode(block, 'ITEM7', Blockly.Java.ORDER_ATOMIC);
+  var value_bc = Blockly.Java.valueToCode(block, 'ITEM8', Blockly.Java.ORDER_ATOMIC);
+  var value_br = Blockly.Java.valueToCode(block, 'ITEM9', Blockly.Java.ORDER_ATOMIC);
+  var value_r = Blockly.Java.valueToCode(block, 'ITEMR', Blockly.Java.ORDER_ATOMIC);
+  
+
+
+  var code = '/*Replace me*/\n;';
+  return code;
+};
+
+
+Blockly.Blocks['mcrecipe_smelting'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcrecipe_smelting",
+  "message0": "Furnace Recipe %1 Input: %2 Output: %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    }, 
+    {
+      "type": "input_value",
+      "name": "ITEMI",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEMO",
+      "check": "mciteminput"
+    },
+    
+  ],
+  "colour": COLOR_RECIPES,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcrecipe_smelting'] = function(block) {
+  var value_itemi = Blockly.Java.valueToCode(block, 'ITEMI', Blockly.Java.ORDER_ATOMIC);
+  var value_itemo = Blockly.Java.valueToCode(block, 'ITEMO', Blockly.Java.ORDER_ATOMIC);
+  
+
+
+  var code = '/*Replace me*/\n;';
+  return code;
+};
