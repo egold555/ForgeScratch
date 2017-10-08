@@ -1,13 +1,17 @@
 package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Formatter;
@@ -222,6 +226,31 @@ public class JavaHelper {
 		for (int i = 0; i < paths.length; i++) {
 			node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
 			model.removeNodeFromParent(node);
+		}
+	}
+	
+	public static boolean isConnectedToTheInternet() {
+		try {
+			URL obj = new URL("http://google.com/");
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("User-Agent", "Mozilla/5.0");
+			
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			
+			return true;
+			
+		}
+		catch(Exception e) {
+			return false;
 		}
 	}
 }

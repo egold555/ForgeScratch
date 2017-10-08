@@ -37,6 +37,7 @@ var COLOR_CONSTRUCTOR_OPTION = 40;
 var COLOR_ACTIONS = 140;
 var COLOR_VARIABLES = 290;
 var COLOR_EVENTS = 180;
+var COLOR_RECIPES = 200;
 
 
 Blockly.Blocks['mcblock'] = {
@@ -4882,5 +4883,93 @@ Blockly.Java['mcevent_noteblock_change'] = function(block) {
   '     }\n' + 
   '}\n' +
   '/*END:NoteBlockEventChange*/\n';
+  return code;
+};
+
+
+Blockly.Blocks['mcrecipe_crafting_shaped'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcrecipe_crafting_shaped",
+  "message0": "Shaped Crafting Recipe %1 Top Left: %2 Top Center: %3 Top Right: %4 Middle Left: %5 Middle Center: %6 Middle Right: %7 Bottom Left: %8 Bottom Center: %9 Bottom Right: %10 Result: %11",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM1",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM2",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM3",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM4",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM5",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM6",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM7",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM8",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEM9",
+      "check": "mciteminput"
+    },
+    {
+      "type": "input_value",
+      "name": "ITEMR",
+      "check": "mciteminput"
+    },
+    
+  ],
+  "colour": COLOR_RECIPES,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcrecipe_crafting_shaped'] = function(block) {
+  var value_tl = Blockly.Java.valueToCode(block, 'ITEM1', Blockly.Java.ORDER_ATOMIC);
+  var value_tc = Blockly.Java.valueToCode(block, 'ITEM2', Blockly.Java.ORDER_ATOMIC);
+  var value_tr = Blockly.Java.valueToCode(block, 'ITEM3', Blockly.Java.ORDER_ATOMIC);
+  var value_ml = Blockly.Java.valueToCode(block, 'ITEM4', Blockly.Java.ORDER_ATOMIC);
+  var value_mc = Blockly.Java.valueToCode(block, 'ITEM5', Blockly.Java.ORDER_ATOMIC);
+  var value_mr = Blockly.Java.valueToCode(block, 'ITEM6', Blockly.Java.ORDER_ATOMIC);
+  var value_bl = Blockly.Java.valueToCode(block, 'ITEM7', Blockly.Java.ORDER_ATOMIC);
+  var value_bc = Blockly.Java.valueToCode(block, 'ITEM8', Blockly.Java.ORDER_ATOMIC);
+  var value_br = Blockly.Java.valueToCode(block, 'ITEM9', Blockly.Java.ORDER_ATOMIC);
+  var value_r = Blockly.Java.valueToCode(block, 'ITEMR', Blockly.Java.ORDER_ATOMIC);
+  
+
+
+  var code = '/*Replace me*/\n;';
   return code;
 };

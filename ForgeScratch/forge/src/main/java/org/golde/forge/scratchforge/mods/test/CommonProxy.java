@@ -109,8 +109,7 @@ public class CommonProxy {
 	public static Scheduler scheduler = new Scheduler();
 	
 	/* Block Variables */
-	static Mcblock_Block_Name111 mcblock_Block_Name111;
-
+	
 
 	/* BlockFlower Variables */
 	
@@ -127,8 +126,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-		mcblock_Block_Name111 = new Mcblock_Block_Name111();
-
+		
 
 		/* BlockFlower Constructor Calls */
 		
@@ -211,21 +209,6 @@ public class CommonProxy {
 
 
 
-
-/*type:block*/
-    public class Mcblock_Block_Name111 extends BlockBase {
-        public Mcblock_Block_Name111() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Block Name111", Material.ground);
-
-if(false){
-    setHardness(-1.0F);
-}
-if(false){
-    setResistance(6000000.0F);
-}
-        }
-
-    }
 
 
 }

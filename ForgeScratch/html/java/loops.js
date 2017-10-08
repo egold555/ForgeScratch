@@ -122,7 +122,7 @@ Blockly.Java['controls_for'] = function(block) {
       increment = -increment;
     }
     if (variable0Type === 'Var') {
-      code = 'private double ' + variable0 + " = 0;\n" + 
+      code = 'double ' + variable0 + " = 0;\n" + 
       'for (' + variable0 + '.setObject(' + argument0 + '); ' +
                        variable0 + '.getObjectAsDouble() ' +
                                                direction + argument1 + '; ' +
@@ -133,7 +133,7 @@ Blockly.Java['controls_for'] = function(block) {
       } else if (increment != 1) {
         doincrement = ' += ' + increment;
       }
-      code += 'private double ' + variable0 + " = 0;\n" + 
+      code += 'double ' + variable0 + " = 0;\n" + 
       'for (' + variable0 + ' = ' + argument0 + '; ' +
                         variable0 + direction + argument1 + '; ' +
                         variable0 + doincrement + ')';

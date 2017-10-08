@@ -59,13 +59,13 @@ public class Main implements ActionListener{
 	//Makes a properties file and simple saving and loading settings
 	public Config config = new Config();
 
-	WindowProgramOptions windowProgramOptions = new WindowProgramOptions(this, config);
+	private WindowProgramOptions windowProgramOptions = new WindowProgramOptions(this, config);
 
 	//Forge directory
 	public File forge_folder = new File("forge");
 
 	//Main JFame
-	private static JFrame frame = new JFrame("ScratchForge"); 
+	private JFrame frame = new JFrame("ScratchForge"); 
 
 	//Menu bar for JFrame
 	private JMenuBar menuBar = new JMenuBar(); 
@@ -101,6 +101,8 @@ public class Main implements ActionListener{
 	public String MOD_NAME = "If you see this, something bad happened"; 
 
 	public ModManager modManager;
+	
+	public boolean offlineMode = false;
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -109,6 +111,9 @@ public class Main implements ActionListener{
 
 	//Start creation of everything
 	void initAndShowGUI() {
+		
+		offlineMode = !JavaHelper.isConnectedToTheInternet();
+		if(offlineMode) {PLog.info("Offline mode detected.");}
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
