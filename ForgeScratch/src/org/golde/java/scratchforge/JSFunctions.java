@@ -53,7 +53,8 @@ public class JSFunctions {
 		BlockPlant("blockPlant"),
 		Item("item"),
 		Entity("entity"),
-		Command("command")
+		Command("command"),
+		Recipes("recipe")
 		;
 
 		public final String clazz;
@@ -84,7 +85,7 @@ public class JSFunctions {
 			List<CodeComponent> itemComponents = findComponents(codeParser, EnumObjectType.Item);
 			List<CodeComponent> entityComponents = findComponents(codeParser, EnumObjectType.Entity);
 			List<CodeComponent> commandComponents = findComponents(codeParser, EnumObjectType.Command);
-
+			List<CodeComponent> recipeComponents = findComponents(codeParser, EnumObjectType.Recipes);
 
 			//================== [ Forge Mod.java Replacement] ==================
 			
@@ -122,7 +123,9 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", registerCommandConstructors(commandComponents));
 			
-			fileToReplace = fileToReplace.replace("/*Classes*/", codes(allComponents));
+			fileToReplace = fileToReplace.replace("/*Recipes*/", placeGenericCode(recipeComponents));
+			
+			fileToReplace = fileToReplace.replace("/*Classes*/", placeClasses(allComponents, EnumObjectType.Recipes));
 			
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityComponents));
 
@@ -169,10 +172,25 @@ public class JSFunctions {
 		return result;
 	}
 
-	private String codes(List<CodeComponent> components) {
+	private String placeGenericCode(List<CodeComponent> components) {
 		String result = "";
 
 		for (CodeComponent component: components) {
+			result += component.getCode();
+		}
+
+		return result;		
+	}
+	
+	private String placeClasses(List<CodeComponent> components, EnumObjectType... ignore) {
+		String result = "";
+
+		ComponentLoop: for(CodeComponent component: components) {
+			for(EnumObjectType type:ignore) {
+				if(component.getType().equals(type.clazz)) {
+					continue ComponentLoop;
+				}
+			}
 			result += component.getCode();
 		}
 

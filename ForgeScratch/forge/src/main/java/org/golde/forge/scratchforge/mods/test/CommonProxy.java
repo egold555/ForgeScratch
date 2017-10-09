@@ -146,6 +146,12 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
+		
+		/* Recipe Registry */
+		
+/*type:recipe*/
+GameRegistry.addShapelessRecipe(new ItemStack(Items.brick), (Items.apple), (Items.bone));
+
 	}
 	
 	public void serverLoad(FMLServerStartingEvent event) {

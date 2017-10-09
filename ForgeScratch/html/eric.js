@@ -4968,9 +4968,26 @@ Blockly.Java['mcrecipe_crafting_shaped'] = function(block) {
   var value_br = Blockly.Java.valueToCode(block, 'ITEM9', Blockly.Java.ORDER_ATOMIC);
   var value_r = Blockly.Java.valueToCode(block, 'ITEMR', Blockly.Java.ORDER_ATOMIC);
   
+  var craftString = '';
 
+  craftString += '"' + ((value_tl == "") ? ' ' : 'A') + ((value_tc == "") ? ' ' : 'B') + ((value_tr == "") ? ' ' : 'C') + '", ';
+  craftString += '"' + ((value_ml == "") ? ' ' : 'D') + ((value_mc == "") ? ' ' : 'E') + ((value_mr == "") ? ' ' : 'F') + '", ';
+  craftString += '"' + ((value_bl == "") ? ' ' : 'G') + ((value_bc == "") ? ' ' : 'H') + ((value_br == "") ? ' ' : 'I') + '"';
 
-  var code = '/*Replace me*/\n;';
+  if (value_tl != "") { craftString += ', \'A\', ' + value_tl; }
+  if (value_tc != "") { craftString += ', \'B\', ' + value_tc; }
+  if (value_tr != "") { craftString += ', \'C\', ' + value_tr; }
+  if (value_ml != "") { craftString += ', \'D\', ' + value_ml; }
+  if (value_mc != "") { craftString += ', \'E\', ' + value_mc; }
+  if (value_mr != "") { craftString += ', \'F\', ' + value_mr; }
+  if (value_bl != "") { craftString += ', \'G\', ' + value_bl; }
+  if (value_bc != "") { craftString += ', \'H\', ' + value_bc; }
+  if (value_br != "") { craftString += ', \'I\', ' + value_br; }
+
+  var code = '/*BEGIN:Recipes*/\n' +
+  '/*type:recipe*/\n' +
+  'GameRegistry.addRecipe(new ItemStack' + value_r + ', ' +  craftString + ');\n' + 
+  '/*END:Recipes*/\n';
   return code;
 };
 
@@ -5059,7 +5076,22 @@ Blockly.Java['mcrecipe_crafting_shapeless'] = function(block) {
   
 
 
-  var code = '/*Replace me*/\n;';
+  var craftString = '';
+
+  if (value_tl != "") { craftString += ', ' + value_tl; }
+  if (value_tc != "") { craftString += ', ' + value_tc; }
+  if (value_tr != "") { craftString += ', ' + value_tr; }
+  if (value_ml != "") { craftString += ', ' + value_ml; }
+  if (value_mc != "") { craftString += ', ' + value_mc; }
+  if (value_mr != "") { craftString += ', ' + value_mr; }
+  if (value_bl != "") { craftString += ', ' + value_bl; }
+  if (value_bc != "") { craftString += ', ' + value_bc; }
+  if (value_br != "") { craftString += ', ' + value_br; }
+
+  var code = '/*BEGIN:Recipes*/\n' +
+  '/*type:recipe*/\n' +
+  'GameRegistry.addShapelessRecipe(new ItemStack' + value_r + craftString + ');\n' + 
+  '/*END:Recipes*/\n';
   return code;
 };
 
@@ -5096,9 +5128,11 @@ Blockly.Blocks['mcrecipe_smelting'] = {
 Blockly.Java['mcrecipe_smelting'] = function(block) {
   var value_itemi = Blockly.Java.valueToCode(block, 'ITEMI', Blockly.Java.ORDER_ATOMIC);
   var value_itemo = Blockly.Java.valueToCode(block, 'ITEMO', Blockly.Java.ORDER_ATOMIC);
-  
 
-
-  var code = '/*Replace me*/\n;';
+  var code = 
+  '/*BEGIN:Recipes*/\n' +
+  '/*type:recipe*/\n' +
+  'GameRegistry.addSmelting(' + value_itemi + ', new ItemStack' + value_itemo + ', 0.35f);\n' + 
+  '/*END:Recipes*/\n';
   return code;
 };
