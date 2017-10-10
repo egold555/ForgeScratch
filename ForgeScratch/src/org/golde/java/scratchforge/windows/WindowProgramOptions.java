@@ -147,17 +147,17 @@ public class WindowProgramOptions extends JFrame{
 		btnCleanProject.setBounds(12, 29, 124, 25);
 		panel.add(btnCleanProject);
 		
-		/*JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Other"));
-		panel.setBounds(12, 219, 191, 144);
-		getContentPane().add(panel);*/
-		
-		/*JPanel panel_1 = new JPanel();
+		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Other"));
-		panel_1.setBounds(279, 219, 191, 144);
-		getContentPane().add(panel_1);*/
+		panel_1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Gradlew"));
+		panel_1.setBounds(10, 163, 193, 78);
+		panel_1.setEnabled(false);
+		getContentPane().add(panel_1);
+		
+		JCheckBox chckbxAlwaysOffline = new JCheckBox("Always Offline");
+		chckbxAlwaysOffline.setBounds(24, 35, 97, 23);
+		chckbxAlwaysOffline.setEnabled(false);
+		panel_1.add(chckbxAlwaysOffline);
 		
 		this.setResizable(false);
 		

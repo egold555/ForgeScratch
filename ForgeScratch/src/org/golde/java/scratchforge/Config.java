@@ -24,6 +24,7 @@ public class Config {
 				setInt(ConfigProperty.MCRAM, 8);
 				setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, true);
 				setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, false);
+				//setBoolean(ConfigProperty.GRADLEW_ALWAYS_OFFLINE, false);
 			}
 		}
 		catch(Exception e) {
@@ -35,6 +36,7 @@ public class Config {
 		MCRAM, 
 		CLIENT_MULTIPLAYER_ENABLED, 
 		CLIENT_MULTIPLAYER_LIMITED,
+		//GRADLEW_ALWAYS_OFFLINE,
 	}
 	
 	public void setBoolean(ConfigProperty setting, boolean to) {
