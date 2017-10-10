@@ -1,0 +1,24 @@
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+footer {
+  padding: 50px 0;
+  background-color: #f8f8f8;
+}
+
+p.copyright {
+  float: left;
+  margin: 0px 0 0;
+}
+
+p.affiliated {
+   float: right;
+  margin: 0px 0 0;
+}
