@@ -1,3 +1,4 @@
+<?php include 'vars.php'; ?>
     <!-- Footer -->
     <footer>
       <div class="container">
@@ -12,6 +13,10 @@
           <li class="footer-menu-divider list-inline-item">&sdot;</li>
           <li class="list-inline-item">
             <a href="#download">Download</a>
+          </li>
+          <li class="footer-menu-divider list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a href="explore.php">Explore</a>
           </li>
         </ul>
         <p class="affiliated text-muted small">Minecraft content and materials are trademarks and copyrights of Mojang and its licensors. <br style="clear:both" />All rights reserved.<br style="clear:both" />This site is not affiliated with Mojang.</p>

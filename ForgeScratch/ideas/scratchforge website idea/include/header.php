@@ -1,3 +1,4 @@
+<?php include 'vars.php'; ?>
 <html lang="en">
 
   <head>
@@ -31,11 +32,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+           <li class="nav-item">
+              <a class="nav-link" href="index.php">Home</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Download</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="explore.php">Explore</a>
             </li>
           </ul>
         </div>

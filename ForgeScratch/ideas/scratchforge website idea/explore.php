@@ -1,49 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ScratchForge Official Website">
-    <meta name="author" content="Eric Golde">
-
-    <title>Explore</title>
-    <!-- Bootstrap core CSS -->
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-    <link href="css/all.css" rel="stylesheet">
-    <link href="css/explore-page.css" rel="stylesheet">
-    
-
-  </head>
-
-  <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">ScratchForge</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Download</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+<?php 
+$page_title = "Explore";
+$page_css = "explore-page";
+include("include/header.php");
+?>
 
     <!-- Page Content -->
     <div class="container">
@@ -55,7 +14,7 @@
 
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -66,7 +25,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -77,7 +36,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -88,7 +47,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -99,7 +58,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -110,7 +69,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -121,7 +80,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -132,7 +91,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
+          <div class="card h-50">
             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
@@ -174,34 +133,4 @@
     <!-- /.container -->
   
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <ul class="list-inline">
-          <li class="list-inline-item">
-            <a href="#">Home</a>
-          </li>
-          <li class="footer-menu-divider list-inline-item">&sdot;</li>
-          <li class="list-inline-item">
-            <a href="#about">About</a>
-          </li>
-          <li class="footer-menu-divider list-inline-item">&sdot;</li>
-          <li class="list-inline-item">
-            <a href="#download">Download</a>
-          </li>
-        </ul>
-        <p class="affiliated text-muted small">Minecraft content and materials are trademarks and copyrights of Mojang and its licensors. <br style="clear:both" />All rights reserved.<br style="clear:both" />This site is not affiliated with Mojang.</p>
-        <p class="copyright text-muted small">Copyright &copy; Eric Golde 2017. <br style="clear:both" />All Rights Reserved</p>
-        
-        
-      </div>
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-  </body>
-
-</html>
+    <?php include("include/footer.php");?>

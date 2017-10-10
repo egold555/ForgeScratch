@@ -1,7 +1,7 @@
 <?php 
 $page_title = "Home";
 $page_css = "landing-page";
-include("header.php");
+include("include/header.php");
 ?>
 
     <!-- Header -->
@@ -69,4 +69,4 @@ include("header.php");
     </section>
 
 
-<?php include("footer.html");?>
+<?php include("include/footer.php");?>
