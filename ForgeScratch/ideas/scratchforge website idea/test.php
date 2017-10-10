@@ -1,4 +1,8 @@
-<?php include("header.html");?>
+<?php 
+$page_title = "Home";
+$page_css = "landing-page";
+include("header.php");
+?>
 
     <!-- Header -->
     <header class="intro-header">
