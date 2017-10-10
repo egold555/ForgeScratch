@@ -32,18 +32,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-           <li class="nav-item">
-              <a class="nav-link" href="index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Download</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="explore.php">Explore</a>
-            </li>
+            <?php
+              foreach ($clickable_tabs as $key => $value) {
+                echo '<li class="nav-item">';
+                echo '    <a class="nav-link" href="'.$value.'">'.$key.'</a>';
+                echo '</li>';
+              }
+            ?>
           </ul>
         </div>
       </div>
