@@ -1,7 +1,7 @@
 <?php 
 $page_title = "Home";
 $page_css = "landing-page";
-include("include/header.php");
+include("../include/header.php");
 ?>
 
     <!-- Header -->

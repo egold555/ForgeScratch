@@ -8,9 +8,7 @@ include("include/header.php");
     <div class="container">
 
       <!-- Page Heading -->
-      <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-      </h1>
+      <h1 class="my-4">Explore other peoples projects!</h1>
 
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
@@ -20,7 +18,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project One</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -31,7 +29,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Two</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -42,7 +40,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Three</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -53,7 +51,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Four</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -64,7 +62,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Five</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -75,7 +73,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Six</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -86,7 +84,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Seven</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
@@ -97,7 +95,7 @@ include("include/header.php");
               <h4 class="card-title">
                 <a href="#">Project Eight</a>
               </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius adipisci dicta dignissimos neque animi ea, veritatis, provident hic consequatur ut esse! Commodi ea consequatur accusantium, beatae qui deserunt tenetur ipsa.</p>
+              <p class="card-text">Text about the project</p>
             </div>
           </div>
         </div>
