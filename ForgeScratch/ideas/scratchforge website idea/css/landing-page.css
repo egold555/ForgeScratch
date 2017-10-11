@@ -226,3 +226,8 @@
     caret-color: rgb(119, 119, 119);
     margin: 0px 0px 12.6px;
 }
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
