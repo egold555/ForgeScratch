@@ -458,9 +458,11 @@ Code.runJS = function() {
     java_app.run(Blockly.Java.workspaceToCode(Code.workspace));
   }catch(err){
     if(err.startsWith("FS")){
-      sendJavaError(err);
+      var nice = err.replace("FS ", "");
+      sendToast(TOAST_ERROR_BLOCKS, nice);
     }else{
       log("Error: " + err);
+      sendToast(TOAST_ERROR_PROGRAM, err);
     }
     
   }
@@ -504,5 +506,22 @@ function log(msg){
 }
 
 function sendJavaError(error){
-  java_app.displayFSError(error.replace("FS ", ""));
+  java_app.displayFSError(error);
+}
+
+
+var TOAST_ERROR_PROGRAM = 0;
+var TOAST_ERROR_BLOCKS = 1;
+var TOAST_SUCCESS = 2;
+var TOAST_WARNING = 3;
+var TOAST_UPDATE = 4;
+function sendToast(type, message){
+  switch(type){
+    case TOAST_ERROR_PROGRAM: toastr.error(message, "ScratchForge Error"); break;
+    case TOAST_ERROR_BLOCKS: toastr.error(message, "Code Error"); break;
+    case TOAST_SUCCESS: toastr.success(message, "Success"); break;
+    case TOAST_WARNING: toastr.warning(message, "Warning"); break;
+    case TOAST_UPDATE: toastr.info(message, "Success"); break;
+  }
+  
 }

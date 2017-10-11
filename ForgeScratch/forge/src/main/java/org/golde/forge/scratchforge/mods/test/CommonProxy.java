@@ -149,9 +149,6 @@ public class CommonProxy {
 		
 		/* Recipe Registry */
 		
-/*type:recipe*/
-GameRegistry.addShapelessRecipe(new ItemStack(Items.brick), (Items.apple), (Items.bone));
-
 	}
 	
 	public void serverLoad(FMLServerStartingEvent event) {

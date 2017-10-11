@@ -152,8 +152,11 @@ public class JSFunctions {
 
 		try {
 			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (main.offlineMode ? " --offline" : ""), false);
-		}catch(Exception e) {
+			showToast(EnumToast.SUCCESS, "Starting Minecraft...");
+		}
+		catch(Exception e) {
 			PLog.error(e, "Failed to start forge!");
+			showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
 		}
 	}
 	
@@ -300,6 +303,19 @@ public class JSFunctions {
 
 	public void displayFSError(String msg) {
 		log("[FS-Error] " + msg);
+	}
+	
+	enum EnumToast{
+		ERROR_PROGRAM(0), ERROR_BLOCKS(1), SUCCESS(2), WARNING(3), UPDATE(4);
+		
+		public final int id;
+		EnumToast(int id){
+			this.id = id;
+		}
+	};
+	
+	public void showToast(EnumToast type, String message) {
+		javaApp.call("sendToast", type.id, message);
 	}
 
 }
