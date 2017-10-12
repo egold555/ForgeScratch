@@ -24,11 +24,34 @@ Blockly.Blocks['name'] = {
   NT: Not tested
 */
 
+var TOAST_ERROR_PROGRAM = 0;
+var TOAST_ERROR_BLOCKS = 1;
+var TOAST_SUCCESS = 2;
+var TOAST_WARNING = 3;
+var TOAST_UPDATE = 4;
+function sendToast(type, message){
+  switch(type){
+    case TOAST_ERROR_PROGRAM: toastr.error(message, "ScratchForge Error"); break;
+    case TOAST_ERROR_BLOCKS: toastr.error(message, "Code Error"); break;
+    case TOAST_SUCCESS: toastr.success(message, "Success"); break;
+    case TOAST_WARNING: toastr.warning(message, "Warning"); break;
+    case TOAST_UPDATE: toastr.info(message, "Success"); break;
+  }
+}
+
 function showError(block, msg){
   var nice = msg.replace("FS ", "");
   block.setWarningText(nice);
-  throw("FS " + msg); //code.js will catch this and forward msg on to Java
+  sendToast(TOAST_ERROR_BLOCKS, nice);
+  throw("FS " + msg); //code.js will catch
 };
+
+function showWarning(block, msg){
+  var nice = msg.replace("FS ", "");
+  block.setWarningText(nice);
+  sendToast(TOAST_WARNING, nice);
+}
+
 
 var RETURNS = '/*returns*/';
 

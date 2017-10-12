@@ -457,10 +457,8 @@ Code.runJS = function() {
     Blockly.Java.fileHeader = "";
     java_app.run(Blockly.Java.workspaceToCode(Code.workspace));
   }catch(err){
-    if(err.startsWith("FS")){
-      var nice = err.replace("FS ", "");
-      sendToast(TOAST_ERROR_BLOCKS, nice);
-    }else{
+    sendJavaError(err.replace("FS ", ""));
+    if(!err.startsWith("FS")){
       log("Error: " + err);
       sendToast(TOAST_ERROR_PROGRAM, err);
     }

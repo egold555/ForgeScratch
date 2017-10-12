@@ -24,8 +24,38 @@
   <script src="jquery.min.js"></script>
   <script src="toastr.min.js"></script>
   <link rel="stylesheet" href="toastr.min.css">
+
+  <script>
+    $(window).on('load', function(){
+      $(".loader").delay(500).fadeOut(1600);
+      $("#overlay").delay(500).fadeOut(1600);
+    });
+  </script>
+
 </head>
 <body>
+
+  <!-- Loading Screen -->
+  <div id='overlay'></div>
+  <div class="loader">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Begin Scratch Forge -->
   <table width="100%" height="100%">
     <tr>
      

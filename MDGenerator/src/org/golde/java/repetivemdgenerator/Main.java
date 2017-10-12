@@ -5,7 +5,7 @@ public class Main {
 	static final String elementType = "mobs";
 	
 	static final String[][] elements = { 
-			/*new String[] {
+			new String[] {
 					"Cancel Event", 
 					"Tries to cancel the given event."
 					},
@@ -80,7 +80,7 @@ public class Main {
 			new String[] {
 					"Note Block Change Event", 
 					"Fired when a Noteblock is changed, e.g the pitch altered"
-					}*/
+					}/*
 			new String[] {
 					"Scale Model", 
 					"The amount to scale the model in any direction"
@@ -88,7 +88,7 @@ public class Main {
 			new String[] {
 					"Translate Model", 
 					"The amount to translate the model from its center point"
-					},
+					},*/
 	};
 	
 	public static void main(String[] args) {

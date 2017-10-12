@@ -148,6 +148,7 @@ public class JSFunctions {
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to make mod!");
+			showToast(EnumToast.ERROR_PROGRAM, "Failed to make mod:" + e.getMessage());
 		}
 
 		try {
