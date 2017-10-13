@@ -69,7 +69,8 @@ include("include/header.php");
         <!-- Introduction Row -->
         <div class="row">
             <div class="col-lg-12">
-                <center><h2 class="my-4">About Me</h2></center>
+                <center>
+                    <h2 class="my-4">About Me</h2></center>
             </div>
             <div class="col-lg-6 text-center mb-4 col-centered">
                 <img class="rounded-circle img-fluid d-block mx-auto" src="img/eric-avatar.png" alt="">
@@ -80,13 +81,10 @@ include("include/header.php");
     </div>
     <!-- /.container -->
 </section>
-
 <script src="js/smooth-scroll.min.js"></script>
 <script>
-  var scroll = new SmoothScroll('a[href*="#"]', {
+var scroll = new SmoothScroll('a[href*="#"]', {
     speed: 1000,
-  });
+});
 </script>
-
-
 <?php include("include/footer.php");?>

@@ -1,12 +1,25 @@
 package org.golde.java.scratchforge;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
 import org.golde.java.scratchforge.helpers.codeparser.CodeParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import netscape.javascript.JSObject;
 
@@ -35,18 +48,42 @@ public class JSFunctions {
 	}
 
 	public String saveXML() {
-		String XML = (String) javaApp.call("saveXML");
-		XML = XML.substring(0, 42) + "<modName>" + main.MOD_NAME + "</modName>" + XML.substring(42);
-		return XML;
+		String blocklyXML = (String) javaApp.call("saveXML");
+
+		String textures = "";
+
+		String sfXML = 
+				"<?xml version=\"1.0\"?>\n" + 
+						"<ScratchForge version= \"" + main.VERSION + "\">\n" +
+						"    <modName>" + main.MOD_NAME + "</modName>\n" +
+						"    <blockly>" + blocklyXML + "</blockly>\n" + 
+						"</ScratchForge>";
+
+
+		return sfXML;
 	}
 
-	public void load(String xml) {
-		int startIndex = xml.indexOf("<modName>") + "<modName>".length();
-		int endIndex = xml.indexOf("</modName>");
-		main.MOD_NAME = xml.substring(startIndex, endIndex);
-		javaApp.call("loadXML", xml);
+	public void load(String xml) throws Exception{
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(JavaHelper.stringToInputStream(xml));
+
+		doc.getDocumentElement().normalize();
+
+		Element rootElement = (Element) doc.getDocumentElement();
+		main.MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
+		String blockly = nodeToString(((Element)rootElement.getElementsByTagName("blockly").item(0)).getElementsByTagName("xml").item(0));
+		javaApp.call("loadXML", blockly);
 	}
-	
+
+	private static String nodeToString(Node node) throws Exception{
+		StringWriter sw = new StringWriter();
+		Transformer t = TransformerFactory.newInstance().newTransformer();
+		t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		t.transform(new DOMSource(node), new StreamResult(sw));
+		return sw.toString();
+	}
+
 	enum EnumObjectType{
 		Block("block"),
 		BlockFlower("blockFlower"),
@@ -70,7 +107,7 @@ public class JSFunctions {
 		try {
 			CodeParser codeParser = new CodeParser();
 			codeParser.parseCode(fixCode(sfGenCode));
-			
+
 
 			//Setup basic variables
 			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
@@ -88,7 +125,7 @@ public class JSFunctions {
 			List<CodeComponent> recipeComponents = findComponents(codeParser, EnumObjectType.Recipes);
 
 			//================== [ Forge Mod.java Replacement] ==================
-			
+
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
 
@@ -113,7 +150,7 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
 			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
-			
+
 			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
 			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
@@ -122,11 +159,11 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", registerCommandConstructors(commandComponents));
-			
+
 			fileToReplace = fileToReplace.replace("/*Recipes*/", placeGenericCode(recipeComponents));
-			
+
 			fileToReplace = fileToReplace.replace("/*Classes*/", placeClasses(allComponents, EnumObjectType.Recipes));
-			
+
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Entity*/", registerEntityCalls(entityComponents));
 
 			JavaHelper.writeFile(new File(projectFolder, "CommonProxy.java"), fileToReplace);
@@ -160,7 +197,7 @@ public class JSFunctions {
 			showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
 		}
 	}
-	
+
 	private List<CodeComponent> findComponents(CodeParser codeParser, EnumObjectType type)
 	{
 		return codeParser.getComponentsOfType(type.clazz);
@@ -185,7 +222,7 @@ public class JSFunctions {
 
 		return result;		
 	}
-	
+
 	private String placeClasses(List<CodeComponent> components, EnumObjectType... ignore) {
 		String result = "";
 
@@ -210,7 +247,7 @@ public class JSFunctions {
 
 		return result;
 	}
-	
+
 	/*private String constructorCallsWithoutVariable(List<CodeComponent> components) {
 		String result = "";
 
@@ -220,7 +257,7 @@ public class JSFunctions {
 
 		return result;
 	}*/
-	
+
 	private String registerCommandConstructors(List<CodeComponent> components) {
 		String result = "";
 
@@ -230,7 +267,7 @@ public class JSFunctions {
 
 		return result;
 	}
-	
+
 	private String registerEntityCalls(List<CodeComponent> components) {
 		String result = "";
 
@@ -242,10 +279,10 @@ public class JSFunctions {
 
 		return result;
 	}
-	
+
 	private String registerEntityRenderer(List<CodeComponent> components) {
 		String result = "";
-		
+
 		for (CodeComponent component: components) {
 			String className = className(component);
 			String modelName = component.getValueAsString("model", null);
@@ -257,13 +294,13 @@ public class JSFunctions {
 			double tz = component.getValueAsDouble("translatez", 0.0);
 			result += "RenderingRegistry.registerEntityRenderingHandler(" + className + ".class, new CustomEntityRenderer(new Model" + modelName + "(), \"" + variableName(component).toLowerCase() + "\", " + sx + ", " + sy + ", " + sz + ", " + tx + ", " + ty + ", " + tz + "));\n";
 		}
-		
+
 		return result;
 	}
 
 	private String worldGenCalls(List<CodeComponent> components) {
 		String result = "";
-		
+
 		for (CodeComponent component: components) {
 			if (component.getType().equals(EnumObjectType.BlockFlower.clazz)) {
 				result += "(new WorldGenFlowers(" + variableName(component) + ")).generate(world, random, x, y, z); \n";
@@ -280,7 +317,7 @@ public class JSFunctions {
 		code = code.replace("public class MyApp {", "");
 		code = code.substring(0, code.length() - 4);
 
-		
+
 		code = code.replace("BLOCK_ID", "ForgeMod.BLOCK_ID");
 		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;
@@ -305,16 +342,16 @@ public class JSFunctions {
 	public void displayFSError(String msg) {
 		log("[FS-Error] " + msg);
 	}
-	
+
 	enum EnumToast{
 		ERROR_PROGRAM(0), ERROR_BLOCKS(1), SUCCESS(2), WARNING(3), UPDATE(4);
-		
+
 		public final int id;
 		EnumToast(int id){
 			this.id = id;
 		}
 	};
-	
+
 	public void showToast(EnumToast type, String message) {
 		javaApp.call("sendToast", type.id, message);
 	}

@@ -50,7 +50,7 @@ import netscape.javascript.JSObject;
  */
 public class Main implements ActionListener{
 
-	public final String VERSION = "1.0 alpha";
+	public final String VERSION = "1.0";
 
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
@@ -298,7 +298,8 @@ public class Main implements ActionListener{
 							"  Google - Blockly",
 							"  Sri Harsha Chilakapati - Image Tool",
 							"  Forge Mod Developers",
-							"  Mojang"
+							"  Mojang",
+							"  EmilHernvall - Base64 Class"
 					};
 					String aboutText = JavaHelper.joinStrings(aboutTextList, "\n", 0);
 					JOptionPane.showMessageDialog(null, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
@@ -336,7 +337,11 @@ public class Main implements ActionListener{
 			Platform.runLater(new Runnable() {
 		        @Override
 		        public void run() {
-		        	jsFunctions.load(XML);
+		        	try {
+						jsFunctions.load(XML);
+					} catch (Exception e) {
+						PLog.error(e, "Failed to load blockMod!");
+					}
 		        }
 		   });
 			

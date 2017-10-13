@@ -4,8 +4,10 @@
 $clickable_tabs = array(
 	'Home' => 'index.php#home', 
 	'About' => 'index.php#about', 
-	'Download' => 'download.php', 
-	'Explore' => 'explore.php'
+	'Download' => 'downloads.php'/*, 
+	'Explore' => 'explore.php'*/
 	);
+
+$currentVersion = 1.0;
 
 ?>

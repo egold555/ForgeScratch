@@ -2,6 +2,7 @@ package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Formatter;
@@ -252,5 +254,9 @@ public class JavaHelper {
 		catch(Exception e) {
 			return false;
 		}
+	}
+	
+	public static InputStream stringToInputStream(String s) throws UnsupportedEncodingException {
+		return new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8.name()));
 	}
 }
