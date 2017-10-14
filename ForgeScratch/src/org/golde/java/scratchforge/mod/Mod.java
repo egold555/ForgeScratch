@@ -192,7 +192,7 @@ public class Mod {
 				this.entityTexture = entityTexture;
 			}
 
-			file = new File(assetsDirectory, "textures\\" + type.folder + "\\" + getTextureName() + ".png");
+			file = new File(assetsDirectory, "textures\\" + getRelativePath());
 		}
 
 		public boolean hasBeenCreated() {
@@ -201,6 +201,10 @@ public class Mod {
 
 		public File getFile() {
 			return file;
+		}
+		
+		public String getRelativePath() {
+			return type.folder + "\\" + getTextureName() + ".png";
 		}
 		
 		public boolean delete() {

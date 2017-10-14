@@ -1,12 +1,15 @@
 package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -14,12 +17,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -108,14 +114,66 @@ public class JavaHelper {
 			PLog.error(e, "Failed to open file!");
 		}
 	}
+	
+	/*public static String base64EncodeImage(BufferedImage image) {
+		String imageString = null;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(image, "png", bos);
+			byte[] imageBytes = bos.toByteArray();
 
-	public static String base64Encode(String toEncode) {
-		return Base64.getEncoder().encodeToString(toEncode.getBytes());
+			imageString = base64Encode(imageBytes);
+
+			bos.close();
+		} catch (IOException e) {
+			PLog.error(e, "Failed to convert image to base64");
+		}
+		return imageString;
+	}*/
+	
+	public static String base64EncodeFile(File file) {
+		String imageString = null;
+		try {
+			imageString = base64Encode(Files.readAllBytes(file.toPath()));
+		} catch (IOException e) {
+			PLog.error(e, "Failed to convert image to base64");
+		}
+		return imageString;
 	}
 
-	public static String base64Decode(String toDecode) {
-		return new String(Base64.getDecoder().decode(toDecode));
+
+	public static String base64Encode(byte[] toEncode) {
+		return Base64.getEncoder().encodeToString(toEncode);
 	}
+	
+	public static void base64DecodeFile(String data, File file)
+	{
+		try {
+			Files.write(file.toPath(), base64Decode(data), StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			PLog.error(e, "Failed to write file");
+		}
+	}
+
+	/*public static BufferedImage decodeImage(String data) {
+		 BufferedImage image = null;
+	        byte[] imageByte;
+	        try {
+	            imageByte = base64Decode(data);
+	            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+	            image = ImageIO.read(bis);
+	            bis.close();
+	        } catch (Exception e) {
+	        	PLog.error(e, "Failed to read Base64 image!");
+	        }
+	        return image;
+	}*/
+	
+	public static byte[] base64Decode(String data) {
+		return Base64.getDecoder().decode(data);
+	}
+	
+	
 
 	public static String makeJavaId(String name) {
 		String result = "";

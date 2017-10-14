@@ -488,6 +488,11 @@ window.addEventListener('load', Code.init);
 
 //Java function
 
+function getBlocklyCode()
+{
+  return Blockly.Java.workspaceToCode(Code.workspace);
+}
+
 function loadXML(xml_text){
   var xml = Blockly.Xml.textToDom(xml_text);
   Blockly.Xml.domToWorkspace(Code.workspace, xml); 

@@ -2,6 +2,7 @@ package org.golde.java.scratchforge;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,9 +18,12 @@ import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
 import org.golde.java.scratchforge.helpers.codeparser.CodeParser;
+import org.golde.java.scratchforge.mod.Mod.Texture;
+import org.golde.java.scratchforge.mod.ModManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import netscape.javascript.JSObject;
 
@@ -34,6 +38,7 @@ public class JSFunctions {
 	private File forgeDir;
 	private File forgeScratch;
 	private File forgeModsIn;
+	private File forgeAssets;
 	//private File forgeModsOut;
 	private JSObject javaApp;
 	private String javaHome = System.getenv("JAVA_HOME");
@@ -44,18 +49,29 @@ public class JSFunctions {
 		this.forgeDir = main.forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
+		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
 		//this.forgeModsOut = new File(forgeScratch, "unusedMods");
 	}
 
 	public String saveXML() {
+		createMod();
+		
 		String blocklyXML = (String) javaApp.call("saveXML");
 
 		String textures = "";
+		for(Texture texture: main.modManager.getMod(main.MOD_NAME).getTextures()) {
+			if (texture.hasBeenCreated()) {
+				textures += "        <texture name=\"" + texture.getRelativePath() +  "\">" + JavaHelper.base64EncodeFile(texture.getFile()) + "</texture>\n";
+			}
+		}
 
 		String sfXML = 
 				"<?xml version=\"1.0\"?>\n" + 
 						"<ScratchForge version= \"" + main.VERSION + "\">\n" +
 						"    <modName>" + main.MOD_NAME + "</modName>\n" +
+						"    <textures>\n" +
+						textures + 
+						"    </textures>\n" +
 						"    <blockly>" + blocklyXML + "</blockly>\n" + 
 						"</ScratchForge>";
 
@@ -67,11 +83,26 @@ public class JSFunctions {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(JavaHelper.stringToInputStream(xml));
-
 		doc.getDocumentElement().normalize();
 
 		Element rootElement = (Element) doc.getDocumentElement();
 		main.MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
+		
+		File rootDirectory = new File(forgeAssets, "sf_" + JavaHelper.makeJavaId(main.MOD_NAME) + "\\textures");
+		Element textures = (Element) (rootElement.getElementsByTagName("textures").item(0));
+		
+		NodeList textureList = textures.getElementsByTagName("texture");
+		for(int i = 0; i < textureList.getLength(); i++) {
+			if (textureList.item(i).getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element)(textureList.item(i));
+				String name = element.getAttribute("name");
+				File file = new File(rootDirectory, name);
+				file.getParentFile().mkdirs();
+				String base64 = element.getTextContent();
+				JavaHelper.base64DecodeFile(base64, file);
+			}
+		}
+		
 		String blockly = nodeToString(((Element)rootElement.getElementsByTagName("blockly").item(0)).getElementsByTagName("xml").item(0));
 		javaApp.call("loadXML", blockly);
 	}
@@ -84,7 +115,7 @@ public class JSFunctions {
 		return sw.toString();
 	}
 
-	enum EnumObjectType{
+	private enum EnumObjectType{
 		Block("block"),
 		BlockFlower("blockFlower"),
 		BlockPlant("blockPlant"),
@@ -100,8 +131,14 @@ public class JSFunctions {
 		}
 
 	}
-
-	public void run(String sfGenCode) {
+	
+	private void createMod()
+	{
+		createModFromCode((String) javaApp.call("getBlocklyCode"));
+	}
+	
+	private void createModFromCode(String sfGenCode)
+	{
 		PLog.info("Fixing code....");
 		String projectName = main.MOD_NAME.replace(" ", "_");
 		try {
@@ -188,6 +225,12 @@ public class JSFunctions {
 			showToast(EnumToast.ERROR_PROGRAM, "Failed to make mod:" + e.getMessage());
 		}
 
+
+	}
+
+	public void run(String sfGenCode) {
+		createModFromCode(sfGenCode);
+		
 		try {
 			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (main.offlineMode ? " --offline" : ""), false);
 			showToast(EnumToast.SUCCESS, "Starting Minecraft...");
