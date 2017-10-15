@@ -1,10 +1,8 @@
 package org.golde.java.scratchforge.helpers;
 
 import java.awt.Desktop;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,7 +23,6 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;

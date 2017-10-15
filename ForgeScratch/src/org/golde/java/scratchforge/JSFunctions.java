@@ -2,14 +2,12 @@ package org.golde.java.scratchforge;
 
 import java.io.File;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -19,7 +17,6 @@ import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
 import org.golde.java.scratchforge.helpers.codeparser.CodeParser;
 import org.golde.java.scratchforge.mod.Mod.Texture;
-import org.golde.java.scratchforge.mod.ModManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -87,6 +84,11 @@ public class JSFunctions {
 
 		Element rootElement = (Element) doc.getDocumentElement();
 		main.MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
+		
+		String version = rootElement.getAttribute("version");
+		if(!main.VERSION.equals(version)) {
+			showToast(EnumToast.WARNING, "Your version (" + main.VERSION + ") does not match the block mod version (" + version + "). Expect bugs!");
+		}
 		
 		File rootDirectory = new File(forgeAssets, "sf_" + JavaHelper.makeJavaId(main.MOD_NAME) + "\\textures");
 		Element textures = (Element) (rootElement.getElementsByTagName("textures").item(0));
@@ -372,10 +374,6 @@ public class JSFunctions {
 
 	private String className(CodeComponent component) {
 		return "Mc" + component.getType() + "_" + component.getName();
-	}
-
-	public void disguardElements() {
-		javaApp.call("Code.discard");
 	}
 
 	public void log(String msg) {

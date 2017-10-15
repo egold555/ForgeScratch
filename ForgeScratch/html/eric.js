@@ -772,10 +772,10 @@ Blockly.Java['mcblockoptions_walkthrough'] = function(block) {
   '        EntityPlayer player = null;\n' +
   '        final VariableHolder variableHolder = new VariableHolder();\n' +
   '        if(genericEntity instanceof EntityPlayer){\n' +
-  '            player = (EntityPlayer)entity;\n' + 
+  '            player = (EntityPlayer)genericEntity;\n' + 
   '        }\n' +
     '      else if(genericEntity instanceof EntityLiving){\n' +
-  '            variableHolder.entity = (EntityLiving)entity;\n' + 
+  '            variableHolder.entity = (EntityLiving)genericEntity;\n' + 
   '        }\n' +
   '            ' + statements_code + '\n' +
   '    }\n' +
@@ -2731,7 +2731,7 @@ Blockly.Java['mcaction_velocity_player'] = function(block) {
   var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
   var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'if(player != null){player.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +');}\n';
+  var code = 'if(player != null){player.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +'); player.velocityChanged = true;}\n';
   return code;
 };
 
@@ -2776,7 +2776,7 @@ Blockly.Java['mcaction_velocity_entity'] = function(block) {
   var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
   var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
 
-  var code = 'if(variableHolder.entity != null){variableHolder.entity.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +');}\n';
+  var code = 'if(variableHolder.entity != null){variableHolder.entity.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z +'); variableHolder.entity.velocityChanged = true;}\n';
   return code;
 };
 
@@ -3112,7 +3112,7 @@ Blockly.Blocks['mcaction_sethealth_entity'] = {
 Blockly.Java['mcaction_sethealth_entity'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'variableHolder.entity.setHealth(' + value_health + 'f);\n';
+  var code = 'if(variableHolder.entity != null){variableHolder.entity.setHealth(' + value_health + 'f);}\n';
   return code;
 };
 
@@ -3143,7 +3143,7 @@ Blockly.Blocks['mcaction_sethealth_player'] = {
 Blockly.Java['mcaction_sethealth_player'] = function(block) {
   var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
   
-  var code = 'player.setHealth(' + value_health + 'f);\n';
+  var code = 'if(player != null){player.setHealth(' + value_health + 'f);}\n';
   return code;
 };
 

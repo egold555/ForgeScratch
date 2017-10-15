@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
@@ -20,9 +22,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.golde.java.scratchforge.JSFunctions.EnumToast;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.mod.ModManager;
@@ -48,7 +50,7 @@ import netscape.javascript.JSObject;
  * @author Eric
  *
  */
-public class Main implements ActionListener{
+public class Main implements ActionListener, KeyListener{
 
 	public final String VERSION = "1.0";
 
@@ -70,21 +72,21 @@ public class Main implements ActionListener{
 	//Menu bar for JFrame
 	private JMenuBar menuBar = new JMenuBar(); 
 
-	//Every thing to put under the "File" button in the menu bar
+	//Everything to put under the "File" button in the menu bar
 	private JMenuItem mFileNew = new JMenuItem("New");
 	private JMenuItem mFileOpen = new JMenuItem("Open");
 	private JMenuItem mFileSaveItem = new JMenuItem("Save");
 	private JMenuItem mFileSaveAs = new JMenuItem("Save As");
 	private JMenuItem mFileExit = new JMenuItem("Exit");
 
-	//Every thing to put under the "Options - Program" button in the menu bar
+	//Everything to put under the "Options - Program" button in the menu bar
 	private JMenuItem mOptionsProgram = new JMenuItem("Program Options");
 
-	//Every thing to put under the "Options - Mod" button in the menu bar
+	//Everything to put under the "Options - Mod" button in the menu bar
 	private JMenuItem mOptionsModTextures = new JMenuItem("Textures");
 	private JMenuItem mOptionsModManager = new JMenuItem("Mod Manager");
 
-	//Every thing to put under the "Help" button in the menu bar
+	//Everything to put under the "Help" button in the menu bar
 	private JMenuItem mHelpAbout = new JMenuItem("About");
 
 	//File name for wither opening or closing. Set by "Open" or "Save As"
@@ -101,8 +103,10 @@ public class Main implements ActionListener{
 	public String MOD_NAME = "If you see this, something bad happened"; 
 
 	public ModManager modManager;
-	
+
 	public boolean offlineMode = false;
+
+	private WebEngine webEngine;
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -111,18 +115,21 @@ public class Main implements ActionListener{
 
 	//Start creation of everything
 	void initAndShowGUI() {
-		
-		offlineMode = !JavaHelper.isConnectedToTheInternet();
-		if(offlineMode) {PLog.info("Offline mode detected.");}
-		
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+		} catch (Exception e) {
+			PLog.error(e, "Failed to set look and feel");;
 		}
-		
+
+
+		//Offline mode to prevent gradlew from erroring
+		offlineMode = !JavaHelper.isConnectedToTheInternet();
+		if(offlineMode) {PLog.info("Offline mode detected.");}
+
+
+
 		// This has to be called after "forge_folder" is initialized.
 		modManager = new ModManager(this);
 
@@ -141,6 +148,7 @@ public class Main implements ActionListener{
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		fxPanel.addKeyListener(this);
 
 		//Make the menu button "File" and add elements to it
 		JMenu fileMenu = new JMenu("File");
@@ -156,6 +164,25 @@ public class Main implements ActionListener{
 		mFileExit.addActionListener(this);
 		menuBar.add(fileMenu);
 
+		//Make the menu button "Examples" and add elements to it
+		JMenu exampleMenu = new JMenu("Examples");
+		File examplesDir = new File("examples");
+		for(File f:JavaHelper.listFoldersInFolder(examplesDir)) {
+			JMenuItem category = new JMenu(f.getName());
+			for(File sub:JavaHelper.listFilesForFolder(f)) {
+				JMenuItem item = new JMenuItem(sub.getName());
+				item.addActionListener(this);
+				category.add(item);
+			}
+			category.addActionListener(this);
+			exampleMenu.add(category);
+		}
+
+
+
+		menuBar.add(exampleMenu);
+
+		//Make the menu button "Options" and add elements to it
 		JMenu mOptionsMenu = new JMenu("Options");
 
 		//Make the menu button "Mod Options" and add elements to it
@@ -184,6 +211,8 @@ public class Main implements ActionListener{
 
 		frame.setJMenuBar(menuBar);
 
+		//frame.addKeyListener(new KeyboardListener());
+
 		Platform.runLater(() -> {
 			fxPanel.setScene(createScene());
 		});
@@ -197,22 +226,22 @@ public class Main implements ActionListener{
 		Scene scene = new Scene(root);
 		WebView  webView = new WebView();
 		webView.setContextMenuEnabled(false);
-		WebEngine webEngine = webView.getEngine();
+		webEngine = webView.getEngine();
 		File f = new File("html\\index.html");
-		
+
 		webEngine.setPromptHandler(new Callback<PromptData, String>() {
-			
+
 			@Override
 			public String call(PromptData param) {
 				return JOptionPane.showInputDialog(frame, param.getMessage());
 			}
 		});
-		
+
 		webEngine.getLoadWorker().stateProperty().addListener(
 				new ChangeListener<Worker.State>() {
 					public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
 						if (newState == Worker.State.SUCCEEDED) {
-							
+
 							/*if(webEngine.getLocation() != null) {
 								PLog.info("External website: " + webEngine.getLocation());
 								if(!webEngine.getLocation().contains("file:///")){
@@ -220,29 +249,27 @@ public class Main implements ActionListener{
 									return;
 								}
 							}*/
-							
+
 							// web page is loaded.
 							window = (JSObject) webEngine.executeScript("window");
 							jsFunctions = new JSFunctions(Main.this);
 							window.setMember("java_app", jsFunctions);
-							
+
 						}
-						
-						
+
+
 					}
 				});
-		
+
 		//Prevent new windows from opening
 		/*webEngine.setCreatePopupHandler(
 		    new Callback<PopupFeatures, WebEngine>() {
 		        @Override
 		        public WebEngine call(PopupFeatures config) {
-		            
+
 		            return null;
 		        }
 		    });*/
-		
-		
 
 
 		webEngine.load(f.toURI().toString());
@@ -253,60 +280,65 @@ public class Main implements ActionListener{
 	// Handle menu events
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Object source = e.getSource();
-				//File
-				if (source == mFileNew) {
-					//new mod
-					createMod(false);
-				}
-				else if (source == mFileOpen) {
-					loadFile(false);
-				}
-				else if (source == mFileSaveItem) {
-					saveFile(filename);
-				}
-				else if (source == mFileSaveAs) {
-					saveFile(null);
-				}
-				else if (source == mFileExit) {
-					System.exit(0);
-				}
+		Platform.runLater(() -> {
+			Object source = e.getSource();
+			//File
+			if (source == mFileNew) {
+				//new mod
+				createMod(false);
+			}
+			else if (source == mFileOpen) {
+				loadFile(false);
+			}
+			else if (source == mFileSaveItem) {
+				saveFile(filename);
+			}
+			else if (source == mFileSaveAs) {
+				saveFile(null);
+			}
+			else if (source == mFileExit) {
+				System.exit(0);
+			}
 
-				//Mod Options
-				else if(source == mOptionsModManager) {
-					//jsFunctions.showEnabledMods(frame);
-					new WindowToggleMods(Main.this);
-				}
-				else if(source == mOptionsProgram) {
-					windowProgramOptions.showSettingsMenu();
-				}
-				else if(source == mOptionsModTextures) {
+			//Mod Options
+			else if(source == mOptionsModManager) {
+				//jsFunctions.showEnabledMods(frame);
+				new WindowToggleMods(Main.this);
+			}
+			else if(source == mOptionsProgram) {
+				windowProgramOptions.showSettingsMenu();
+			}
+			else if(source == mOptionsModTextures) {
 
-					new WindowEditTexture(Main.this);
-				}
-				else if(source == mHelpAbout) {
-					String[] aboutTextList = {
-							"ScratchForge v" + VERSION,
-							" ",
-							"Created By Eric Golde",
-							" ",
-							"Special thanks to:",
-							"  Peter Golde",
-							"  Google - Blockly",
-							"  Sri Harsha Chilakapati - Image Tool",
-							"  Forge Mod Developers",
-							"  Mojang",
-							"  EmilHernvall - Base64 Class"
-					};
-					String aboutText = JavaHelper.joinStrings(aboutTextList, "\n", 0);
-					JOptionPane.showMessageDialog(null, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
-				}
+				new WindowEditTexture(Main.this);
+			}
+			else if(source == mHelpAbout) {
+				String[] aboutTextList = {
+						"ScratchForge v" + VERSION,
+						" ",
+						"Created By Eric Golde",
+						" ",
+						"Special thanks to:",
+						"  Peter Golde",
+						"  Google - Blockly",
+						"  Sri Harsha Chilakapati - Image Tool",
+						"  Forge Mod Developers",
+						"  Mojang"
+				};
+				String aboutText = JavaHelper.joinStrings(aboutTextList, "\n", 0);
+				JOptionPane.showMessageDialog(null, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
+			}
 
+			if(source instanceof JMenuItem) {
+				String name = ((JMenuItem)source).getText();
+				if(name.endsWith(".blockmod")) {
+					//Example
+					PLog.info("Name: " + name);
+				}
 
 			}
+
+
 		});
 
 	}
@@ -333,18 +365,18 @@ public class Main implements ActionListener{
 		}
 		try {
 			String XML = JavaHelper.readFile(new File(name));
-			
-			Platform.runLater(new Runnable() {
-		        @Override
-		        public void run() {
-		        	try {
-						jsFunctions.load(XML);
-					} catch (Exception e) {
-						PLog.error(e, "Failed to load blockMod!");
-					}
-		        }
-		   });
-			
+
+			Platform.runLater(() -> {
+				try {
+					jsFunctions.load(XML);
+					jsFunctions.showToast(EnumToast.SUCCESS, "Successfully loaded mod!");
+				} catch (Exception e) {
+					jsFunctions.showToast(EnumToast.ERROR_PROGRAM, "Failed to load mod!");
+					PLog.error(e, "Failed to load blockMod!");
+				}
+
+			});
+
 		}
 		catch (Exception e) {
 			PLog.error(e, "File not found: " + name);
@@ -442,19 +474,47 @@ public class Main implements ActionListener{
 		int result = JOptionPane.showConfirmDialog(frame, panel, "New Mod", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION && !JavaHelper.isStringEmpty(field1.getText())) {
 			MOD_NAME = field1.getText();
-			Platform.runLater(new Runnable() {
-		        @Override
-		        public void run() {
-		        	jsFunctions.disguardElements();
-		        }
-		   });
-			
+			Platform.runLater(() -> {
+				webEngine.executeScript("Code.discard()");
+			});
+
+
 		}else {
 			if(isStarting) {
 				startupDialog();
 			}
 			return;
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		Platform.runLater(() -> {
+			if(e.isControlDown()) {
+				int kc = e.getKeyCode();
+				/*if(kc == KeyEvent.VK_R) { //TODO: Debug
+					webEngine.reload();
+				}*/
+				if(kc == KeyEvent.VK_S) {
+					saveFile(filename);
+				}
+				else if(kc == KeyEvent.VK_O) {
+					loadFile(false);
+				}
+				else if(kc == KeyEvent.VK_N) {
+					createMod(false);
+				}
+			}
+			
+		});
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
 	}
 
 }

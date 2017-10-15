@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ScratchForge version= "1.0">
+    <modName>test</modName>
+    <textures>
+    </textures>
+    <blockly><xml xmlns="http://www.w3.org/1999/xhtml"><block type="mcblock" x="163" y="13"><field name="NAME">Trampoline</field><field name="MATERIAL">Material.ground</field><field name="UNBREAKABLE">FALSE</field><field name="EXPLOSION">FALSE</field><statement name="Options"><block type="mcblockoptions_walkthrough"><statement name="CODE"><block type="mcaction_velocity_player"><value name="VEL_X"><block type="math_number"><field name="NUM">0</field></block></value><value name="VEL_Y"><block type="math_number"><field name="NUM">1</field></block></value><value name="VEL_Z"><block type="math_number"><field name="NUM">0</field></block></value><next><block type="mcaction_potionplayer"><field name="POTION">6</field><field name="INVIS">TRUE</field><value name="TIME"><block type="math_number"><field name="NUM">3</field></block></value><value name="AMP"><block type="math_number"><field name="NUM">3</field></block></value></block></next></block></statement></block></statement></block></xml></blockly>
+</ScratchForge>
