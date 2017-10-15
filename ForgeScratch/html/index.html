@@ -27,15 +27,19 @@
 
   <script>
     $(window).on('load', function(){
-      $(".loader").delay(500).fadeOut(1600);
-      $("#overlay").delay(500).fadeOut(1600);
+      $(".loader").delay(500).fadeOut(1600, function(){
+        $(this).remove();
+      });
+      $("#overlay").delay(500).fadeOut(1600, function(){
+        $(this).remove();
+      });
     });
   </script>
 
 </head>
 <body>
 
-  <!-- Loading Screen -->
+  <!-- Loading Screen (Automatically gets removed with JQuery after fade out)-->
   <div id='overlay'></div>
   <div class="loader">
     <span></span>
