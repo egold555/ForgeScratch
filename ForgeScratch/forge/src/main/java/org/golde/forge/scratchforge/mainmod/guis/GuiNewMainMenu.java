@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mainmod;
+package org.golde.forge.scratchforge.mainmod.guis;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import java.util.Random;
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.golde.forge.scratchforge.mainmod.Config;
+import org.golde.forge.scratchforge.mainmod.Language;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -451,8 +453,7 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 		String s1 = "Copyright Mojang AB. Do not distribute!";
 		this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 		
-		String scratch = EnumChatFormatting.LIGHT_PURPLE + "ScratchForge installed";
-		this.drawString(this.fontRendererObj, scratch, this.width - this.fontRendererObj.getStringWidth(scratch) - 2, this.height - 20, -1);
+		this.drawString(this.fontRendererObj, Language.TITLE_INSTALLED, this.width - this.fontRendererObj.getStringWidth(Language.TITLE_INSTALLED) - 2, this.height - 20, -1);
 
 		super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
 	}

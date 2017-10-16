@@ -8,6 +8,11 @@ import java.util.Set;
 import org.golde.forge.scratchforge.base.helpers.JavaHelpers;
 import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
+import org.golde.forge.scratchforge.mainmod.guis.GuiMessage;
+import org.golde.forge.scratchforge.mainmod.guis.GuiNewIngameOptions;
+import org.golde.forge.scratchforge.mainmod.guis.GuiNewLan;
+import org.golde.forge.scratchforge.mainmod.guis.GuiNewMainMenu;
+import org.golde.forge.scratchforge.mainmod.guis.GuiNewMultiplayer;
 
 import com.google.common.collect.SetMultimap;
 
@@ -22,12 +27,16 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -78,7 +87,7 @@ public class ClientProxy extends CommonProxy{
 		if(failedTextures.size() > 0) {
 			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
 			EntityPlayer player = event.player;
-			if(player != null) {player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Hey! It seems like you do not have textures for "+ EnumChatFormatting.WHITE + failed + EnumChatFormatting.GOLD + "." ));}
+			if(player != null) {player.addChatMessage(new ChatComponentText(Language.CHAT_MISSING_TEXTURES.replace("%failed%", failed)));}
 		}
 	}
 
@@ -92,10 +101,10 @@ public class ClientProxy extends CommonProxy{
 		//Remove the missing blocks message that forge puts
 		//Kids might get confused so we will just remove it
 		if(event.gui instanceof GuiConfirmation) {
-			
+
 			//Make forge not do backups because were skipping the gui screen
 			System.getProperties().setProperty("fml.doNotBackup", "true");
-			
+
 			//Use reflection to automatically simulate pushing the OK button
 			try {
 				GuiConfirmation gui = (GuiConfirmation)event.gui;
@@ -112,11 +121,39 @@ public class ClientProxy extends CommonProxy{
 			}
 			event.gui = null; //Don't display the screen
 		}
-		
+
+		//Custom main menu screen
 		if(event.gui instanceof GuiMainMenu) {
 			event.gui = new GuiNewMainMenu();
 		}
 
+		//Custom ingame options to get rid of forge test
+		if(event.gui instanceof GuiIngameMenu) {
+			event.gui = new GuiNewIngameOptions();
+		}
+
+		//Handle Mod Rejections
+		if(event.gui instanceof GuiDisconnected) {
+			try {
+				GuiDisconnected gui = (GuiDisconnected)event.gui;
+				Class clazz = gui.getClass();
+				Field field = JavaHelpers.getField(clazz, "field_146304_f");
+				field.setAccessible(true);
+				IChatComponent message = (IChatComponent)field.get(gui);
+				
+				field = JavaHelpers.getField(clazz, "field_146307_h");
+				field.setAccessible(true);
+				GuiScreen pastGuiScreen = (GuiScreen)field.get(gui);
+				if(message.getUnformattedText().startsWith("Mod rejections ")) {
+					event.gui = new GuiMessage(pastGuiScreen, Language.LAN_REJECT);
+				}
+			}
+			catch(Exception e) {
+				PLog.error(e, "Failed to do reflection!");
+			}
+		}
+
+		//If is limited, display custom screen
 		if(Config.isMultiplayerLimitedToLan()) {
 			if(event.gui instanceof GuiMultiplayer) {
 				event.gui = new GuiNewMultiplayer();

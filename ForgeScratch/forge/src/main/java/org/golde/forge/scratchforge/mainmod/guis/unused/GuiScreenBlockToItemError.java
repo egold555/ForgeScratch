@@ -1,10 +1,13 @@
-package org.golde.forge.scratchforge.mainmod;
+package org.golde.forge.scratchforge.mainmod.guis.unused;
+
+import org.golde.forge.scratchforge.mainmod.guis.GuiAbstractMessage;
+import org.golde.forge.scratchforge.mainmod.guis.GuiMessage;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.StartupQuery;
 import net.minecraft.client.gui.GuiScreen;
 
-public class GuiScreenBlockToItemError extends GuiScreenDummy{
+public class GuiScreenBlockToItemError extends GuiMessage{
 
 	StartupQuery query;
 	
@@ -24,7 +27,7 @@ public class GuiScreenBlockToItemError extends GuiScreenDummy{
 	
 	@Override
 	public void onDoneButtonClicked() {
-		FMLClientHandler.instance().showGuiScreen(pastScreen);
+		super.onDoneButtonClicked();
 		query.finish();
 	}
 }

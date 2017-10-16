@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mainmod;
+package org.golde.forge.scratchforge.mainmod.guis;
 
 import org.lwjgl.opengl.GL11;
 
@@ -13,14 +13,11 @@ import net.minecraft.util.ResourceLocation;
 /*
  * Based off of forge's GuiNotification class
  */
-public abstract class GuiScreenDummy extends GuiScreen{
-
-	public final GuiScreen pastScreen;
+public abstract class GuiAbstractMessage extends GuiBase{
 	private final String[] lines;
-	private final ResourceLocation logoTexture = new ResourceLocation(ForgeModScratchForge.MOD_ID.toLowerCase(), "textures/gui/logo.png");
 
-	public GuiScreenDummy(GuiScreen pastScreen, String lines[]) {
-		this.pastScreen = pastScreen;
+	public GuiAbstractMessage(GuiScreen pastScreen, String lines[]) {
+		super(pastScreen);
 		this.lines = lines;
 	}
 
@@ -29,6 +26,7 @@ public abstract class GuiScreenDummy extends GuiScreen{
 		buttonList.add(new GuiButton(0, width / 2 - 100, height - 38, I18n.format("gui.done", new Object[0])));
 	}
 
+	@Override
 	protected final void actionPerformed(GuiButton button)
 	{
 		if(button.enabled && button.id == 0) {
@@ -38,20 +36,11 @@ public abstract class GuiScreenDummy extends GuiScreen{
 	
 	public abstract void onDoneButtonClicked();
 	
-	/*public final void sendBackToPastGuiScreen() {
-		Minecraft.getMinecraft().displayGuiScreen(pastScreen);
-	}*/
-
+	
+	@Override
 	public final void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-		drawDefaultBackground();
-		
-		
-		//Draw Logo
-		this.mc.getTextureManager().bindTexture(logoTexture);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.drawTexturedModalRect((this.width / 2 - 274 / 2), 30, 0, 0, 256, 49);
-		
+		super.drawScreen(mouseX, mouseY, partialTicks);
 		
 		//Draw Text
 		int spaceAvailable = height - 38 - 20;
@@ -70,7 +59,7 @@ public abstract class GuiScreenDummy extends GuiScreen{
 			}
 			offset += 10;
 		}
-		super.drawScreen(mouseX, mouseY, partialTicks);
+
 	}
 
 }
