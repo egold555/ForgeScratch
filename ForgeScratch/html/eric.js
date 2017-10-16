@@ -2186,6 +2186,33 @@ Blockly.Java['mcitemoptions_doesntleave'] = function(block) {
     return code;
 }
 
+//NBT
+Blockly.Blocks['mcitemoptions_nbt_hastag'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemoptions_nbt_hastag",
+  "message0": "Has Tag: %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "TAG",
+      "check": "String"
+    }
+  ],
+  "output": "Boolean",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemoptions_nbt_hastag'] = function(block) {
+  var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
+  var code = 'variableHolder.nbt.hasKey(' + value_tag + ')';
+  return [code, Blockly.Java.ORDER_NONE];
+};
 
 Blockly.Blocks['location_player_x'] = {
   

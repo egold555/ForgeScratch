@@ -39,10 +39,11 @@ public class CommonProxy {
 	}*/
 	
 	public void serverInit(FMLServerStartingEvent event) {
-		MinecraftServer server = event.getServer();
-		if(!server.isDedicatedServer()) {
+		if(!event.getServer().isDedicatedServer() && event.getServer() instanceof IntegratedServer) {
+			IntegratedServer server = (IntegratedServer)event.getServer();
 			server.setOnlineMode(false);
-			((IntegratedServer)server).setMOTD("Cool MOTD");
+			//server.setMOTD("Cool MOTD");
+			
 		}
 	}
 	
