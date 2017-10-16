@@ -227,23 +227,17 @@ public class CommonProxy {
 			if(world.isRemote){return itemstack;}
 			final VariableHolder variableHolder = new VariableHolder();
 
-			if (itemstack.hasTagCompound())
-			{
-				variableHolder.nbt = itemstack.getTagCompound();
-			}
-			else
-			{
-				variableHolder.nbt = new NBTTagCompound();
-			}
+			if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound();}
 
 			if (variableHolder.nbt.hasKey("Uses"))
 			{
-				variableHolder.nbt.setInteger("Uses", variableHolder.nbt.getInteger("Uses") + 1);
+				variableHolder.nbt.setDouble("Uses", variableHolder.nbt.getInteger("Uses") + 1);
 			}
 			else
 			{
 				variableHolder.nbt.setInteger("Uses", 1);
 			}
+			
 			itemstack.setTagCompound(variableHolder.nbt);
 
 			return itemstack;

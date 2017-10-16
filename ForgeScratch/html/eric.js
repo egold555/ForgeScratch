@@ -2065,7 +2065,9 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
   'public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){\n' +
   '    if(world.isRemote){return itemstack;}\n' +
   '    final VariableHolder variableHolder = new VariableHolder();\n' +
+  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound();}\n' +
   '    ' + statements_code + '\n' +
+  'itemstack.setTagCompound(variableHolder.nbt);\n' +
   '    return itemstack;\n' +
   '}'
   ;
@@ -2109,7 +2111,9 @@ Blockly.Java['mcitemoptions_leftclick'] = function(block) {
   'public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int meta, float dx, float dy, float dz) {\n' +
   '    if(world.isRemote){return true;}\n' +
   '    final VariableHolder variableHolder = new VariableHolder();\n' +
+  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound();}\n' +
   '    ' + statements_code + '\n' +
+  'itemstack.setTagCompound(variableHolder.nbt);\n' +
   '    return true;\n' +
   '}'
   ;
@@ -2147,14 +2151,14 @@ Blockly.Java['mcitemoptions_lore'] = function(block) {
      var value_lore = Blockly.Java.valueToCode(block, 'LORE', Blockly.Java.ORDER_ATOMIC);
      var codeToAdd = "";
      if(value_lore.indexOf("Array") >= 0){
-      codeToAdd = '    list.addAll(' + value_lore + ');\n';
+      codeToAdd = '    lores.addAll(' + value_lore + ');\n';
      }
      else{
-      codeToAdd = '    list.add(' + value_lore + ');\n';
+      codeToAdd = '    lores.add(' + value_lore + ');\n';
      }
      var code = 
     '@Override\n' +
-    'public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List list, boolean p_77624_4_) {\n' +
+    'public void addInformation(ItemStack itemstack, EntityPlayer p_77624_2_, List lores, boolean p_77624_4_) {\n' +
     codeToAdd +
     '}\n'
     ;
@@ -2186,13 +2190,13 @@ Blockly.Java['mcitemoptions_doesntleave'] = function(block) {
     return code;
 }
 
-//NBT
-Blockly.Blocks['mcitemoptions_nbt_hastag'] = {
+
+Blockly.Blocks['mcitemactions_nbt_hastag'] = {
   
   init: function() {
     this.jsonInit({
-      "type": "mcitemoptions_nbt_hastag",
-  "message0": "Has Tag: %1",
+      "type": "mcitemactions_nbt_hastag",
+  "message0": "NBT Has Tag: %1",
   "args0": [
     {
       "type": "input_value",
@@ -2201,17 +2205,146 @@ Blockly.Blocks['mcitemoptions_nbt_hastag'] = {
     }
   ],
   "output": "Boolean",
-  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "colour": COLOR_ACTIONS,
   "tooltip": "",
   "helpUrl": ""
     });
   }
 };
 
-Blockly.Java['mcitemoptions_nbt_hastag'] = function(block) {
+Blockly.Java['mcitemactions_nbt_hastag'] = function(block) {
   var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
   var code = 'variableHolder.nbt.hasKey(' + value_tag + ')';
   return [code, Blockly.Java.ORDER_NONE];
+};
+
+Blockly.Blocks['mcitemactions_nbt_setnumber'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemactions_nbt_setnumber",
+  "message0": "NBT Set Number %1 Tag %2 Value %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "TAG",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "VALUE",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": COLOR_ACTIONS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemactions_nbt_setnumber'] = function(block) {
+  var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
+  var value_value = Blockly.Java.valueToCode(block, 'VALUE', Blockly.Java.ORDER_ATOMIC);
+  var code = 'variableHolder.nbt.setDouble(' + value_tag + ', ' + value_value + ');\n';
+  return code;
+};
+
+Blockly.Blocks['mcitemactions_nbt_setstring'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemactions_nbt_setstring",
+  "message0": "NBT Set Text %1 Tag %2 Value %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "TAG",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "VALUE",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": COLOR_ACTIONS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemactions_nbt_setstring'] = function(block) {
+  var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
+  var value_value = Blockly.Java.valueToCode(block, 'VALUE', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'variableHolder.nbt.setString(' + value_tag + ', ' + value_value + ');\n';
+  return code;
+};
+
+Blockly.Blocks['mcitemactions_nbt_getstring'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemactions_nbt_getstring",
+  "message0": "NBT Get Text %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "TAG",
+      "check": "String"
+    }
+  ],
+  "output": "String",
+  "colour": COLOR_ACTIONS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemactions_nbt_getstring'] = function(block) {
+  var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
+  var code = 'itemstack.getTagCompound().getString(' + value_tag + ');\n';
+  return code;
+};
+
+Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcitemactions_nbt_getnumber",
+  "message0": "NBT Get Number %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "TAG",
+      "check": "String"
+    }
+  ],
+  "output": "Number",
+  "colour": COLOR_ACTIONS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcitemactions_nbt_getnumber'] = function(block) {
+  var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
+  var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ');\n';
+  return code;
 };
 
 Blockly.Blocks['location_player_x'] = {
