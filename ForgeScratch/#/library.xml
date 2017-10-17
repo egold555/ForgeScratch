@@ -3552,12 +3552,85 @@
     <field name="INLINE">AUTO</field>
     <field name="CONNECTIONS">BOTH</field>
     <statement name="INPUTS">
+      <block type="input_dummy" id="$)Cb@Wu#Rw$0S42^INhC">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="n0$azOPh}gu,F(+Uo}YG">
+            <field name="TEXT">NBT Set Number</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_value" id="U8[HKSaOA^xp+G?}m1/4">
+            <field name="INPUTNAME">TAG</field>
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="poAv}=8nogBi/M5%K1ep">
+                <field name="TEXT">Tag</field>
+              </block>
+            </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="sI!`^[G]6F*v0:?85wZN"></shadow>
+              <block type="type_string" id="h.}f(%=r_oVNU0Y$-UT/"></block>
+            </value>
+            <next>
+              <block type="input_value" id="a*,P_560l:*VW;QC/_T/">
+                <field name="INPUTNAME">VALUE</field>
+                <field name="ALIGN">LEFT</field>
+                <statement name="FIELDS">
+                  <block type="field_static" id="LdOe6[a:natmx#p[#I2t">
+                    <field name="TEXT">Value</field>
+                  </block>
+                </statement>
+                <value name="TYPE">
+                  <shadow type="type_null" id="6LS2x8/z~{=-:LA$;|vS"></shadow>
+                  <block type="type_number" id="T3+J]ISt},Fl?Sv/;fW}"></block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="[f{G;1.AmcOS4C76O[b[" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="nrtN_z,JnjT5^VhLo~u#" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="g(E;uBA#hrk%)x)}lr1M"></shadow>
+      <block type="type_other" id="}CM0F+cEFHvAT8@xBd5[">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="/c^:u#CJa+oy3Mtc-:}Q"></shadow>
+      <block type="type_other" id="]4Lp,W0DAKJ%uUyTsl]l">
+        <field name="TYPE">action</field>
+      </block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="dUmtCz;t7b{e,AkkM3^8">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="WMO:F)7w!~.{PCCjCakW" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="LEFT"></mutation>
+    <field name="NAME">nbt_getString</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">LEFT</field>
+    <statement name="INPUTS">
       <block type="input_value" id="U8[HKSaOA^xp+G?}m1/4">
         <field name="INPUTNAME">TAG</field>
         <field name="ALIGN">LEFT</field>
         <statement name="FIELDS">
           <block type="field_static" id="n0$azOPh}gu,F(+Uo}YG">
-            <field name="TEXT">Has Tag:</field>
+            <field name="TEXT">NBT Get Text</field>
           </block>
         </statement>
         <value name="TYPE">
@@ -3576,11 +3649,9 @@
         <field name="TEXT"></field>
       </block>
     </value>
-    <value name="TOPTYPE">
-      <shadow type="type_null" id="g(E;uBA#hrk%)x)}lr1M"></shadow>
-    </value>
-    <value name="BOTTOMTYPE">
-      <shadow type="type_null" id="/c^:u#CJa+oy3Mtc-:}Q"></shadow>
+    <value name="OUTPUTTYPE">
+      <shadow type="type_null" id="#NQNpH]Pf9M2{g?uQn16"></shadow>
+      <block type="type_string" id="WnE,!Sj^z}Le$g-ME4sY"></block>
     </value>
     <value name="COLOUR">
       <block type="colour_hue" id="dUmtCz;t7b{e,AkkM3^8">
