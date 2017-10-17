@@ -31,7 +31,7 @@ import netscape.javascript.JSObject;
  */
 public class JSFunctions {
 
-	private Main main;
+	//private Main main;
 	private File forgeDir;
 	private File forgeScratch;
 	private File forgeModsIn;
@@ -40,10 +40,10 @@ public class JSFunctions {
 	private JSObject javaApp;
 	private String javaHome = System.getenv("JAVA_HOME");
 
-	public JSFunctions(Main main) {
-		this.main = main;
-		this.javaApp = main.window;
-		this.forgeDir = main.forge_folder;
+	public JSFunctions() {
+		//this.main = main;
+		this.javaApp = Main.getInstance().window;
+		this.forgeDir = Main.getInstance().forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
@@ -56,7 +56,7 @@ public class JSFunctions {
 		String blocklyXML = (String) javaApp.call("saveXML");
 
 		String textures = "";
-		for(Texture texture: main.modManager.getMod(main.MOD_NAME).getTextures()) {
+		for(Texture texture: Main.getInstance().modManager.getMod(Main.getInstance().MOD_NAME).getTextures()) {
 			if (texture.hasBeenCreated()) {
 				textures += "        <texture name=\"" + texture.getRelativePath() +  "\">" + JavaHelper.base64EncodeFile(texture.getFile()) + "</texture>\n";
 			}
@@ -64,8 +64,8 @@ public class JSFunctions {
 
 		String sfXML = 
 				"<?xml version=\"1.0\"?>\n" + 
-						"<ScratchForge version= \"" + main.VERSION + "\">\n" +
-						"    <modName>" + main.MOD_NAME + "</modName>\n" +
+						"<ScratchForge version= \"" + Main.getInstance().VERSION + "\">\n" +
+						"    <modName>" + Main.getInstance().MOD_NAME + "</modName>\n" +
 						"    <textures>\n" +
 						textures + 
 						"    </textures>\n" +
@@ -83,14 +83,14 @@ public class JSFunctions {
 		doc.getDocumentElement().normalize();
 
 		Element rootElement = (Element) doc.getDocumentElement();
-		main.MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
+		Main.getInstance().MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
 		
 		String version = rootElement.getAttribute("version");
-		if(!main.VERSION.equals(version)) {
-			showToast(EnumToast.WARNING, "Your version (" + main.VERSION + ") does not match the block mod version (" + version + "). Expect bugs!");
+		if(!Main.getInstance().VERSION.equals(version)) {
+			showToast(EnumToast.WARNING, "Your version (" + Main.getInstance().VERSION + ") does not match the block mod version (" + version + "). Expect bugs!");
 		}
 		
-		File rootDirectory = new File(forgeAssets, "sf_" + JavaHelper.makeJavaId(main.MOD_NAME) + "\\textures");
+		File rootDirectory = new File(forgeAssets, "sf_" + JavaHelper.makeJavaId(Main.getInstance().MOD_NAME) + "\\textures");
 		Element textures = (Element) (rootElement.getElementsByTagName("textures").item(0));
 		
 		NodeList textureList = textures.getElementsByTagName("texture");
@@ -142,7 +142,7 @@ public class JSFunctions {
 	private void createModFromCode(String sfGenCode)
 	{
 		PLog.info("Fixing code....");
-		String projectName = main.MOD_NAME.replace(" ", "_");
+		String projectName = Main.getInstance().MOD_NAME.replace(" ", "_");
 		try {
 			CodeParser codeParser = new CodeParser();
 			codeParser.parseCode(fixCode(sfGenCode));
@@ -166,10 +166,10 @@ public class JSFunctions {
 			//================== [ Forge Mod.java Replacement] ==================
 
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
 
-			fileToReplace = fileToReplace.replace("/*Mod Template*/", main.MOD_NAME);
+			fileToReplace = fileToReplace.replace("/*Mod Template*/", Main.getInstance().MOD_NAME);
 
 
 			//write the file
@@ -181,7 +181,7 @@ public class JSFunctions {
 			//================== [ Forge CommonProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"CommonProxy.java"));
 
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
 			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockComponents));
@@ -212,14 +212,14 @@ public class JSFunctions {
 
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(main.MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityComponents));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
 
 
-			main.modManager.scanDirectoriesForMods();
+			Main.getInstance().modManager.scanDirectoriesForMods();
 
 		}
 		catch(Exception e) {
@@ -234,7 +234,7 @@ public class JSFunctions {
 		createModFromCode(sfGenCode);
 		
 		try {
-			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (main.offlineMode ? " --offline" : ""), false);
+			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""), false);
 			showToast(EnumToast.SUCCESS, "Starting Minecraft...");
 		}
 		catch(Exception e) {

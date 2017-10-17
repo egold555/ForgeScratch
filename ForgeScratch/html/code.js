@@ -470,11 +470,17 @@ Code.runJS = function() {
  * Discard all blocks from the workspace.
  */
 Code.discard = function() {
-  var count = Code.workspace.getAllBlocks().length;
-  if (count < 2 ||
-      window.confirm(MSG['discard'].replace('%1', count))) {
-    Code.workspace.clear();
-    window.location.hash = '';
+  try{
+    var count = Code.workspace.getAllBlocks().length;
+    if (count < 2 || window.confirm(MSG['discard'].replace('%1', count))) {
+      Code.workspace.clear();
+      window.location.hash = '';
+      log("Clearing blocks...");
+    }
+  }
+  catch(e){
+    sendToast(TOAST_ERROR_PROGRAM, "Failed to disguard blocks.");
+    sendJavaError(e);
   }
 };
 
@@ -528,3 +534,5 @@ function sendToast(type, message){
   }
   
 }
+
+//Blockly.BlockSvg.START_HAT = true;
