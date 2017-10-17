@@ -14,6 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.golde.forge.scratchforge.mainmod.Config;
 import org.golde.forge.scratchforge.mainmod.Language;
+//import org.golde.forge.scratchforge.mainmod.Config;
+//import org.golde.forge.scratchforge.mainmod.Language;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -21,6 +23,7 @@ import org.lwjgl.util.glu.Project;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
+import cpw.mods.fml.client.GuiModList;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -185,9 +188,9 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 		boolean flag = true;
 		int i = this.height / 4 + 48;
 
-		
+
 		this.addSingleplayerMultiplayerButtons(i, 24);
-		
+
 
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, i + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
 		this.buttonList.add(new GuiButton(4, this.width / 2 + 2, i + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
@@ -209,36 +212,41 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 	private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
 	{
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
+		this.buttonList.add(new GuiButton(6, width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, "Mods"));
 		if(Config.isMultiplayerButtonEnabled()) {
 			this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
 		}
 	}
 
-	protected void actionPerformed(GuiButton p_146284_1_)
+	protected void actionPerformed(GuiButton button)
 	{
-		if (p_146284_1_.id == 0)
+		if (button.id == 0)
 		{
 			this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
 		}
 
-		if (p_146284_1_.id == 5)
+		if (button.id == 5)
 		{
 			this.mc.displayGuiScreen(new GuiLanguage(this, this.mc.gameSettings, this.mc.getLanguageManager()));
 		}
 
-		if (p_146284_1_.id == 1)
+		if (button.id == 1)
 		{
 			this.mc.displayGuiScreen(new GuiSelectWorld(this));
 		}
 
-		if (p_146284_1_.id == 2)
+		if (button.id == 2)
 		{
 			this.mc.displayGuiScreen(new GuiMultiplayer(this));
 		}
 
-		if (p_146284_1_.id == 4)
+		if (button.id == 4)
 		{
 			this.mc.shutdown();
+		}
+
+		if (button.id == 6) {
+			mc.displayGuiScreen(new GuiModList(this));
 		}
 
 	}
@@ -441,7 +449,7 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 		String s = "Minecraft 1.7.10";
 
 		List<String> brandings = Lists.reverse(FMLCommonHandler.instance().getBrandings(true));
-		
+
 		for (int i = 0; i < brandings.size(); i++)
 		{
 			String brd = brandings.get(i);
@@ -452,10 +460,10 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 		}
 		String s1 = "Copyright Mojang AB. Do not distribute!";
 		this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
-		
+
 		this.drawString(this.fontRendererObj, Language.TITLE_INSTALLED, this.width - this.fontRendererObj.getStringWidth(Language.TITLE_INSTALLED) - 2, this.height - 20, -1);
 
 		super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
 	}
-	
+
 }

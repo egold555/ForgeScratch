@@ -2316,8 +2316,8 @@ Blockly.Blocks['mcitemactions_nbt_getstring'] = {
 
 Blockly.Java['mcitemactions_nbt_getstring'] = function(block) {
   var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-  var code = 'itemstack.getTagCompound().getString(' + value_tag + ');\n';
-  return code;
+  var code = 'itemstack.getTagCompound().getString(' + value_tag + ')';
+  return [code, Blockly.Java.ORDER_NONE];
 };
 
 Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
@@ -2343,8 +2343,8 @@ Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
 
 Blockly.Java['mcitemactions_nbt_getnumber'] = function(block) {
   var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-  var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ');\n';
-  return code;
+  var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ')';
+  return [code, Blockly.Java.ORDER_NONE];
 };
 
 Blockly.Blocks['location_player_x'] = {
@@ -2362,7 +2362,7 @@ Blockly.Blocks['location_player_x'] = {
 };
 
 Blockly.Java['location_player_x'] = function(block) {
-  return ['player.posX', Blockly.JavaScript.ORDER_NONE];
+  return ['player.posX', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2382,7 +2382,7 @@ Blockly.Blocks['location_player_y'] = {
 };
 
 Blockly.Java['location_player_y'] = function(block) {
-  return ['player.posY', Blockly.JavaScript.ORDER_NONE];
+  return ['player.posY', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2402,7 +2402,7 @@ Blockly.Blocks['location_player_z'] = {
 };
 
 Blockly.Java['location_player_z'] = function(block) {
-  return ['player.posZ', Blockly.JavaScript.ORDER_NONE];
+  return ['player.posZ', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2422,7 +2422,7 @@ Blockly.Blocks['location_entity_x'] = {
 };
 
 Blockly.Java['location_entity_x'] = function(block) {
-  return ['variableHolder.entity.posX', Blockly.JavaScript.ORDER_NONE];
+  return ['variableHolder.entity.posX', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2442,7 +2442,7 @@ Blockly.Blocks['location_entity_y'] = {
 };
 
 Blockly.Java['location_entity_y'] = function(block) {
-  return ['variableHolder.entity.posY', Blockly.JavaScript.ORDER_NONE];
+  return ['variableHolder.entity.posY', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2462,7 +2462,7 @@ Blockly.Blocks['location_entity_z'] = {
 };
 
 Blockly.Java['location_entity_z'] = function(block) {
-  return ['variableHolder.entity.posZ', Blockly.JavaScript.ORDER_NONE];
+  return ['variableHolder.entity.posZ', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2482,7 +2482,7 @@ Blockly.Blocks['location_block_x'] = {
 };
 
 Blockly.Java['location_block_x'] = function(block) {
-  return ['x', Blockly.JavaScript.ORDER_NONE];
+  return ['x', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2504,7 +2504,7 @@ Blockly.Blocks['location_block_y'] = {
 };
 
 Blockly.Java['location_block_y'] = function(block) {
-  return ['y', Blockly.JavaScript.ORDER_NONE];
+  return ['y', Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2525,7 +2525,7 @@ Blockly.Blocks['location_block_z'] = {
 };
 
 Blockly.Java['location_block_z'] = function(block) {
-  return ['z', Blockly.JavaScript.ORDER_NONE];
+  return ['z', Blockly.Java.ORDER_NONE];
 };
 
 
