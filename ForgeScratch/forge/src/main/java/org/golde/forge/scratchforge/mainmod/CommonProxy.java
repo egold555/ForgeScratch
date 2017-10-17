@@ -58,7 +58,7 @@ public class CommonProxy {
 			block.getSubBlocks(Item.getItemFromBlock(block), null, items);
 			List<String> names = new ArrayList<String>();
 			for(ItemStack i:items) {
-				names.add("§6"+i.getDisplayName());
+				names.add("\u00a76"+i.getDisplayName());
 			}
 			
 			return names;
@@ -67,7 +67,7 @@ public class CommonProxy {
 		private String fixColorCoding(String raw) {
 			String[] charToReplace = {",", "[", "]", ":", "(", ")"};
 			for(String to:charToReplace) {
-				raw = raw.replace(to, "§f" + to);
+				raw = raw.replace(to, "\u00a7f" + to);
 			}
 			return raw;
 		}
@@ -83,14 +83,14 @@ public class CommonProxy {
 				Block block = world.getBlock(x, y, z);
 
 				if(block != null) {
-					l.add(fixColorCoding("§bBlock§f: §a" + block.getLocalizedName() + "§f (§6" + block.getUnlocalizedName() + "§f, §6" + Block.getIdFromBlock(block) + "§f)"));
-					l.add(fixColorCoding("§bSide§f: §a" + data));
+					l.add(fixColorCoding("\u00a7bBlock\u00a7f: \u00a7a" + block.getLocalizedName() + "\u00a7f (\u00a76" + block.getUnlocalizedName() + "\u00a7f, \u00a76" + Block.getIdFromBlock(block) + "\u00a7f)"));
+					l.add(fixColorCoding("\u00a7bSide\u00a7f: \u00a7a" + data));
 					
-					l.add(fixColorCoding("§bSub: [" + Arrays.asList(getSubBlocks(block)).toString().replace(",", ",§6").replace("]", "").replace("[", "") + "]"));
+					l.add(fixColorCoding("\u00a7bSub: [" + Arrays.asList(getSubBlocks(block)).toString().replace(",", ",\u00a76").replace("]", "").replace("[", "") + "]"));
 				}
 				//l.add("Material: " + block.getMaterial().toString());
-				l.add(fixColorCoding("§bX: §a" + x + " §bY: §a" + y + " §bZ: §a" + z));
-				l.add(fixColorCoding("§bDX: §a" + dx + " §bDY: §a" + dy + " §bDZ: §a" + dz));
+				l.add(fixColorCoding("\u00a7bX: \u00a7a" + x + " \u00a7bY: \u00a7a" + y + " \u00a7bZ: \u00a7a" + z));
+				l.add(fixColorCoding("\u00a7bDX: \u00a7a" + dx + " \u00a7bDY: \u00a7a" + dy + " \u00a7bDZ: \u00a7a" + dz));
 				
 				
 

@@ -115,131 +115,180 @@
   <xml id="toolbox" style="display: none">
   
     <category name="Minecraft Blocks" colour="15">
+
       <block type="mcblock"></block>
       <block type="mcblockflower"></block>
       <block type="mcblockplant"></block>
-      <block type="mcblockoptions_quantity"></block>
-      <block type="mcblockoptions_lightopacity"></block>
-      <block type="mcblockoptions_lightvalue"></block>
-      <block type="mcblockoptions_click_right"></block>
-      <block type="mcblockoptions_click_left"></block>
-      <block type="mcblockoptions_blockplaced"></block>
-      <block type="mcblockoptions_block_broken_player"></block>
-      <block type="mcblockoptions_block_broken_explosion"></block>
-      <block type="mcblockoptions_walkthrough"></block>
-      <block type="mcblockoptions_transparent"></block>
-      <block type="mcblockoptions_experience"></block>
+
+      <category name="Block Options" colour="40">
+        <block type="mcblockoptions_quantity"></block>
+        <block type="mcblockoptions_lightopacity"></block>
+        <block type="mcblockoptions_lightvalue"></block>
+        <block type="mcblockoptions_click_right"></block>
+        <block type="mcblockoptions_click_left"></block>
+        <block type="mcblockoptions_blockplaced"></block>
+        <block type="mcblockoptions_block_broken_player"></block>
+        <block type="mcblockoptions_block_broken_explosion"></block>
+        <block type="mcblockoptions_walkthrough"></block>
+        <block type="mcblockoptions_transparent"></block>
+        <block type="mcblockoptions_experience"></block>
+      </category>
+
+      <category name="Block Variables" colour="290">
+        <block type="mcblockinput"></block>
+        <block type="location_block_x"></block>
+        <block type="location_block_y"></block>
+        <block type="location_block_z"></block>
+      </category>
+
+      <category name="Block Actions" colour="140">
+        <block type="mcaction_placeblock"></block>
+        <block type="mcaction_placeblockmeta"></block>
+        <block type="mcaction_breakblock"></block>
+      </category>
+
+      <category name="Block Events" colour="180">
+        <block type="mcevent_cancel"></block>
+        <block type="mcevent_noteblock_play"></block>
+        <block type="mcevent_noteblock_change"></block>
+      </category>
+
     </category>
 
     <category name="Minecraft Items" colour="15">
       <block type="mcitem"></block>
-      <block type="mcitemoptions_rightclick"></block>
-      <block type="mcitemoptions_leftclick"></block>
-      <block type="mcitemoptions_lore"></block>
-      <block type="mcitemoptions_doesntleave"></block>
-      
+
+      <category name="Item Options" colour="40">
+        <block type="mcitemoptions_rightclick"></block>
+        <block type="mcitemoptions_leftclick"></block>
+        <block type="mcitemoptions_lore"></block>
+        <block type="mcitemoptions_doesntleave"></block>
+      </category>
+
+      <category name="Item Variables" colour="290">
+        <block type="mciteminput"></block>
+      </category>
+
+      <category name="Item Actions" colour="140">
+        <block type="mcitemactions_nbt_hastag"></block>
+        <block type="mcitemactions_nbt_setnumber"></block>
+        <block type="mcitemactions_nbt_getnumber"></block>
+        <block type="mcitemactions_nbt_setstring"></block>
+        <block type="mcitemactions_nbt_getstring"></block>
+        <block type="mcaction_spawnitem"></block>
+      </category>
+
+      <category name="Item Events" colour="180">
+        <block type="mcevent_cancel"></block>
+        <block type="mcevent_itempickup"></block>
+        <block type="mcevent_itemcraft"></block>
+        <block type="mcevent_itemsmelt"></block>
+      </category>
+
     </category>
 
-    <category name="Minecraft Mobs" colour="15">
-    <block type="mcentity"></block>
-    <block type="mcentityoptions_modelscale"></block>
-    <block type="mcentityoptions_modeltranslate"></block>
+    <category name="Minecraft Creature" colour="15">
+      <block type="mcentity"></block>
+      <category name="Creature Options" colour="40">
+        <block type="mcentityoptions_modelscale"></block>
+        <block type="mcentityoptions_modeltranslate"></block>
+      </category>
+
+      <category name="Creature Variables" colour="290">
+        <block type="location_entity_x"></block>
+        <block type="location_entity_y"></block>
+        <block type="location_entity_z"></block>
+      </category>
+
+      <category name="Creature Actions" colour="140">
+        <block type="mcaction_potionentity"></block>
+        <block type="mcaction_velocity_entity"></block>
+        <block type="mcaction_teleport_entity"></block>
+        <block type="mcaction_rename_entity"></block>
+        <block type="mcaction_sethealth_entity"></block>
+        <block type="mcaction_spawn_mob"></block>
+      </category>
+
+
+    </category>
+
+    <category name="Minecraft Player" colour="15">
+
+      <category name="Player Variables" colour="290">
+        <block type="location_player_x"></block>
+        <block type="location_player_y"></block>
+        <block type="location_player_z"></block>
+      </category>
+
+      <category name="Player Actions" colour="140">
+        <block type="mcaction_potionplayer"></block>
+        <block type="mcaction_playsound"></block>
+        <block type="mcaction_chat"></block>
+        <block type="mcaction_giveitem"></block>
+        <block type="mcaction_velocity_player"></block>
+        <block type="mcaction_teleport_player"></block>
+        <block type="mcaction_sethealth_player"></block>
+      </category>
+
+      <category name="Player Events" colour="180">
+        <block type="mcevent_cancel"></block>
+        <block type="mcevent_playerjoin"></block>
+        <block type="mcevent_playerleave"></block>
+        <block type="mcevent_playerrespawn"></block>
+        <block type="mcevent_playerarrowshoot"></block>
+        <block type="mcevent_playerattack"></block>
+        <block type="mcevent_playerbonemeal"></block>
+        <block type="mcevent_playerfillbucket"></block>
+        <block type="mcevent_playeritembreak"></block>
+        <block type="mcevent_playeropencontainer"></block>
+        <block type="mcevent_playerpickxp"></block>
+        <block type="mcevent_playersleep"></block>
+        <block type="mcevent_playerhoe"></block>
+      </category>
+
     </category>
 
     <category name="Minecraft Commands" colour="15">
       <block type="mccommand"></block>
     </category>
 
-    <category name="Minecraft Item Actions" colour="140">
-      <block type="mcitemactions_nbt_hastag"></block>
-      <block type="mcitemactions_nbt_setnumber"></block>
-      <block type="mcitemactions_nbt_getnumber"></block>
-      <block type="mcitemactions_nbt_setstring"></block>
-      <block type="mcitemactions_nbt_getstring"></block>
+    <category name="Minecraft Misc." colour="15">
+
+      <category name="Misc. Variables" colour="290">
+        <block type="mcsoundinput"></block>
+        <block type="mcvariable_color_chat"></block>
+        <block type="mcvariable_color_fireworks"></block>
+      </category>
+
+      <category name="Misc. Actions" colour="140">
+        <block type="mcaction_time_selector"></block>
+        <block type="mcaction_time_raw"></block>
+        <block type="mcaction_explosion"></block>
+        <block type="mcaction_lightning"></block>
+        <block type="mcaction_firework"></block>
+        <block type="mcaction_particle"></block>
+        <block type="mcaction_log"></block>
+        <block type="mcaction_taskdelay"></block>
+        <block type="mcaction_httprequest"></block>
+      </category>
+
+      <category name="Misc. Events" colour="180">
+        <block type="mcevent_cancel"></block>
+        <block type="mcevent_treegen"></block>
+      </category>
+
+      <category name="Crafting Recipes" colour="200">
+        <block type="mcrecipe_crafting_shaped"></block>
+        <block type="mcrecipe_crafting_shapeless"></block>
+        <block type="mcrecipe_smelting"></block>
+      </category>
+
     </category>
 
-    <category name="Minecraft Player Actions" colour="140">
-      <block type="mcaction_potionplayer"></block>
-      <block type="mcaction_playsound"></block>
-      <block type="mcaction_chat"></block>
-      <block type="mcaction_giveitem"></block>
-      <block type="mcaction_velocity_player"></block>
-      <block type="mcaction_teleport_player"></block>
-      <block type="mcaction_sethealth_player"></block>
-    </category>
+    
 
-    <category name="Minecraft Entity Actions" colour="140">
-      <block type="mcaction_potionentity"></block>
-      <block type="mcaction_velocity_entity"></block>
-      <block type="mcaction_teleport_entity"></block>
-      <block type="mcaction_rename_entity"></block>
-      <block type="mcaction_sethealth_entity"></block>
-    </category>
 
-    <category name="Minecraft World Actions" colour="140">
-     <block type="mcaction_time_selector"></block>
-      <block type="mcaction_time_raw"></block>
-      <block type="mcaction_spawn_mob"></block>
-      <block type="mcaction_explosion"></block>
-      <block type="mcaction_spawnitem"></block>
-      <block type="mcaction_lightning"></block>
-      <block type="mcaction_placeblock"></block>
-      <block type="mcaction_placeblockmeta"></block>
-      <block type="mcaction_breakblock"></block>
-      <block type="mcaction_firework"></block>
-      <block type="mcaction_particle"></block>
-    </category>
-
-    <category name="Minecraft Experimential Actions" colour="140">
-      <block type="mcaction_log"></block>
-      <block type="mcaction_taskdelay"></block>
-      <block type="mcaction_httprequest"></block>
-    </category>
-
-    <category name="Minecraft Recipes" colour="200">
-      <block type="mcrecipe_crafting_shaped"></block>
-      <block type="mcrecipe_crafting_shapeless"></block>
-      <block type="mcrecipe_smelting"></block>
-    </category>
-
-    <category name="Minecraft Variables" colour="290">
-      <block type="mciteminput"></block>
-      <block type="mcblockinput"></block>
-      <block type="mcsoundinput"></block>
-      <block type="location_player_x"></block>
-      <block type="location_player_y"></block>
-      <block type="location_player_z"></block>
-      <block type="location_entity_x"></block>
-      <block type="location_entity_y"></block>
-      <block type="location_entity_z"></block>
-      <block type="location_block_x"></block>
-      <block type="location_block_y"></block>
-      <block type="location_block_z"></block>
-      <block type="mcvariable_color_chat"></block>
-      <block type="mcvariable_color_fireworks"></block>
-    </category>
-
-    <category name="Minecraft Events" colour="180">
-      <block type="mcevent_cancel"></block>
-      <block type="mcevent_itempickup"></block>
-      <block type="mcevent_itemcraft"></block>
-      <block type="mcevent_itemsmelt"></block>
-      <block type="mcevent_playerjoin"></block>
-      <block type="mcevent_playerleave"></block>
-      <block type="mcevent_playerrespawn"></block>
-      <block type="mcevent_playerarrowshoot"></block>
-      <block type="mcevent_playerattack"></block>
-      <block type="mcevent_playerbonemeal"></block>
-      <block type="mcevent_playerfillbucket"></block>
-      <block type="mcevent_playeritembreak"></block>
-      <block type="mcevent_playeropencontainer"></block>
-      <block type="mcevent_playerpickxp"></block>
-      <block type="mcevent_playersleep"></block>
-      <block type="mcevent_playerhoe"></block>
-      <block type="mcevent_treegen"></block>
-      <block type="mcevent_noteblock_play"></block>
-      <block type="mcevent_noteblock_change"></block>
-    </category>
+    
 
     <!-- <category name="TEST" colour="15">
       <category name="FOO" colour="15"></category>

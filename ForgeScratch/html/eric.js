@@ -942,7 +942,7 @@ Blockly.Blocks['mcaction_spawn_mob'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_spawn_mob",
-  "message0": "Spawn Mob %1 Mob:  %2 %3 Location X: %4 Location Y: %5 Location Z: %6",
+  "message0": "Spawn Creature %1 Creature:  %2 %3 Location X: %4 Location Y: %5 Location Z: %6",
   "args0": [
     {
       "type": "input_dummy"
@@ -1321,7 +1321,7 @@ Blockly.Blocks['mcaction_potionentity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_potionentity",
-  "message0": "Add Potion Effect To A Mob %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
+  "message0": "Add Potion Effect To A Creature %1 Potion:  %2 %3 Seconds %4 Amplifier %5 Make Particles Invisible %6",
   "args0": [
     {
       "type": "input_dummy"
@@ -2413,7 +2413,7 @@ Blockly.Blocks['location_entity_x'] = {
   init: function() {
     this.jsonInit({
       "type": "location_entity_x",
-  "message0": "Entity X",
+  "message0": "Creature X",
   "output": "Number",
   "colour": COLOR_VARIABLES,
   "tooltip": "",
@@ -2433,7 +2433,7 @@ Blockly.Blocks['location_entity_y'] = {
   init: function() {
     this.jsonInit({
       "type": "location_entity_y",
-  "message0": "Entity Y",
+  "message0": "Creature Y",
   "output": "Number",
   "colour": COLOR_VARIABLES,
   "tooltip": "",
@@ -2453,7 +2453,7 @@ Blockly.Blocks['location_entity_z'] = {
   init: function() {
     this.jsonInit({
       "type": "location_entity_z",
-  "message0": "Entity Z",
+  "message0": "Creature Z",
   "output": "Number",
   "colour": COLOR_VARIABLES,
   "tooltip": "",
@@ -2902,7 +2902,7 @@ Blockly.Blocks['mcaction_velocity_entity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_velocity_entity",
-  "message0": "Set Entity Velocity %1 Velocity X %2 Velocity Y %3 Velocity Z %4",
+  "message0": "Set Creature Velocity %1 Velocity X %2 Velocity Y %3 Velocity Z %4",
   "args0": [
     {
       "type": "input_dummy"
@@ -2996,7 +2996,7 @@ Blockly.Blocks['mcaction_teleport_entity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_teleport_entity",
-  "message0": "Teleport Entity %1 Location X %2 Location Y %3 Location Z %4",
+  "message0": "Teleport Creature %1 Location X %2 Location Y %3 Location Z %4",
   "args0": [
     {
       "type": "input_dummy"
@@ -3213,7 +3213,7 @@ Blockly.Blocks['mcaction_rename_entity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_rename_entity",
-  "message0": "Rename Mob %1 Name: %2",
+  "message0": "Rename Creature %1 Name: %2",
   "args0": [
     {
       "type": "input_dummy"
@@ -3253,7 +3253,7 @@ Blockly.Blocks['mcaction_sethealth_entity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcaction_sethealth_entity",
-  "message0": "Set Mob Health %1",
+  "message0": "Set Creature Health %1",
   "args0": [
     {
       "type": "input_value",
@@ -3316,7 +3316,7 @@ Blockly.Blocks['mcentity'] = {
   init: function() {
     this.jsonInit({
       "type": "mcentity",
-  "message0": "Minecraft Mob %1 Name: %2 %3 Model: %4 %5 Create Spawn Egg %6 %7 Spawn Egg Primary Color %8 %9 Spawn Egg Secondary Color %10 %11 (NI) Spawn Naturally In World %12 %13 Options: %14 %15",
+  "message0": "Minecraft Creature %1 Name: %2 %3 Model: %4 %5 Create Spawn Egg %6 %7 Spawn Egg Primary Color %8 %9 Spawn Egg Secondary Color %10 %11 (NI) Spawn Naturally In World %12 %13 Options: %14 %15",
   "args0": [
     {
       "type": "input_dummy"
@@ -3324,7 +3324,7 @@ Blockly.Blocks['mcentity'] = {
     {
       "type": "field_input",
       "name": "NAME",
-      "text": "Mob Name"
+      "text": "Creature Name"
     },
     {
       "type": "input_dummy"
@@ -4563,7 +4563,7 @@ Blockly.Blocks['mcevent_playerattack'] = {
   init: function() {
     this.jsonInit({
       "type": "mcevent_playerattack",
-  "message0": "Player Attack Entity Event %1 %2",
+  "message0": "Player Attack Creature Event %1 %2",
   "args0": [
     {
       "type": "input_dummy"
@@ -4578,7 +4578,7 @@ Blockly.Blocks['mcevent_playerattack'] = {
     }
   ],
   "colour": COLOR_EVENTS,
-  "tooltip": "Fired when the player is about to attack an Entity",
+  "tooltip": "Fired when the player is about to attack an Creature",
   "helpUrl": ""
     });
   }
