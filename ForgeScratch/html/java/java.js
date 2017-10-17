@@ -1294,7 +1294,7 @@ Blockly.Java.toStringCode = function(block,name) {
       item = '"' + item + '"';
     } else if(targetBlock.type !== 'variables_get' &&
       Blockly.Java.GetVariableType(item) === 'Var') {
-      item = item + '.toString()';
+      //item = item + '.toString()';
     } else {
       // It is something else so we need to convert it on the fly
       this.addImport('java.text.DecimalFormat');

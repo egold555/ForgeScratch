@@ -2065,7 +2065,7 @@ Blockly.Java['mcitemoptions_rightclick'] = function(block) {
   'public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){\n' +
   '    if(world.isRemote){return itemstack;}\n' +
   '    final VariableHolder variableHolder = new VariableHolder();\n' +
-  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound();}\n' +
+  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound(); itemstack.setTagCompound(variableHolder.nbt);}\n' +
   '    ' + statements_code + '\n' +
   'itemstack.setTagCompound(variableHolder.nbt);\n' +
   '    return itemstack;\n' +
@@ -2111,7 +2111,7 @@ Blockly.Java['mcitemoptions_leftclick'] = function(block) {
   'public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int meta, float dx, float dy, float dz) {\n' +
   '    if(world.isRemote){return true;}\n' +
   '    final VariableHolder variableHolder = new VariableHolder();\n' +
-  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound();}\n' +
+  '    if (itemstack.hasTagCompound()){variableHolder.nbt = itemstack.getTagCompound();}else{variableHolder.nbt = new NBTTagCompound(); itemstack.setTagCompound(variableHolder.nbt);}\n' +
   '    ' + statements_code + '\n' +
   'itemstack.setTagCompound(variableHolder.nbt);\n' +
   '    return true;\n' +
@@ -2316,7 +2316,7 @@ Blockly.Blocks['mcitemactions_nbt_getstring'] = {
 
 Blockly.Java['mcitemactions_nbt_getstring'] = function(block) {
   var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-  var code = 'itemstack.getTagCompound().getString(' + value_tag + ')';
+  var code = '(itemstack.getTagCompound() != null ? itemstack.getTagCompound().getString(' + value_tag + ') : "")';
   return [code, Blockly.Java.ORDER_NONE];
 };
 
@@ -2343,7 +2343,8 @@ Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
 
 Blockly.Java['mcitemactions_nbt_getnumber'] = function(block) {
   var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-  var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ')';
+  //var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ')';
+   var code = '(itemstack.getTagCompound() != null ? itemstack.getTagCompound().getDouble(' + value_tag + ') : 0)';
   return [code, Blockly.Java.ORDER_NONE];
 };
 
