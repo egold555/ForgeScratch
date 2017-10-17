@@ -54,6 +54,8 @@ public class Main implements ActionListener, KeyListener{
 
 	public final String VERSION = "1.0";
 
+	private static Main INSTANCE;
+	
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
 
@@ -115,7 +117,7 @@ public class Main implements ActionListener, KeyListener{
 
 	//Start creation of everything
 	void initAndShowGUI() {
-
+		INSTANCE = this;
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
@@ -252,7 +254,7 @@ public class Main implements ActionListener, KeyListener{
 
 							// web page is loaded.
 							window = (JSObject) webEngine.executeScript("window");
-							jsFunctions = new JSFunctions(Main.this);
+							jsFunctions = new JSFunctions();
 							window.setMember("java_app", jsFunctions);
 
 						}
@@ -515,6 +517,10 @@ public class Main implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 
+	}
+	
+	public static Main getInstance() {
+		return INSTANCE;
 	}
 
 }
