@@ -107,56 +107,55 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-
+	
 	/* Block Variables */
-
+	
 
 	/* BlockFlower Variables */
-
+	
 
 	/* BlockPlant Variables */
-
+	
 
 	/* Item Variables */
 	public static SpawnEgg spawnEgg;
-
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
-
+		
 
 		/* BlockFlower Constructor Calls */
-
+		
 
 		/* BlockPlant Constructor Calls */
-
+		
 
 		/* Item Constructor Calls */
 		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-
+		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Creature_Name.class, Mcentity_Creature_Name.RAW_NAME, Mcentity_Creature_Name.NAME, Mcentity_Creature_Name.EGG_P, Mcentity_Creature_Name.EGG_S); //BatNew
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-
+		
 		/* Recipe Registry */
-
+		
 	}
-
+	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-
+		
 	}
-
+	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		scheduler.update();
@@ -169,10 +168,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-
+			
 
 			/*Overworld world generation for plants*/
-
+			
 
 		}
 	}
@@ -192,7 +191,7 @@ public class CommonProxy {
 
 		}
 	}
-
+	
 	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
 		int id = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
@@ -202,57 +201,17 @@ public class CommonProxy {
 		}
 		//TODO: Add language
 	}
-
+	
 	private void createEgg(int id, int solidColor, int spotColor) {
 		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-
-	/*type:global*/
-
-
+	
+/*type:global*/
 
 
 
-	/*type:entity*/
-	/*model:BatNew*/
-	public static class Mcentity_Creature_Name extends EntityCreature {
-		public static final String RAW_NAME = "Creature Name";
-		public static final String NAME = "Creature_Name";
-		public static final boolean SPAWN_NATURALLY = false;
-		public static final int EGG_P = 0xff0000;
-		public static final int EGG_S = 0x33ff33;
 
-		public Mcentity_Creature_Name(World world){
-			super(world);
-			this.targetTasks.addTask(targetTasks.taskEntries.size() + 1, new CustomAITest(this));
-		}
-		
-		class CustomAITest extends EntityAIBase {
-			
-			private final EntityCreature entity;
-
-			public CustomAITest (EntityCreature entity) {
-				this.entity = entity;
-			}
-			
-			
-			
-			@Override
-			public boolean shouldExecute() {
-				return !entity.worldObj.isDaytime();
-			}
-			
-			@Override
-			public void startExecuting() {
-				entity.setHealth(0);
-			}
-			
-			
-		}
-
-
-	}
 
 
 }

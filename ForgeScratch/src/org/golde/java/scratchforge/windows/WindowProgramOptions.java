@@ -138,7 +138,7 @@ public class WindowProgramOptions extends JFrame{
 		btnCleanProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JavaHelper.runCMD(main.forge_folder, "gradlew clean", false);
+					JavaHelper.runCMD(main.forge_folder, "gradlew clean");
 				} catch (Exception e) {
 					PLog.error(e, "Failed to run project!");
 				}

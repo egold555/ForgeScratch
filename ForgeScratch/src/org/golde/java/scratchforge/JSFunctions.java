@@ -234,7 +234,7 @@ public class JSFunctions {
 		createModFromCode(sfGenCode);
 		
 		try {
-			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""), false);
+			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
 			showToast(EnumToast.SUCCESS, "Starting Minecraft...");
 		}
 		catch(Exception e) {
@@ -384,8 +384,8 @@ public class JSFunctions {
 		log("[FS-Error] " + msg);
 	}
 
-	enum EnumToast{
-		ERROR_PROGRAM(0), ERROR_BLOCKS(1), SUCCESS(2), WARNING(3), UPDATE(4);
+	public enum EnumToast{
+		ERROR_PROGRAM(0), ERROR_BLOCKS(1), SUCCESS(2), WARNING(3), UPDATE(4), INFO(5);
 
 		public final int id;
 		EnumToast(int id){

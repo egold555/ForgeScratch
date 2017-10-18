@@ -28,6 +28,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import org.golde.java.scratchforge.Main;
+import org.golde.java.scratchforge.JSFunctions.EnumToast;
+
 /**
  * A class to do functions that Java should have built in
  * @author Eric
@@ -36,8 +39,14 @@ import javax.swing.tree.TreePath;
 public class JavaHelper {
 
 	//Opens up a cmd prompt and executes commands. 
-	public static void runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
-		Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" cmd.exe /c \"" + cmd + "\"");
+	public static void runCMD(File dir, String cmd) throws Exception {
+		Process p = Runtime.getRuntime().exec("cmd.exe /c cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" /wait cmd.exe /c \"" + cmd + "\"");
+		//Main.getInstance().jsFunctions.showToast(EnumToast.INFO, "Minecraft is now running. Please close Minecraft to continue.");
+		p.waitFor();
+		if(doesFileContainString(new File(Main.getInstance().forge_folder, ".gradle\\gradle.log"), "FAILURE: Build failed with an exception.")) {
+			Main.getInstance().jsFunctions.showToast(EnumToast.ERROR_BLOCKS, "Minecraft failed to build. Please double check all of your functions!");
+		}
+		PLog.info("Exit Code: " + p.waitFor());
 	}	
 
 
@@ -313,5 +322,18 @@ public class JavaHelper {
 	
 	public static InputStream stringToInputStream(String s) throws UnsupportedEncodingException {
 		return new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8.name()));
+	}
+	
+	public static boolean doesFileContainString(File file, String toFind) throws FileNotFoundException {
+		Scanner scanner = new Scanner(file);
+	    while (scanner.hasNextLine()) {
+	        String line = scanner.nextLine();
+	        if(line.contains(toFind)) { 
+	            scanner.close();
+	        	return true;
+	        }
+	    }
+	    scanner.close();
+	    return false;
 	}
 }
