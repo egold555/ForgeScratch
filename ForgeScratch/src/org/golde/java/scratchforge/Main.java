@@ -39,9 +39,12 @@ import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.PopupFeatures;
 import javafx.scene.web.PromptData;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import netscape.javascript.JSObject;
 
@@ -244,13 +247,6 @@ public class Main implements ActionListener, KeyListener{
 					public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
 						if (newState == Worker.State.SUCCEEDED) {
 
-							/*if(webEngine.getLocation() != null) {
-								PLog.info("External website: " + webEngine.getLocation());
-								if(!webEngine.getLocation().contains("file:///")){
-									PLog.info("External website: " + webEngine.getLocation());
-									return;
-								}
-							}*/
 
 							// web page is loaded.
 							window = (JSObject) webEngine.executeScript("window");
@@ -263,16 +259,19 @@ public class Main implements ActionListener, KeyListener{
 					}
 				});
 
-		//Prevent new windows from opening
-		/*webEngine.setCreatePopupHandler(
-		    new Callback<PopupFeatures, WebEngine>() {
-		        @Override
-		        public WebEngine call(PopupFeatures config) {
+		
+		// Open new windows in a new WebView.
+		webEngine.setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
 
-		            return null;
-		        }
-		    });*/
-
+	        @Override
+	        public WebEngine call(PopupFeatures p) {
+	            Stage stage = new Stage(StageStyle.UTILITY);
+	            WebView wv2 = new WebView();
+	            stage.setScene(new Scene(wv2));
+	            stage.show();
+	            return wv2.getEngine();
+	        }
+	    });
 
 		webEngine.load(f.toURI().toString());
 		root.getChildren().add(webView);
