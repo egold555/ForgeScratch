@@ -74,15 +74,13 @@ public class WindowProgramOptions extends JFrame{
 		}
 	}
 	
-	private Config config;
 	private JComboBox<String> comboBoxRam = new JComboBox<String>();
 	private JCheckBox chckbxMultiplayerEnabled;
 	private JCheckBox chckbxMultiplayerLimited;
 	private JTextField textField;
 	
-	public WindowProgramOptions(Main main, Config config) {
+	public WindowProgramOptions() {
 		setTitle("Program Options");
-		this.config = config;
 		JPanel box1 = new JPanel();
 		box1.setBounds(12, 13, 191, 144);
 		box1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Minecraft"));
@@ -138,7 +136,7 @@ public class WindowProgramOptions extends JFrame{
 		btnCleanProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JavaHelper.runCMD(main.forge_folder, "gradlew clean");
+					JavaHelper.runCMD(Main.getInstance().forge_folder, "gradlew clean");
 				} catch (Exception e) {
 					PLog.error(e, "Failed to run project!");
 				}
@@ -177,6 +175,7 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void showSettingsMenu() {
+		Config config = Main.getInstance().config;
 		try {
 			comboBoxRam.setSelectedIndex(config.getInt(ConfigProperty.MCRAM));
 			chckbxMultiplayerEnabled.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED));
@@ -190,6 +189,7 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void saveAndCloseSettingsMenu() {
+		Config config = Main.getInstance().config;
 		config.setInt(ConfigProperty.MCRAM, comboBoxRam.getSelectedIndex());
 		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, chckbxMultiplayerEnabled.isSelected());
 		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, chckbxMultiplayerLimited.isSelected());

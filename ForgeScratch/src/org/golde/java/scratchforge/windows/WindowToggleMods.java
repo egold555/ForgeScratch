@@ -27,11 +27,7 @@ public class WindowToggleMods extends JFrame{
 
 	private static final long serialVersionUID = 6722641269135618502L;
 
-	private Main main;
-
-
-	public WindowToggleMods(Main main) {
-		this.main = main;
+	public WindowToggleMods() {
 		this.setResizable(false);
 		setTitle("Mod Manager");
 
@@ -56,7 +52,7 @@ public class WindowToggleMods extends JFrame{
 
 	private DefaultMutableTreeNode populateTreeView() {
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Mods");
-		for(Mod mod: main.modManager.allMods()) {
+		for(Mod mod: Main.getInstance().modManager.allMods()) {
 			DefaultMutableTreeNode modNode = new DefaultMutableTreeNode(mod.getDisplayName());
 			modNode.setUserObject(mod);
 			top.add(modNode);

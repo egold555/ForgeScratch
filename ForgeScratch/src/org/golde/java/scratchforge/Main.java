@@ -66,7 +66,7 @@ public class Main implements ActionListener, KeyListener{
 	//Makes a properties file and simple saving and loading settings
 	public Config config = new Config();
 
-	private WindowProgramOptions windowProgramOptions = new WindowProgramOptions(this, config);
+	private WindowProgramOptions windowProgramOptions = new WindowProgramOptions();
 
 	//Forge directory
 	public File forge_folder = new File("forge");
@@ -136,7 +136,7 @@ public class Main implements ActionListener, KeyListener{
 
 
 		// This has to be called after "forge_folder" is initialized.
-		modManager = new ModManager(this);
+		modManager = new ModManager();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JFXPanel fxPanel = new JFXPanel(){
@@ -304,14 +304,14 @@ public class Main implements ActionListener, KeyListener{
 			//Mod Options
 			else if(source == mOptionsModManager) {
 				//jsFunctions.showEnabledMods(frame);
-				new WindowToggleMods(Main.this);
+				new WindowToggleMods();
 			}
 			else if(source == mOptionsProgram) {
 				windowProgramOptions.showSettingsMenu();
 			}
 			else if(source == mOptionsModTextures) {
 
-				new WindowEditTexture(Main.this);
+				new WindowEditTexture();
 			}
 			else if(source == mHelpAbout) {
 				String[] aboutTextList = {
@@ -426,17 +426,6 @@ public class Main implements ActionListener, KeyListener{
 			}
 		}
 	}
-
-	/*private void showProgramArgsMenu() {
-        JTextField field1 = new JTextField("-Xincgc -Xmx4G -Xms4G");
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Arguments:"));
-        panel.add(field1);
-        int result = JOptionPane.showConfirmDialog(null, panel, "Program Argument Options", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
-
-        }
-	}*/
 
 	//Main dialog on startup
 	public void startupDialog() {

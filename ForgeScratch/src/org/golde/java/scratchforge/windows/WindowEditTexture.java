@@ -28,13 +28,11 @@ import org.golde.java.scratchforge.mod.Mod.Texture;
 public class WindowEditTexture extends JFrame {
 
 	private static final long serialVersionUID = -8302074072215275295L;
-	private Main main;
 
 	private final String[] texturesToIgnore = {"spawn_egg", "spawn_egg_overlay"};
 
-	public WindowEditTexture(Main main) {
-		this.main = main;
-		File forgeModsIn = new File(main.forge_folder, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
+	public WindowEditTexture() {
+		File forgeModsIn = new File(Main.getInstance().forge_folder, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 
 		this.setResizable(false);
 		getContentPane().setLayout(null);
@@ -127,7 +125,7 @@ public class WindowEditTexture extends JFrame {
 
 	private DefaultMutableTreeNode populateTreeView(File forgeModsIn) {
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Mods");
-		for(Mod mod: main.modManager.allMods()) {
+		for(Mod mod: Main.getInstance().modManager.allMods()) {
 			DefaultMutableTreeNode modNode = new DefaultMutableTreeNode(mod.getModName());
 			modNode.setUserObject(mod);
 			//PLog.info("Textures: " + mod.getTextures().length);

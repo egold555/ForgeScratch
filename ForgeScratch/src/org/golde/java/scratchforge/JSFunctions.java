@@ -31,23 +31,19 @@ import netscape.javascript.JSObject;
  */
 public class JSFunctions {
 
-	//private Main main;
 	private File forgeDir;
 	private File forgeScratch;
 	private File forgeModsIn;
 	private File forgeAssets;
-	//private File forgeModsOut;
 	private JSObject javaApp;
 	private String javaHome = System.getenv("JAVA_HOME");
 
 	public JSFunctions() {
-		//this.main = main;
 		this.javaApp = Main.getInstance().window;
 		this.forgeDir = Main.getInstance().forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
-		//this.forgeModsOut = new File(forgeScratch, "unusedMods");
 	}
 
 	public String saveXML() {

@@ -16,10 +16,10 @@ public class ModManager {
 	public final File forgeModsIn;
 	public final File forgeModsOut;
 
-	public ModManager(Main main)
+	public ModManager()
 	{
 		//this.main = main;
-		this.forgeDir = main.forge_folder;
+		this.forgeDir = Main.getInstance().forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeModsOut = new File(forgeScratch, "unusedMods");
