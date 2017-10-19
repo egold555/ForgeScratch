@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.soundDump;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -139,7 +139,6 @@ public class CommonProxy {
 		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Creature_Name.class, Mcentity_Creature_Name.RAW_NAME, Mcentity_Creature_Name.NAME, Mcentity_Creature_Name.EGG_P, Mcentity_Creature_Name.EGG_S); //BatNew
 
 	}
 
@@ -209,30 +208,6 @@ public class CommonProxy {
 
 	
 /*type:global*/
-
-
-
-
-
-/*type:entity*/
-/*model:BatNew*/
-public static class Mcentity_Creature_Name extends EntityCreature {
-    public static final String RAW_NAME = "Creature Name";
-    public static final String NAME = "Creature_Name";
-    public static final boolean SPAWN_NATURALLY = false;
-    public static final int EGG_P = 0xff0000;
-    public static final int EGG_S = 0x33ff33;
-
-    public Mcentity_Creature_Name(World world){
-        super(world);
-    }
-
-            @Override
-    protected String getDeathSound() {
-        return "ambient.cave";
-    }
-
-}
 
 
 }

@@ -3643,6 +3643,40 @@ Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
   return code;
 };
 
+Blockly.Blocks['mcentityoptions_sound_living'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_sound",
+  "message0": "Living Sound:  %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "SOUND",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_sound_living'] = function(block) {
+  var value_sound = Blockly.Java.valueToCode(block, 'SOUND', Blockly.Java.ORDER_ATOMIC);
+  value_sound = value_sound.replace('(', '');
+  value_sound = value_sound.replace(')', '');
+  var code = 
+  '@Override\n' +
+  'protected String getDeathSound() {\n' + 
+  '    return "' + value_sound + '";\n' + 
+  '}\n';
+  return code;
+};
+
 
 Blockly.Blocks['mcaction_taskdelay'] = {
   
