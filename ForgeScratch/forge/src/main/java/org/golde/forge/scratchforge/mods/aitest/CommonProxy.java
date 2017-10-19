@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.aitest;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -225,12 +225,30 @@ public class CommonProxy {
 
 		public Mcentity_Creature_Name(World world){
 			super(world);
-			//this.tasks.addTask(1, new EntityAISwimming(this));
-	        //this.tasks.addTask(2, new EntityAIRestrictSun(this));
-	        //this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D));
 	        this.tasks.addTask(0, new EntityAIWander(this, 1.0D));
 	        this.tasks.addTask(2, new EntityAILookIdle(this));
 	        this.tasks.addTask(0, new EntityAIPanic(this, 0.70));
+	        this.tasks.addTask(3, new AITest(this));
+		}
+		
+		private class AITest extends EntityAIBase{
+
+			private EntityCreature entity;
+			
+			public AITest(EntityCreature entity) {
+				this.entity = entity;
+			}
+			
+			@Override
+			public boolean shouldExecute() {
+				return true;
+			}
+			
+			@Override
+			public void startExecuting() {
+				entity.setFire(8);
+			}
+			
 		}
 
 		@Override

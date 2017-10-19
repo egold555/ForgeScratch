@@ -5545,3 +5545,36 @@ Blockly.Java['mcrecipe_smelting'] = function(block) {
   '/*END:Recipes*/\n';
   return code;
 };
+
+
+Blockly.Blocks['mcaction_fire_entity'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcaction_fire_entity",
+  "message0": "Set Entity On Fire %1 Seconds: %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "SECONDS",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": "action",
+  "nextStatement": "action",
+  "colour": COLOR_ACTIONS,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcaction_fire_entity'] = function(block) {
+  var value_seconds = Blockly.Java.valueToCode(block, 'SECONDS', Blockly.Java.ORDER_ATOMIC);
+  
+  var code = 'if(variableHolder.entity != null){entity.setFire((int)' + value_seconds + ');}\n';
+  return code;
+};
