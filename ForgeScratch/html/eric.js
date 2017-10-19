@@ -3647,7 +3647,7 @@ Blockly.Blocks['mcentityoptions_sound_living'] = {
   
   init: function() {
     this.jsonInit({
-      "type": "mcentityoptions_sound",
+      "type": "mcentityoptions_sound_living",
   "message0": "Living Sound:  %1",
   "args0": [
     {
@@ -3671,12 +3671,147 @@ Blockly.Java['mcentityoptions_sound_living'] = function(block) {
   value_sound = value_sound.replace(')', '');
   var code = 
   '@Override\n' +
+  'protected String getLivingSound() {\n' + 
+  '    return ' + value_sound + ';\n' + 
+  '}\n';
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_sound_death'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_sound_death",
+  "message0": "Death Sound:  %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "SOUND",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_sound_death'] = function(block) {
+  var value_sound = Blockly.Java.valueToCode(block, 'SOUND', Blockly.Java.ORDER_ATOMIC);
+  value_sound = value_sound.replace('(', '');
+  value_sound = value_sound.replace(')', '');
+  var code = 
+  '@Override\n' +
   'protected String getDeathSound() {\n' + 
   '    return ' + value_sound + ';\n' + 
   '}\n';
   return code;
 };
 
+Blockly.Blocks['mcentityoptions_sound_hurt'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_sound_hurt",
+  "message0": "Hurt Sound:  %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "SOUND",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_sound_hurt'] = function(block) {
+  var value_sound = Blockly.Java.valueToCode(block, 'SOUND', Blockly.Java.ORDER_ATOMIC);
+  value_sound = value_sound.replace('(', '');
+  value_sound = value_sound.replace(')', '');
+  var code = 
+  '@Override\n' +
+  'protected String getHurtSound() {\n' + 
+  '    return ' + value_sound + ';\n' + 
+  '}\n';
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_sound_splash'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_sound_splash",
+  "message0": "Splash Sound:  %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "SOUND",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_sound_splash'] = function(block) {
+  var value_sound = Blockly.Java.valueToCode(block, 'SOUND', Blockly.Java.ORDER_ATOMIC);
+  value_sound = value_sound.replace('(', '');
+  value_sound = value_sound.replace(')', '');
+  var code = 
+  '@Override\n' +
+  'protected String getSplashSound() {\n' + 
+  '    return ' + value_sound + ';\n' + 
+  '}\n';
+  return code;
+};
+
+Blockly.Blocks['mcentityoptions_sound_swim'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_sound_swim",
+  "message0": "Swim Sound:  %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "SOUND",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['mcentityoptions_sound_swim'] = function(block) {
+  var value_sound = Blockly.Java.valueToCode(block, 'SOUND', Blockly.Java.ORDER_ATOMIC);
+  value_sound = value_sound.replace('(', '');
+  value_sound = value_sound.replace(')', '');
+  var code = 
+  '@Override\n' +
+  'protected String getSwimSound() {\n' + 
+  '    return ' + value_sound + ';\n' + 
+  '}\n';
+  return code;
+};
 
 Blockly.Blocks['mcaction_taskdelay'] = {
   
@@ -4064,179 +4199,235 @@ Blockly.Blocks['mcsoundinput'] = {
       "type": "field_dropdown",
       "name": "SOUND",
       "options": [
-        ["ambient.cave", "ambient.cave/13"], 
-        ["ambient.weather.rain", "ambient.weather.rain/4"], 
-        ["ambient.weather.thunder", "ambient.weather.thunder/3"],
-        ["damage.fallbig", "damage.fallbig"],
-        ["damage.fallsmall", "damage.fallsmall"],
-        ["damage.hit", "damage.hit/3"],
-        ["dig.cloth", "dig.cloth/4"],
-        ["dig.grass", "dig.grass/4"],
-        ["dig.gravel", "dig.gravel/4"],
-        ["dig.sand", "dig.sand/4"],
-        ["dig.snow", "dig.snow/4"],
-        ["dig.stone", "dig.stone/4"],
-        ["dig.wood", "dig.wood/4"],
-        ["fire.fire", "fire.fire"],
-        ["fire.ignite", "fire.ignite"],
-        ["fireworks.blast_far1", "fireworks.blast_far1"],
-        ["fireworks.blast1", "fireworks.blast1"],
-        ["fireworks.largeBlast_far1", "fireworks.largeBlast_far1"],
-        ["fireworks.largeBlast1", "fireworks.largeBlast1"],
-        ["fireworks.launch1", "fireworks.launch1"],
-        ["fireworks.twinkle_far1", "fireworks.twinkle_far1"],
-        ["fireworks.twinkle1", "fireworks.twinkle1"],
-        ["liquid.lava", "liquid.lava"],
-        ["liquid.lavapop", "liquid.lavapop"],
-        ["liquid.splash", "liquid.splash/2"],
-        ["liquid.swim", "liquid.swim/4"],
-        ["liquid.water", "liquid.water"],
-        ["minecart.base", "minecart.base"],
-        ["minecart.inside", "minecart.inside"],
-        ["mob.bat.death", "mob.bat.death"],
-        ["mob.bat.hurt", "mob.bat.hurt/4"],
-        ["mob.bat.idle", "mob.bat.idle/4"],
-        ["mob.bat.loop", "mob.bat.loop"],
-        ["mob.bat.takeoff", "mob.bat.takeoff"],
-        ["mob.blaze.breathe", "mob.blaze.breathe/4"],
-        ["mob.blaze.death", "mob.blaze.death"],
-        ["mob.blaze.hit", "mob.blaze.hit/4"],
-        ["mob.cat.hiss", "mob.cat.hiss/3"],
-        ["mob.cat.hitt", "mob.cat.hitt/3"],
-        ["mob.cat.meow", "mob.cat.meow/4"],
-        ["mob.cat.purr", "mob.cat.purr/3"],
-        ["mob.cat.purreow", "mob.cat.purreow/2"],
-        ["mob.chicken.hurt", "mob.chicken.hurt/2"],
-        ["mob.chicken.plop", "mob.chicken.plop"],
-        ["mob.chicken.say", "mob.chicken.say/3"],
-        ["mob.chicken.step", "mob.chicken.step/2"],
-        ["mob.cow.hurt", "mob.cow.hurt/3"],
-        ["mob.cow.say", "mob.cow.say/4"],
-        ["mob.cow.step", "mob.cow.step/4"],
-        ["mob.creeper.death", "mob.creeper.death"],
-        ["mob.creeper.say", "mob.creeper.say/4"],
-        ["mob.enderdragon.end", "mob.enderdragon.end"],
-        ["mob.enderdragon.growl", "mob.enderdragon.growl/4"],
-        ["mob.enderdragon.hit", "mob.enderdragon.hit/4"],
-        ["mob.enderdragon.wings", "mob.enderdragon.wings/6"],
-        ["mob.endermen.death", "mob.endermen.death"],
-        ["mob.endermen.hit", "mob.endermen.hit/4"],
-        ["mob.endermen.idle", "mob.endermen.idle/5"],
-        ["mob.endermen.portal", "mob.endermen.portal/2"],
-        ["mob.endermen.scream", "mob.endermen.scream/4"],
-        ["mob.endermen.stare", "mob.endermen.stare"],
-        ["mob.ghast.affectionate_scream", "mob.ghast.affectionate_scream"],
-        ["mob.ghast.charge", "mob.ghast.charge"],
-        ["mob.ghast.death", "mob.ghast.death"],
-        ["mob.ghast.fireball4", "mob.ghast.fireball4"],
-        ["mob.ghast.moan", "mob.ghast.moan/7"],
-        ["mob.ghast.scream", "mob.ghast.scream/5"],
-        ["mob.irongolem.death", "mob.irongolem.death"],
-        ["mob.irongolem.hit", "mob.irongolem.hit/4"],
-        ["mob.irongolem.throw", "mob.irongolem.throw"],
-        ["mob.irongolem.walk", "mob.irongolem.walk/4"],
-        ["mob.magmacube.big", "mob.magmacube.big/4"],
-        ["mob.magmacube.jump", "mob.magmacube.jump/4"],
-        ["mob.magmacube.small", "mob.magmacube.small/5"],
-        ["mob.pig.death", "mob.pig.death"],
-        ["mob.pig.say", "mob.pig.say/3"],
-        ["mob.pig.step", "mob.pig.step/5"],
-        ["mob.sheep.say", "mob.sheep.say/3"],
-        ["mob.sheep.shear", "mob.sheep.shear"],
-        ["mob.sheep.step", "mob.sheep.step/5"],
-        ["mob.silverfish.hit", "mob.silverfish.hit/3"],
-        ["mob.silverfish.kill", "mob.silverfish.kill"],
-        ["mob.silverfish.say", "mob.silverfish.say/4"],
-        ["mob.silverfish.step", "mob.silverfish.step/4"],
-        ["mob.skeleton.death", "mob.skeleton.death"],
-        ["mob.skeleton.hurt", "mob.skeleton.hurt/4"],
-        ["mob.skeleton.say", "mob.skeleton.say/3"],
-        ["mob.skeleton.step", "mob.skeleton.step/4"],
-        ["mob.slime.attack", "mob.slime.attack/2"],
-        ["mob.slime.big", "mob.slime.big/4"],
-        ["mob.slime.small", "mob.slime.small/5"],
-        ["mob.spider.death", "mob.spider.death"],
-        ["mob.spider.say", "mob.spider.say/4"],
-        ["mob.spider.step", "mob.spider.step/4"],
-        ["mob.villager.death", "mob.villager.death"],
-        ["mob.villager.haggle", "mob.villager.haggle/3"],
-        ["mob.villager.hit", "mob.villager.hit/4"],
-        ["mob.villager.idle", "mob.villager.idle/3"],
-        ["mob.villager.no", "mob.villager.no/3"],
-        ["mob.villager.yes", "mob.villager.yes/3"],
-        ["mob.wither.death", "mob.wither.death"],
-        ["mob.wither.hurt", "mob.wither.hurt/4"],
-        ["mob.wither.idle", "mob.wither.idle/4"],
-        ["mob.wither.shoot", "mob.wither.shoot"],
-        ["mob.wither.spawn", "mob.wither.spawn"],
-        ["mob.wolf.bark", "mob.wolf.bark/3"],
-        ["mob.wolf.death", "mob.wolf.death"],
-        ["mob.wolf.growl", "mob.wolf.growl/3"],
-        ["mob.wolf.howl", "mob.wolf.howl/2"],
-        ["mob.wolf.hurt", "mob.wolf.hurt/3"],
-        ["mob.wolf.panting", "mob.wolf.panting"],
-        ["mob.wolf.shake", "mob.wolf.shake"],
-        ["mob.wolf.step", "mob.wolf.step/5"],
-        ["mob.wolf.whine", "mob.wolf.whine"],
-        ["mob.zombie.death", "mob.zombie.death"],
-        ["mob.zombie.hurt", "mob.zombie.hurt/2"],
-        ["mob.zombie.infect", "mob.zombie.infect"],
-        ["mob.zombie.metal", "mob.zombie.metal/3"],
-        ["mob.zombie.say", "mob.zombie.say/3"],
-        ["mob.zombie.step", "mob.zombie.step/5"],
-        ["mob.zombie.remedy", "mob.zombie.remedy"],
-        ["mob.zombie.unfect", "mob.zombie.unfect"],
-        ["mob.zombie.wood", "mob.zombie.wood/4"],
-        ["mob.zombie.woodbreak", "mob.zombie.woodbreak"],
-        ["mob.zombiepig.zpig", "mob.zombiepig.zpig/4"],
-        ["mob.zombiepig.zpigangry", "mob.zombiepig.zpigangry/4"],
-        ["mob.zombiepig.zpigdeath", "mob.zombiepig.zpigdeath"],
-        ["mob.zombiepig.zpighurt", "mob.zombiepig.zpighurt/2"],
-        ["note.bass", "note.bass"],
-        ["note.bassattack", "note.bassattack"],
-        ["note.bd", "note.bd"],
-        ["note.harp", "note.harp"],
-        ["note.hat", "note.hat"],
-        ["note.pling", "note.pling"],
-        ["note.snare", "note.snare"],
-        ["portal.portal", "portal.portal"],
-        ["portal.travel", "portal.travel"],
-        ["portal.trigger", "portal.trigger"],
-        ["random.anvil_break", "random.anvil_break"],
-        ["random.anvil_land", "random.anvil_land"],
-        ["random.anvil_use", "random.anvil_use"],
-        ["random.bow", "random.bow"],
-        ["random.bowhit", "random.bowhit/4"],
-        ["random.break", "random.break"],
-        ["random.breath", "random.breath"],
-        ["random.burp", "random.burp"],
-        ["random.chestclosed", "random.chestclosed"],
-        ["random.chestopen", "random.chestopen"],
-        ["random.classic_hurt", "random.classic_hurt"],
-        ["random.click", "random.click"],
-        ["random.door_close", "random.door_close"],
-        ["random.door_open", "random.door_open"],
-        ["random.drink", "random.drink"],
-        ["random.eat", "random.eat/3"],
-        ["random.explode", "random.explode/4"],
-        ["random.fizz", "random.fizz"],
-        ["random.fuse", "random.fuse"],
-        ["random.glass", "random.glass/3"],
-        ["random.levelup", "random.levelup"],
-        ["random.orb", "random.orb"],
-        ["random.pop", "random.pop"],
-        ["random.successful_hit", "random.successful_hit"],
-        ["random.wood_click", "random.wood_click"],
-        ["step.cloth", "step.cloth/4"],
-        ["step.grass", "step.grass/6"],
-        ["step.gravel", "step.gravel/4"],
-        ["step.ladder", "step.ladder/5"],
-        ["step.sand", "step.sand/5"],
-        ["step.snow", "step.snow/4"],
-        ["step.stone", "step.stone/6"],
-        ["step.wood", "step.wood/6"],
-        ["tile.piston.in", "tile.piston.in"],
-        ["tile.piston.out", "tile.piston.out"],  
+          [ "ambient.cave.cave", "ambient.cave.cave" ],
+          [ "ambient.weather.rain", "ambient.weather.rain" ],
+          [ "ambient.weather.thunder", "ambient.weather.thunder" ],
+          [ "game.player.hurt.fall.big", "game.player.hurt.fall.big" ],
+          [ "game.player.hurt.fall.small", "game.player.hurt.fall.small" ],
+          [ "game.neutral.hurt.fall.big", "game.neutral.hurt.fall.big" ],
+          [ "game.neutral.hurt.fall.small", "game.neutral.hurt.fall.small" ],
+          [ "game.hostile.hurt.fall.big", "game.hostile.hurt.fall.big" ],
+          [ "game.hostile.hurt.fall.small", "game.hostile.hurt.fall.small" ],
+          [ "game.player.hurt", "game.player.hurt" ],
+          [ "game.neutral.hurt", "game.neutral.hurt" ],
+          [ "game.hostile.hurt", "game.hostile.hurt" ],
+          [ "game.player.die", "game.player.die" ],
+          [ "game.neutral.die", "game.neutral.die" ],
+          [ "game.hostile.die", "game.hostile.die" ],
+          [ "dig.cloth", "dig.cloth" ],
+          [ "dig.grass", "dig.grass" ],
+          [ "dig.gravel", "dig.gravel" ],
+          [ "dig.sand", "dig.sand" ],
+          [ "dig.snow", "dig.snow" ],
+          [ "dig.stone", "dig.stone" ],
+          [ "dig.wood", "dig.wood" ],
+          [ "fire.fire", "fire.fire" ],
+          [ "fire.ignite", "fire.ignite" ],
+          [ "fireworks.blast", "fireworks.blast" ],
+          [ "fireworks.blast_far", "fireworks.blast_far" ],
+          [ "fireworks.largeBlast", "fireworks.largeBlast" ],
+          [ "fireworks.largeBlast_far", "fireworks.largeBlast_far" ],
+          [ "fireworks.launch", "fireworks.launch" ],
+          [ "fireworks.twinkle", "fireworks.twinkle" ],
+          [ "fireworks.twinkle_far", "fireworks.twinkle_far" ],
+          [ "liquid.lava", "liquid.lava" ],
+          [ "liquid.lavapop", "liquid.lavapop" ],
+          [ "game.neutral.swim.splash", "game.neutral.swim.splash" ],
+          [ "game.player.swim.splash", "game.player.swim.splash" ],
+          [ "game.hostile.swim.splash", "game.hostile.swim.splash" ],
+          [ "game.player.swim", "game.player.swim" ],
+          [ "game.neutral.swim", "game.neutral.swim" ],
+          [ "game.hostile.swim", "game.hostile.swim" ],
+          [ "liquid.water", "liquid.water" ],
+          [ "minecart.base", "minecart.base" ],
+          [ "minecart.inside", "minecart.inside" ],
+          [ "mob.bat.death", "mob.bat.death" ],
+          [ "mob.bat.hurt", "mob.bat.hurt" ],
+          [ "mob.bat.idle", "mob.bat.idle" ],
+          [ "mob.bat.loop", "mob.bat.loop" ],
+          [ "mob.bat.takeoff", "mob.bat.takeoff" ],
+          [ "mob.blaze.breathe", "mob.blaze.breathe" ],
+          [ "mob.blaze.death", "mob.blaze.death" ],
+          [ "mob.blaze.hit", "mob.blaze.hit" ],
+          [ "mob.cat.hiss", "mob.cat.hiss" ],
+          [ "mob.cat.hitt", "mob.cat.hitt" ],
+          [ "mob.cat.meow", "mob.cat.meow" ],
+          [ "mob.cat.purr", "mob.cat.purr" ],
+          [ "mob.cat.purreow", "mob.cat.purreow" ],
+          [ "mob.chicken.hurt", "mob.chicken.hurt" ],
+          [ "mob.chicken.plop", "mob.chicken.plop" ],
+          [ "mob.chicken.say", "mob.chicken.say" ],
+          [ "mob.chicken.step", "mob.chicken.step" ],
+          [ "mob.cow.hurt", "mob.cow.hurt" ],
+          [ "mob.cow.say", "mob.cow.say" ],
+          [ "mob.cow.step", "mob.cow.step" ],
+          [ "mob.creeper.death", "mob.creeper.death" ],
+          [ "mob.creeper.say", "mob.creeper.say" ],
+          [ "mob.enderdragon.end", "mob.enderdragon.end" ],
+          [ "mob.enderdragon.growl", "mob.enderdragon.growl" ],
+          [ "mob.enderdragon.hit", "mob.enderdragon.hit" ],
+          [ "mob.enderdragon.wings", "mob.enderdragon.wings" ],
+          [ "mob.endermen.death", "mob.endermen.death" ],
+          [ "mob.endermen.hit", "mob.endermen.hit" ],
+          [ "mob.endermen.idle", "mob.endermen.idle" ],
+          [ "mob.endermen.portal", "mob.endermen.portal" ],
+          [ "mob.endermen.scream", "mob.endermen.scream" ],
+          [ "mob.endermen.stare", "mob.endermen.stare" ],
+          [ "mob.ghast.affectionate_scream", "mob.ghast.affectionate_scream" ],
+          [ "mob.ghast.charge", "mob.ghast.charge" ],
+          [ "mob.ghast.death", "mob.ghast.death" ],
+          [ "mob.ghast.fireball", "mob.ghast.fireball" ],
+          [ "mob.ghast.moan", "mob.ghast.moan" ],
+          [ "mob.ghast.scream", "mob.ghast.scream" ],
+          [ "mob.horse.angry", "mob.horse.angry" ],
+          [ "mob.horse.armor", "mob.horse.armor" ],
+          [ "mob.horse.breathe", "mob.horse.breathe" ],
+          [ "mob.horse.death", "mob.horse.death" ],
+          [ "mob.horse.donkey.angry", "mob.horse.donkey.angry" ],
+          [ "mob.horse.donkey.death", "mob.horse.donkey.death" ],
+          [ "mob.horse.donkey.hit", "mob.horse.donkey.hit" ],
+          [ "mob.horse.donkey.idle", "mob.horse.donkey.idle" ],
+          [ "mob.horse.gallop", "mob.horse.gallop" ],
+          [ "mob.horse.hit", "mob.horse.hit" ],
+          [ "mob.horse.idle", "mob.horse.idle" ],
+          [ "mob.horse.jump", "mob.horse.jump" ],
+          [ "mob.horse.land", "mob.horse.land" ],
+          [ "mob.horse.leather", "mob.horse.leather" ],
+          [ "mob.horse.skeleton.death", "mob.horse.skeleton.death" ],
+          [ "mob.horse.skeleton.hit", "mob.horse.skeleton.hit" ],
+          [ "mob.horse.skeleton.idle", "mob.horse.skeleton.idle" ],
+          [ "mob.horse.soft", "mob.horse.soft" ],
+          [ "mob.horse.wood", "mob.horse.wood" ],
+          [ "mob.horse.zombie.death", "mob.horse.zombie.death" ],
+          [ "mob.horse.zombie.hit", "mob.horse.zombie.hit" ],
+          [ "mob.horse.zombie.idle", "mob.horse.zombie.idle" ],
+          [ "mob.irongolem.death", "mob.irongolem.death" ],
+          [ "mob.irongolem.hit", "mob.irongolem.hit" ],
+          [ "mob.irongolem.throw", "mob.irongolem.throw" ],
+          [ "mob.irongolem.walk", "mob.irongolem.walk" ],
+          [ "mob.magmacube.big", "mob.magmacube.big" ],
+          [ "mob.magmacube.jump", "mob.magmacube.jump" ],
+          [ "mob.magmacube.small", "mob.magmacube.small" ],
+          [ "mob.pig.death", "mob.pig.death" ],
+          [ "mob.pig.say", "mob.pig.say" ],
+          [ "mob.pig.step", "mob.pig.step" ],
+          [ "mob.sheep.say", "mob.sheep.say" ],
+          [ "mob.sheep.shear", "mob.sheep.shear" ],
+          [ "mob.sheep.step", "mob.sheep.step" ],
+          [ "mob.silverfish.hit", "mob.silverfish.hit" ],
+          [ "mob.silverfish.kill", "mob.silverfish.kill" ],
+          [ "mob.silverfish.say", "mob.silverfish.say" ],
+          [ "mob.silverfish.step", "mob.silverfish.step" ],
+          [ "mob.skeleton.death", "mob.skeleton.death" ],
+          [ "mob.skeleton.hurt", "mob.skeleton.hurt" ],
+          [ "mob.skeleton.say", "mob.skeleton.say" ],
+          [ "mob.skeleton.step", "mob.skeleton.step" ],
+          [ "mob.slime.attack", "mob.slime.attack" ],
+          [ "mob.slime.big", "mob.slime.big" ],
+          [ "mob.slime.small", "mob.slime.small" ],
+          [ "mob.spider.death", "mob.spider.death" ],
+          [ "mob.spider.say", "mob.spider.say" ],
+          [ "mob.spider.step", "mob.spider.step" ],
+          [ "mob.villager.death", "mob.villager.death" ],
+          [ "mob.villager.haggle", "mob.villager.haggle" ],
+          [ "mob.villager.hit", "mob.villager.hit" ],
+          [ "mob.villager.idle", "mob.villager.idle" ],
+          [ "mob.villager.no", "mob.villager.no" ],
+          [ "mob.villager.yes", "mob.villager.yes" ],
+          [ "mob.wither.death", "mob.wither.death" ],
+          [ "mob.wither.hurt", "mob.wither.hurt" ],
+          [ "mob.wither.idle", "mob.wither.idle" ],
+          [ "mob.wither.shoot", "mob.wither.shoot" ],
+          [ "mob.wither.spawn", "mob.wither.spawn" ],
+          [ "mob.wolf.bark", "mob.wolf.bark" ],
+          [ "mob.wolf.death", "mob.wolf.death" ],
+          [ "mob.wolf.growl", "mob.wolf.growl" ],
+          [ "mob.wolf.howl", "mob.wolf.howl" ],
+          [ "mob.wolf.hurt", "mob.wolf.hurt" ],
+          [ "mob.wolf.panting", "mob.wolf.panting" ],
+          [ "mob.wolf.shake", "mob.wolf.shake" ],
+          [ "mob.wolf.step", "mob.wolf.step" ],
+          [ "mob.wolf.whine", "mob.wolf.whine" ],
+          [ "mob.zombie.death", "mob.zombie.death" ],
+          [ "mob.zombie.hurt", "mob.zombie.hurt" ],
+          [ "mob.zombie.infect", "mob.zombie.infect" ],
+          [ "mob.zombie.metal", "mob.zombie.metal" ],
+          [ "mob.zombie.remedy", "mob.zombie.remedy" ],
+          [ "mob.zombie.say", "mob.zombie.say" ],
+          [ "mob.zombie.step", "mob.zombie.step" ],
+          [ "mob.zombie.unfect", "mob.zombie.unfect" ],
+          [ "mob.zombie.wood", "mob.zombie.wood" ],
+          [ "mob.zombie.woodbreak", "mob.zombie.woodbreak" ],
+          [ "mob.zombiepig.zpig", "mob.zombiepig.zpig" ],
+          [ "mob.zombiepig.zpigangry", "mob.zombiepig.zpigangry" ],
+          [ "mob.zombiepig.zpigdeath", "mob.zombiepig.zpigdeath" ],
+          [ "mob.zombiepig.zpighurt", "mob.zombiepig.zpighurt" ],
+          [ "note.bass", "note.bass" ],
+          [ "note.bassattack", "note.bassattack" ],
+          [ "note.bd", "note.bd" ],
+          [ "note.harp", "note.harp" ],
+          [ "note.hat", "note.hat" ],
+          [ "note.pling", "note.pling" ],
+          [ "note.snare", "note.snare" ],
+          [ "portal.portal", "portal.portal" ],
+          [ "portal.travel", "portal.travel" ],
+          [ "portal.trigger", "portal.trigger" ],
+          [ "random.anvil_break", "random.anvil_break" ],
+          [ "random.anvil_land", "random.anvil_land" ],
+          [ "random.anvil_use", "random.anvil_use" ],
+          [ "random.bow", "random.bow" ],
+          [ "random.bowhit", "random.bowhit" ],
+          [ "random.break", "random.break" ],
+          [ "random.burp", "random.burp" ],
+          [ "random.chestclosed", "random.chestclosed" ],
+          [ "random.chestopen", "random.chestopen" ],
+          [ "gui.button.press", "gui.button.press" ],
+          [ "random.click", "random.click" ],
+          [ "random.door_close", "random.door_close" ],
+          [ "random.door_open", "random.door_open" ],
+          [ "random.drink", "random.drink" ],
+          [ "random.eat", "random.eat" ],
+          [ "random.explode", "random.explode" ],
+          [ "random.fizz", "random.fizz" ],
+          [ "game.tnt.primed", "game.tnt.primed" ],
+          [ "creeper.primed", "creeper.primed" ],
+          [ "dig.glass", "dig.glass" ],
+          [ "game.potion.smash", "game.potion.smash" ],
+          [ "random.levelup", "random.levelup" ],
+          [ "random.orb", "random.orb" ],
+          [ "random.pop", "random.pop" ],
+          [ "random.splash", "random.splash" ],
+          [ "random.successful_hit", "random.successful_hit" ],
+          [ "random.wood_click", "random.wood_click" ],
+          [ "records.11", "records.11" ],
+          [ "records.13", "records.13" ],
+          [ "records.blocks", "records.blocks" ],
+          [ "records.cat", "records.cat" ],
+          [ "records.chirp", "records.chirp" ],
+          [ "records.far", "records.far" ],
+          [ "records.mall", "records.mall" ],
+          [ "records.mellohi", "records.mellohi" ],
+          [ "records.stal", "records.stal" ],
+          [ "records.strad", "records.strad" ],
+          [ "records.wait", "records.wait" ],
+          [ "records.ward", "records.ward" ],
+          [ "step.cloth", "step.cloth" ],
+          [ "step.grass", "step.grass" ],
+          [ "step.gravel", "step.gravel" ],
+          [ "step.ladder", "step.ladder" ],
+          [ "step.sand", "step.sand" ],
+          [ "step.snow", "step.snow" ],
+          [ "step.stone", "step.stone" ],
+          [ "step.wood", "step.wood" ],
+          [ "tile.piston.in", "tile.piston.in" ],
+          [ "tile.piston.out", "tile.piston.out" ],
+          [ "music.menu", "music.menu" ],
+          [ "music.game", "music.game" ],
+          [ "music.game.creative", "music.game.creative" ],
+          [ "music.game.end", "music.game.end" ],
+          [ "music.game.end.dragon", "music.game.end.dragon" ],
+          [ "music.game.end.credits", "music.game.end.credits" ],
+          [ "music.game.nether", "music.game.nether" ] 
       ]
     }
   ],
@@ -4250,17 +4441,7 @@ Blockly.Blocks['mcsoundinput'] = {
 
 Blockly.Java['mcsoundinput'] = function(block) {
   var dropdown_item = block.getFieldValue('SOUND');
-  var code = dropdown_item;
-  var slash = dropdown_item.indexOf('/');
-  if(slash > 0){
-    var afterSlash = code.substring(slash + 1, code.length);
-    code = code.substring(0, slash);
-    code = '"' + code + '." + ';
-    code = code + '(JavaHelpers.RANDOM.nextInt(' + afterSlash + ') + 1)';
-  }
-  else{
-    code = '"' + code + '"';
-  }
+  var code = '"' + dropdown_item + '"';
   
   return [code, Blockly.Java.ORDER_NONE];
 };
