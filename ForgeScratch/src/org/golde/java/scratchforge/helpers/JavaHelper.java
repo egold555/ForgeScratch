@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JTree;
@@ -38,6 +39,8 @@ import org.golde.java.scratchforge.JSFunctions.EnumToast;
  */
 public class JavaHelper {
 
+	public static final Random RANDOM = new Random();
+	
 	//Opens up a cmd prompt and executes commands. 
 	public static void runCMD(File dir, String cmd) throws Exception {
 		Process p = Runtime.getRuntime().exec("cmd.exe /c cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" /wait cmd.exe /c \"" + cmd + "\"");

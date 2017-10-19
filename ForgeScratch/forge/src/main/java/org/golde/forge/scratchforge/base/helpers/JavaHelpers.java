@@ -7,11 +7,14 @@ import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class JavaHelpers {
 
+	public static final Random RANDOM = new Random();
+	
 	public static Field getField(Class<?> clazz, String fieldName) throws RuntimeException{
 		Class<?> tmpClass = clazz;
 		do {

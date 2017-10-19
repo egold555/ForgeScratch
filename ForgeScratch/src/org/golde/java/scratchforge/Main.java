@@ -128,7 +128,6 @@ public class Main implements ActionListener, KeyListener{
 			PLog.error(e, "Failed to set look and feel");;
 		}
 
-
 		//Offline mode to prevent gradlew from erroring
 		offlineMode = !JavaHelper.isConnectedToTheInternet();
 		if(offlineMode) {PLog.info("Offline mode detected.");}

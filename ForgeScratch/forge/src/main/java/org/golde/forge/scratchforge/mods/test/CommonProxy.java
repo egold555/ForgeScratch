@@ -229,7 +229,7 @@ public static class Mcentity_Creature_Name extends EntityCreature {
 
             @Override
     protected String getDeathSound() {
-        return "ambient.cave";
+        return "ambient.cave." + (JavaHelpers.RANDOM.nextInt(13 + 1));
     }
 
 }
