@@ -14,8 +14,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import org.golde.scratchforge.installer.Main;
-
 public class JavaHelpers {
 
 	public static void downloadZip(String urlSite, File file) throws Exception{
@@ -37,63 +35,76 @@ public class JavaHelpers {
 		}
 		output.flush();
 	}
-	
+
 	public static void extractFolder(File zipFile, File to) throws ZipException, IOException 
 	{
-	    int BUFFER = 2048;
+		int BUFFER = 2048;
 
-	    ZipFile zip = new ZipFile(zipFile);
-	    to.mkdir();
-	    Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
+		ZipFile zip = new ZipFile(zipFile);
+		to.mkdir();
+		Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 
-	    // Process each entry
-	    while (zipFileEntries.hasMoreElements())
-	    {
-	        // grab a zip file entry
-	        ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
-	        String currentEntry = entry.getName();
-	        File destFile = new File(to, currentEntry);
-	        //destFile = new File(newPath, destFile.getName());
-	        File destinationParent = destFile.getParentFile();
+		// Process each entry
+		while (zipFileEntries.hasMoreElements())
+		{
+			// grab a zip file entry
+			ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+			String currentEntry = entry.getName();
+			File destFile = new File(to, currentEntry);
+			//destFile = new File(newPath, destFile.getName());
+			File destinationParent = destFile.getParentFile();
 
-	        // create the parent directory structure if needed
-	        destinationParent.mkdirs();
+			// create the parent directory structure if needed
+			destinationParent.mkdirs();
 
-	        if (!entry.isDirectory())
-	        {
-	            BufferedInputStream is = new BufferedInputStream(zip
-	            .getInputStream(entry));
-	            int currentByte;
-	            // establish buffer for writing file
-	            byte data[] = new byte[BUFFER];
+			if (!entry.isDirectory())
+			{
+				BufferedInputStream is = new BufferedInputStream(zip
+						.getInputStream(entry));
+				int currentByte;
+				// establish buffer for writing file
+				byte data[] = new byte[BUFFER];
 
-	            // write the current file to disk
-	            FileOutputStream fos = new FileOutputStream(destFile);
-	            BufferedOutputStream dest = new BufferedOutputStream(fos,
-	            BUFFER);
+				// write the current file to disk
+				FileOutputStream fos = new FileOutputStream(destFile);
+				BufferedOutputStream dest = new BufferedOutputStream(fos,
+						BUFFER);
 
-	            // read and write until last byte is encountered
-	            while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
-	                dest.write(data, 0, currentByte);
-	            }
-	            dest.flush();
-	            dest.close();
-	            is.close();
-	        }
+				// read and write until last byte is encountered
+				while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+					dest.write(data, 0, currentByte);
+				}
+				dest.flush();
+				dest.close();
+				is.close();
+			}
 
-	        if (currentEntry.endsWith(".zip"))
-	        {
-	            // found a zip file, try to open
-	            extractFolder(destFile, to);
-	        }
-	        
-	    }
-	    zip.close();
+			if (currentEntry.endsWith(".zip"))
+			{
+				// found a zip file, try to open
+				extractFolder(destFile, to);
+			}
+
+		}
+		zip.close();
 	}
 
 	//Opens up a cmd prompt and executes commands. 
 	public static Process runCMD(File dir, String cmd, boolean keepOpen) throws Exception {
 		return Runtime.getRuntime().exec("cmd.exe /" + (keepOpen ? "k" : "c") + " cd \"" + dir.getAbsolutePath() + "\" & " + cmd);
-	}	
+	}
+
+	public static void deleteDirectory(File dir) { 
+		if (dir.isDirectory()) { 
+			File[] children = dir.listFiles(); 
+			for (int i = 0; i < children.length; i++) { 
+				deleteDirectory(children[i]); 
+			} 
+		} 
+		// either file or an empty directory 
+		if(!dir.getName().toLowerCase().endsWith(".blockmod")) {
+			dir.delete(); 
+		}
+	}
 
 }

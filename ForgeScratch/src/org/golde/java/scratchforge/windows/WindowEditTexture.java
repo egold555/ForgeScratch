@@ -63,7 +63,7 @@ public class WindowEditTexture extends JFrame {
 								PLog.error(e1, "Failed to create texture");
 							}
 						} 
-						JavaHelper.openFileWithDefaultProgram(texture.getFile());
+						JavaHelper.editFileWithDefaultProgram(texture.getFile());
 					}
 				}
 			}

@@ -116,11 +116,11 @@ public class JavaHelper {
 		return false;
 	}
 
-	public static void openFileWithDefaultProgram(File file) {
+	public static void editFileWithDefaultProgram(File file) {
 		try {
-			Desktop.getDesktop().open(file);
+			Desktop.getDesktop().edit(file);
 		} catch (Exception e) {
-			PLog.error(e, "Failed to open file!");
+			PLog.error(e, "Failed to edit file!");
 		}
 	}
 	

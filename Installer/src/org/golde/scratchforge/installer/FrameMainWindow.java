@@ -21,7 +21,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.golde.scratchforge.installer.helpers.JavaHelpers;
-import org.golde.scratchforge.installer.helpers.PLog;
 
 public class FrameMainWindow extends JPanel{
 
@@ -34,7 +33,7 @@ public class FrameMainWindow extends JPanel{
 
 	public FrameMainWindow() throws URISyntaxException {
 
-		installerRunDirectory = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+		installerRunDirectory = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
 
 		setPreferredSize(new Dimension(404, 236));
 		setLayout(null);
@@ -131,17 +130,29 @@ public class FrameMainWindow extends JPanel{
 
 
 	private void install() {
-		//Copy Zip
-
-		//PLog.info("JAR: " + installerRunDirectory.getAbsolutePath());
+		
+		installerRunDirectory = new File(installerRunDirectory, "ScratchForge");
+		
+		if(installerRunDirectory.exists()) {
+			if(!installerRunDirectory.isDirectory()) {
+				//User has file named ScratchForge
+				installFailed("It looks like you have a file named ScratchForge. To prevent data lose, we have canceled the installation. Please install to another directory.");
+				return;
+			}
+			printText("Removing old version...");
+			JavaHelpers.deleteDirectory(installerRunDirectory);
+			printText("Deleted old version!");
+		}
+		installerRunDirectory.mkdirs();
 
 		printText("Downloading zip...");
 		
 		try {
-			JavaHelpers.downloadZip("http://web.golde.org/temp/testzip/" + Main.SF_VERSION + ".zip", new File(installerRunDirectory, DATA_ZIP_NAME));
+			JavaHelpers.downloadZip("http://scratchforge.golde.org/downloads/assets/" + Main.SF_VERSION + ".zip", new File(installerRunDirectory, DATA_ZIP_NAME));
 		}
 		catch(Exception e) {
-			PLog.error(e, "Failed to download ZIP!");
+			installFailed("Failed to download zip: " + e.getMessage());
+			e.printStackTrace();
 			return;
 		}
 		printText("Downloaded!");
@@ -151,17 +162,18 @@ public class FrameMainWindow extends JPanel{
 		//Unzip file
 		printText("Extracting zip...");
 		try {
-			JavaHelpers.extractFolder(dataZip, new File(installerRunDirectory, "ScratchForge"));
+			JavaHelpers.extractFolder(dataZip, installerRunDirectory);
 		}
 		catch(Exception e) {
-			PLog.error(e, "Failed to unzip ZIP file!");
+			installFailed("Failed to extract zip: " + e.getMessage());
+			e.printStackTrace();
 			return;
 		}
 		printText("Extracted!");
 		
 		printText("Deleting temp zip...");
 		if(!dataZip.delete()) {
-			PLog.error("Failed to delete " + DATA_ZIP_NAME);
+			installFailed("Failed to delete " + DATA_ZIP_NAME);
 		}
 		printText("Deleted temp zip.");
 		
@@ -171,17 +183,16 @@ public class FrameMainWindow extends JPanel{
 		//	gradlew eclipse
 		try {
 			String line;
-			Process p = JavaHelpers.runCMD(new File(new File(installerRunDirectory, "ScratchForge"), "forge"), "echo Running gradlew setupDevWorkspace... & gradlew setupDevWorkspace & echo Running gradlew eclipse... & gradlew eclipse", false);
+			Process p = JavaHelpers.runCMD(new File(installerRunDirectory, "forge"), "echo Running gradlew setupDevWorkspace... & gradlew setupDevWorkspace & echo Running gradlew eclipse... & gradlew eclipse", false);
 			BufferedReader bri = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = bri.readLine()) != null) {
-				PLog.info(line);
 				printText(line);
 			}
 			bri.close();
 			p.waitFor();
 		}
 		catch(Exception e) {
-			PLog.error(e, "Failed to run gradlew command line!");
+			installFailed("Failed to run gradlew command line: " + e.getMessage());
 			return;
 		}
 
@@ -189,6 +200,11 @@ public class FrameMainWindow extends JPanel{
 		printText("Finished.");
 		JOptionPane.showMessageDialog(this, "Successfully installed ScratchForge v" + Main.SF_VERSION + "!", "Success!", JOptionPane.INFORMATION_MESSAGE);
 		
+	}
+	
+	private void installFailed(String message) {
+		printText("Installed finished with errors.");
+		JOptionPane.showMessageDialog(this, "Failed to install ScratchForge v" + Main.SF_VERSION + "! " + message, "Failed to install!", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void printText(String message) {
