@@ -8,6 +8,7 @@ $clickable_tabs = array(
 	'Explore' => 'explore.php'*/
 	);
 
-$currentVersion = 1.0;
+$version = "1.0";
+$versionDownload = "downloads/ScratchForge-".$version."-Release.jar"
 
 ?>

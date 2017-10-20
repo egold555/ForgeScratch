@@ -1,6 +1,6 @@
 <?php 
 $page_title = "Downloads";
-$page_css = "explore-page";
+$page_css = "downloads-page";
 include("include/header.php");
 ?>
 
@@ -14,7 +14,8 @@ include("include/header.php");
     closedir($handle);
   }
 ?>
-<h1>List of files:</h1>
+
+<h3>Downloads: </h3>
 <ul><?php echo $thelist; ?></ul>
 
 <?php include("include/footer.php");?>

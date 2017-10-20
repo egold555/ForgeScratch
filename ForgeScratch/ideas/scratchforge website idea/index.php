@@ -12,9 +12,9 @@ include("include/header.php");
             <hr class="intro-divider">
             <ul class="list-inline intro-social-buttons">
                 <li class="list-inline-item">
-                    <a href="#" class="btn btn-secondary btn-lg">
+                    <a href="<?php echo $versionDownload ?>" class="btn btn-secondary btn-lg">
                 <i class="fa fa-download" aria-hidden="true"></i>
-                <span class="network-name">Download</span>
+                <span class="network-name">Download v<?php echo $version ?></span>
               </a>
                 </li>
                 <li class="list-inline-item">

@@ -21,6 +21,7 @@
         <p class="copyright text-muted small">Copyright &copy; Eric Golde 2017.
             <br style="clear:both" />All Rights Reserved</p>
     </div>
+    <br>
 </footer>
 <!-- Bootstrap core JavaScript -->
 <script src="js/jquery.min.js"></script>
