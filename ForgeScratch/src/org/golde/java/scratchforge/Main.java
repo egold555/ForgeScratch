@@ -171,7 +171,7 @@ public class Main implements ActionListener, KeyListener{
 		menuBar.add(fileMenu);
 
 		//Make the menu button "Examples" and add elements to it
-		JMenu exampleMenu = new JMenu("Examples");
+		/*JMenu exampleMenu = new JMenu("Examples");
 		File examplesDir = new File("examples");
 		for(File f:JavaHelper.listFoldersInFolder(examplesDir)) {
 			JMenuItem category = new JMenu(f.getName());
@@ -186,8 +186,8 @@ public class Main implements ActionListener, KeyListener{
 
 
 
-		menuBar.add(exampleMenu);
-
+		menuBar.add(exampleMenu); //TODO Make examples
+		 */
 		//Make the menu button "Options" and add elements to it
 		JMenu mOptionsMenu = new JMenu("Options");
 
@@ -222,7 +222,7 @@ public class Main implements ActionListener, KeyListener{
 		Platform.runLater(() -> {
 			fxPanel.setScene(createScene());
 		});
-		
+
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
 
 		startupDialog();
