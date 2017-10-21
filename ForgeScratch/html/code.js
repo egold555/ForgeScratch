@@ -518,6 +518,10 @@ function sendJavaError(error){
   java_app.displayFSError(error);
 }
 
+function callOnLoad(){
+  java_app.callOnLoad();
+}
+
 
 var TOAST_ERROR_PROGRAM = 0;
 var TOAST_ERROR_BLOCKS = 1;
@@ -531,7 +535,7 @@ function sendToast(type, message){
     case TOAST_ERROR_BLOCKS: toastr.error(message, "Code Error"); break;
     case TOAST_SUCCESS: toastr.success(message, "Success"); break;
     case TOAST_WARNING: toastr.warning(message, "Warning"); break;
-    case TOAST_UPDATE: toastr.info(message, "Update Avaiable"); break;
+    case TOAST_UPDATE: toastr.info(message, "Update Avaiable", {onclick: function() {console.log('you clicked on the info toaster n.1')}}); break;
     case TOAST_UPDATE: toastr.info(message, "Info"); break;
   }
   

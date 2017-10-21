@@ -509,5 +509,16 @@ public class Main implements ActionListener, KeyListener{
 	public static Main getInstance() {
 		return INSTANCE;
 	}
+	
+	String updateAvaiable = null;
+	void checkForUpdates() {
+		jsFunctions.showToast(EnumToast.UPDATE, "An update is avaiable");
+	}
+	
+	public void downloadUpdate() {
+		if(updateAvaiable != null) {
+			
+		}
+	}
 
 }
