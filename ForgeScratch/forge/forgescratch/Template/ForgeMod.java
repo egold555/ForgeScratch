@@ -103,7 +103,7 @@ import io.netty.channel.*;
 public class ForgeMod implements IWorldGenerator{
     
 	public static final String MOD_NAME = "/*Mod Template*/";
-	public static final String MOD_ID = "sf_" + MOD_NAME;
+	public static final String MOD_ID = "sf_/*Mod Package*/";
 	public static final String BLOCK_ID = MOD_ID + ":";
     public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods./*Mod Package*/";
     

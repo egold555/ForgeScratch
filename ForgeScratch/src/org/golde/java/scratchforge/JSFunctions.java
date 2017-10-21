@@ -164,7 +164,6 @@ public class JSFunctions {
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
-
 			fileToReplace = fileToReplace.replace("/*Mod Template*/", Main.getInstance().MOD_NAME);
 
 

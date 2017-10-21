@@ -88,8 +88,9 @@ public class FrameMainWindow extends JPanel{
 				//Install Program
 				printText("Checking java 8...");
 				String JAVA_HOME = checkJDK();
-				if(JAVA_HOME != null) {
-					JOptionPane.showMessageDialog(null, "No JDK found. Your JAVA_HOME variable points to: " + JAVA_HOME + "\nPlease install java JDK > 1.8", "JDK Checker", JOptionPane.ERROR_MESSAGE);
+				printText("JAVA_HOME = " + JAVA_HOME);
+				if(JAVA_HOME == null) {
+					JOptionPane.showMessageDialog(null, "No JDK found. \nPlease install java JDK > 1.8 and set your JAVA_HOME variable. \nInstructions located here: http://example.com/", "JDK Checker", JOptionPane.ERROR_MESSAGE);
 					System.exit(-1);
 					return;
 				}
@@ -122,13 +123,13 @@ public class FrameMainWindow extends JPanel{
 	}
 
 	private String checkJDK() {
-		String JAVA_HOME = System.getenv("JAVA_HOME");
-		if(JAVA_HOME.contains("jdk1.8")) {
-			return null;
-		}
-		else {
-			return JAVA_HOME;
-		}
+			String JAVA_HOME = System.getenv("JAVA_HOME");
+			if(JAVA_HOME == null || !JAVA_HOME.contains("jdk1.8")) {
+				return null;
+			}
+			else {
+				return JAVA_HOME;
+			}	
 	}
 
 

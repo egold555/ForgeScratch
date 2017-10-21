@@ -11,7 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
-@Mod(modid = ForgeModScratchForge.MOD_ID, name=ForgeModScratchForge.MOD_NAME, version="1.0")
+@Mod(modid = ForgeModScratchForge.MOD_ID, name=ForgeModScratchForge.MOD_NAME, version="1.0", canBeDeactivated=false)
 public class ForgeModScratchForge {
 	public static final String MOD_NAME = "ScratchForge";
 	public static final String MOD_ID = MOD_NAME;

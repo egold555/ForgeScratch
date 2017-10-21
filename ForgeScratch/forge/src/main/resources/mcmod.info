@@ -1,8 +1,8 @@
 [
 {
-  "modid": "fs",
-  "name": "Forge Scratch Developer Kit",
-  "description": "The base mod for ForgeScratch",
+  "modid": "ScratchForge",
+  "name": "ScratchForge Developer Kit",
+  "description": "The base mod for ScratchForge",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

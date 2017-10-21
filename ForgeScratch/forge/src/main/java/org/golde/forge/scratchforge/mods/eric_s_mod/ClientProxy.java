@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
+package org.golde.forge.scratchforge.mods.eric_s_mod;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
