@@ -4,14 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ScratchForge Official Website">
+    <meta name="description" content="A simple, intuitive, and friendly UI allow for kids and teens alike to create Minecraft mods with no Java knowledge.">
     <meta name="author" content="Eric Golde">
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $page_dir; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $page_dir; ?>css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="css/all.css" rel="stylesheet">
-    <link href="css/<?php echo $page_css; ?>.css" rel="stylesheet">
+    <link href="<?php echo $page_dir; ?>css/all.css" rel="stylesheet">
+    <link href="<?php echo $page_dir; ?>css/<?php echo $page_css; ?>.css" rel="stylesheet">
     <title>
         <?php echo $page_title; ?> - ScratchForge</title>
 </head>

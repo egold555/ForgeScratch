@@ -24,10 +24,10 @@
     <br>
 </footer>
 <!-- Bootstrap core JavaScript -->
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/landing.js"></script>
+<script src="<?php echo $page_dir; ?>js/jquery.min.js"></script>
+<script src="<?php echo $page_dir; ?>js/popper.min.js"></script>
+<script src="<?php echo $page_dir; ?>js/bootstrap.min.js"></script>
+<script src="<?php echo $page_dir; ?>js/landing.js"></script>
 </body>
 
 </html>

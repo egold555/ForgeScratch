@@ -1,7 +1,8 @@
 <?php 
 $page_title = "Explore";
 $page_css = "explore-page";
-include("include/header.php");
+$page_dir = "../";
+include("../include/header.php");
 ?>
 <!-- Page Content -->
 <div class="container">
@@ -124,4 +125,4 @@ include("include/header.php");
     </ul>
 </div>
 <!-- /.container -->
-<?php include("include/footer.php");?>
+<?php include("../include/footer.php");?>
