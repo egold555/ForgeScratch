@@ -19,8 +19,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileSystemView;
 
 import org.golde.scratchforge.installer.helpers.JavaHelpers;
+import org.golde.scratchforge.installer.helpers.OS;
+
+import mslinks.ShellLink;
 
 public class FrameMainWindow extends JPanel{
 
@@ -96,22 +100,22 @@ public class FrameMainWindow extends JPanel{
 						System.exit(0);
 					}
 				}.start();
-				
-				
+
+
 			}
 		});
 		btnInstall.setBounds(158, 198, 97, 25);
 		add(btnInstall);
-		
+
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setBounds(49, 168, 332, 55);
 		textArea.setVisible(false);
-		
+
 		scroll = new JScrollPane(textArea);
-	    scroll.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	    scroll.setBounds(21, 28, 360, 195);
-	    scroll.setVisible(false);
+		scroll.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(21, 28, 360, 195);
+		scroll.setVisible(false);
 		add(scroll);
 
 
@@ -130,9 +134,9 @@ public class FrameMainWindow extends JPanel{
 
 
 	private void install() {
-		
+
 		installerRunDirectory = new File(installerRunDirectory, "ScratchForge");
-		
+
 		if(installerRunDirectory.exists()) {
 			if(!installerRunDirectory.isDirectory()) {
 				//User has file named ScratchForge
@@ -146,7 +150,7 @@ public class FrameMainWindow extends JPanel{
 		installerRunDirectory.mkdirs();
 
 		printText("Downloading zip...");
-		
+
 		try {
 			JavaHelpers.downloadZip("http://scratchforge.golde.org/downloads/assets/" + Main.SF_VERSION + ".zip", new File(installerRunDirectory, DATA_ZIP_NAME));
 		}
@@ -170,13 +174,13 @@ public class FrameMainWindow extends JPanel{
 			return;
 		}
 		printText("Extracted!");
-		
+
 		printText("Deleting temp zip...");
 		if(!dataZip.delete()) {
 			installFailed("Failed to delete " + DATA_ZIP_NAME);
 		}
 		printText("Deleted temp zip.");
-		
+
 		printText("Starting MCP...");
 		//Run cmd and see if fail -> output context to installer log?
 		//	gradlew decompile
@@ -196,27 +200,39 @@ public class FrameMainWindow extends JPanel{
 			return;
 		}
 
+		//Create Desktop Icon
+		if(OS.isWindows()){
+			try {
+				ShellLink sl = ShellLink.createLink(new File(installerRunDirectory, "ScratchForge.jar").getAbsolutePath());
+				sl.setIconLocation(new File(installerRunDirectory, "icon.ico").getAbsolutePath());
+				sl.saveTo(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath() + "\\ScratchForge.lnk");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		//Finish
 		printText("Finished.");
 		JOptionPane.showMessageDialog(this, "Successfully installed ScratchForge v" + Main.SF_VERSION + "!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-		
+
 	}
-	
+
 	private void installFailed(String message) {
 		printText("Installed finished with errors.");
 		JOptionPane.showMessageDialog(this, "Failed to install ScratchForge v" + Main.SF_VERSION + "! " + message, "Failed to install!", JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void printText(String message) {
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				textArea.setText(textArea.getText() + "\n" + message);
 			}
-			
+
 		});
-	     
+
 	}
 }

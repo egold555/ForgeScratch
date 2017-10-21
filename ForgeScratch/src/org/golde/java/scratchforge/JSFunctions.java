@@ -374,14 +374,6 @@ public class JSFunctions {
 	public void log(String msg) {
 		PLog.info("[JS] " + msg);
 	}
-	
-	public void downloadUpdate() { //Just a callback so I can have functions in the same class
-		Main.getInstance().downloadUpdate();
-	}
-	
-	public void callOnLoad() {
-		Main.getInstance().checkForUpdates();
-	}
 
 	public void displayFSError(String msg) {
 		log("[FS-Error] " + msg);
@@ -399,5 +391,7 @@ public class JSFunctions {
 	public void showToast(EnumToast type, String message) {
 		javaApp.call("sendToast", type.id, message);
 	}
+	
+	
 
 }

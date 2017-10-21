@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -40,9 +41,9 @@ import org.golde.java.scratchforge.JSFunctions.EnumToast;
 public class JavaHelper {
 
 	public static final Random RANDOM = new Random();
-	
+
 	//Opens up a cmd prompt and executes commands. 
-	public static void runCMD(File dir, String cmd) throws Exception {
+	public static void runCMD(File dir, String cmd) throws Exception { //TODO: MAC
 		Process p = Runtime.getRuntime().exec("cmd.exe /c cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" /wait cmd.exe /c \"" + cmd + "\"");
 		//Main.getInstance().jsFunctions.showToast(EnumToast.INFO, "Minecraft is now running. Please close Minecraft to continue.");
 		p.waitFor();
@@ -123,7 +124,7 @@ public class JavaHelper {
 			PLog.error(e, "Failed to edit file!");
 		}
 	}
-	
+
 	/*public static String base64EncodeImage(BufferedImage image) {
 		String imageString = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -139,7 +140,7 @@ public class JavaHelper {
 		}
 		return imageString;
 	}*/
-	
+
 	public static String base64EncodeFile(File file) {
 		String imageString = null;
 		try {
@@ -154,7 +155,7 @@ public class JavaHelper {
 	public static String base64Encode(byte[] toEncode) {
 		return Base64.getEncoder().encodeToString(toEncode);
 	}
-	
+
 	public static void base64DecodeFile(String data, File file)
 	{
 		try {
@@ -177,12 +178,12 @@ public class JavaHelper {
 	        }
 	        return image;
 	}*/
-	
+
 	public static byte[] base64Decode(String data) {
 		return Base64.getDecoder().decode(data);
 	}
-	
-	
+
+
 
 	public static String makeJavaId(String name) {
 		String result = "";
@@ -297,14 +298,14 @@ public class JavaHelper {
 			model.removeNodeFromParent(node);
 		}
 	}
-	
+
 	public static boolean isConnectedToTheInternet() {
 		try {
 			URL obj = new URL("http://google.com/");
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", "Mozilla/5.0");
-			
+
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(con.getInputStream()));
 			String inputLine;
@@ -314,29 +315,47 @@ public class JavaHelper {
 				response.append(inputLine);
 			}
 			in.close();
-			
+
 			return true;
-			
+
 		}
 		catch(Exception e) {
 			return false;
 		}
 	}
-	
+
 	public static InputStream stringToInputStream(String s) throws UnsupportedEncodingException {
 		return new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8.name()));
 	}
-	
+
 	public static boolean doesFileContainString(File file, String toFind) throws FileNotFoundException {
 		Scanner scanner = new Scanner(file);
-	    while (scanner.hasNextLine()) {
-	        String line = scanner.nextLine();
-	        if(line.contains(toFind)) { 
-	            scanner.close();
-	        	return true;
-	        }
-	    }
-	    scanner.close();
-	    return false;
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if(line.contains(toFind)) { 
+				scanner.close();
+				return true;
+			}
+		}
+		scanner.close();
+		return false;
+	}
+
+	public static String readResponceFromUrl(String url) throws Exception {
+		URL website = new URL(url);
+		URLConnection connection = website.openConnection();
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(
+						connection.getInputStream()));
+
+		StringBuilder response = new StringBuilder();
+		String inputLine;
+
+		while ((inputLine = in.readLine()) != null) 
+			response.append(inputLine);
+
+		in.close();
+
+		return response.toString();
 	}
 }

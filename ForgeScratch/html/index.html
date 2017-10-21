@@ -23,7 +23,7 @@
   <script src="code.js"></script>
   <script src="jquery.min.js"></script>
   <script src="toastr.min.js"></script>
-  <link rel="stylesheet" href="toastr.min.css">
+  <link rel="stylesheet" href="toastr.css">
 
   <script>
     $(window).on('load', function(){
@@ -33,6 +33,11 @@
       $("#overlay").delay(500).fadeOut(1600, function(){
         $(this).remove();
       });
+
+      //Configure toasts
+      toastr.options.timeOut = 0;
+      toastr.options.extendedTimeOut = 0;
+      toastr.options.closeButton = true;
     });
   </script>
 

@@ -3,6 +3,7 @@ package org.golde.java.scratchforge;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -58,7 +60,7 @@ public class Main implements ActionListener, KeyListener{
 	public final String VERSION = "1.0";
 
 	private static Main INSTANCE;
-	
+
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
 
@@ -220,6 +222,8 @@ public class Main implements ActionListener, KeyListener{
 		Platform.runLater(() -> {
 			fxPanel.setScene(createScene());
 		});
+		
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
 
 		startupDialog();
 	}
@@ -246,31 +250,33 @@ public class Main implements ActionListener, KeyListener{
 					public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
 						if (newState == Worker.State.SUCCEEDED) {
 
-
 							// web page is loaded.
 							window = (JSObject) webEngine.executeScript("window");
 							jsFunctions = new JSFunctions();
 							window.setMember("java_app", jsFunctions);
-
+							Platform.runLater(() -> {
+								PLog.info("Checking updates...");
+								checkUpdate();
+							});
 						}
 
 
 					}
 				});
 
-		
+
 		// Open new windows in a new WebView.
 		webEngine.setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
 
-	        @Override
-	        public WebEngine call(PopupFeatures p) {
-	            Stage stage = new Stage(StageStyle.UTILITY);
-	            WebView wv2 = new WebView();
-	            stage.setScene(new Scene(wv2));
-	            stage.show();
-	            return wv2.getEngine();
-	        }
-	    });
+			@Override
+			public WebEngine call(PopupFeatures p) {
+				Stage stage = new Stage(StageStyle.UTILITY);
+				WebView wv2 = new WebView();
+				stage.setScene(new Scene(wv2));
+				stage.show();
+				return wv2.getEngine();
+			}
+		});
 
 		webEngine.load(f.toURI().toString());
 		root.getChildren().add(webView);
@@ -497,7 +503,7 @@ public class Main implements ActionListener, KeyListener{
 					createMod(false);
 				}
 			}
-			
+
 		});
 	}
 
@@ -505,19 +511,32 @@ public class Main implements ActionListener, KeyListener{
 	public void keyTyped(KeyEvent e) {
 
 	}
-	
+
 	public static Main getInstance() {
 		return INSTANCE;
 	}
-	
-	String updateAvaiable = null;
-	void checkForUpdates() {
-		jsFunctions.showToast(EnumToast.UPDATE, "An update is avaiable");
+
+	private String hasUpdate = null;
+	public void checkUpdate() {
+		try {
+			String officialVersion = JavaHelper.readResponceFromUrl("http://scratchforge.golde.org/version.php");
+			String officialVersionDownload = JavaHelper.readResponceFromUrl("http://scratchforge.golde.org/version.php?dl=1");
+			if(JavaHelper.isStringEmpty(officialVersion) || !officialVersion.contains(".")) {return;} //Should not ever happen but you never know
+			if(!Main.getInstance().VERSION.equals(officialVersion)) {
+				//Update avaiable
+				hasUpdate = officialVersionDownload;
+				jsFunctions.showToast(EnumToast.UPDATE, "Update " + officialVersion + " is avaiable to download. Click me to download and install the update.");
+			}
+		} 
+		catch (Exception e) {
+			PLog.error(e, "Failed to check for updates!");
+			jsFunctions.showToast(EnumToast.ERROR_PROGRAM, "Failed to check for updates! Error code: " + e.getMessage());
+		}
 	}
-	
-	public void downloadUpdate() {
-		if(updateAvaiable != null) {
-			
+
+	public void downloadUpdate() { 
+		if(hasUpdate != null) {
+
 		}
 	}
 
