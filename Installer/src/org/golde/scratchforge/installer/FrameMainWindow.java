@@ -127,9 +127,10 @@ public class FrameMainWindow extends JPanel{
 			if(JAVA_HOME == null || !JAVA_HOME.contains("jdk1.8")) {
 				return null;
 			}
-			else {
-				return JAVA_HOME;
-			}	
+			if(!new File(JAVA_HOME).exists() || !new File(JAVA_HOME).isDirectory()) {
+				return null;
+			}
+			return JAVA_HOME;
 	}
 
 
