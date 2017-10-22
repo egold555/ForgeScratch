@@ -147,12 +147,9 @@ Blockly.Java.INLINEVARCLASS = true;
  */
 Blockly.Java.classes_ = [];
 /**
- * List of global variables to be generated.  NO LONGER USED
+ * List of global variables to be generated.
  */
 Blockly.Java.globals_ = {};
-
-// Global variables.
-Blockly.Java.globalVariables_ = {};
 /**
  * Target Blockly type to generate code for (if any) 
  */
@@ -261,14 +258,11 @@ Blockly.Java.getInterfaces = function() {
  * @param {string} val Initializer value for the gloabl
  */
 Blockly.Java.setGlobalVar = function(block,name,val) {
-  /*
-   There doesn't seem to be an equivalent for getLocalContext any more.
   if (Blockly.Variables.getLocalContext(block,name) == null &&
       (typeof this.globals_[name] === 'undefined' ||
         this.globals_[name] === null)) {
     this.globals_[name] = val;
   }
-  */
 };
 /**
  * Get the Java type of a variable by name
@@ -1139,10 +1133,9 @@ Blockly.Java.init = function(workspace, imports) {
   }
 
   var defvars = [];
-  //Blockly.VariableTypeEquivalence['Colour'] = ['String'];
-  var variables = workspace.getAllVariables();   //Blockly.Variables.allVariables(workspace);
-  this.globalVariables_ = workspace.getAllVariables();
-  this.blocklyTypes_ = workspace.getVariableTypes(); //Blockly.Variables.allVariablesTypes(workspace);
+  Blockly.VariableTypeEquivalence['Colour'] = ['String'];
+  var variables = Blockly.Variables.allVariables(workspace);
+  this.blocklyTypes_ = Blockly.Variables.allVariablesTypes(workspace);
   // Make sure all the type variables are pushed.  This is because we
   // Don't return the special function parameters in the allVariables list
   for(var name in this.blocklyTypes_) {
@@ -1187,15 +1180,12 @@ Blockly.Java.finish = function(code) {
   // and get the statics and then the non-statics to output.
   var allDefs = '';
 
-  for (var i = 0; i < this.globalVariables_.length; i++) {
-  //for(var def in this.globalVariables_) {
-    var def = this.globalVariables_[i].name;
+  for(var def in this.globals_) {
     var initializer = '';
     var type = this.GetVariableType(def);
-    /*if (this.globals_[def] != null && this.globals_[def] !== '') {
+    if (this.globals_[def] != null && this.globals_[def] !== '') {
       initializer = ' = ' + this.globals_[def];
-    } else */
-    if (type === 'Var') {
+    } else if (type === 'Var') {
       initializer = ' = new Var(0)';
     } else if (type === 'Boolean') {
       initializer = ' = false';
