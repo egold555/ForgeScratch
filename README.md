@@ -1,6 +1,8 @@
 # ForgeScratch
-A program to create 1.7.10 Minecraft mods using scratch like blocks.
+A simple, intuitive, and friendly UI allow for kids and teens alike to create Minecraft mods with no Java knowledge.
 
-Requires Java 8
+######Requires Java 8
 
-(Yes I know I need a better readme!)
+[[Website]](http://scratchforge.golde.org/)
+[[In-progress Wiki]](https://github.com/egold555/ForgeScratch/wiki)
+[[Report bugs]]( https://github.com/egold555/ForgeScratch/issues)
