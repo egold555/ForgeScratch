@@ -90,7 +90,7 @@ public class FrameMainWindow extends JPanel{
 				String JAVA_HOME = checkJDK();
 				printText("JAVA_HOME = " + JAVA_HOME);
 				if(JAVA_HOME == null) {
-					JOptionPane.showMessageDialog(null, "No JDK found. \nPlease install java JDK > 1.8 and set your JAVA_HOME variable. \nInstructions located here: http://example.com/", "JDK Checker", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No JDK found. \nPlease install java JDK > 1.8 and set your JAVA_HOME variable. \nInstructions located here: http://scratchforge.golde.org/help/", "JDK Checker", JOptionPane.ERROR_MESSAGE);
 					System.exit(-1);
 					return;
 				}
