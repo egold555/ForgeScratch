@@ -388,21 +388,7 @@ Code.init = function() {
     // Lazy-load the syntax-highlighting.
     window.setTimeout(Code.importPrettify, 1);
 
-    function onchange(event) {
-      console.log("EVENT: " + event);
-      /*if(event.type == Blockly.Events.UI){
-        console.log("UI")
-      }*/
-      /*console.log("  - Type: " + event.type);
-      console.log("  - Element: " + event.element);
-      console.log("  - Old: " + event.oldValue);
-      console.log("  - New: " + event.newValue);
-      console.log("  - ID: " + event.varId);*/
-      console.log(" ");
-      
-    }
-
-    Code.workspace.addChangeListener(onchange);
+   
 
 };
 
