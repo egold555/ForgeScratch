@@ -1,4 +1,4 @@
-# ForgeScratch
+# ScratchForge
 A simple, intuitive, and friendly UI allow for kids and teens alike to create Minecraft mods with no Java knowledge.
 
 **Requires Java 8 and JDK**
@@ -7,4 +7,4 @@ A simple, intuitive, and friendly UI allow for kids and teens alike to create Mi
 [[Releases]](http://scratchforge.golde.org/downloads)
 [[In-progress Wiki]](https://github.com/egold555/ForgeScratch/wiki)
 [[Report bugs]](https://github.com/egold555/ForgeScratch/issues)
-[[Feedback]] (https://goo.gl/forms/q88Uey3RhMDKOPl42)
+[[Feedback]](https://goo.gl/forms/q88Uey3RhMDKOPl42)
