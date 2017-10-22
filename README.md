@@ -6,4 +6,5 @@ A simple, intuitive, and friendly UI allow for kids and teens alike to create Mi
 [[Website]](http://scratchforge.golde.org/)
 [[Releases]](http://scratchforge.golde.org/downloads)
 [[In-progress Wiki]](https://github.com/egold555/ForgeScratch/wiki)
-[[Report bugs]]( https://github.com/egold555/ForgeScratch/issues)
+[[Report bugs]](https://github.com/egold555/ForgeScratch/issues)
+[[Feedback]] (https://goo.gl/forms/q88Uey3RhMDKOPl42)
