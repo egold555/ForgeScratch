@@ -300,7 +300,7 @@
 
     <sep></sep>
   
-    <category id="catLogic" colour="210">
+    <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
@@ -309,7 +309,7 @@
       <block type="logic_null"></block>
       <block type="logic_ternary"></block>
     </category>
-    <category id="catLoops" colour="120">
+    <category name="%{BKY_CATLOOPS}" colour="%{BKY_LOOPS_HUE}">
       <block type="controls_repeat_ext">
         <value name="TIMES">
           <shadow type="math_number">
@@ -338,7 +338,7 @@
       <block type="controls_forEach"></block>
       <block type="controls_flow_statements"></block>
     </category>
-    <category id="catMath" colour="230">
+    <category name="%{BKY_CATMATH}" colour="%{BKY_MATH_HUE}">
       <block type="math_number"></block>
       <block type="math_arithmetic">
         <value name="A">
@@ -371,13 +371,6 @@
         <value name="NUMBER_TO_CHECK">
           <shadow type="math_number">
             <field name="NUM">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="math_change">
-        <value name="DELTA">
-          <shadow type="math_number">
-            <field name="NUM">1</field>
           </shadow>
         </value>
       </block>
@@ -432,7 +425,7 @@
       </block>
       <block type="math_random_float"></block>
     </category>
-    <category id="catText" colour="160">
+    <category name="%{BKY_CATTEXT}" colour="%{BKY_TEXTS_HUE}">
       <block type="text"></block>
       <block type="text_join"></block>
       <block type="text_append">
@@ -457,7 +450,7 @@
       <block type="text_indexOf">
         <value name="VALUE">
           <block type="variables_get">
-            <field name="VAR">text</field>
+            <field name="VAR">{textVariable}</field>
           </block>
         </value>
         <value name="FIND">
@@ -469,14 +462,14 @@
       <block type="text_charAt">
         <value name="VALUE">
           <block type="variables_get">
-            <field name="VAR">text</field>
+            <field name="VAR">{textVariable}</field>
           </block>
         </value>
       </block>
       <block type="text_getSubstring">
         <value name="STRING">
           <block type="variables_get">
-            <field name="VAR">text</field>
+            <field name="VAR">{textVariable}</field>
           </block>
         </value>
       </block>
@@ -494,13 +487,13 @@
           </shadow>
         </value>
       </block>
-      <!-- <block type="text_print">
+      <block type="text_print">
         <value name="TEXT">
           <shadow type="text">
             <field name="TEXT">abc</field>
           </shadow>
         </value>
-      </block> -->
+      </block>
       <block type="text_prompt_ext">
         <value name="TEXT">
           <shadow type="text">
@@ -508,9 +501,8 @@
           </shadow>
         </value>
       </block>
-      <block type="text_comment"></block>
     </category>
-    <category id="catLists" colour="260">
+    <category name="%{BKY_CATLISTS}" colour="%{BKY_LISTS_HUE}">
       <block type="lists_create_with">
         <mutation items="0"></mutation>
       </block>
@@ -527,28 +519,28 @@
       <block type="lists_indexOf">
         <value name="VALUE">
           <block type="variables_get">
-            <field name="VAR">list</field>
+            <field name="VAR">{listVariable}</field>
           </block>
         </value>
       </block>
       <block type="lists_getIndex">
         <value name="VALUE">
           <block type="variables_get">
-            <field name="VAR">list</field>
+            <field name="VAR">{listVariable}</field>
           </block>
         </value>
       </block>
       <block type="lists_setIndex">
         <value name="LIST">
           <block type="variables_get">
-            <field name="VAR">list</field>
+            <field name="VAR">{listVariable}</field>
           </block>
         </value>
       </block>
       <block type="lists_getSublist">
         <value name="LIST">
           <block type="variables_get">
-            <field name="VAR">list</field>
+            <field name="VAR">{listVariable}</field>
           </block>
         </value>
       </block>
@@ -559,8 +551,9 @@
           </shadow>
         </value>
       </block>
+      <block type="lists_sort"></block>
     </category>
-    <!-- <category id="catColour" colour="20">
+    <!-- <category name="%{BKY_CATCOLOUR}" colour="%{BKY_COLOUR_HUE}">
       <block type="colour_picker"></block>
       <block type="colour_random"></block>
       <block type="colour_rgb">
@@ -598,9 +591,9 @@
         </value>
       </block>
     </category> -->
-    <!-- <sep></sep>-->
-    <category id="catVariables" colour="330" custom="VARIABLE"></category>
-    <!--<category id="catFunctions" colour="290" custom="PROCEDURE"></category> -->
+    <!-- <sep></sep> -->
+    <category name="%{BKY_CATVARIABLES}" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
+    <category name="%{BKY_CATFUNCTIONS}" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"></category>
   </xml>
 
 </body>

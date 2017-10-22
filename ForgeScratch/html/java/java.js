@@ -1133,9 +1133,9 @@ Blockly.Java.init = function(workspace, imports) {
   }
 
   var defvars = [];
-  Blockly.VariableTypeEquivalence['Colour'] = ['String'];
-  var variables = Blockly.Variables.allVariables(workspace);
-  this.blocklyTypes_ = Blockly.Variables.allVariablesTypes(workspace);
+  //Blockly.VariableTypeEquivalence['Colour'] = ['String'];
+  var variables = workspace.getAllVariables();   //Blockly.Variables.allVariables(workspace);
+  this.blocklyTypes_ = workspace.getVariableTypes(); //Blockly.Variables.allVariablesTypes(workspace);
   // Make sure all the type variables are pushed.  This is because we
   // Don't return the special function parameters in the allVariables list
   for(var name in this.blocklyTypes_) {
