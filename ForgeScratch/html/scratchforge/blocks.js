@@ -2180,7 +2180,7 @@ Blockly.Blocks['mcitemactions_nbt_hastag'] = {
 
 Blockly.Java['mcitemactions_nbt_hastag'] = function(block) {
     var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-    var code = 'variableHolder.nbt.hasKey(' + value_tag + ')';
+    var code = 'variableHolder.nbt.'+ MCVERSION["nbtHasKey"] +'(' + value_tag + ')';
     return [code, Blockly.Java.ORDER_NONE];
 };
 
@@ -2216,7 +2216,7 @@ Blockly.Blocks['mcitemactions_nbt_setnumber'] = {
 Blockly.Java['mcitemactions_nbt_setnumber'] = function(block) {
     var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
     var value_value = Blockly.Java.valueToCode(block, 'VALUE', Blockly.Java.ORDER_ATOMIC);
-    var code = 'variableHolder.nbt.setDouble(' + value_tag + ', ' + value_value + ');\n';
+    var code = 'variableHolder.nbt.'+ MCVERSION["nbtSetDouble"] +'(' + value_tag + ', ' + value_value + ');\n';
     return code;
 };
 
@@ -2253,7 +2253,7 @@ Blockly.Java['mcitemactions_nbt_setstring'] = function(block) {
     var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
     var value_value = Blockly.Java.valueToCode(block, 'VALUE', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'variableHolder.nbt.setString(' + value_tag + ', ' + value_value + ');\n';
+    var code = 'variableHolder.nbt.'+ MCVERSION["nbtSetString"] +'(' + value_tag + ', ' + value_value + ');\n';
     return code;
 };
 
@@ -2278,7 +2278,7 @@ Blockly.Blocks['mcitemactions_nbt_getstring'] = {
 
 Blockly.Java['mcitemactions_nbt_getstring'] = function(block) {
     var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
-    var code = '(itemstack.getTagCompound() != null ? itemstack.getTagCompound().getString(' + value_tag + ') : "")';
+    var code = '(itemstack.'+ MCVERSION["itemstackGetTag"] +'() != null ? itemstack.'+ MCVERSION["itemstackGetTag"] +'().'+ MCVERSION["nbtGetString"] +'(' + value_tag + ') : "")';
     return [code, Blockly.Java.ORDER_NONE];
 };
 
@@ -2304,7 +2304,7 @@ Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
 Blockly.Java['mcitemactions_nbt_getnumber'] = function(block) {
     var value_tag = Blockly.Java.valueToCode(block, 'TAG', Blockly.Java.ORDER_ATOMIC);
     //var code = 'itemstack.getTagCompound().getDouble(' + value_tag + ')';
-    var code = '(itemstack.getTagCompound() != null ? itemstack.getTagCompound().getDouble(' + value_tag + ') : 0)';
+    var code = '(itemstack.'+ MCVERSION["itemstackGetTag"] +'() != null ? itemstack.'+ MCVERSION["itemstackGetTag"] +'().'+ MCVERSION["nbtGetDouble"] +'(' + value_tag + ') : 0)';
     return [code, Blockly.Java.ORDER_NONE];
 };
 
@@ -2323,7 +2323,7 @@ Blockly.Blocks['location_player_x'] = {
 };
 
 Blockly.Java['location_player_x'] = function(block) {
-    return ['player.posX', Blockly.Java.ORDER_NONE];
+    return ['player.'+ MCVERSION["playerX"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2343,7 +2343,7 @@ Blockly.Blocks['location_player_y'] = {
 };
 
 Blockly.Java['location_player_y'] = function(block) {
-    return ['player.posY', Blockly.Java.ORDER_NONE];
+    return ['player.'+ MCVERSION["playerY"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2363,7 +2363,7 @@ Blockly.Blocks['location_player_z'] = {
 };
 
 Blockly.Java['location_player_z'] = function(block) {
-    return ['player.posZ', Blockly.Java.ORDER_NONE];
+    return ['player.'+ MCVERSION["playerZ"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2383,7 +2383,7 @@ Blockly.Blocks['location_entity_x'] = {
 };
 
 Blockly.Java['location_entity_x'] = function(block) {
-    return ['variableHolder.entity.posX', Blockly.Java.ORDER_NONE];
+    return ['variableHolder.entity.'+ MCVERSION["entityX"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2403,7 +2403,7 @@ Blockly.Blocks['location_entity_y'] = {
 };
 
 Blockly.Java['location_entity_y'] = function(block) {
-    return ['variableHolder.entity.posY', Blockly.Java.ORDER_NONE];
+    return ['variableHolder.entity'+ MCVERSION["entityY"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2423,7 +2423,7 @@ Blockly.Blocks['location_entity_z'] = {
 };
 
 Blockly.Java['location_entity_z'] = function(block) {
-    return ['variableHolder.entity.posZ', Blockly.Java.ORDER_NONE];
+    return ['variableHolder.entity.'+ MCVERSION["entityZ"], Blockly.Java.ORDER_NONE];
 };
 
 
@@ -2514,7 +2514,7 @@ Blockly.Blocks['mcaction_giveitem'] = {
 Blockly.Java['mcaction_giveitem'] = function(block) {
     var value_item = Blockly.Java.valueToCode(block, 'ITEM', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(player != null){player.inventory.addItemStackToInventory(new ItemStack' + value_item + ');}\n';
+    var code = 'if(player != null){player.inventory.'+ MCVERSION["playerAddItem"] +'(new ItemStack' + value_item + ');}\n';
     return code;
 };
 
@@ -2559,7 +2559,7 @@ Blockly.Java['mcaction_lightning'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.addWeatherEffect((new EntityLightningBolt(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ')));\n';
+    var code = 'world.'+ MCVERSION["addWeatherEffect"] +'((new EntityLightningBolt(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ')));\n';
     return code;
 };
 
@@ -2627,7 +2627,7 @@ Blockly.Java['mcaction_chat'] = function(block) {
     var value_msg = Blockly.Java.valueToCode(block, 'MSG', Blockly.Java.ORDER_ATOMIC);
 
     var code =
-        'if(player != null) {player.addChatMessage(new ChatComponentText(' + value_msg + '));}\n';
+        'if(player != null) {player.'+ MCVERSION["playerAddChatMessage"] + '(new '+ MCVERSION["chatComponentText"] + '(' + value_msg + '));}\n';
     return code;
 };
 
@@ -2679,7 +2679,7 @@ Blockly.Java['mcaction_placeblock'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', 0, 3);\n';
+    var code = 'world.'+ MCVERSION["worldSetBlock"] +'((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', 0, 3);\n';
     return code;
 };
 
@@ -2739,7 +2739,7 @@ Blockly.Java['mcaction_placeblockmeta'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.setBlock((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', (int)' + value_meta + ', 3);\n';
+    var code = 'world.'+ MCVERSION["worldSetBlockMeta"] +'((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + value_block + ', (int)' + value_meta + ', 3);\n';
     return code;
 };
 
@@ -2796,7 +2796,7 @@ Blockly.Java['mcaction_breakblock'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.func_147480_a((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + checkbox_drop + ');\n';
+    var code = 'world.'+ MCVERSION["worldBreakBlock"] +'((int)' + value_loc_x + ', (int)' + value_loc_y + ', (int)' + value_loc_z + ', ' + checkbox_drop + ');\n';
     return code;
 };
 
@@ -2843,7 +2843,7 @@ Blockly.Java['mcaction_velocity_player'] = function(block) {
     var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
     var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(player != null){player.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z + '); player.velocityChanged = true;}\n';
+    var code = 'if(player != null){player.'+ MCVERSION["playerVelocity"] + '(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z + '); player.velocityChanged = true;}\n';
     return code;
 };
 
@@ -2887,7 +2887,7 @@ Blockly.Java['mcaction_velocity_entity'] = function(block) {
     var value_vel_y = Blockly.Java.valueToCode(block, 'VEL_Y', Blockly.Java.ORDER_ATOMIC);
     var value_vel_z = Blockly.Java.valueToCode(block, 'VEL_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(variableHolder.entity != null){variableHolder.entity.setVelocity(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z + '); variableHolder.entity.velocityChanged = true;}\n';
+    var code = 'if(variableHolder.entity != null){variableHolder.entity.'+ MCVERSION["entityVelocity"] + '(' + value_vel_x + ', ' + value_vel_y + ', ' + value_vel_z + '); variableHolder.entity.velocityChanged = true;}\n';
     return code;
 };
 
@@ -2933,7 +2933,7 @@ Blockly.Java['mcaction_teleport_player'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(player != null){player.setPositionAndUpdate(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');}\n';
+    var code = 'if(player != null){player.'+ MCVERSION["playerTeleport"] + '(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');}\n';
     return code;
 };
 
@@ -2980,7 +2980,7 @@ Blockly.Java['mcaction_teleport_entity'] = function(block) {
     var value_loc_y = Blockly.Java.valueToCode(block, 'LOC_Y', Blockly.Java.ORDER_ATOMIC);
     var value_loc_z = Blockly.Java.valueToCode(block, 'LOC_Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(variableHolder.entity != null){(variableHolder.entity.setPositionAndUpdate(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');}\n';
+    var code = 'if(variableHolder.entity != null){(variableHolder.entity.'+ MCVERSION["entityTeleport"] + '(' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ');}\n';
     return code;
 };
 
@@ -3090,14 +3090,14 @@ Blockly.Java['mcaction_firework'] = function(block) {
     var dropdown_type = block.getFieldValue('TYPE');
     var value_color = Blockly.Java.valueToCode(block, 'COLOR', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.spawnEntityInWorld(ModHelpers.getFirework(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', ' + checkbox_flicker + ', ' + checkbox_trail + ', ' + value_color + ', ' + dropdown_type + ', ' + value_power + '));\n';
+    var code = 'world.'+ MCVERSION["worldSpawnEntity"] +'(ModHelpers.getFirework(world, ' + value_loc_x + ', ' + value_loc_y + ', ' + value_loc_z + ', ' + checkbox_flicker + ', ' + checkbox_trail + ', ' + value_color + ', ' + dropdown_type + ', ' + value_power + '));\n';
     return code;
 };
 
 
 
 
-
+//Stay the same
 Blockly.Blocks['mcvariable_color_chat'] = {
     init: function() {
 
@@ -3120,9 +3120,7 @@ Blockly.Java['mcvariable_color_chat'] = function(block) {
     return [code, Blockly.Java.ORDER_NONE];
 };
 
-
-
-
+//These should stay the same
 Blockly.Blocks['mcvariable_color_fireworks'] = {
 
     init: function() {
@@ -3182,8 +3180,8 @@ Blockly.Java['mcaction_rename_entity'] = function(block) {
 
     var code =
         'if(variableHolder.entity != null){\n' +
-        '    variableHolder.entity.setCustomNameTag(' + value_name + ');\n' +
-        '    variableHolder.entity.setAlwaysRenderNameTag(true);\n' +
+        '    variableHolder.entity.'+ MCVERSION["entitySetNametag"] + '(' + value_name + ');\n' +
+        '    variableHolder.entity.'+ MCVERSION["entityRenderNametag"] + '(true);\n' +
         '}\n';
     return code;
 };
@@ -3214,7 +3212,7 @@ Blockly.Blocks['mcaction_sethealth_entity'] = {
 Blockly.Java['mcaction_sethealth_entity'] = function(block) {
     var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(variableHolder.entity != null){variableHolder.entity.setHealth(' + value_health + 'f);}\n';
+    var code = 'if(variableHolder.entity != null){variableHolder.entity.'+ MCVERSION["entitySetHealth"] + '(' + value_health + 'f);}\n';
     return code;
 };
 
@@ -3243,13 +3241,13 @@ Blockly.Blocks['mcaction_sethealth_player'] = {
 Blockly.Java['mcaction_sethealth_player'] = function(block) {
     var value_health = Blockly.Java.valueToCode(block, 'HEALTH', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'if(player != null){player.setHealth(' + value_health + 'f);}\n';
+    var code = 'if(player != null){player.'+ MCVERSION["playerSetHealth"] + '(' + value_health + 'f);}\n';
     return code;
 };
 
 
 
-
+//TODO ?
 Blockly.Blocks['mcentity'] = {
 
     init: function() {
@@ -3450,7 +3448,7 @@ Blockly.Blocks['mcentity'] = {
 };
 
 
-
+//TODO
 Blockly.Java['mcentity'] = function(block) {
     var value_name = make_java_id(block.getFieldValue('NAME'));
     var raw_value_name = block.getFieldValue('NAME');
@@ -3527,6 +3525,7 @@ Blockly.Blocks['mcentityoptions_modelscale'] = {
     }
 };
 
+//TODO
 Blockly.Java['mcentityoptions_modelscale'] = function(block) {
     var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
     var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
@@ -3570,6 +3569,7 @@ Blockly.Blocks['mcentityoptions_modeltranslate'] = {
     }
 };
 
+//TODO
 Blockly.Java['mcentityoptions_modeltranslate'] = function(block) {
     var value_x = Blockly.Java.valueToCode(block, 'X', Blockly.Java.ORDER_ATOMIC);
     var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
@@ -3605,7 +3605,7 @@ Blockly.Java['mcentityoptions_sound_living'] = function(block) {
     value_sound = value_sound.replace(')', '');
     var code =
         '@Override\n' +
-        'protected String getLivingSound() {\n' +
+        'protected String '+ MCVERSION["entityLivingSound"] + '() {\n' +
         '    return ' + value_sound + ';\n' +
         '}\n';
     return code;
@@ -3637,7 +3637,7 @@ Blockly.Java['mcentityoptions_sound_death'] = function(block) {
     value_sound = value_sound.replace(')', '');
     var code =
         '@Override\n' +
-        'protected String getDeathSound() {\n' +
+        'protected String '+ MCVERSION["entityDeathSound"] +'() {\n' +
         '    return ' + value_sound + ';\n' +
         '}\n';
     return code;
@@ -3669,7 +3669,7 @@ Blockly.Java['mcentityoptions_sound_hurt'] = function(block) {
     value_sound = value_sound.replace(')', '');
     var code =
         '@Override\n' +
-        'protected String getHurtSound() {\n' +
+        'protected String '+ MCVERSION["entityHurtSound"] + '() {\n' +
         '    return ' + value_sound + ';\n' +
         '}\n';
     return code;
@@ -3701,7 +3701,7 @@ Blockly.Java['mcentityoptions_sound_splash'] = function(block) {
     value_sound = value_sound.replace(')', '');
     var code =
         '@Override\n' +
-        'protected String getSplashSound() {\n' +
+        'protected String '+ MCVERSION["entitySplashSound"] + '() {\n' +
         '    return ' + value_sound + ';\n' +
         '}\n';
     return code;
@@ -3733,7 +3733,7 @@ Blockly.Java['mcentityoptions_sound_swim'] = function(block) {
     value_sound = value_sound.replace(')', '');
     var code =
         '@Override\n' +
-        'protected String getSwimSound() {\n' +
+        'protected String '+ MCVERSION["entitySwimSound"] + '() {\n' +
         '    return ' + value_sound + ';\n' +
         '}\n';
     return code;
@@ -3820,6 +3820,7 @@ Blockly.Blocks['mccommand'] = {
     }
 };
 
+//TODO
 Blockly.Java['mccommand'] = function(block) {
     var value_name = make_java_id(block.getFieldValue('COMMAND'));
     //var text_command = block.getFieldValue('COMMAND');
@@ -3846,7 +3847,7 @@ Blockly.Java['mccommand'] = function(block) {
 };
 
 
-
+//Hopefully particles stay the same between versions
 Blockly.Blocks['mcaction_particle'] = {
 
     init: function() {
@@ -4034,7 +4035,7 @@ Blockly.Java['mcaction_particle'] = function(block) {
     var value_y = Blockly.Java.valueToCode(block, 'Y', Blockly.Java.ORDER_ATOMIC);
     var value_z = Blockly.Java.valueToCode(block, 'Z', Blockly.Java.ORDER_ATOMIC);
 
-    var code = 'world.spawnParticle("' + dropdown_particle + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', 0.0f, 0.0f, 0.0f);\n';
+    var code = 'world.' + MCVERSION[""] + '("' + dropdown_particle + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', 0.0f, 0.0f, 0.0f);\n';
     return code;
 };
 
@@ -4093,6 +4094,7 @@ Blockly.Blocks['mcaction_httprequest'] = {
     }
 };
 
+//Never changes between versions cause I wrote the function
 Blockly.Java['mcaction_httprequest'] = function(block) {
     var text_url = block.getFieldValue('URL');
     var dropdown_request_type = block.getFieldValue('REQUEST_TYPE');
@@ -4107,7 +4109,7 @@ Blockly.Java['mcaction_httprequest'] = function(block) {
     return code;
 };
 
-
+//Keep 1.7.10 sounds cause they should work in any version (Lets hope so)
 Blockly.Blocks['mcsoundinput'] = {
 
     init: function() {
@@ -4381,7 +4383,7 @@ Blockly.Blocks['mcevent_cancel'] = {
 };
 
 Blockly.Java['mcevent_cancel'] = function(block) {
-    var code = 'if(event.isCancelable()) {event.setCanceled(true);}else {PLog.warning("Attempted to cancel a uncancelable event!");}\n';
+    var code = 'if(event'+ MCVERSION["eventIsCancleable"] + '() {event.'+ MCVERSION["eventSetCanceled"] + '(true);}else {PLog.warning("Attempted to cancel a uncancelable event!");}\n';
     return code;
 };
 
@@ -4418,7 +4420,7 @@ Blockly.Java['mcevent_itempickup'] = function(block) {
         '/*BEGIN:ItemPickupEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void itemPickupEvent(ItemPickupEvent event) {\n' +
+        'public void itemPickupEvent('+ MCVERSION["eventItemPickup"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4462,7 +4464,7 @@ Blockly.Java['mcevent_itemcraft'] = function(block) {
         '/*BEGIN:ItemCraftedEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void itemCraftedEvent(ItemCraftedEvent event) {\n' +
+        'public void itemCraftedEvent('+ MCVERSION["eventItemCraft"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4506,7 +4508,7 @@ Blockly.Java['mcevent_itemsmelt'] = function(block) {
         '/*BEGIN:ItemSmeltedEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void itemSmeltedEvent(ItemSmeltedEvent event) {\n' +
+        'public void itemSmeltedEvent('+ MCVERSION["eventItemSmelt"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4550,7 +4552,7 @@ Blockly.Java['mcevent_playerjoin'] = function(block) {
         '/*BEGIN:PlayerLoggedInEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerLoggedInEvent(PlayerLoggedInEvent event) {\n' +
+        'public void playerLoggedInEvent('+ MCVERSION["eventPlayerJoin"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4594,7 +4596,7 @@ Blockly.Java['mcevent_playerleave'] = function(block) {
         '/*BEGIN:PlayerLoggedOutEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerLoggedOutEvent(PlayerLoggedOutEvent event) {\n' +
+        'public void playerLoggedOutEvent('+ MCVERSION["eventPlayerLogOut"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
