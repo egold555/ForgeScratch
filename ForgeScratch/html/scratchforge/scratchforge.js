@@ -388,7 +388,7 @@ Code.init = function() {
     // Lazy-load the syntax-highlighting.
     window.setTimeout(Code.importPrettify, 1);
 
-   
+  
 
 };
 

@@ -4638,7 +4638,7 @@ Blockly.Java['mcevent_playerrespawn'] = function(block) {
         '/*BEGIN:PlayerRespawnEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerRespawnEvent(PlayerRespawnEvent event) {\n' +
+        'public void playerRespawnEvent('+ MCVERSION["eventPlayerRespawn"] +' event) {\n' +
         '    if(event.player != null && !event.player.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.player;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4682,7 +4682,7 @@ Blockly.Java['mcevent_playerarrowshoot'] = function(block) {
         '/*BEGIN:ArrowNockEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void arrowNockEvent(ArrowNockEvent event) {\n' +
+        'public void arrowNockEvent('+ MCVERSION["eventPlayerArrowShoot"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4726,7 +4726,7 @@ Blockly.Java['mcevent_playerattack'] = function(block) {
         '/*BEGIN:AttackEntityEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void attackEntityEvent(AttackEntityEvent event) {\n' +
+        'public void attackEntityEvent('+ MCVERSION["eventPlayerAttackEntity"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4771,7 +4771,7 @@ Blockly.Java['mcevent_playerbonemeal'] = function(block) {
         '/*BEGIN:BonemealEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void bonemealEvent(BonemealEvent event) {\n' +
+        'public void bonemealEvent('+ MCVERSION["eventPlayerBonemeal"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4815,7 +4815,7 @@ Blockly.Java['mcevent_playerfillbucket'] = function(block) {
         '/*BEGIN:FillBucketEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void fillBucketEvent(FillBucketEvent event) {\n' +
+        'public void fillBucketEvent('+ MCVERSION["eventPlayerFillBucket"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4859,7 +4859,7 @@ Blockly.Java['mcevent_playeritembreak'] = function(block) {
         '/*BEGIN:PlayerDestroyItemEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerDestroyItemEvent(PlayerDestroyItemEvent event) {\n' +
+        'public void playerDestroyItemEvent('+ MCVERSION["eventPlayerDestroyItem"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4903,7 +4903,7 @@ Blockly.Java['mcevent_playeropencontainer'] = function(block) {
         '/*BEGIN:PlayerOpenContainerEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerOpenContainerEvent(PlayerOpenContainerEvent event) {\n' +
+        'public void playerOpenContainerEvent('+ MCVERSION["eventPlyerOpenContainer"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4947,7 +4947,7 @@ Blockly.Java['mcevent_playerpickxp'] = function(block) {
         '/*BEGIN:PlayerPickupXpEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerPickupXpEvent(PlayerPickupXpEvent event) {\n' +
+        'public void playerPickupXpEvent('+ MCVERSION["eventPlayerPickupXP"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -4991,7 +4991,7 @@ Blockly.Java['mcevent_playersleep'] = function(block) {
         '/*BEGIN:PlayerSleepInBedEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void playerSleepInBedEvent(PlayerSleepInBedEvent event) {\n' +
+        'public void playerSleepInBedEvent('+ MCVERSION["eventPlayerSleepInBed"] +' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -5038,7 +5038,7 @@ Blockly.Java['mcevent_playerhoe'] = function(block) {
         '/*BEGIN:UseHoeEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void useHoeEvent(UseHoeEvent event) {\n' +
+        'public void useHoeEvent(' + MCVERSION["eventPlayerUseHoe"] + ' event) {\n' +
         '    if(event.entityPlayer != null && !event.entityPlayer.worldObj.isRemote) {\n' +
         '         final EntityPlayer player = event.entityPlayer;\n' +
         '         final World world = player.worldObj;\n' +
@@ -5086,7 +5086,7 @@ Blockly.Java['mcevent_treegen'] = function(block) {
         '/*BEGIN:SaplingGrowTreeEvent*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void saplingGrowTreeEvent(SaplingGrowTreeEvent event) {\n' +
+        'public void saplingGrowTreeEvent(' + MCVERSION["eventSaplingGrow"] + ' event) {\n' +
         '    if(!event.world.isRemote) {\n' +
         '         final EntityPlayer player = null;\n' +
         '         final World world = event.world;\n' +
@@ -5133,7 +5133,7 @@ Blockly.Java['mcevent_noteblock_play'] = function(block) {
         '/*BEGIN:NoteBlockEventPlay*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void noteBlockEventPlay(NoteBlockEvent.Play event) {\n' +
+        'public void noteBlockEventPlay(' + MCVERSION["eventNoteBlockPlay"] + ' event) {\n' +
         '    if(!event.world.isRemote) {\n' +
         '         final EntityPlayer player = null;\n' +
         '         final World world = event.world;\n' +
@@ -5180,7 +5180,7 @@ Blockly.Java['mcevent_noteblock_change'] = function(block) {
         '/*BEGIN:NoteBlockEventChange*/\n' +
         '/*type:event*/\n' +
         '@SubscribeEvent\n' +
-        'public void noteBlockEventChange(NoteBlockEvent.Change event) {\n' +
+        'public void noteBlockEventChange(' + MCVERSION["eventNoteBlockChange"] + ' event) {\n' +
         '    if(!event.world.isRemote) {\n' +
         '         final EntityPlayer player = null;\n' +
         '         final World world = event.world;\n' +
@@ -5294,7 +5294,7 @@ Blockly.Java['mcrecipe_crafting_shaped'] = function(block) {
 
     var code = '/*BEGIN:Recipes*/\n' +
         '/*type:recipe*/\n' +
-        'GameRegistry.addRecipe(new ItemStack' + value_r + ', ' + craftString + ');\n' +
+        MCVERSION["recipeCraftShaped"] + '(new ItemStack' + value_r + ', ' + craftString + ');\n' +
         '/*END:Recipes*/\n';
     return code;
 };
