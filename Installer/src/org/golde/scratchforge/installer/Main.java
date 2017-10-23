@@ -29,9 +29,9 @@ public class Main {
 		
 		OS.getOS();
 		
-		if(!OS.isWindows()) {
+		if(OS.getOS().cmdLine == null) {
 			 JLabel label = new JLabel("<html>Currently, ScratchForge only supports the Windows OS! ScratchForge will not work correctly. <b>Use at your own risk!</b> <br> I am hoping to support Mac and Linux in the future. But for now only Windows is supported.</html>");
-			JOptionPane.showMessageDialog(frame, label, "Error", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(frame, label, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

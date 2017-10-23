@@ -44,6 +44,10 @@ public class JavaHelper {
 
 	//Opens up a cmd prompt and executes commands. 
 	public static void runCMD(File dir, String cmd) throws Exception { //TODO: MAC
+		String cmdLine = OS.getOS().cmdLine;
+		if(cmdLine == null) {
+			return;
+		}
 		Process p = Runtime.getRuntime().exec("cmd.exe /c cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" /wait cmd.exe /c \"" + cmd + "\"");
 		//Main.getInstance().jsFunctions.showToast(EnumToast.INFO, "Minecraft is now running. Please close Minecraft to continue.");
 		p.waitFor();

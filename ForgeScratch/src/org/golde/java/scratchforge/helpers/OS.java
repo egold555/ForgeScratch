@@ -3,11 +3,16 @@ package org.golde.java.scratchforge.helpers;
 public class OS {
 
 	public enum Platform {
-		Windows,
-		Mac,
-		Unix,
-		Solaris,
-		unsupported
+		Windows("cmd.exe /c"),
+		Mac("/usr/bin/open -a Terminal bash"),
+		Unix(null),
+		Solaris(null),
+		unsupported(null);
+		
+		public final String cmdLine;
+		Platform(String cmdLine) {
+			this.cmdLine = cmdLine;
+		}
 	}
 
 	private static Platform m_os = null;
