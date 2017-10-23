@@ -5,12 +5,12 @@ var V1_7_10 = {
 	blockOptionLightOpacity: "getLightOpacity",
 	blockOptionLightValue: "getLightValue",
 	blockOptionRightClick: "onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz)",
-	blockOptionLeftClick: "onBlockClicked(World world, int x, int y, int z, EntityPlayer player)"
+	blockOptionLeftClick: "onBlockClicked(World world, int x, int y, int z, EntityPlayer player)",
 	blockOptionPlacedPlayer: "onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack)",
 	blockOptionDestroyPlayer: "onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)",
 	blockOptionDestroyExplosion: "onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)",
 	blockOptionEntityCollide: "onEntityCollidedWithBlock(World world, int x, int y, int z, Entity genericEntity)",
-	blockOptionBoundingBox: "getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_)"
+	blockOptionBoundingBox: "getCollisionBoundingBoxFromPool(World p_getCollisionBoundingBoxFromPool_1_, int p_getCollisionBoundingBoxFromPool_2_, int p_getCollisionBoundingBoxFromPool_3_, int p_getCollisionBoundingBoxFromPool_4_)",
 	blockOptionRenderAsNormal: "renderAsNormalBlock",
 	blockOptionOpaque: "isOpaqueCube",
 	blockOptionXP: "getExpDrop",
