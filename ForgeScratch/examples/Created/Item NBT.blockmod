@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ScratchForge version= "1.0">
+    <modName>Example - Item NBT</modName>
+    <textures>
+    </textures>
+    <blockly><xml xmlns="http://www.w3.org/1999/xhtml"><block type="mcitem" x="38" y="-12"><field name="NAME">Counter</field><field name="AMOUNT">1</field><statement name="CODE"><block type="mcitemoptions_rightclick"><statement name="CODE"><block type="mcitemactions_nbt_setnumber"><value name="TAG"><block type="text"><field name="TEXT">counter</field></block></value><value name="VALUE"><block type="math_arithmetic"><field name="OP">ADD</field><value name="A"><shadow type="math_number"><field name="NUM">1</field></shadow><block type="mcitemactions_nbt_getnumber"><value name="TAG"><block type="text"><field name="TEXT">counter</field></block></value></block></value><value name="B"><shadow type="math_number"><field name="NUM">1</field></shadow></value></block></value></block></statement><next><block type="mcitemoptions_lore"><value name="LORE"><block type="text_join"><mutation items="3"></mutation><value name="ADD0"><block type="text"><field name="TEXT">Count: </field></block></value><value name="ADD1"><block type="mcvariable_color_chat"><field name="COLOR">#55ff55</field></block></value><value name="ADD2"><block type="mcitemactions_nbt_getnumber"><value name="TAG"><block type="text"><field name="TEXT">counter</field></block></value></block></value></block></value></block></next></block></statement></block></xml></blockly>
+</ScratchForge>
