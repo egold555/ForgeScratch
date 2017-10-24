@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,8 +21,9 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class ModHelpers {
@@ -50,7 +49,7 @@ public class ModHelpers {
 	}
 
 	public static void addTranslation(String from, String to) {
-		LanguageRegistry.instance().addStringLocalization(from, to);
+		//LanguageRegistry.instance().addStringLocalization(from, to);
 		translationList.put(from, to);
 	}
 
@@ -62,8 +61,8 @@ public class ModHelpers {
 		return translationList.getOrDefault(old, "Failed to find translation!");
 	}
 	
-	public static EntityLiving getEntity(World world, String entity) {
-		Entity theEntity = EntityList.createEntityByName(entity, world);
+	public static EntityLiving getEntity(World world, int entity) {
+		Entity theEntity = EntityList.createEntityByID(entity, world);
 		if(theEntity == null) {
 			PLog.error("Entity '" + entity + "' does not exist!");
 			return null;
@@ -75,35 +74,36 @@ public class ModHelpers {
 		return (EntityLiving)theEntity;
 	}
 
-	public static EntityLiving spawnEntityInWorld(World world, double x, double y, double z, String entity) {
+	public static EntityLiving spawnEntityInWorld(World world, double x, double y, double z, int entity) {
 		if(world.isRemote) {return null;}
 		EntityLiving theEntity = getEntity(world, entity);
 		theEntity.setPosition(x + 0.5f, y + 1, z + 0.5f);
-		world.spawnEntityInWorld(theEntity);
+		world.spawnEntity(theEntity);
 		return theEntity;
 	}
 
 	public static void addPotionToEntity(EntityLivingBase entity, int potion, int seconds, int amp, boolean invis) {
 		if(entity instanceof EntityLiving) {
-			((EntityLiving)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+			
+			((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.getPotionById(potion), seconds * 20, amp, false, invis));
 		}
 		else if(entity instanceof EntityPlayer) {
-			((EntityPlayer)entity).addPotionEffect(new PotionEffect(potion, seconds * 20, amp, invis));
+			((EntityPlayer)entity).addPotionEffect(new PotionEffect(Potion.getPotionById(potion), seconds * 20, amp, false, invis));
 		}
 
 	}
 
 
 	public static EntityFireworkRocket getRandomFirework(World world, double x, double y, double z) {
-		ItemStack firework = new ItemStack(Items.fireworks);
-		firework.stackTagCompound = new NBTTagCompound();
+		ItemStack firework = new ItemStack(Items.FIREWORKS);
+		firework.setTagCompound(new NBTTagCompound());
 		NBTTagCompound expl = new NBTTagCompound();
 		expl.setBoolean("Flicker", true);
 		expl.setBoolean("Trail", true);
 
 		int[] colors = new int[random.nextInt(8) + 1];
 		for (int i = 0; i < colors.length; i++) {
-			colors[i] = ItemDye.field_150922_c[random.nextInt(16)];
+			colors[i] = ItemDye.DYE_COLORS[random.nextInt(16)];
 		}
 		expl.setIntArray("Colors", colors);
 		byte type = (byte) (random.nextInt(3) + 1);
@@ -116,7 +116,7 @@ public class ModHelpers {
 		NBTTagCompound fireworkTag = new NBTTagCompound();
 		fireworkTag.setTag("Explosions", explosions);
 		fireworkTag.setByte("Flight", (byte) 1);
-		firework.stackTagCompound.setTag("Fireworks", fireworkTag);
+		firework.setTagInfo("Fireworks", fireworkTag);
 
 		return new EntityFireworkRocket(world, x, y, z, firework);
 	}
@@ -145,8 +145,8 @@ public class ModHelpers {
 	}
 
 	public static EntityFireworkRocket getFirework(World world, double x, double y, double z, boolean flicker, boolean trail, int[] colors, int type, int power) {
-		ItemStack firework = new ItemStack(Items.fireworks);
-		firework.stackTagCompound = new NBTTagCompound();
+		ItemStack firework = new ItemStack(Items.FIREWORKS);
+		firework.setTagCompound(new NBTTagCompound());
 		NBTTagCompound expl = new NBTTagCompound();
 		
 		expl.setBoolean("Flicker", flicker);
@@ -160,30 +160,30 @@ public class ModHelpers {
 		NBTTagCompound fireworkTag = new NBTTagCompound();
 		fireworkTag.setTag("Explosions", explosions);
 		fireworkTag.setByte("Flight", (byte) power);
-		firework.stackTagCompound.setTag("Fireworks", fireworkTag);
+		firework.setTagInfo("Fireworks", fireworkTag);
 
 		return new EntityFireworkRocket(world, x, y, z, firework);
 	}
 	
-	public static EnumChatFormatting getChatColorFromHex(String hex) {
+	public static TextFormatting getChatColorFromHex(String hex) {
 		switch(hex) {
-		case "#000": return EnumChatFormatting.BLACK;
-		case "#0000aa": return EnumChatFormatting.DARK_BLUE;
-		case "#00aa00": return EnumChatFormatting.DARK_GREEN;
-		case "#00aaaa": return EnumChatFormatting.DARK_AQUA;
-		case "#aa0000": return EnumChatFormatting.DARK_RED;
-		case "#aa00aa": return EnumChatFormatting.DARK_PURPLE;
-		case "#ffaa00": return EnumChatFormatting.GOLD;
-		case "#aaaaaa": return EnumChatFormatting.GRAY;
-		case "#555555": return EnumChatFormatting.DARK_GRAY;
-		case "#5555ff": return EnumChatFormatting.BLUE;
-		case "#55ff55": return EnumChatFormatting.GREEN;
-		case "#55ffff": return EnumChatFormatting.AQUA;
-		case "#ff5555": return EnumChatFormatting.RED;
-		case "#ff55ff": return EnumChatFormatting.LIGHT_PURPLE;
-		case "#ffff55": return EnumChatFormatting.YELLOW;
-		case "#ffffff": return EnumChatFormatting.WHITE;
-		default: return EnumChatFormatting.RESET; 
+		case "#000": return TextFormatting.BLACK;
+		case "#0000aa": return TextFormatting.DARK_BLUE;
+		case "#00aa00": return TextFormatting.DARK_GREEN;
+		case "#00aaaa": return TextFormatting.DARK_AQUA;
+		case "#aa0000": return TextFormatting.DARK_RED;
+		case "#aa00aa": return TextFormatting.DARK_PURPLE;
+		case "#ffaa00": return TextFormatting.GOLD;
+		case "#aaaaaa": return TextFormatting.GRAY;
+		case "#555555": return TextFormatting.DARK_GRAY;
+		case "#5555ff": return TextFormatting.BLUE;
+		case "#55ff55": return TextFormatting.GREEN;
+		case "#55ffff": return TextFormatting.AQUA;
+		case "#ff5555": return TextFormatting.RED;
+		case "#ff55ff": return TextFormatting.LIGHT_PURPLE;
+		case "#ffff55": return TextFormatting.YELLOW;
+		case "#ffffff": return TextFormatting.WHITE;
+		default: return TextFormatting.RESET; 
 		}
 	}
 
