@@ -537,6 +537,17 @@ function sendJavaError(error) {
     java_app.displayFSError(error);
 }
 
+function togglePause(num){
+    //log("Num: " + num);
+    if(num == true){
+        $("#overlay-pause").show();
+        //log("SHOW")
+    } else {
+        $("#overlay-pause").hide();
+         //log("HIDe")
+    }
+}
+
 
 var TOAST_ERROR_PROGRAM = 0;
 var TOAST_ERROR_BLOCKS = 1;

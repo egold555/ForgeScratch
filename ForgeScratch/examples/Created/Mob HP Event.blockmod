@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ScratchForge version= "1.0">
+    <modName>Example - Events</modName>
+    <textures>
+    </textures>
+    <blockly><xml xmlns="http://www.w3.org/1999/xhtml"><block type="mcevent_playerattack" x="138" y="163"><statement name="CODE"><block type="mcaction_rename_entity"><value name="NAME"><block type="text_join"><mutation items="4"></mutation><value name="ADD0"><block type="entity_get_health"></block></value><value name="ADD1"><block type="text"><field name="TEXT"> </field></block></value><value name="ADD2"><block type="mcvariable_color_chat"><field name="COLOR">#ff5555</field></block></value><value name="ADD3"><block type="text"><field name="TEXT">HP</field></block></value></block></value></block></statement></block></xml></blockly>
+</ScratchForge>

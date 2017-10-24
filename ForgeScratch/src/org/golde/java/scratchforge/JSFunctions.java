@@ -22,6 +22,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javafx.application.Platform;
 import netscape.javascript.JSObject;
 
 /**
@@ -48,7 +49,7 @@ public class JSFunctions {
 
 	public String saveXML() {
 		createMod();
-		
+
 		String blocklyXML = (String) javaApp.call("saveXML");
 
 		String textures = "";
@@ -80,15 +81,15 @@ public class JSFunctions {
 
 		Element rootElement = (Element) doc.getDocumentElement();
 		Main.getInstance().MOD_NAME = ((Element) rootElement.getElementsByTagName("modName").item(0)).getTextContent();
-		
+
 		String version = rootElement.getAttribute("version");
 		if(!Main.getInstance().VERSION.equals(version)) {
 			showToast(EnumToast.WARNING, "Your version (" + Main.getInstance().VERSION + ") does not match the block mod version (" + version + "). Expect bugs!");
 		}
-		
+
 		File rootDirectory = new File(forgeAssets, "sf_" + JavaHelper.makeJavaId(Main.getInstance().MOD_NAME) + "\\textures");
 		Element textures = (Element) (rootElement.getElementsByTagName("textures").item(0));
-		
+
 		NodeList textureList = textures.getElementsByTagName("texture");
 		for(int i = 0; i < textureList.getLength(); i++) {
 			if (textureList.item(i).getNodeType() == Node.ELEMENT_NODE) {
@@ -100,7 +101,7 @@ public class JSFunctions {
 				JavaHelper.base64DecodeFile(base64, file);
 			}
 		}
-		
+
 		String blockly = nodeToString(((Element)rootElement.getElementsByTagName("blockly").item(0)).getElementsByTagName("xml").item(0));
 		javaApp.call("loadXML", blockly);
 	}
@@ -129,12 +130,12 @@ public class JSFunctions {
 		}
 
 	}
-	
+
 	private void createMod()
 	{
 		createModFromCode((String) javaApp.call("getBlocklyCode"));
 	}
-	
+
 	private void createModFromCode(String sfGenCode)
 	{
 		PLog.info("Fixing code....");
@@ -227,14 +228,32 @@ public class JSFunctions {
 
 	public void run(String sfGenCode) {
 		createModFromCode(sfGenCode);
+		pause(true);
 		
-		try {
-			JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
-		}
-		catch(Exception e) {
-			PLog.error(e, "Failed to start forge!");
-			showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
-		}
+		//The crazy hacky ways that I come up with to get the program to do what....
+		new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				Platform.runLater(() -> {
+					try {
+						JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
+						pause(false);
+					}
+					catch(Exception e) {
+						pause(false);
+						PLog.error(e, "Failed to start forge!");
+						showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
+					}
+				});
+
+			}
+		}.start();
+
 	}
 
 	private List<CodeComponent> findComponents(CodeParser codeParser, EnumObjectType type)
@@ -390,7 +409,11 @@ public class JSFunctions {
 	public void showToast(EnumToast type, String message) {
 		javaApp.call("sendToast", type.id, message);
 	}
-	
-	
+
+	public void pause(boolean value) {
+		javaApp.call("togglePause", value);
+	}
+
+
 
 }
