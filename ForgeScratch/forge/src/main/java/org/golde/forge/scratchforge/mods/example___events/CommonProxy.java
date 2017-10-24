@@ -222,7 +222,7 @@ public void attackEntityEvent(AttackEntityEvent event) {
          final VariableHolder variableHolder = new VariableHolder();
          if(event.target instanceof EntityLiving) {variableHolder.entity = (EntityLiving)event.target;}
              if(variableHolder.entity != null){
-        variableHolder.entity.setCustomNameTag(((variableHolder.entity != null ? variableHolder.entity.getHealth():0) + " " + ModHelpers.getChatColorFromHex("#ff5555") + "HP"));
+        variableHolder.entity.setCustomNameTag(((variableHolder.entity != null ? variableHolder.entity.getHealth():0) + " " + ModHelpers.getChatColorFromHex("#ff5555") + "\u2764"));
         variableHolder.entity.setAlwaysRenderNameTag(true);
     }
 
