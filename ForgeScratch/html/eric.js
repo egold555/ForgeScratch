@@ -2307,7 +2307,7 @@ Blockly.Blocks['mcitemactions_nbt_getstring'] = {
     }
   ],
   "output": "String",
-  "colour": COLOR_ACTIONS,
+  "colour": COLOR_VARIABLES,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -2334,7 +2334,7 @@ Blockly.Blocks['mcitemactions_nbt_getnumber'] = {
     }
   ],
   "output": "Number",
-  "colour": COLOR_ACTIONS,
+  "colour": COLOR_VARIABLES,
   "tooltip": "",
   "helpUrl": ""
     });
@@ -2529,6 +2529,41 @@ Blockly.Java['location_block_z'] = function(block) {
   return ['z', Blockly.Java.ORDER_NONE];
 };
 
+Blockly.Blocks['entity_get_health'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "entity_get_health",
+  "message0": "Creature Health",
+  "output": "Number",
+  "colour": COLOR_VARIABLES,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['entity_get_health'] = function(block) {
+  return ['(variableHolder.entity != null ? variableHolder.entity.getHealth():0)', Blockly.Java.ORDER_NONE];
+};
+
+Blockly.Blocks['player_get_health'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "player_get_health",
+  "message0": "Player Health",
+  "output": "Number",
+  "colour": COLOR_VARIABLES,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Java['player_get_health'] = function(block) {
+  return ['(player != null ? player.getHealth():0)', Blockly.Java.ORDER_NONE];
+};
 
 
 Blockly.Blocks['mcaction_giveitem'] = {

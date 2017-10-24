@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -109,11 +108,17 @@ public class Main implements ActionListener, KeyListener{
 	//Default mod name, gets overwritten on new project creation
 	public String MOD_NAME = "If you see this, something bad happened"; 
 
+	//Mod manager
 	public ModManager modManager;
 
+	//This makes grdlew use chashed files
 	public boolean offlineMode = false;
 
+	//The internal webEngine
 	private WebEngine webEngine;
+	
+	//Example blockmod directory
+	private File examplesDir = new File("examples");
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -171,8 +176,8 @@ public class Main implements ActionListener, KeyListener{
 		menuBar.add(fileMenu);
 
 		//Make the menu button "Examples" and add elements to it
-		/*JMenu exampleMenu = new JMenu("Examples");
-		File examplesDir = new File("examples");
+		JMenu exampleMenu = new JMenu("Examples");
+		
 		for(File f:JavaHelper.listFoldersInFolder(examplesDir)) {
 			JMenuItem category = new JMenu(f.getName());
 			for(File sub:JavaHelper.listFilesForFolder(f)) {
@@ -184,10 +189,8 @@ public class Main implements ActionListener, KeyListener{
 			exampleMenu.add(category);
 		}
 
-
-
 		menuBar.add(exampleMenu); //TODO Make examples
-		 */
+		 
 		//Make the menu button "Options" and add elements to it
 		JMenu mOptionsMenu = new JMenu("Options");
 
@@ -337,9 +340,10 @@ public class Main implements ActionListener, KeyListener{
 
 			if(source instanceof JMenuItem) {
 				String name = ((JMenuItem)source).getText();
-				if(name.endsWith(".blockmod")) {
+				if(name.endsWith(".blockmod")) { //TODO: Open .blockmod
 					//Example
 					PLog.info("Name: " + name);
+					
 				}
 
 			}

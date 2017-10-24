@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ScratchForge version= "1.0">
+    <modName>Example - Thor</modName>
+    <textures>
+        <texture name="blocks\thor.png">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAhSURBVDhPY2RY9OI/AwWACUqTDUYNGDUABEYNGHgDGBgAij4CqcCv8bYAAAAASUVORK5CYII=</texture>
+    </textures>
+    <blockly><xml xmlns="http://www.w3.org/1999/xhtml"><block type="mcblock" x="9" y="3"><field name="NAME">Thor</field><field name="MATERIAL">Material.ground</field><field name="UNBREAKABLE">FALSE</field><field name="EXPLOSION">FALSE</field><statement name="Options"><block type="mcblockoptions_click_right"><statement name="CODE"><block type="mcaction_lightning"><value name="LOC_X"><block type="location_block_x"></block></value><value name="LOC_Y"><block type="location_block_y"></block></value><value name="LOC_Z"><block type="location_block_z"></block></value></block></statement></block></statement></block></xml></blockly>
+</ScratchForge>

@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods.aitest;
+package org.golde.forge.scratchforge.mods.example___thor;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -107,56 +107,57 @@ import io.netty.channel.*;
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-
+	
 	/* Block Variables */
+	static Mcblock_Thor mcblock_Thor;
 
 
 	/* BlockFlower Variables */
-
+	
 
 	/* BlockPlant Variables */
-
+	
 
 	/* Item Variables */
 	public static SpawnEgg spawnEgg;
-
+	
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
 		/* Block Constructor Calls */
+		mcblock_Thor = new Mcblock_Thor();
 
 
 		/* BlockFlower Constructor Calls */
-
+		
 
 		/* BlockPlant Constructor Calls */
-
+		
 
 		/* Item Constructor Calls */
 		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-
+		
 
 		/* Entity Constructor Calls */
-		createEntity(Mcentity_Creature_Name.class, Mcentity_Creature_Name.RAW_NAME, Mcentity_Creature_Name.NAME, Mcentity_Creature_Name.EGG_P, Mcentity_Creature_Name.EGG_S); //Boat
-
+		
 	}
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-
+		
 		/* Recipe Registry */
-
+		
 	}
-
+	
 	public void serverLoad(FMLServerStartingEvent event) {
 		/* Command Registry */
-
+		
 	}
-
+	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		scheduler.update();
@@ -169,10 +170,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-
+			
 
 			/*Overworld world generation for plants*/
-
+			
 
 		}
 	}
@@ -192,7 +193,7 @@ public class CommonProxy {
 
 		}
 	}
-
+	
 	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
 		int id = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
@@ -202,69 +203,40 @@ public class CommonProxy {
 		}
 		//TODO: Add language
 	}
-
+	
 	private void createEgg(int id, int solidColor, int spotColor) {
 		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
 	}
 
-
-	/*type:global*/
-
-
+	
+/*type:global*/
 
 
 
-	/*type:entity*/
-	/*model:Boat*/
-	public static class Mcentity_Creature_Name extends EntityCreature {
-		public static final String RAW_NAME = "Creature Name";
-		public static final String NAME = "Creature_Name";
-		public static final boolean SPAWN_NATURALLY = false;
-		public static final int EGG_P = 0xff0000;
-		public static final int EGG_S = 0x33ff33;
 
-		public Mcentity_Creature_Name(World world){
-			super(world);
-	        this.tasks.addTask(0, new EntityAIWander(this, 1.0D));
-	        this.tasks.addTask(2, new EntityAILookIdle(this));
-	        this.tasks.addTask(0, new EntityAIPanic(this, 0.70));
-	        this.tasks.addTask(3, new AITest(this));
-		}
-		
-		private class AITest extends EntityAIBase{
 
-			private EntityCreature entity;
-			
-			public AITest(EntityCreature entity) {
-				this.entity = entity;
-			}
-			
-			@Override
-			public boolean shouldExecute() {
-				return true;
-			}
-			
-			@Override
-			public void startExecuting() {
-				entity.setFire(8);
-			}
-			
-		}
+/*type:block*/
+    public class Mcblock_Thor extends BlockBase {
+        public Mcblock_Thor() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Thor", Material.ground);
 
-		@Override
-		protected boolean isAIEnabled() {
-			return true;
-		}
-		
-		protected void applyEntityAttributes()
-	    {
-	        super.applyEntityAttributes();
-	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
-	    }
-		
-		
-		
-	}
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
+        }
+
+        @Override
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hx, float hy, float hz) {
+             if(world.isRemote){return true;}
+             final VariableHolder variableHolder = new VariableHolder();
+                world.addWeatherEffect((new EntityLightningBolt(world, (x), (y), (z))));
+
+            return true;
+        }
+    }
 
 
 }
