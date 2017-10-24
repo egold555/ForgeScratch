@@ -1,5 +1,6 @@
 package org.golde.forge.scratchforge.base.client.models;
 
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.Entity;
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelSkeletonNew extends ModelZombie
+public class ModelSkeletonNew extends ModelBiped
 {
     private static final String __OBFID = "CL_00000857";
 
@@ -43,7 +44,6 @@ public class ModelSkeletonNew extends ModelZombie
      */
     public void setLivingAnimations(EntityLivingBase p_78086_1_, float p_78086_2_, float p_78086_3_, float p_78086_4_)
     {
-        this.aimedBow = false;
         super.setLivingAnimations(p_78086_1_, p_78086_2_, p_78086_3_, p_78086_4_);
     }
 

@@ -16,16 +16,6 @@ import org.golde.forge.scratchforge.mainmod.guis.GuiNewMultiplayer;
 
 import com.google.common.collect.SetMultimap;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.GuiConfirmation;
-import cpw.mods.fml.client.GuiIngameModOptions;
-import cpw.mods.fml.client.GuiNotification;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.StartupQuery;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiIngameMenu;
@@ -34,12 +24,16 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.*;
+import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class ClientProxy extends CommonProxy{
 
@@ -87,27 +81,27 @@ public class ClientProxy extends CommonProxy{
 		if(failedTextures.size() > 0) {
 			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
 			EntityPlayer player = event.player;
-			if(player != null) {player.addChatMessage(new ChatComponentText(Language.CHAT_MISSING_TEXTURES.replace("%failed%", failed)));}
+			if(player != null) {player.sendMessage(new TextComponentString(Language.CHAT_MISSING_TEXTURES.replace("%failed%", failed)));}
 		}
 	}
 
 	@SubscribeEvent
 	public void onGuiChange(GuiOpenEvent event) {
 
-		if(event.gui != null) {
+		if(event.getGui() != null) {
 			//PLog.info("Gui Change: " + event.gui.getClass().getName());
 		}
 
 		//Remove the missing blocks message that forge puts
 		//Kids might get confused so we will just remove it
-		if(event.gui instanceof GuiConfirmation) {
+		if(event.getGui() instanceof GuiConfirmation) {
 
 			//Make forge not do backups because were skipping the gui screen
 			System.getProperties().setProperty("fml.doNotBackup", "true");
 
 			//Use reflection to automatically simulate pushing the OK button
 			try {
-				GuiConfirmation gui = (GuiConfirmation)event.gui;
+				GuiConfirmation gui = (GuiConfirmation)event.getGui();
 				Class clazz = gui.getClass();
 				Field field = JavaHelpers.getField(clazz, "query");
 				field.setAccessible(true);
@@ -119,33 +113,33 @@ public class ClientProxy extends CommonProxy{
 			catch(Exception e) {
 				PLog.error(e, "Failed to do reflection!");
 			}
-			event.gui = null; //Don't display the screen
+			event.setGui(null); //Don't display the screen
 		}
 
 		//Custom main menu screen
-		if(event.gui instanceof GuiMainMenu) {
-			event.gui = new GuiNewMainMenu();
+		if(event.getGui() instanceof GuiMainMenu) {
+			event.setGui(new GuiNewMainMenu());
 		}
 
 		//Custom ingame options to get rid of forge test
-		if(event.gui instanceof GuiIngameMenu) {
-			event.gui = new GuiNewIngameOptions();
+		if(event.getGui() instanceof GuiIngameMenu) {
+			event.setGui(new GuiNewIngameOptions());
 		}
 
 		//Handle Mod Rejections
-		if(event.gui instanceof GuiDisconnected) {
+		if(event.getGui() instanceof GuiDisconnected) {
 			try {
-				GuiDisconnected gui = (GuiDisconnected)event.gui;
+				GuiDisconnected gui = (GuiDisconnected)event.getGui();
 				Class clazz = gui.getClass();
 				Field field = JavaHelpers.getField(clazz, "field_146304_f");
 				field.setAccessible(true);
-				IChatComponent message = (IChatComponent)field.get(gui);
+				ITextComponent message = (ITextComponent)field.get(gui);
 				
 				field = JavaHelpers.getField(clazz, "field_146307_h");
 				field.setAccessible(true);
 				GuiScreen pastGuiScreen = (GuiScreen)field.get(gui);
 				if(message.getUnformattedText().startsWith("Mod rejections ")) {
-					event.gui = new GuiMessage(pastGuiScreen, Language.LAN_REJECT);
+					event.setGui(new GuiMessage(pastGuiScreen, Language.LAN_REJECT)); 
 				}
 			}
 			catch(Exception e) {
@@ -155,8 +149,8 @@ public class ClientProxy extends CommonProxy{
 
 		//If is limited, display custom screen
 		if(Config.isMultiplayerLimitedToLan()) {
-			if(event.gui instanceof GuiMultiplayer) {
-				event.gui = new GuiNewMultiplayer();
+			if(event.getGui() instanceof GuiMultiplayer) {
+				event.setGui(new GuiNewMultiplayer());
 			}
 		}
 	}

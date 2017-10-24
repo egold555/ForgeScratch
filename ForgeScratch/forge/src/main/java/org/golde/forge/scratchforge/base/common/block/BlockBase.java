@@ -11,7 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 public class BlockBase extends Block{
 	
 	public BlockBase(String blockId, CreativeTabs creativeTab, String name) {
-		this(blockId, creativeTab, name, Material.rock, Block.soundTypeStone);
+		this(blockId, creativeTab, name, Material.ROCK, Block.soundTypeStone);
 	}
 	
 	public BlockBase(String blockId, CreativeTabs creativeTab, String name, Material material) {

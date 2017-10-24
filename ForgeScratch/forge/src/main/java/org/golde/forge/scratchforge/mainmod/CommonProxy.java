@@ -8,21 +8,20 @@ import org.golde.forge.scratchforge.base.common.item.ItemBase;
 import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.event.*;
 
 public class CommonProxy {
 
@@ -55,7 +54,7 @@ public class CommonProxy {
 		
 		private List<String> getSubBlocks(Block block) {
 			List<ItemStack> items = new ArrayList<ItemStack>();
-			block.getSubBlocks(Item.getItemFromBlock(block), null, items);
+			//block.getSubBlocks(Item.getItemFromBlock(block), null, items);
 			List<String> names = new ArrayList<String>();
 			for(ItemStack i:items) {
 				names.add("\u00a76"+i.getDisplayName());
@@ -73,23 +72,21 @@ public class CommonProxy {
 		}
 
 		@Override
-		public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world,
-				int x, int y, int z, int data, float dx,
-				float dy, float dz) {
+		public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float dx, float dy, float dz) {
 
 			if(world.isRemote) {
 				List<String> l = new ArrayList<String>();
-
-				Block block = world.getBlock(x, y, z);
+				IBlockState blockState = world.getBlockState(pos);
+				Block block = blockState.getBlock();
 
 				if(block != null) {
 					l.add(fixColorCoding("\u00a7bBlock\u00a7f: \u00a7a" + block.getLocalizedName() + "\u00a7f (\u00a76" + block.getUnlocalizedName() + "\u00a7f, \u00a76" + Block.getIdFromBlock(block) + "\u00a7f)"));
-					l.add(fixColorCoding("\u00a7bSide\u00a7f: \u00a7a" + data));
+					//l.add(fixColorCoding("\u00a7bSide\u00a7f: \u00a7a" + data));
 					
 					l.add(fixColorCoding("\u00a7bSub: [" + Arrays.asList(getSubBlocks(block)).toString().replace(",", ",\u00a76").replace("]", "").replace("[", "") + "]"));
 				}
 				//l.add("Material: " + block.getMaterial().toString());
-				l.add(fixColorCoding("\u00a7bX: \u00a7a" + x + " \u00a7bY: \u00a7a" + y + " \u00a7bZ: \u00a7a" + z));
+				l.add(fixColorCoding("\u00a7bX: \u00a7a" + pos.getX() + " \u00a7bY: \u00a7a" + pos.getY() + " \u00a7bZ: \u00a7a" + pos.getZ()));
 				l.add(fixColorCoding("\u00a7bDX: \u00a7a" + dx + " \u00a7bDY: \u00a7a" + dy + " \u00a7bDZ: \u00a7a" + dz));
 				
 				
@@ -98,12 +95,11 @@ public class CommonProxy {
 
 				for(String s:l)
 				{
-					if(player != null) {player.addChatMessage(new ChatComponentText(s));}
+					if(player != null) {player.sendMessage(new TextComponentString(s));}
 				}
 			}
 
-			return super.onItemUse(itemstack, player, world, x, y, z,
-					data, dx, dy, dz);
+			return super.onItemUse(player, world, pos, hand, facing, dx, dy, dz);
 		}
 
 	}
