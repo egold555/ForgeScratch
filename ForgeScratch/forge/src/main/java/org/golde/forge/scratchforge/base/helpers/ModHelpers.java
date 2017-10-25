@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -29,37 +30,6 @@ import net.minecraft.world.World;
 public class ModHelpers {
 
 	private static Random random = new Random();
-
-	//                      old,    new
-	private static HashMap<String, String> translationList = new HashMap<String, String>();
-
-	public static void addTranslation(Block block, String to) {
-		ItemStack item = new ItemStack(block, 1, 0);
-		String from = item.getItem().getUnlocalizedName(item);
-		from+=".name";
-		addTranslation(from, to);
-	}
-
-	public static void addTranslation(Item item, String to) {
-		addTranslation(item.getUnlocalizedName() + ".name", to);
-	}
-
-	public static void addTranslation(CreativeTabs creativeTab, String to) {
-		addTranslation(creativeTab.getTranslatedTabLabel(), to);
-	}
-
-	public static void addTranslation(String from, String to) {
-		//LanguageRegistry.instance().addStringLocalization(from, to);
-		translationList.put(from, to);
-	}
-
-	public static String getTranslation(String old) {
-
-		if(!old.endsWith(".name")) {
-			old+=".name";
-		}
-		return translationList.getOrDefault(old, "Failed to find translation!");
-	}
 	
 	public static EntityLiving getEntity(World world, int entity) {
 		Entity theEntity = EntityList.createEntityByID(entity, world);

@@ -47,8 +47,8 @@ public class SpawnEgg extends ItemBase{
 	public HashMap entityEggs = new LinkedHashMap();
 
 	//Need to change name from Spawn Egg to Spawn for language change
-	public SpawnEgg(String BLOCK_ID, CreativeTabs CREATIVE_TAB) {
-		super(BLOCK_ID, CREATIVE_TAB, "Spawn Egg", 64);
+	public SpawnEgg(String MOD_ID, CreativeTabs CREATIVE_TAB) {
+		super(MOD_ID, CREATIVE_TAB, "Spawn Egg", 64);
 		setHasSubtypes(true);
 	}
 

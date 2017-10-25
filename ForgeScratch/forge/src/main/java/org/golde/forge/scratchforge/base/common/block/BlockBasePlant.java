@@ -28,12 +28,12 @@ public class BlockBasePlant extends BlockReed {
 	private boolean requiresWater = true;
 	private boolean doesGenerateInWorld = true;
 
-	public BlockBasePlant(String blockId, CreativeTabs creatibeTab, String rawName,EnumPlantType plantType, boolean doesGenInWorld, boolean needsWaterToGen, int maxGrowHeight) {
+	public BlockBasePlant(String MOD_ID, CreativeTabs creatibeTab, String rawName, EnumPlantType plantType, boolean doesGenInWorld, boolean needsWaterToGen, int maxGrowHeight) {
 		super();
 		this.plantType = plantType;
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(name);
-		setRegistryName(blockId, name);
+		setUnlocalizedName(MOD_ID + "." + name);
+		setRegistryName(rawName);
 		this.setHardness(0.01F);
 		this.setResistance(2.0F);
 		setCreativeTab(creatibeTab);
@@ -41,9 +41,6 @@ public class BlockBasePlant extends BlockReed {
 		this.requiresWater = needsWaterToGen;
 		this.doesGenerateInWorld = doesGenInWorld;
 		this.growHeight = maxGrowHeight;
-
-		BlockBase.REGISTRY.add(this);
-		ModHelpers.addTranslation(this, rawName);
 	}
 
 	@Override

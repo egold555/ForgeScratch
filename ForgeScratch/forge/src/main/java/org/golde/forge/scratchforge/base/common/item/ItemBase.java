@@ -11,21 +11,16 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemBase extends Item{
-
-	public static List<Item> REGISTRY = new ArrayList<Item>();
 	
-	public ItemBase(String id, CreativeTabs creativeTab, String rawName, int maxStackSize) {
+	public ItemBase(String MOD_ID, CreativeTabs creativeTab, String rawName, int maxStackSize) {
 		
 		setCreativeTab(creativeTab);
 		setMaxStackSize(maxStackSize);
 		canRepair = false;
 
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(name);
-		setRegistryName(id, name);
-		
-		REGISTRY.add(this);
-		ModHelpers.addTranslation(this, rawName);
+		setUnlocalizedName(MOD_ID + "." + name);
+		setRegistryName(name);
 	}
 	
 }

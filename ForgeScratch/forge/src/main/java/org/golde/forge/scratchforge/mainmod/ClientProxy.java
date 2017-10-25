@@ -43,15 +43,12 @@ public class ClientProxy extends CommonProxy{
 		//Mod Config Folder -> Minecraft Dir - > For dir -> root
 		PLog.info(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile().getAbsolutePath());
 		Config.load(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile());
-
-		ModHelpers.addTranslation(ForgeModScratchForge.CREATIVE_TAB.getTranslatedTabLabel(), ForgeModScratchForge.MOD_NAME);
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
 	}
 
 	@SubscribeEvent

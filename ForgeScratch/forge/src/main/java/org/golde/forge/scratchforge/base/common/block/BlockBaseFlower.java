@@ -20,17 +20,14 @@ public class BlockBaseFlower extends BlockFlower{
 
 	private String texture;
 	
-	public BlockBaseFlower(String blockId, CreativeTabs creatibeTab, String rawName) {
+	public BlockBaseFlower(String MOD_ID, CreativeTabs creatibeTab, String rawName) {
 		super();
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(name);
-		setRegistryName(blockId, name);
+		setUnlocalizedName(MOD_ID + "." + name);
+		setRegistryName(name);
 		this.setHardness(0.01F);
         this.setResistance(2.0F);
         setCreativeTab(creatibeTab);
-        
-        BlockBase.REGISTRY.add(this);
-        ModHelpers.addTranslation(this, rawName);
 	}
 
 	@SideOnly(Side.CLIENT)

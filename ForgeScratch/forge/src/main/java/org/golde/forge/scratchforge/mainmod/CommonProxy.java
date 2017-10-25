@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.golde.forge.scratchforge.base.common.block.BlockBase;
 import org.golde.forge.scratchforge.base.common.item.ItemBase;
 import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
@@ -21,12 +22,17 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber
 public class CommonProxy {
-
+	
 	public void preInit(FMLPreInitializationEvent event) {
-		new DebugItem();
+		
 	}
 	
 	public void init(FMLInitializationEvent event) {
@@ -41,15 +47,19 @@ public class CommonProxy {
 		if(!event.getServer().isDedicatedServer() && event.getServer() instanceof IntegratedServer) {
 			IntegratedServer server = (IntegratedServer)event.getServer();
 			server.setOnlineMode(false);
-			//server.setMOTD("Cool MOTD");
 			
 		}
 	}
 	
-	class DebugItem extends ItemBase{
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Item> event) {
+	    event.getRegistry().register(new DebugItem());
+	}
+	
+	private static class DebugItem extends ItemBase {
 
 		public DebugItem() {
-			super(ForgeModScratchForge.BLOCK_ID, ForgeModScratchForge.CREATIVE_TAB, "Debugger", 1);
+			super(ForgeModScratchForge.MOD_ID, ForgeModScratchForge.CREATIVE_TAB, "debugger", 1);
 		}
 		
 		private List<String> getSubBlocks(Block block) {

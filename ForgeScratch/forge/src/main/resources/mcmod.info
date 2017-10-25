@@ -1,6 +1,6 @@
 [
 {
-  "modid": "ScratchForge",
+  "modid": "scratchforge",
   "name": "ScratchForge Developer Kit",
   "description": "The base mod for ScratchForge",
   "version": "${version}",

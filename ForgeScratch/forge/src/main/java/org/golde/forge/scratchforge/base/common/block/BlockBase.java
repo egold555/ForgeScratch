@@ -14,27 +14,23 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block{
 	
-	public static List<Block> REGISTRY = new ArrayList<Block>();
-	
-	public BlockBase(String blockId, CreativeTabs creativeTab, String name) {
-		this(blockId, creativeTab, name, Material.ROCK, SoundType.STONE);
+	public BlockBase(String MOD_ID, CreativeTabs creativeTab, String name) {
+		this(MOD_ID, creativeTab, name, Material.ROCK, SoundType.STONE);
 	}
 	
-	public BlockBase(String blockId, CreativeTabs creativeTab, String name, Material material) {
-		this(blockId, creativeTab, name, material, SoundType.STONE);
+	public BlockBase(String MOD_ID, CreativeTabs creativeTab, String name, Material material) {
+		this(MOD_ID, creativeTab, name, material, SoundType.STONE);
 	}
 	
-	public BlockBase(String blockId, CreativeTabs creatibeTab, String rawName, Material material, SoundType sound) {
+	public BlockBase(String MOD_ID, CreativeTabs creatibeTab, String rawName, Material material, SoundType sound) {
 		super(material);
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(name);
-		setRegistryName(blockId, name);
+		setUnlocalizedName(MOD_ID + "." + name);
+		setRegistryName(name);
 		this.setHardness(1.5f);
         this.setResistance(10.0F);
         setSoundType(sound);
         setCreativeTab(creatibeTab);
-        REGISTRY.add(this);
-        ModHelpers.addTranslation(this, rawName);
 	}
 	
 

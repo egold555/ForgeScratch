@@ -11,8 +11,7 @@ import net.minecraftforge.fml.common.event.*;
 @Mod(modid = ForgeModScratchForge.MOD_ID, name=ForgeModScratchForge.MOD_NAME, version="1.0", canBeDeactivated=false)
 public class ForgeModScratchForge {
 	public static final String MOD_NAME = "scratchforge";
-	public static final String MOD_ID = MOD_NAME;
-	public static final String BLOCK_ID = MOD_ID + ":";
+	public static final String MOD_ID = "scratchforge";
 	public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mainmod";
     
     @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
