@@ -32,7 +32,7 @@ public class BlockBasePlant extends BlockReed {
 		super();
 		this.plantType = plantType;
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(MOD_ID + "." + name);
+		setUnlocalizedName(name);
 		setRegistryName(rawName);
 		this.setHardness(0.01F);
 		this.setResistance(2.0F);

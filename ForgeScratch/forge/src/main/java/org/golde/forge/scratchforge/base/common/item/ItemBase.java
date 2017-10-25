@@ -19,7 +19,7 @@ public class ItemBase extends Item{
 		canRepair = false;
 
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(MOD_ID + "." + name);
+		setUnlocalizedName(name);
 		setRegistryName(name);
 	}
 	

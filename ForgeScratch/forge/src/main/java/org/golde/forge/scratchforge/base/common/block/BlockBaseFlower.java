@@ -23,7 +23,7 @@ public class BlockBaseFlower extends BlockFlower{
 	public BlockBaseFlower(String MOD_ID, CreativeTabs creatibeTab, String rawName) {
 		super();
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(MOD_ID + "." + name);
+		setUnlocalizedName(name);
 		setRegistryName(name);
 		this.setHardness(0.01F);
         this.setResistance(2.0F);

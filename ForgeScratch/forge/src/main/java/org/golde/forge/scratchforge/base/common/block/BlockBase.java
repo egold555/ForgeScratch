@@ -25,7 +25,7 @@ public class BlockBase extends Block{
 	public BlockBase(String MOD_ID, CreativeTabs creatibeTab, String rawName, Material material, SoundType sound) {
 		super(material);
 		String name = JavaHelpers.makeJavaId(rawName);
-		setUnlocalizedName(MOD_ID + "." + name);
+		setUnlocalizedName(name);
 		setRegistryName(name);
 		this.setHardness(1.5f);
         this.setResistance(10.0F);
