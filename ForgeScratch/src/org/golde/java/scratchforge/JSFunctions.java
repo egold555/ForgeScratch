@@ -315,7 +315,8 @@ public class JSFunctions {
 		String result = "";
 
 		for (CodeComponent component: components) {
-			result += variableName(component) + " = new " + className(component) + "();" + "\n";
+			//result += variableName(component) + " = new " + className(component) + "();" + "\n";
+			result += "event.getRegistry().register(" + className(component) + "());" + "\n";
 		}
 
 		return result;
