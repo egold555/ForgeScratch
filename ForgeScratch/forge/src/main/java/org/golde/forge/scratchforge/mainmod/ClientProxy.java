@@ -137,15 +137,18 @@ public class ClientProxy extends CommonProxy{
 			try {
 				GuiDisconnected gui = (GuiDisconnected)event.getGui();
 				Class clazz = gui.getClass();
-				Field field = JavaHelpers.getField(clazz, "field_146304_f");
+				Field field = JavaHelpers.getField(clazz, "message");
 				field.setAccessible(true);
 				ITextComponent message = (ITextComponent)field.get(gui);
 				
-				field = JavaHelpers.getField(clazz, "field_146307_h");
+				field = JavaHelpers.getField(clazz, "parentScreen");
 				field.setAccessible(true);
 				GuiScreen pastGuiScreen = (GuiScreen)field.get(gui);
 				if(message.getUnformattedText().startsWith("Mod rejections ")) {
 					event.setGui(new GuiMessage(pastGuiScreen, Language.LAN_REJECT)); 
+				}
+				else if(message.getUnformattedText().contains("1.7.10")) {
+					event.setGui(new GuiMessage(pastGuiScreen, Language.V_1_7_10_WORLD)); 
 				}
 			}
 			catch(Exception e) {
@@ -153,12 +156,6 @@ public class ClientProxy extends CommonProxy{
 			}
 		}
 
-		//If is limited, display custom screen
-		if(Config.isMultiplayerLimitedToLan()) {
-			if(event.getGui() instanceof GuiMultiplayer) {
-				event.setGui(new GuiNewMultiplayer());
-			}
-		}
 	}
 
 }

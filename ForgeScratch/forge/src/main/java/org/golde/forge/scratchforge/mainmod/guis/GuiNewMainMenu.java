@@ -13,6 +13,7 @@ import java.util.Random;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.golde.forge.scratchforge.mainmod.Config;
 import org.golde.forge.scratchforge.mainmod.Language;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GLContext;
@@ -206,12 +207,14 @@ public class GuiNewMainMenu extends GuiScreen
 		
 	}
 
-	private void addSingleplayerMultiplayerButtons(int p_addSingleplayerMultiplayerButtons_1_, int p_addSingleplayerMultiplayerButtons_2_)
+	private void addSingleplayerMultiplayerButtons(int x, int y)
 	{
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_addSingleplayerMultiplayerButtons_1_, I18n.format("menu.singleplayer", new Object[0])));
-		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_addSingleplayerMultiplayerButtons_1_ + p_addSingleplayerMultiplayerButtons_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
-		this.realmsButton = addButton(new GuiButton(14, this.width / 2 + 2, p_addSingleplayerMultiplayerButtons_1_ + p_addSingleplayerMultiplayerButtons_2_ * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
-		this.buttonList.add(this.modButton = new GuiButton(6, this.width / 2 - 100, p_addSingleplayerMultiplayerButtons_1_ + p_addSingleplayerMultiplayerButtons_2_ * 2, 98, 20, I18n.format("fml.menu.mods", new Object[0])));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, x, I18n.format("menu.singleplayer", new Object[0])));
+		GuiButton multiplayerButton = new GuiButton(2, this.width / 2 - 100, x + y * 1, I18n.format("menu.multiplayer", new Object[0]));
+		multiplayerButton.enabled = Config.isMultiplayerButtonEnabled();
+		this.buttonList.add(multiplayerButton);
+		this.realmsButton = addButton(new GuiButton(14, this.width / 2 + 2, x + y * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
+		this.buttonList.add(this.modButton = new GuiButton(6, this.width / 2 - 100, x + y * 2, 98, 20, I18n.format("fml.menu.mods", new Object[0])));
 	}
 
 	private void addDemoButtons(int p_addDemoButtons_1_, int p_addDemoButtons_2_)
@@ -238,7 +241,7 @@ public class GuiNewMainMenu extends GuiScreen
 			this.mc.displayGuiScreen(new GuiWorldSelection(this));
 		}
 		if (p_actionPerformed_1_.id == 2) {
-			this.mc.displayGuiScreen(new GuiMultiplayer(this));
+			this.mc.displayGuiScreen((Config.isMultiplayerLimitedToLan() ? new GuiNewMultiplayer(this):new GuiMultiplayer(this)));
 		}
 		if ((p_actionPerformed_1_.id == 14) && (this.realmsButton.visible)) {
 			switchToRealms();
@@ -528,8 +531,5 @@ public class GuiNewMainMenu extends GuiScreen
 		}
 	}
 	
-	/*private GuiMainMenu getMainMenuFromThis(GuiNewMainMenu guiNewMainMenu) {
-		Object o = guiNewMainMenu;
-		return (GuiMainMenu)o;
-	}*/
+	
 }

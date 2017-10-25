@@ -2,13 +2,14 @@ package org.golde.forge.scratchforge.mainmod.guis;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
 public class GuiNewMultiplayer extends GuiMultiplayer
 {
 
-	public GuiNewMultiplayer() {
-		super(null);
+	public GuiNewMultiplayer(GuiScreen past) {
+		super(past);
 	}
 
 	@Override
