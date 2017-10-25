@@ -1,7 +1,4 @@
-package org.golde.forge.scratchforge.mods.test;
-
-import org.golde.forge.scratchforge.base.common.item.ItemBase;
-import org.golde.forge.scratchforge.base.common.item.SpawnEgg;
+package org.golde.forge.scratchforge.mods./*Mod Package*/;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -10,9 +7,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModItems {
 	
 	@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + ":spawnEgg")
-	public static SpawnEgg spawnEgg;
+	public static BlockBase spawnEgg;
 
-	/* Item */
+	/* Block */
 
 	//@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + ":/*name*/")
 	

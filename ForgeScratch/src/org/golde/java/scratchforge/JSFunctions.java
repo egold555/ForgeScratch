@@ -161,7 +161,6 @@ public class JSFunctions {
 			List<CodeComponent> recipeComponents = findComponents(codeParser, EnumObjectType.Recipes);
 
 			//================== [ Forge Mod.java Replacement] ==================
-
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
@@ -172,9 +171,25 @@ public class JSFunctions {
 			JavaHelper.writeFile(new File(projectFolder, "ForgeMod.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
+			
+			//================== [ Mod Items.java Replacement] ==================
+			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModItems.java"));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+
+			//write the file
+			JavaHelper.writeFile(new File(projectFolder, "ModItems.java"), fileToReplace);
+			//=============================== [ END ] ===============================
+			
+			//================== [ Mod Blocks.java Replacement] ==================
+			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModBlocks.java"));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+
+			//write the file
+			JavaHelper.writeFile(new File(projectFolder, "ModBlocks.java"), fileToReplace);
+			//=============================== [ END ] ===============================
 
 
-			//================== [ Forge CommonProxy.java Replacement] ==================
+			//================== [ Forge CommonProxy.java Replacement ] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"CommonProxy.java"));
 
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
