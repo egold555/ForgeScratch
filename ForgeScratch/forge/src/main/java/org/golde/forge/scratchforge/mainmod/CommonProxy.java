@@ -56,7 +56,7 @@ public class CommonProxy {
 	    event.getRegistry().register(new DebugItem());
 	}
 	
-	private static class DebugItem extends ItemBase {
+	public static class DebugItem extends ItemBase {
 
 		public DebugItem() {
 			super(ForgeModScratchForge.MOD_ID, ForgeModScratchForge.CREATIVE_TAB, "debugger", 1);

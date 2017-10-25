@@ -28,13 +28,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 
 	@Override
@@ -50,6 +53,12 @@ public class ClientProxy extends CommonProxy{
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
+	
+	@SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+        //ModBlocks.initModels();
+        ModItems.initModels();
+    }
 
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {

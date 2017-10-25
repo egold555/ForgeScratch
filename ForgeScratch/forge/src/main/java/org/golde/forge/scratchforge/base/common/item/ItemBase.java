@@ -1,14 +1,13 @@
 package org.golde.forge.scratchforge.base.common.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.golde.forge.scratchforge.base.helpers.JavaHelpers;
-import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item{
 	
@@ -22,5 +21,10 @@ public class ItemBase extends Item{
 		setUnlocalizedName(name);
 		setRegistryName(name);
 	}
+	
+	@SideOnly(Side.CLIENT)
+    public void initModel() {
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    }
 	
 }
