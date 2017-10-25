@@ -5,6 +5,7 @@ import org.golde.forge.scratchforge.base.common.item.*;
 import org.golde.forge.scratchforge.base.common.world.*;
 import org.golde.forge.scratchforge.base.helpers.*;
 
+import akka.actor.FSM.Event;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.client.*;
@@ -51,7 +52,6 @@ import net.minecraft.server.dedicated.*;
 import net.minecraft.server.gui.*;
 import net.minecraft.server.integrated.*;
 import net.minecraft.server.management.*;
-import net.minecraft.src.*;
 import net.minecraft.stats.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
@@ -60,7 +60,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.*;
 import net.minecraft.world.chunk.storage.*;
-import net.minecraft.world.demo.*;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.layer.*;
@@ -81,19 +80,15 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.*;
 import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
-import net.minecraftforge.transformers.*;
 
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.eventhandler.*;
-import cpw.mods.fml.common.gameevent.*;
-import cpw.mods.fml.common.gameevent.TickEvent.*;
-import cpw.mods.fml.common.gameevent.InputEvent.*;
-import cpw.mods.fml.common.gameevent.PlayerEvent.*;
-import cpw.mods.fml.common.Mod.*;
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.relauncher.*;
+import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.common.gameevent.*;
+import net.minecraftforge.fml.common.Mod.*;
+import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.fml.common.network.*;
+import net.minecraftforge.fml.relauncher.*;
 
 import org.apache.logging.log4j.*;
 
@@ -104,39 +99,15 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
+@Mod.EventBusSubscriber
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
-	
-	/* Block Variables */
-	/*Variables - Block*/
-
-	/* BlockFlower Variables */
-	/*Variables - BlockFlower*/
-
-	/* BlockPlant Variables */
-	/*Variables - BlockPlant*/
-
-	/* Item Variables */
-	public static SpawnEgg spawnEgg;
-	/*Variables - Item*/
 
 	/* Entity Variables */
 	/*Variables - Entity*/
 
 	public void preInit(FMLPreInitializationEvent event){
-		/* Block Constructor Calls */
-		/*Constructor calls - Block*/
-
-		/* BlockFlower Constructor Calls */
-		/*Constructor calls - BlockFlower*/
-
-		/* BlockPlant Constructor Calls */
-		/*Constructor calls - BlockPlant*/
-
-		/* Item Constructor Calls */
-		spawnEgg = new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB);
-		/*Constructor calls - Item*/
 
 		/* Entity Constructor Calls */
 		/*Constructor calls - Entity*/
@@ -145,7 +116,6 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.TERRAIN_GEN_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
 		
 		/* Recipe Registry */
 		/*Recipes*/
@@ -155,6 +125,26 @@ public class CommonProxy {
 		/* Command Registry */
 		/*Constructor calls - Command*/
 	}
+	
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		/* Block Constructor Calls */
+		/*Constructor calls - Block*/
+
+		/* BlockFlower Constructor Calls */
+		/*Constructor calls - BlockFlower*/
+
+		/* BlockPlant Constructor Calls */
+		/*Constructor calls - BlockPlant*/
+	}
+	
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		/* Item Constructor Calls */
+		event.getRegistry().register(new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB));
+		/*Constructor calls - Item*/
+	}
+	
 	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
@@ -193,17 +183,17 @@ public class CommonProxy {
 	}
 	
 	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
-		int id = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, rawEntityName, id);
-		EntityRegistry.registerModEntity(entityClass, rawEntityName, id, ForgeMod.INSTANCE, 64, 1, true);
+		int id = 1;
+		ResourceLocation rl = new ResourceLocation(ForgeMod.MOD_ID, rawEntityName);
+		EntityRegistry.registerModEntity(rl, entityClass, rawEntityName, id, ForgeMod.INSTANCE, 64, 1, true);
 		if(solidColor != -1 && spotColor != -1) {
-			createEgg(id, solidColor, spotColor);
+			createEgg(rl, id, solidColor, spotColor);
 		}
 		//TODO: Add language
 	}
 	
-	private void createEgg(int id, int solidColor, int spotColor) {
-		spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(id, solidColor, spotColor));
+	private void createEgg(ResourceLocation rl, int id, int solidColor, int spotColor) {
+		ModItems.spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(rl, solidColor, spotColor));
 	}
 
 	/*Classes*/

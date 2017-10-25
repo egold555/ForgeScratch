@@ -52,8 +52,13 @@ public class CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Item> event) {
+	public static void registerItems(RegistryEvent.Register<Item> event) {
 	    event.getRegistry().register(new DebugItem());
+	}
+	
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Item> event) {
+		
 	}
 	
 	public static class DebugItem extends ItemBase {

@@ -51,7 +51,6 @@ import net.minecraft.server.dedicated.*;
 import net.minecraft.server.gui.*;
 import net.minecraft.server.integrated.*;
 import net.minecraft.server.management.*;
-import net.minecraft.src.*;
 import net.minecraft.stats.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
@@ -60,7 +59,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.*;
 import net.minecraft.world.chunk.storage.*;
-import net.minecraft.world.demo.*;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.layer.*;
@@ -81,14 +79,13 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.*;
 import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
-import net.minecraftforge.transformers.*;
 
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.Mod.*;
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.relauncher.*;
+import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.Mod.*;
+import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.fml.common.network.*;
+import net.minecraftforge.fml.relauncher.*;
 
 import org.apache.logging.log4j.*;
 
@@ -116,21 +113,21 @@ public class ForgeMod implements IWorldGenerator{
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
 		@Override
-		public Item getTabIconItem() {
-			return Items.iron_axe;
+		public ItemStack getTabIconItem() {
+			return new ItemStack(Items.IRON_AXE);
 		}
 
 	};
 	
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 
 		chunkX = chunkX * 16;
 		chunkZ = chunkZ * 16;
-		if (world.provider.dimensionId == -1) {
+		if (world.provider.getDimension() == -1) {
 			PROXY.generateNether(world, random, chunkX, chunkZ);
 		}	
-		if (world.provider.dimensionId == 0) {
+		if (world.provider.getDimension() == 0) {
 			PROXY.generateSurface(world, random, chunkX, chunkZ);
 		}
 		

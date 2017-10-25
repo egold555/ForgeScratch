@@ -1,14 +1,11 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
-
+package org.golde.forge.scratchforge.mods.test;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
 import org.golde.forge.scratchforge.base.common.world.*;
 import org.golde.forge.scratchforge.base.helpers.*;
-import org.golde.forge.scratchforge.base.client.models.*;
 
-import org.lwjgl.opengl.GL11;
-
+import akka.actor.FSM.Event;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.client.*;
@@ -84,8 +81,6 @@ import net.minecraftforge.event.terraingen.*;
 import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
 
-import net.minecraftforge.fml.client.*;
-import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.*;
@@ -104,43 +99,109 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-public class ClientProxy extends CommonProxy {
-    
-    @Override
-    public void preInit(FMLPreInitializationEvent event){
-        super.preInit(event);
-        
-        /* Entity Rendering Code */
-        
-    }
-    
-    static class CustomEntityRenderer extends RenderLiving{
+@Mod.EventBusSubscriber
+public class CommonProxy {
 
-    	private ResourceLocation texture;
-    	double sx, sy, sz, tx, ty, tz;
-    	
-		public CustomEntityRenderer(ModelBase model, String textureName, double sx, double sy, double sz, double tx, double ty, double tz) {
-			super(Minecraft.getMinecraft().getRenderManager(), model, 0);
-			texture = new ResourceLocation(ForgeMod.MOD_ID, "textures/entities/" + textureName + ".png");
-			this.sx = sx;
-			this.sy = sy;
-			this.sz = sz;
-			this.tx = tx;
-			this.ty = ty;
-			this.tz = tz;
-		}
+	public static Scheduler scheduler = new Scheduler();
+
+	/* Entity Variables */
+	/*Variables - Entity*/
+
+	public void preInit(FMLPreInitializationEvent event){
+
+		/* Entity Constructor Calls */
 		
-		@Override
-		protected void preRenderCallback(EntityLivingBase entity, float f){
-	    	GL11.glScaled(sx, sy, sz);
-	    	GL11.glTranslated(tx, ty, tz);
-	    }
+	}
 
-		@Override
-		protected ResourceLocation getEntityTexture(Entity arg0) {
-			return texture;
+	public void init(FMLInitializationEvent event){
+		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.TERRAIN_GEN_BUS.register(this);
+		
+		/* Recipe Registry */
+		
+	}
+	
+	public void serverLoad(FMLServerStartingEvent event) {
+		/* Command Registry */
+		
+	}
+	
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		/* Block Constructor Calls */
+		
+
+		/* BlockFlower Constructor Calls */
+		
+
+		/* BlockPlant Constructor Calls */
+		
+	}
+	
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		/* Item Constructor Calls */
+		event.getRegistry().register(new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB));
+		
+	}
+	
+	
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		scheduler.update();
+	}
+
+	public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
+			/*Overworld world generation for flowers*/
+			
+
+			/*Overworld world generation for plants*/
+			
+
 		}
-    	
-    }
-    
+	}
+
+	//TODO: Implement nether plant generation?
+	public void generateNether(World world, Random random, int chunkX, int chunkZ) {
+		for (int i = 0; i < 20; i++) {
+			int x = chunkX + random.nextInt(16) + 8;
+			int y = random.nextInt(128);
+			int z = chunkZ + random.nextInt(16) + 8;
+
+			/*Nether generation for flowers*/
+			/*WorldGen - Nether - Flowers*/
+
+			/*Nether generation for plants*/
+			/*WorldGen - Nether - Plant*/
+
+		}
+	}
+	
+	public void createEntity(Class entityClass, String rawEntityName, String entityName, int solidColor, int spotColor) {
+		int id = 1;
+		ResourceLocation rl = new ResourceLocation(ForgeMod.MOD_ID, rawEntityName);
+		EntityRegistry.registerModEntity(rl, entityClass, rawEntityName, id, ForgeMod.INSTANCE, 64, 1, true);
+		if(solidColor != -1 && spotColor != -1) {
+			createEgg(rl, id, solidColor, spotColor);
+		}
+		//TODO: Add language
+	}
+	
+	private void createEgg(ResourceLocation rl, int id, int solidColor, int spotColor) {
+		ModItems.spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(rl, solidColor, spotColor));
+	}
+
+	
+/*type:global*/
+
+
+
+
+
+
 }
