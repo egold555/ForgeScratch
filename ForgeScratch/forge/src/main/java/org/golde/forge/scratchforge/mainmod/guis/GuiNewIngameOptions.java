@@ -5,8 +5,8 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiShareToLan;
-import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.gui.advancements.GuiScreenAdvancements;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 
@@ -35,7 +35,7 @@ public class GuiNewIngameOptions extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.options", new Object[0])));
         GuiButton var3;
         this.buttonList.add(var3 = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.shareToLan", new Object[0])));
-        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + var1, 98, 20, I18n.format("gui.achievements", new Object[0])));
+        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + var1, 98, 20, I18n.format("gui.advancements", new Object[0])));
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + var1, 98, 20, I18n.format("gui.stats", new Object[0])));
         var3.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
     }
@@ -50,7 +50,7 @@ public class GuiNewIngameOptions extends GuiScreen
 
             case 1:
                 button.enabled = false;
-                this.mc.theWorld.sendQuittingDisconnectingPacket();
+                this.mc.world.sendQuittingDisconnectingPacket();
                 this.mc.loadWorld((WorldClient)null);
                 this.mc.displayGuiScreen(new GuiMainMenu());
 
@@ -65,11 +65,11 @@ public class GuiNewIngameOptions extends GuiScreen
                 break;
 
             case 5:
-                this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.thePlayer.getStatFileWriter()));
+                this.mc.displayGuiScreen(new GuiScreenAdvancements(this.mc.player.connection.getAdvancementManager()));
                 break;
 
             case 6:
-                this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
+                this.mc.displayGuiScreen(new GuiStats(this, this.mc.player.getStatFileWriter()));
                 break;
 
             case 7:
@@ -91,7 +91,7 @@ public class GuiNewIngameOptions extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("menu.game", new Object[0]), this.width / 2, 40, 16777215);
+        this.drawCenteredString(this.fontRenderer, I18n.format("menu.game", new Object[0]), this.width / 2, 40, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

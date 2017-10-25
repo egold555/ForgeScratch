@@ -6,6 +6,7 @@ import org.golde.forge.scratchforge.base.common.block.BlockBasePlant;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -21,23 +22,21 @@ public class WorldGenCustomPlant extends WorldGenerator
 		this.block = block;
 	}
 
-	public boolean generate(World world, Random random, int x, int y, int z)
+	public boolean generate(World world, Random random, BlockPos pos)
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			int newX = x + random.nextInt(4) - random.nextInt(4);
-			int newY = y;
-			int newZ = z + random.nextInt(4) - random.nextInt(4);
+			BlockPos newPos = new BlockPos(pos.getX() + random.nextInt(4) - random.nextInt(4), pos.getY(), pos.getZ() + + random.nextInt(4) - random.nextInt(4));
 			if(block.doesGenerateInWorld()) {
-				if(world.isAirBlock(newX, newY, newZ)){
+				if(world.isAirBlock(pos)){
 					if(block.doesRequireWater()) {
-						if((world.getBlock(newX - 1, newY - 1, newZ).getMaterial() == Material.water) || (world.getBlock(newX + 1, newY - 1, newZ).getMaterial() == Material.water) || (world.getBlock(newX, newY - 1, newZ - 1).getMaterial() == Material.water) || (world.getBlock(newX, newY - 1, newZ + 1).getMaterial() == Material.water))
+						if((world.getBlockState(new BlockPos(newPos.getX() - 1, newPos.getY() - 1, newPos.getZ())).getMaterial() == Material.WATER) || (world.getBlockState(new BlockPos(newPos.getX() + 1, newPos.getY() -1, newPos.getZ())).getMaterial() == Material.WATER) || (world.getBlockState(new BlockPos(newPos.getX(), newPos.getY() - 1, newPos.getZ() - 1)).getMaterial() == Material.WATER) || (world.getBlockState(new BlockPos(newPos.getX(), newPos.getY() - 1, newPos.getZ() + 1)).getMaterial() == Material.WATER))
 						{
-							doGen(world, random, newX, newY, newZ);
+							doGen(world, random, newPos);
 						}
 					}
 					else {
-						doGen(world, random, newX, newY, newZ);
+						doGen(world, random, newPos);
 					}
 				}
 			}
@@ -47,11 +46,12 @@ public class WorldGenCustomPlant extends WorldGenerator
 		return true;
 	}
 
-	private void doGen(World world, Random random, int newX, int newY, int newZ) {
+	private void doGen(World world, Random random, BlockPos pos) {
 		int randomHeight = 2 + random.nextInt(random.nextInt(block.getGrowHeight()) + 1);
 		for (int i1 = 0; i1 < randomHeight; i1++) {
-			if (block.canBlockStay(world, newX, newY + i1, newZ)) {
-				world.setBlock(newX, newY + i1, newZ, block, 0, 2);
+			BlockPos newPos = new BlockPos(pos.getX(), pos.getY() + i1, pos.getZ());
+			if (block.canBlockStay(world, newPos)) {
+				world.setBlockState(newPos, block.getBlockState().getBaseState(), 2);
 			}
 		}
 	}

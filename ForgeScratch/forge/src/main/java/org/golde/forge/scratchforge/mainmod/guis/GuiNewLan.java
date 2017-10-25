@@ -5,17 +5,17 @@ import org.golde.forge.scratchforge.mainmod.Language;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.GameType;
 
 //Better lan describing that both players need to have the mod installed!
 public class GuiNewLan extends GuiBase{
 
 	private GuiButton btnAllowCommands;
 	private GuiButton btnGamemode;
-	private String btnGamemodeText = "survival";
+	private String gameMode = "survival";
 	private boolean allowCommands;
 
 	public GuiNewLan(GuiScreen pastScreen) {
@@ -34,7 +34,7 @@ public class GuiNewLan extends GuiBase{
 
 	private void updateBtnGamemodeAndCommands()
 	{
-		this.btnGamemode.displayString = I18n.format("selectWorld.gameMode", new Object[0]) + " " + I18n.format("selectWorld.gameMode." + this.btnGamemodeText, new Object[0]);
+		this.btnGamemode.displayString = (I18n.format("selectWorld.gameMode", new Object[0]) + ": " + I18n.format(new StringBuilder().append("selectWorld.gameMode.").append(this.gameMode).toString(), new Object[0]));
 		this.btnAllowCommands.displayString = I18n.format("selectWorld.allowCommands", new Object[0]) + " ";
 
 		if (this.allowCommands)
@@ -55,17 +55,17 @@ public class GuiNewLan extends GuiBase{
 		}
 		else if (button.id == 104)
 		{
-			if (this.btnGamemodeText.equals("survival"))
+			if (this.gameMode.equals("survival"))
 			{
-				this.btnGamemodeText = "creative";
+				this.gameMode = "creative";
 			}
-			else if (this.btnGamemodeText.equals("creative"))
+			else if (this.gameMode.equals("creative"))
 			{
-				this.btnGamemodeText = "adventure";
+				this.gameMode = "adventure";
 			}
 			else
 			{
-				this.btnGamemodeText = "survival";
+				this.gameMode = "survival";
 			}
 
 			this.updateBtnGamemodeAndCommands();
@@ -78,19 +78,19 @@ public class GuiNewLan extends GuiBase{
 		else if (button.id == 101)
 		{
 			this.mc.displayGuiScreen((GuiScreen)null);
-			String ip = this.mc.getIntegratedServer().shareToLAN(WorldSettings.GameType.getByName(this.btnGamemodeText), this.allowCommands);
+			String ip = this.mc.getIntegratedServer().shareToLAN(GameType.getByName(gameMode), this.allowCommands);
 			Object object;
 
 			if (ip != null)
 			{
-				object = new ChatComponentTranslation("commands.publish.started", new Object[] {ip});
+				object = new TextComponentTranslation("commands.publish.started", new Object[] {ip});
 			}
 			else
 			{
-				object = new ChatComponentText("commands.publish.failed");
+				object = new TextComponentString("commands.publish.failed");
 			}
 
-			this.mc.ingameGUI.getChatGUI().printChatMessage((IChatComponent)object);
+			this.mc.ingameGUI.getChatGUI().printChatMessage((ITextComponent)object);
 		}
 	}
 
@@ -109,15 +109,15 @@ public class GuiNewLan extends GuiBase{
 		{
 			if (offset >= spaceAvailable)
 			{
-				drawCenteredString(fontRendererObj, "...", width / 2, offset, 16777215);
+				drawCenteredString(fontRenderer, "...", width / 2, offset, 16777215);
 				break;
 			}
 			if (!line.isEmpty()) {
-				drawCenteredString(fontRendererObj, line, width / 2, offset, 16777215);
+				drawCenteredString(fontRenderer, line, width / 2, offset, 16777215);
 			}
 			offset += 10;
 		}
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.otherPlayers", new Object[0]), this.width / 2, this.height - 120, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.otherPlayers", new Object[0]), this.width / 2, this.height - 120, 16777215);
 	}
 
 }

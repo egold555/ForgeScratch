@@ -1,7 +1,7 @@
 package org.golde.forge.scratchforge.mainmod.guis;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class GuiMessage extends GuiAbstractMessage{
 

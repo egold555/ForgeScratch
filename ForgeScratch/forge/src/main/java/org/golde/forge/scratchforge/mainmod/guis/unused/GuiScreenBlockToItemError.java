@@ -3,9 +3,8 @@ package org.golde.forge.scratchforge.mainmod.guis.unused;
 import org.golde.forge.scratchforge.mainmod.guis.GuiAbstractMessage;
 import org.golde.forge.scratchforge.mainmod.guis.GuiMessage;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.StartupQuery;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.common.StartupQuery;
 
 public class GuiScreenBlockToItemError extends GuiMessage{
 

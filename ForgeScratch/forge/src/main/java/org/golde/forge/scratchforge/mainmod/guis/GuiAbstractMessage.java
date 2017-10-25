@@ -1,14 +1,8 @@
 package org.golde.forge.scratchforge.mainmod.guis;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.StartupQuery;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
 
 /*
  * Based off of forge's GuiNotification class
@@ -51,11 +45,11 @@ public abstract class GuiAbstractMessage extends GuiBase{
 		{
 			if (offset >= spaceAvailable)
 			{
-				drawCenteredString(fontRendererObj, "...", width / 2, offset, 16777215);
+				drawCenteredString(fontRenderer, "...", width / 2, offset, 16777215);
 				break;
 			}
 			if (!line.isEmpty()) {
-				drawCenteredString(fontRendererObj, line, width / 2, offset, 16777215);
+				drawCenteredString(fontRenderer, line, width / 2, offset, 16777215);
 			}
 			offset += 10;
 		}
