@@ -55,14 +55,16 @@ public class JavaHelper {
 
 
 	//Write file to system
-	public static void writeFile(File file, String text) throws FileNotFoundException, UnsupportedEncodingException {
+	public static void writeFile(File file, String text) throws IOException {
+		PLog.info("FILE: " + file.getAbsolutePath());
+		file.getParentFile().mkdirs();
 		Formatter out = new Formatter(file, "UTF-8");  // might fail
 		out.format("%s", text);
 		out.close();
 	}
 
 	//Read file from system
-	public static String readFile(File file) throws FileNotFoundException, UnsupportedEncodingException {
+	public static String readFile(File file) throws FileNotFoundException {
 		Scanner in = new Scanner(file, "UTF-8");
 		String result = "";
 		while (in.hasNext()) {

@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(modid=ForgeModScratchForge.MOD_ID, value=Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 
 	@Override

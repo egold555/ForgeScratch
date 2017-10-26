@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid=ForgeModScratchForge.MOD_ID)
 public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {

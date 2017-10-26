@@ -1,7 +1,10 @@
 package org.golde.java.scratchforge;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -36,8 +39,10 @@ public class JSFunctions {
 	private File forgeScratch;
 	private File forgeModsIn;
 	private File forgeAssets;
+	private File modAssets;
 	private JSObject javaApp;
 	private String javaHome = System.getenv("JAVA_HOME");
+	private String MOD_NAME;
 
 	public JSFunctions() {
 		this.javaApp = Main.getInstance().window;
@@ -45,6 +50,7 @@ public class JSFunctions {
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
+		
 	}
 
 	public String saveXML() {
@@ -139,14 +145,15 @@ public class JSFunctions {
 	private void createModFromCode(String sfGenCode)
 	{
 		PLog.info("Fixing code....");
-		String projectName = Main.getInstance().MOD_NAME.replace(" ", "_");
+		MOD_NAME = JavaHelper.makeJavaId(Main.getInstance().MOD_NAME);
+		this.modAssets = new File(forgeAssets, "sf_" + MOD_NAME);
 		try {
 			CodeParser codeParser = new CodeParser();
 			codeParser.parseCode(fixCode(sfGenCode));
 
 
 			//Setup basic variables
-			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
+			File projectFolder = new File(forgeModsIn, MOD_NAME);
 			JavaHelper.copyEverythingInAFolder(new File(forgeScratch, "Template"), projectFolder);
 			String fileToReplace = "";
 
@@ -162,7 +169,7 @@ public class JSFunctions {
 
 			//================== [ Forge Mod.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
 			fileToReplace = fileToReplace.replace("/*Mod Template*/", Main.getInstance().MOD_NAME);
 
@@ -174,15 +181,17 @@ public class JSFunctions {
 			
 			//================== [ Mod Items.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModItems.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
+			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
+			
 			//write the file
 			JavaHelper.writeFile(new File(projectFolder, "ModItems.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 			
 			//================== [ Mod Blocks.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModBlocks.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
 			//write the file
 			JavaHelper.writeFile(new File(projectFolder, "ModBlocks.java"), fileToReplace);
@@ -192,7 +201,7 @@ public class JSFunctions {
 			//================== [ Forge CommonProxy.java Replacement ] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"CommonProxy.java"));
 
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
 			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockComponents));
@@ -205,7 +214,7 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
 			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
 
-			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
+			
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", registerCommandConstructors(commandComponents));
@@ -223,12 +232,12 @@ public class JSFunctions {
 
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityComponents));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
-
+			writeComponentJson(EnumJsonType.ITEM, itemComponents);
 
 			Main.getInstance().modManager.scanDirectoriesForMods();
 
@@ -240,6 +249,8 @@ public class JSFunctions {
 
 
 	}
+
+	
 
 	public void run(String sfGenCode) {
 		createModFromCode(sfGenCode);
@@ -280,7 +291,8 @@ public class JSFunctions {
 		String result = "";
 
 		for (CodeComponent component: blockComponents) {
-			result += "static " + className(component) + " " + variableName(component) + ";" + "\n";
+			//result += "static " + className(component) + " " + variableName(component) + ";" + "\n";
+			result += "@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + \":" + variableName(component) + "\")\n" + "public static " + className(component) + " " + variableName(component) + ";" + "\n\n";
 		}
 
 		return result;
@@ -316,21 +328,11 @@ public class JSFunctions {
 
 		for (CodeComponent component: components) {
 			//result += variableName(component) + " = new " + className(component) + "();" + "\n";
-			result += "event.getRegistry().register(" + className(component) + "());" + "\n";
+			result += "event.getRegistry().register(new " + className(component) + "());" + "\n";
 		}
 
 		return result;
 	}
-
-	/*private String constructorCallsWithoutVariable(List<CodeComponent> components) {
-		String result = "";
-
-		for (CodeComponent component: components) {
-			result += "new " + className(component) + "();" + "\n";
-		}
-
-		return result;
-	}*/
 
 	private String registerCommandConstructors(List<CodeComponent> components) {
 		String result = "";
@@ -395,6 +397,29 @@ public class JSFunctions {
 		code = code.replace("BLOCK_ID", "ForgeMod.BLOCK_ID");
 		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;
+	}
+	
+	private void writeComponentJson(EnumJsonType type, List<CodeComponent> components) throws IOException {
+		for(CodeComponent component:components) {
+			String json = getJson(type, component.getName());
+			JavaHelper.writeFile(new File(new File(modAssets, "models/" + type.toString()), component.getName().toLowerCase()+ ".json"), json);
+		}
+		
+	}
+	
+	private enum EnumJsonType{
+		ITEM;
+		
+		@Override
+		public String toString() {
+			return name().toLowerCase();
+		}
+	}
+	private String getJson(EnumJsonType type, String name) throws IOException {
+		String json = JavaHelper.readFile(new File(new File(new File(forgeScratch, "Template Assets"), "default/json"), type.toString() + ".json"));
+		json = json.replace("*name*", name.toLowerCase());
+		json = json.replace("*mod*", "sf_" + MOD_NAME.toLowerCase());
+		return json;
 	}
 
 	private String variableName(CodeComponent component) {

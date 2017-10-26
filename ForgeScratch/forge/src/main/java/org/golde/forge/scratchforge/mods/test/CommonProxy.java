@@ -99,7 +99,7 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid=ForgeMod.MOD_ID)
 public class CommonProxy {
 
 	public static Scheduler scheduler = new Scheduler();
@@ -142,7 +142,8 @@ public class CommonProxy {
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		/* Item Constructor Calls */
 		event.getRegistry().register(new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB));
-		
+		event.getRegistry().register(new Mcitem_testing());
+
 	}
 	
 	
@@ -187,13 +188,13 @@ public class CommonProxy {
 		ResourceLocation rl = new ResourceLocation(ForgeMod.MOD_ID, rawEntityName);
 		EntityRegistry.registerModEntity(rl, entityClass, rawEntityName, id, ForgeMod.INSTANCE, 64, 1, true);
 		if(solidColor != -1 && spotColor != -1) {
-			createEgg(rl, id, solidColor, spotColor);
+			createEgg(rl, solidColor, spotColor);
 		}
 		//TODO: Add language
 	}
 	
-	private void createEgg(ResourceLocation rl, int id, int solidColor, int spotColor) {
-		ModItems.spawnEgg.entityEggs.put(Integer.valueOf(id), new EntityList.EntityEggInfo(rl, solidColor, spotColor));
+	private void createEgg(ResourceLocation rl, int solidColor, int spotColor) {
+		ModItems.spawnEgg.ENTITY_EGGS.put(rl, new EntityList.EntityEggInfo(rl, solidColor, spotColor));
 	}
 
 	
@@ -202,6 +203,14 @@ public class CommonProxy {
 
 
 
+
+/*type:item*/
+    public static class Mcitem_testing extends ItemBase {
+        public Mcitem_testing() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "testing", 64);
+        }
+
+    }
 
 
 }

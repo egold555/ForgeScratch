@@ -171,7 +171,7 @@ Blockly.Java['mcblock'] = function(block) {
   var code = 
     '/*BEGIN:' + value_name + '*/\n' +
     '/*type:block*/\n' +
-    '    public class Mcblock_' + value_name + ' extends BlockBase {\n' +
+    '    public static class Mcblock_' + value_name + ' extends BlockBase {\n' +
     '        public Mcblock_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_material + '); \n' +
     '\n'+
@@ -258,7 +258,7 @@ Blockly.Java['mcblockflower'] = function(block) {
   var code = 
     '/*BEGIN:' + value_name + '*/\n' +
     '/*type:blockFlower*/\n' +
-    '    public class McblockFlower_' + value_name + ' extends BlockBaseFlower {\n' +
+    '    public static class McblockFlower_' + value_name + ' extends BlockBaseFlower {\n' +
     '        public McblockFlower_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '"); \n' +
     '\n'+
@@ -406,7 +406,7 @@ Blockly.Java['mcblockplant'] = function(block) {
   var code = 
     '/*BEGIN:' + value_name + '*/\n' +
     '/*type:blockPlant*/\n' +
-    '    public class McblockPlant_' + value_name + ' extends BlockBasePlant {\n' +
+    '    public static class McblockPlant_' + value_name + ' extends BlockBasePlant {\n' +
     '        public McblockPlant_' + value_name + '() {\n' +
     '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + dropdown_type + ', ' + checkbox_gen + ', ' + checkbox_watergen + ', ' + value_height + '); \n' +
     '\n'+
@@ -2017,7 +2017,7 @@ Blockly.Java['mcitem'] = function(block) {
   var code = 
   '/*BEGIN:' + value_name + '*/\n' +
   '/*type:item*/\n' +
-  '    public class Mcitem_' + value_name + ' extends ItemBase {\n' + 
+  '    public static class Mcitem_' + value_name + ' extends ItemBase {\n' + 
   '        public Mcitem_' + value_name + '() {\n' +
   '            super(BLOCK_ID, CREATIVE_TAB, "' + raw_value_name + '", ' + value_amount + '); \n' +
   '        }\n\n' +

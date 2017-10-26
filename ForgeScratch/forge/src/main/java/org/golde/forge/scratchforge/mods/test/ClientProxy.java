@@ -104,6 +104,7 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
+@Mod.EventBusSubscriber(modid=ForgeMod.MOD_ID, value=Side.CLIENT)
 public class ClientProxy extends CommonProxy {
     
     @Override
