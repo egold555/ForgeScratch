@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.tutorialmod;
+package org.golde.forge.scratchforge.base.helpers;
 
 import java.nio.FloatBuffer;
 import org.lwjgl.opengl.GL11;

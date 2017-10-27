@@ -1,9 +1,11 @@
 package org.golde.forge.scratchforge.tutorialmod;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.golde.forge.scratchforge.base.helpers.PLog;
+import org.golde.forge.scratchforge.base.helpers.Title;
 import org.golde.forge.scratchforge.tutorialmod.guis.GuiLimitedIngameOptions;
 import org.golde.forge.scratchforge.tutorialmod.guis.GuiTemp;
 import org.lwjgl.opengl.GL11;
@@ -43,17 +45,25 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 	}
+	
+	
 
+	//=============================== [ Gui Switching ] ===============================
 	@SubscribeEvent
 	public void onGuiChange(GuiOpenEvent event) {
 		if(event.gui instanceof GuiMainMenu) {
 			event.gui = new GuiTemp();
 		} else if(event.gui instanceof GuiIngameMenu) {
 			event.gui = new GuiLimitedIngameOptions();
+			titles.add(new Title("Oh, this is cool"));
 		}
 	}
+	//==================================================================================
 	
-	boolean isInGame = false;
+	
+	
+	//=============================== [ Start Integrated Server ] ===============================
+	private boolean isInGame = false;
 	
 	@SubscribeEvent
 	public void renderEvent(TickEvent.RenderTickEvent event) {
@@ -62,39 +72,25 @@ public class ClientProxy extends CommonProxy {
 			Minecraft.getMinecraft().launchIntegratedServer("ScratchForge_Tutorial", "ScratchForge_Tutorial", new WorldSettings(0, GameType.CREATIVE, false, false, WorldType.FLAT));
 		}
 	}
+	//============================================================================================
+	
+	
+	
+	//=============================== [ Handle Titles ] ===============================
+	private List<Title> titles = new ArrayList<Title>();
 	
 	@SubscribeEvent
-	public void renderTextEvent(RenderGameOverlayEvent.Text event) {
+	public void renderTextEvent(RenderGameOverlayEvent.Text event) { //This will fill up with titles... Not sure how to remove them
 		if(event.isCanceled()) {return;}
-		
-		title("§aTitle", "Sub");
-		
+		for(Title title:titles) {
+			if(title.shouldRender()) {
+				title.render();
+				title.setSubTitle("" + title.getRenderTime());
+			}
+		}
 	}
+	//=================================================================================
 	
-	public void title(String title, String subTitle) {
-		Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution scaledResolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int scaledX = scaledResolution.getScaledWidth();
-        int scaledY = scaledResolution.getScaledHeight();
-
-
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)(scaledX / 2), (float)(scaledY / 2), 0.0F);
-        GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.pushMatrix();
-        GlStateManager.scale(4.0F, 4.0F, 4.0F);
-        //var9 = var8 << 24 & -16777216;
-        mc.fontRenderer.drawString(title, (-mc.fontRenderer.getStringWidth(title) / 2), -10, /*16777215 | var9*/0xFFFFFF, true);
-        GlStateManager.popMatrix();
-        GlStateManager.pushMatrix();
-        GlStateManager.scale(2.0F, 2.0F, 2.0F);
-        mc.fontRenderer.drawString(subTitle, (-mc.fontRenderer.getStringWidth(subTitle) / 2), 5, /*16777215 | var9*/0xFFFFFF, true);
-        GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
-        
-	}
 	
 
 }
