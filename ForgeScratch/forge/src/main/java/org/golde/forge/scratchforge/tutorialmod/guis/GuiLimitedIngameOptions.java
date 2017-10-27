@@ -45,7 +45,7 @@ public class GuiLimitedIngameOptions extends GuiScreen
                 button.enabled = false;
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
                 this.mc.loadWorld((WorldClient)null);
-                this.mc.shutdownMinecraftApplet();
+                this.mc.shutdown();
 
             case 2:
             case 3:
