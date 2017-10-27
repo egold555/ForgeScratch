@@ -19,6 +19,7 @@ public class ModItems {
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
+		if(spawnEgg!=null) {spawnEgg.initModel();}
 		/*Variables - Item - Models*/
 	}
 	

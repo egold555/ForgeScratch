@@ -14,15 +14,13 @@ public class ModItems {
 	@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + ":spawnEgg")
 	public static SpawnEgg spawnEgg;
 
-	@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + ":mcitem_testing")
-public static Mcitem_testing mcitem_testing;
-
-
+	
 	
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
-		/*Variables - Item - Models*/
+		if(spawnEgg!=null) {spawnEgg.initModel();}
+		
 	}
 	
 }

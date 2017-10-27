@@ -115,6 +115,11 @@ public class ClientProxy extends CommonProxy {
         
     }
     
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+        ModItems.initModels();
+    }
+    
     static class CustomEntityRenderer extends RenderLiving{
 
     	private ResourceLocation texture;

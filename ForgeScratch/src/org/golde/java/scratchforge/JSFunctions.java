@@ -184,6 +184,7 @@ public class JSFunctions {
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
 			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
+			fileToReplace = fileToReplace.replace("/*Variables - Item - Models*/", initModel(itemComponents));
 			
 			//write the file
 			JavaHelper.writeFile(new File(projectFolder, "ModItems.java"), fileToReplace);
@@ -192,7 +193,10 @@ public class JSFunctions {
 			//================== [ Mod Blocks.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModBlocks.java"));
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
-
+			
+			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
+			fileToReplace = fileToReplace.replace("/*Variables - Block - Models*/", initModel(blockComponents));
+			
 			//write the file
 			JavaHelper.writeFile(new File(projectFolder, "ModBlocks.java"), fileToReplace);
 			//=============================== [ END ] ===============================
@@ -203,16 +207,16 @@ public class JSFunctions {
 
 			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
 
-			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
+			
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockComponents));
 
-			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
-			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
+			//fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
+			//fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
+			//fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
 
-			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
-			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
-			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
+			//fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
+			//fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
+			//fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
 
 			
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
@@ -238,6 +242,9 @@ public class JSFunctions {
 			//=============================== [ END ] ===============================
 
 			writeComponentJson(EnumJsonType.ITEM, itemComponents);
+			writeComponentJson(EnumJsonType.BLOCK, blockComponents);
+			writeComponentJson(EnumJsonType.BLOCK_ITEM, blockComponents);
+			writeComponentJson(EnumJsonType.BLOCK_STATE, blockComponents);
 
 			Main.getInstance().modManager.scanDirectoriesForMods();
 
@@ -287,17 +294,26 @@ public class JSFunctions {
 		return codeParser.getComponentsOfType(type.clazz);
 	}
 
-	private String variables(List<CodeComponent> blockComponents) {
+	private String variables(List<CodeComponent> components) {
 		String result = "";
 
-		for (CodeComponent component: blockComponents) {
-			//result += "static " + className(component) + " " + variableName(component) + ";" + "\n";
-			result += "@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + \":" + variableName(component) + "\")\n" + "public static " + className(component) + " " + variableName(component) + ";" + "\n\n";
+		for (CodeComponent component: components) {
+			result += "@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + \":" + component.getName().toLowerCase() + "\")\n" + "public static " + className(component) + " " + variableName(component) + ";" + "\n\n";
 		}
 
 		return result;
 	}
 
+	private String initModel(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += variableName(component) + ".initModel();\n";
+		}
+
+		return result;
+	}
+	
 	private String placeGenericCode(List<CodeComponent> components) {
 		String result = "";
 
@@ -402,13 +418,27 @@ public class JSFunctions {
 	private void writeComponentJson(EnumJsonType type, List<CodeComponent> components) throws IOException {
 		for(CodeComponent component:components) {
 			String json = getJson(type, component.getName());
-			JavaHelper.writeFile(new File(new File(modAssets, "models/" + type.toString()), component.getName().toLowerCase()+ ".json"), json);
+			String placedAt = "";
+			
+			if(type == EnumJsonType.BLOCK || type == EnumJsonType.ITEM) {
+				placedAt = "models/" + type.toString();
+			}
+			else if(type == EnumJsonType.BLOCK_ITEM) {
+				placedAt = "models/item";
+			}
+			else if(type == EnumJsonType.BLOCK_STATE) {
+				placedAt = "blockstates";
+			}
+			else {
+				PLog.error("Invallid JSON: " + type.name());
+			}
+			JavaHelper.writeFile(new File(new File(modAssets, placedAt), component.getName().toLowerCase()+ ".json"), json);
 		}
 		
 	}
 	
 	private enum EnumJsonType{
-		ITEM;
+		BLOCK, BLOCK_STATE, BLOCK_ITEM, ITEM;
 		
 		@Override
 		public String toString() {

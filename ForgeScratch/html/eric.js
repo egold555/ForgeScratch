@@ -87,19 +87,19 @@ Blockly.Blocks['mcblock'] = {
       "options": [
         [
           "Dirt",
-          "Material.ground"
+          "Material.GROUND"
         ],
         [
           "Stone",
-          "Material.rock"
+          "Material.ROCK"
         ],
         [
           "Wood",
-          "Material.wood"
+          "Material.WOOD"
         ],
         [
           "Glass",
-          "Material.glass"
+          "Material.GLASS"
         ]
       ]
     },

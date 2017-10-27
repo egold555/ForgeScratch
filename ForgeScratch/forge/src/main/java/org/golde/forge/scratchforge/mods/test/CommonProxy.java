@@ -129,21 +129,21 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		/* Block Constructor Calls */
-		
+		event.getRegistry().register(new Mcblock_Block_Name());
+
 
 		/* BlockFlower Constructor Calls */
-		
+		/*Constructor calls - BlockFlower*/
 
 		/* BlockPlant Constructor Calls */
-		
+		/*Constructor calls - BlockPlant*/
 	}
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		/* Item Constructor Calls */
 		event.getRegistry().register(new SpawnEgg(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB));
-		event.getRegistry().register(new Mcitem_testing());
-
+		
 	}
 	
 	
@@ -159,10 +159,10 @@ public class CommonProxy {
 			int z = chunkZ + random.nextInt(16) + 8;
 
 			/*Overworld world generation for flowers*/
-			
+			/*WorldGen - Overworld - Flowers*/
 
 			/*Overworld world generation for plants*/
-			
+			/*WorldGen - Overworld - Plant*/
 
 		}
 	}
@@ -204,10 +204,17 @@ public class CommonProxy {
 
 
 
-/*type:item*/
-    public static class Mcitem_testing extends ItemBase {
-        public Mcitem_testing() {
-            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "testing", 64);
+/*type:block*/
+    public static class Mcblock_Block_Name extends BlockBase {
+        public Mcblock_Block_Name() {
+            super(ForgeMod.BLOCK_ID, ForgeMod.CREATIVE_TAB, "Block Name", Material.GROUND);
+
+if(false){
+    setHardness(-1.0F);
+}
+if(false){
+    setResistance(6000000.0F);
+}
         }
 
     }
