@@ -9,6 +9,7 @@ import java.util.Random;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -24,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
@@ -185,6 +187,14 @@ public class ModHelpers {
 		case "#ffffff": return EnumChatFormatting.WHITE;
 		default: return EnumChatFormatting.RESET; 
 		}
+	}
+	
+	public static void sendChatMessage(String message) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+	}
+	
+	public static void playSound(String sound) {
+		Minecraft.getMinecraft().thePlayer.playSound(sound, 1.0f, 1.0f);
 	}
 
 }

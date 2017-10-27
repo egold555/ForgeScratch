@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
 import org.golde.forge.scratchforge.base.helpers.Title;
 import org.golde.forge.scratchforge.tutorialmod.guis.GuiLimitedIngameOptions;
@@ -20,6 +21,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Type;
 import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
@@ -53,9 +55,14 @@ public class ClientProxy extends CommonProxy {
 	public void onGuiChange(GuiOpenEvent event) {
 		if(event.gui instanceof GuiMainMenu) {
 			event.gui = new GuiTemp();
-		} else if(event.gui instanceof GuiIngameMenu) {
+		} 
+		else if(event.gui instanceof GuiIngameMenu) {
 			event.gui = new GuiLimitedIngameOptions();
-			titles.add(new Title("Oh, this is cool"));
+		} 
+		else if(event.gui instanceof GuiChat) {
+			titles.add(new Title("§aCongratulations!", "§ePuzzle §6" + place + " §ecompleted."));
+			ModHelpers.playSound("random.levelup");
+			ModHelpers.sendChatMessage("§6You have completed puzzle §e" + place + "§6 successfully! Close out of the §6game to continue on your adventure.");
 		}
 	}
 	//==================================================================================
@@ -85,7 +92,7 @@ public class ClientProxy extends CommonProxy {
 		for(Title title:titles) {
 			if(title.shouldRender()) {
 				title.render();
-				title.setSubTitle("" + title.getRenderTime());
+				//title.setSubTitle("" + title.getRenderTime());
 			}
 		}
 	}
