@@ -10,7 +10,6 @@ import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
 import org.golde.forge.scratchforge.mainmod.guis.GuiMessage;
 import org.golde.forge.scratchforge.mainmod.guis.GuiNewIngameOptions;
-import org.golde.forge.scratchforge.mainmod.guis.GuiNewLan;
 import org.golde.forge.scratchforge.mainmod.guis.GuiNewMainMenu;
 import org.golde.forge.scratchforge.mainmod.guis.GuiNewMultiplayer;
 
@@ -18,24 +17,19 @@ import com.google.common.collect.SetMultimap;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.GuiConfirmation;
-import cpw.mods.fml.client.GuiIngameModOptions;
-import cpw.mods.fml.client.GuiNotification;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.StartupQuery;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -124,11 +118,13 @@ public class ClientProxy extends CommonProxy{
 
 		//Custom main menu screen
 		if(event.gui instanceof GuiMainMenu) {
+			if(Config.isTutorial()) {return;}
 			event.gui = new GuiNewMainMenu();
 		}
 
 		//Custom ingame options to get rid of forge test
 		if(event.gui instanceof GuiIngameMenu) {
+			if(Config.isTutorial()) {return;}
 			event.gui = new GuiNewIngameOptions();
 		}
 

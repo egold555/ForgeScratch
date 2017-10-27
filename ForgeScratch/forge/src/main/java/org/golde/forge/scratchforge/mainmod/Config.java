@@ -11,6 +11,8 @@ public class Config {
 
 	private static boolean multiplayer = true;
 	private static boolean multiplayerLimited = false;
+	private static boolean tutorial = false;
+	private static int tutorialPlace = -1;
 	
 	private static Properties prop = new Properties();
 	private static InputStream input = null;
@@ -21,6 +23,8 @@ public class Config {
 		try {
 			multiplayer = Boolean.parseBoolean(get("CLIENT_MULTIPLAYER_ENABLED"));
 			multiplayerLimited = Boolean.parseBoolean(get("CLIENT_MULTIPLAYER_LIMITED"));
+			tutorial = Boolean.parseBoolean(get("TUTORIAL"));
+			tutorialPlace = Integer.parseInt(get("TUTORIALPLACE"));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to load config!");
@@ -37,7 +41,7 @@ public class Config {
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to read setting " + setting + "!");
-			return null;
+			return "0";
 		}
 	}
 	
@@ -47,6 +51,14 @@ public class Config {
 	
 	public static boolean isMultiplayerLimitedToLan() {
 		return multiplayerLimited;
+	}
+	
+	public static boolean isTutorial() {
+		return tutorial;
+	}
+	
+	public static int getTutorialPlace() {
+		return tutorialPlace;
 	}
 	
 }
