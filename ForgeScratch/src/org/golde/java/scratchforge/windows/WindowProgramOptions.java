@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.golde.java.scratchforge.Config;
-import org.golde.java.scratchforge.Config.ConfigProperty;
+import org.golde.java.scratchforge.OldConfig;
+import org.golde.java.scratchforge.OldConfig.ConfigProperty;
 import org.golde.java.scratchforge.Main;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
@@ -175,7 +175,7 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void showSettingsMenu() {
-		Config config = Main.getInstance().config;
+		OldConfig config = Main.getInstance().config;
 		try {
 			comboBoxRam.setSelectedIndex(config.getInt(ConfigProperty.MCRAM));
 			chckbxMultiplayerEnabled.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED));
@@ -189,7 +189,7 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void saveAndCloseSettingsMenu() {
-		Config config = Main.getInstance().config;
+		OldConfig config = Main.getInstance().config;
 		config.setInt(ConfigProperty.MCRAM, comboBoxRam.getSelectedIndex());
 		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, chckbxMultiplayerEnabled.isSelected());
 		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, chckbxMultiplayerLimited.isSelected());

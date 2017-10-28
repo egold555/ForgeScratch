@@ -12,7 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.golde.java.scratchforge.Config.ConfigProperty;
+import org.golde.java.scratchforge.OldConfig.ConfigProperty;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;

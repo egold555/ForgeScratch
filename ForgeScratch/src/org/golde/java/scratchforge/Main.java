@@ -25,7 +25,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.golde.java.scratchforge.Config.ConfigProperty;
+import org.golde.java.scratchforge.OldConfig.ConfigProperty;
+import org.aeonbits.owner.ConfigFactory;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
@@ -68,7 +69,7 @@ public class Main implements ActionListener, KeyListener{
 
 	//Config manager. 
 	//Makes a properties file and simple saving and loading settings
-	public Config config = new Config();
+	public OldConfig config = new OldConfig();
 
 	private WindowProgramOptions windowProgramOptions = new WindowProgramOptions();
 
@@ -124,6 +125,8 @@ public class Main implements ActionListener, KeyListener{
 	private File examplesDir = new File("examples");
 	
 	public boolean tutorial = false;
+	
+	SFConfig cfg;
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -144,7 +147,8 @@ public class Main implements ActionListener, KeyListener{
 		offlineMode = !JavaHelper.isConnectedToTheInternet();
 		if(offlineMode) {PLog.info("Offline mode detected.");}
 
-
+		cfg = ConfigFactory.create(SFConfig.class);
+		ConfigFactory.setProperty("foo", "blah");
 
 		// This has to be called after "forge_folder" is initialized.
 		modManager = new ModManager();

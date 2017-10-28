@@ -31,7 +31,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import org.golde.java.scratchforge.Main;
-import org.golde.java.scratchforge.Config.ConfigProperty;
+import org.golde.java.scratchforge.OldConfig.ConfigProperty;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
 
 import javafx.application.Platform;

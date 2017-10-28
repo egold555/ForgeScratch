@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.golde.java.scratchforge.helpers.PLog;
 
-public class Config {
+public class OldConfig {
 
 	private Properties prop = new Properties();
 	private OutputStream output = null;
@@ -17,7 +17,7 @@ public class Config {
 	private final String CONFIG_NAME = "config.properties";
 	
 
-	public Config() {
+	public OldConfig() {
 		try {
 			if(!new File(CONFIG_NAME).exists()) {
 				//Make config file if it does not exist already
