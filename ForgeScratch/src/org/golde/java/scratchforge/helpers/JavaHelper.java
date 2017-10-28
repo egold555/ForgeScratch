@@ -30,9 +30,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.golde.java.scratchforge.Main;
-import org.golde.java.scratchforge.OldConfig.ConfigProperty;
+import org.golde.java.scratchforge.Config;
+import org.golde.java.scratchforge.Config.ConfigKeys;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
+import org.golde.java.scratchforge.Main;
 
 import javafx.application.Platform;
 
@@ -57,7 +58,7 @@ public class JavaHelper {
 					
 					Platform.runLater(() -> {
 						if(Main.getInstance().tutorial) {
-							Main.getInstance().jsFunctions.changePage(Main.getInstance().config.getInt(ConfigProperty.TUTORIALPLACE));
+							Main.getInstance().jsFunctions.changePage(Config.getInt(ConfigKeys.TUTORIAL_PLACE));
 						}
 						Main.getInstance().jsFunctions.pause(false);
 						try {

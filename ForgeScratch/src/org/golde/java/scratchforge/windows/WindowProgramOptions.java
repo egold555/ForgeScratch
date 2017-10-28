@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.golde.java.scratchforge.OldConfig;
-import org.golde.java.scratchforge.OldConfig.ConfigProperty;
+import org.golde.java.scratchforge.Config;
+import org.golde.java.scratchforge.Config.ConfigKeys;
 import org.golde.java.scratchforge.Main;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
@@ -175,11 +175,10 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void showSettingsMenu() {
-		OldConfig config = Main.getInstance().config;
 		try {
-			comboBoxRam.setSelectedIndex(config.getInt(ConfigProperty.MCRAM));
-			chckbxMultiplayerEnabled.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED));
-			chckbxMultiplayerLimited.setSelected(config.getBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED));
+			comboBoxRam.setSelectedIndex(Config.getInt(ConfigKeys.MINECRAFT_RAM));
+			chckbxMultiplayerEnabled.setSelected(Config.getBoolean(ConfigKeys.MINECRAFT_MP_ENABLED));
+			chckbxMultiplayerLimited.setSelected(Config.getBoolean(ConfigKeys.MINECRAFT_MP_RESTRICTED));
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to load config file. I Don't think they have saved any settings yet");
@@ -189,10 +188,9 @@ public class WindowProgramOptions extends JFrame{
 	}
 	
 	public void saveAndCloseSettingsMenu() {
-		OldConfig config = Main.getInstance().config;
-		config.setInt(ConfigProperty.MCRAM, comboBoxRam.getSelectedIndex());
-		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_ENABLED, chckbxMultiplayerEnabled.isSelected());
-		config.setBoolean(ConfigProperty.CLIENT_MULTIPLAYER_LIMITED, chckbxMultiplayerLimited.isSelected());
+		Config.setInt(ConfigKeys.MINECRAFT_RAM, comboBoxRam.getSelectedIndex());
+		Config.setBoolean(ConfigKeys.MINECRAFT_MP_ENABLED, chckbxMultiplayerEnabled.isSelected());
+		Config.setBoolean(ConfigKeys.MINECRAFT_MP_RESTRICTED, chckbxMultiplayerLimited.isSelected());
 		setVisible(false);
 	}
 	

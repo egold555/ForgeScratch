@@ -12,7 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.golde.java.scratchforge.OldConfig.ConfigProperty;
+import org.golde.java.scratchforge.Config.ConfigKeys;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
@@ -49,9 +49,11 @@ public class JSFunctions {
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
 	}
 	
+	//Called when the tutorial window is opened
 	public void setTutorialWindowObject(JSObject obj)
 	{
 		jsTutorial = obj;
+		changePage(Config.getInt(ConfigKeys.TUTORIAL_PLACE));
 	}
 
 	public String saveXML() {
@@ -417,7 +419,7 @@ public class JSFunctions {
 	}
 	
 	public void saveSelected(int page) {
-		Main.getInstance().config.setInt(ConfigProperty.TUTORIALPLACE, page);
+		Config.setInt(ConfigKeys.TUTORIAL_PLACE, page);
 	}
 
 

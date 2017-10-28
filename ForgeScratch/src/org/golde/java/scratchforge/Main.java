@@ -25,8 +25,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.golde.java.scratchforge.OldConfig.ConfigProperty;
-import org.aeonbits.owner.ConfigFactory;
+import org.golde.java.scratchforge.Config.ConfigKeys;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
@@ -34,8 +33,6 @@ import org.golde.java.scratchforge.mod.ModManager;
 import org.golde.java.scratchforge.windows.WindowEditTexture;
 import org.golde.java.scratchforge.windows.WindowProgramOptions;
 import org.golde.java.scratchforge.windows.WindowToggleMods;
-
-import com.sun.webkit.dom.HTMLBodyElementImpl;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -66,10 +63,6 @@ public class Main implements ActionListener, KeyListener{
 
 	//File for JSObject window to communicate functions to
 	public JSFunctions jsFunctions; 
-
-	//Config manager. 
-	//Makes a properties file and simple saving and loading settings
-	public OldConfig config = new OldConfig();
 
 	private WindowProgramOptions windowProgramOptions = new WindowProgramOptions();
 
@@ -125,8 +118,6 @@ public class Main implements ActionListener, KeyListener{
 	private File examplesDir = new File("examples");
 	
 	public boolean tutorial = false;
-	
-	SFConfig cfg;
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -146,9 +137,6 @@ public class Main implements ActionListener, KeyListener{
 		//Offline mode to prevent gradlew from erroring
 		offlineMode = !JavaHelper.isConnectedToTheInternet();
 		if(offlineMode) {PLog.info("Offline mode detected.");}
-
-		cfg = ConfigFactory.create(SFConfig.class);
-		ConfigFactory.setProperty("foo", "blah");
 
 		// This has to be called after "forge_folder" is initialized.
 		modManager = new ModManager();
@@ -170,6 +158,8 @@ public class Main implements ActionListener, KeyListener{
 		frame.setVisible(true);
 		fxPanel.addKeyListener(this);
 
+
+		
 		//Make the menu button "File" and add elements to it
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(mFileNew);
@@ -464,7 +454,7 @@ public class Main implements ActionListener, KeyListener{
 
 	//Main dialog on startup
 	public void startupDialog() {
-		config.setBoolean(ConfigProperty.TUTORIAL, false);
+		Config.setBoolean(ConfigKeys.TUTORIAL_ENABLED, false);
 		JRadioButton newProject = new JRadioButton("New");
 		JRadioButton openProject = new JRadioButton("Open");
 		JRadioButton tutorial = new JRadioButton("Tutorial");
@@ -534,7 +524,7 @@ public class Main implements ActionListener, KeyListener{
 	
 	private void startTutorial() {
 		tutorial = true;
-		config.setBoolean(ConfigProperty.TUTORIAL, true);
+		Config.setBoolean(ConfigKeys.TUTORIAL_ENABLED, true);
 		jsFunctions.openTutorialPages();
 	}
 	
