@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.golde.java.scratchforge.Config.ConfigProperty;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
@@ -32,6 +33,8 @@ import org.golde.java.scratchforge.mod.ModManager;
 import org.golde.java.scratchforge.windows.WindowEditTexture;
 import org.golde.java.scratchforge.windows.WindowProgramOptions;
 import org.golde.java.scratchforge.windows.WindowToggleMods;
+
+import com.sun.webkit.dom.HTMLBodyElementImpl;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -103,7 +106,7 @@ public class Main implements ActionListener, KeyListener{
 	private final String FILE_EXTENTION_DESCRIPTION = "Mod Save File";
 
 	//The magical thing that communicates with the javascript portion
-	public JSObject window; 
+	public JSObject jsBlocklyWindow; 
 
 	//Default mod name, gets overwritten on new project creation
 	public String MOD_NAME = "If you see this, something bad happened"; 
@@ -119,6 +122,8 @@ public class Main implements ActionListener, KeyListener{
 	
 	//Example blockmod directory
 	private File examplesDir = new File("examples");
+	
+	public boolean tutorial = false;
 
 	public static void main(String[] args) {
 		//Run things after everything, also non static :)
@@ -238,8 +243,7 @@ public class Main implements ActionListener, KeyListener{
 		WebView  webView = new WebView();
 		webView.setContextMenuEnabled(false);
 		webEngine = webView.getEngine();
-		File f = new File("html\\index.html");
-
+		File f = new File("html\\builder\\index.html");
 		webEngine.setPromptHandler(new Callback<PromptData, String>() {
 
 			@Override
@@ -254,9 +258,9 @@ public class Main implements ActionListener, KeyListener{
 						if (newState == Worker.State.SUCCEEDED) {
 
 							// web page is loaded.
-							window = (JSObject) webEngine.executeScript("window");
+							jsBlocklyWindow = (JSObject) webEngine.executeScript("window");
 							jsFunctions = new JSFunctions();
-							window.setMember("java_app", jsFunctions);
+							jsBlocklyWindow.setMember("java_app", jsFunctions);
 							Platform.runLater(() -> {
 								PLog.info("Checking updates...");
 								checkUpdate();
@@ -277,7 +281,25 @@ public class Main implements ActionListener, KeyListener{
 				WebView wv2 = new WebView();
 				stage.setScene(new Scene(wv2));
 				stage.show();
-				return wv2.getEngine();
+				WebEngine engine = wv2.getEngine();
+				
+				engine.getLoadWorker().stateProperty().addListener(
+						new ChangeListener<Worker.State>() {
+							public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
+								if (newState == Worker.State.SUCCEEDED) {
+									// web page is loaded. If it's the tutorial,
+									// then set up communication between the tutorial and the JsFunctions java class.
+									JSObject windowObject = (JSObject) engine.executeScript("window");
+									JSObject tutorial = (JSObject) engine.executeScript("window.document.getElementById('scratchforge_tutorial')");
+									if (tutorial != null) {
+										windowObject.setMember("java_app", jsFunctions);
+										jsFunctions.setTutorialWindowObject(windowObject);
+									}
+								}
+							}
+						});
+				
+				return engine;
 			}
 		});
 
@@ -438,18 +460,22 @@ public class Main implements ActionListener, KeyListener{
 
 	//Main dialog on startup
 	public void startupDialog() {
+		config.setBoolean(ConfigProperty.TUTORIAL, false);
 		JRadioButton newProject = new JRadioButton("New");
 		JRadioButton openProject = new JRadioButton("Open");
+		JRadioButton tutorial = new JRadioButton("Tutorial");
 
 		newProject.setSelected(true);
 
 		ButtonGroup bttnGroup = new ButtonGroup();
 		bttnGroup.add(newProject);
 		bttnGroup.add(openProject);
+		bttnGroup.add(tutorial);
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		panel.add(newProject);
 		panel.add(openProject);
+		panel.add(tutorial);
 
 		int result; 
 		do  {
@@ -459,8 +485,14 @@ public class Main implements ActionListener, KeyListener{
 
 		if(newProject.isSelected()) {
 			createMod(true);
-		}else {
+		}
+		else if (openProject.isSelected()){
 			loadFile(true);
+		}
+		else {
+			Platform.runLater(() -> {
+			startTutorial();
+			});
 		}
 	}
 
@@ -485,6 +517,28 @@ public class Main implements ActionListener, KeyListener{
 			return;
 		}
 	}
+	
+	static class Progress {
+		public static final int START = 1;
+		public static final int BLOCKS = 2;
+		/*public static final int ITEMS = 0;
+		public static final int CREATURES = 0;
+		public static final int EVENTS = 0;
+		public static final int START = 0;*/
+		public static final int FINISH = 100;
+	}
+	
+	private void startTutorial() {
+		tutorial = true;
+		config.setBoolean(ConfigProperty.TUTORIAL, true);
+		jsFunctions.openTutorialPages();
+	}
+	
+	/*private void finishTutorial(){
+		tutorial = false;
+		config.setBoolean(ConfigProperty.TUTORIAL, false);
+		config.setint(ConfigProperty.TUTORIAL, Progress.FINISH);
+	}*/
 
 	@Override
 	public void keyPressed(KeyEvent e) {}
@@ -512,9 +566,7 @@ public class Main implements ActionListener, KeyListener{
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	public static Main getInstance() {
 		return INSTANCE;
@@ -540,7 +592,7 @@ public class Main implements ActionListener, KeyListener{
 
 	public void downloadUpdate() { 
 		if(hasUpdate != null) {
-
+			//TODO Download the update
 		}
 	}
 

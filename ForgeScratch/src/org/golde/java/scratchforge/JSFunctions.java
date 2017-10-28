@@ -12,6 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.golde.java.scratchforge.Config.ConfigProperty;
 import org.golde.java.scratchforge.helpers.JavaHelper;
 import org.golde.java.scratchforge.helpers.PLog;
 import org.golde.java.scratchforge.helpers.codeparser.CodeComponent;
@@ -36,21 +37,27 @@ public class JSFunctions {
 	private File forgeScratch;
 	private File forgeModsIn;
 	private File forgeAssets;
-	private JSObject javaApp;
+	private JSObject jsBlockly;
+	private JSObject jsTutorial;
 	private String javaHome = System.getenv("JAVA_HOME");
 
 	public JSFunctions() {
-		this.javaApp = Main.getInstance().window;
+		this.jsBlockly = Main.getInstance().jsBlocklyWindow;
 		this.forgeDir = Main.getInstance().forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
 	}
+	
+	public void setTutorialWindowObject(JSObject obj)
+	{
+		jsTutorial = obj;
+	}
 
 	public String saveXML() {
 		createMod();
 
-		String blocklyXML = (String) javaApp.call("saveXML");
+		String blocklyXML = (String) jsBlockly.call("saveXML");
 
 		String textures = "";
 		for(Texture texture: Main.getInstance().modManager.getMod(Main.getInstance().MOD_NAME).getTextures()) {
@@ -103,7 +110,7 @@ public class JSFunctions {
 		}
 
 		String blockly = nodeToString(((Element)rootElement.getElementsByTagName("blockly").item(0)).getElementsByTagName("xml").item(0));
-		javaApp.call("loadXML", blockly);
+		jsBlockly.call("loadXML", blockly);
 	}
 
 	private static String nodeToString(Node node) throws Exception{
@@ -133,7 +140,7 @@ public class JSFunctions {
 
 	private void createMod()
 	{
-		createModFromCode((String) javaApp.call("getBlocklyCode"));
+		createModFromCode((String) jsBlockly.call("getBlocklyCode"));
 	}
 
 	private void createModFromCode(String sfGenCode)
@@ -229,30 +236,17 @@ public class JSFunctions {
 	public void run(String sfGenCode) {
 		createModFromCode(sfGenCode);
 		pause(true);
-		
-		//The crazy hacky ways that I come up with to get the program to do what....
-		new Thread() {
-			public void run() {
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				Platform.runLater(() -> {
-					try {
-						JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
-						pause(false);
-					}
-					catch(Exception e) {
-						pause(false);
-						PLog.error(e, "Failed to start forge!");
-						showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
-					}
-				});
-
+		Platform.runLater(() -> {
+			try {
+				JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
+				
 			}
-		}.start();
+			catch(Exception e) {
+				PLog.error(e, "Failed to start forge!");
+				showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
+			}
+		});
+
 
 	}
 
@@ -407,11 +401,23 @@ public class JSFunctions {
 	};
 
 	public void showToast(EnumToast type, String message) {
-		javaApp.call("sendToast", type.id, message);
+		jsBlockly.call("sendToast", type.id, message);
 	}
 
 	public void pause(boolean value) {
-		javaApp.call("togglePause", value);
+		jsBlockly.call("togglePause", value);
+	}
+	
+	public void openTutorialPages() {
+		jsBlockly.call("openInNewTab", "../tutorial/index.html");
+	}
+	
+	public void changePage(int page) {
+		jsTutorial.call("setSelected", page);
+	}
+	
+	public void saveSelected(int page) {
+		Main.getInstance().config.setInt(ConfigProperty.TUTORIALPLACE, page);
 	}
 
 

@@ -189,12 +189,8 @@ public class ModHelpers {
 		}
 	}
 	
-	public static void sendChatMessage(String message) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
-	}
-	
-	public static void playSound(String sound) {
-		Minecraft.getMinecraft().thePlayer.playSound(sound, 1.0f, 1.0f);
+	public static void sendChatMessage(EntityPlayer player, String message) {
+		player.addChatMessage(new ChatComponentText(message));
 	}
 
 }

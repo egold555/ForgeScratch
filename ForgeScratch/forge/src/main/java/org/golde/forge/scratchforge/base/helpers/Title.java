@@ -48,12 +48,12 @@ public class Title {
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.pushMatrix();
         GlStateManager.scale(4.0F, 4.0F, 4.0F);
-        //var9 = var8 << 24 & -16777216;
-        mc.fontRenderer.drawString(title, (-mc.fontRenderer.getStringWidth(title) / 2), -10, /*16777215 | var9*/0xFFFFFF, true);
+
+        mc.fontRenderer.drawString(title, (-mc.fontRenderer.getStringWidth(title) / 2), -10, 0xFFFFFF, true);
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
-        mc.fontRenderer.drawString(subTitle, (-mc.fontRenderer.getStringWidth(subTitle) / 2), 5, /*16777215 | var9*/0xFFFFFF, true);
+        mc.fontRenderer.drawString(subTitle, (-mc.fontRenderer.getStringWidth(subTitle) / 2), 5, 0xFFFFFF, true);
         GlStateManager.popMatrix();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();

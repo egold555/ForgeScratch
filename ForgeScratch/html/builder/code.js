@@ -580,5 +580,10 @@ function sendToast(type, message) {
 
 }
 
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  //win.focus();
+}
+
 
 Blockly.BlockSvg.START_HAT = true;

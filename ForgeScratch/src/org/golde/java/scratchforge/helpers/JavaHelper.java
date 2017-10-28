@@ -31,7 +31,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import org.golde.java.scratchforge.Main;
+import org.golde.java.scratchforge.Config.ConfigProperty;
 import org.golde.java.scratchforge.JSFunctions.EnumToast;
+
+import javafx.application.Platform;
 
 /**
  * A class to do functions that Java should have built in
@@ -46,11 +49,35 @@ public class JavaHelper {
 	public static void runCMD(File dir, String cmd) throws Exception { //TODO: MAC
 		Process p = Runtime.getRuntime().exec("cmd.exe /c cd \"" + dir.getAbsolutePath() + "\" & start \"Console\" /wait cmd.exe /c \"" + cmd + "\"");
 		//Main.getInstance().jsFunctions.showToast(EnumToast.INFO, "Minecraft is now running. Please close Minecraft to continue.");
-		p.waitFor();
-		if(doesFileContainString(new File(Main.getInstance().forge_folder, ".gradle\\gradle.log"), "FAILURE: Build failed with an exception.")) {
-			Main.getInstance().jsFunctions.showToast(EnumToast.ERROR_BLOCKS, "Minecraft failed to build. Please double check all of your functions!");
-		}
-		PLog.info("Exit Code: " + p.waitFor());
+		//p.waitFor();
+		new Thread() {
+			public void run() {
+				try {
+					PLog.info("Exit Code: " + p.waitFor());
+					
+					Platform.runLater(() -> {
+						if(Main.getInstance().tutorial) {
+							Main.getInstance().jsFunctions.changePage(Main.getInstance().config.getInt(ConfigProperty.TUTORIALPLACE));
+						}
+						Main.getInstance().jsFunctions.pause(false);
+						try {
+							if(doesFileContainString(new File(Main.getInstance().forge_folder, ".gradle\\gradle.log"), "FAILURE: Build failed with an exception.")) {
+								Main.getInstance().jsFunctions.showToast(EnumToast.ERROR_BLOCKS, "Minecraft failed to build. Please double check all of your functions!");
+							}
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+							Main.getInstance().jsFunctions.pause(false);
+						}
+						
+					});
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					Main.getInstance().jsFunctions.pause(false);
+				}
+				
+			}
+		}.start();
+		
 	}	
 
 
