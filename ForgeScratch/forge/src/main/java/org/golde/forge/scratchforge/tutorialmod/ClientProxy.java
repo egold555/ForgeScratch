@@ -6,6 +6,7 @@ import java.util.List;
 import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.Title;
 import org.golde.forge.scratchforge.mainmod.Config;
+import org.golde.forge.scratchforge.mainmod.Config.ConfigKeys;
 import org.golde.forge.scratchforge.tutorialmod.guis.GuiLimitedIngameOptions;
 import org.golde.forge.scratchforge.tutorialmod.guis.GuiTemp;
 
@@ -88,7 +89,7 @@ public class ClientProxy extends CommonProxy {
 		player.worldObj.playSoundAtEntity(player, "random.levelup", 1.0f, 1.0f);
 		ModHelpers.sendChatMessage(player, EnumChatFormatting.GOLD + "You have completed puzzle "+ EnumChatFormatting.YELLOW + place.getId() + EnumChatFormatting.GOLD + " successfully!");
 		if(place.getSuccessMessage() != null) {ModHelpers.sendChatMessage(player, place.getSuccessMessage());}
-		Config.updateTutorialPlace();
+		Config.setInt(ConfigKeys.TUTORIAL_PLACE, Config.getInt(ConfigKeys.TUTORIAL_PLACE) + 1);
 	}
 
 	//=================================================================================

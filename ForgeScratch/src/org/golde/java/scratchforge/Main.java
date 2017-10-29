@@ -39,6 +39,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.PopupFeatures;
@@ -47,6 +48,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import netscape.javascript.JSObject;
 
@@ -113,10 +115,10 @@ public class Main implements ActionListener, KeyListener{
 
 	//The internal webEngine
 	private WebEngine webEngine;
-	
+
 	//Example blockmod directory
 	private File examplesDir = new File("examples");
-	
+
 	public boolean tutorial = false;
 
 	public static void main(String[] args) {
@@ -159,7 +161,7 @@ public class Main implements ActionListener, KeyListener{
 		fxPanel.addKeyListener(this);
 
 
-		
+
 		//Make the menu button "File" and add elements to it
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(mFileNew);
@@ -176,7 +178,7 @@ public class Main implements ActionListener, KeyListener{
 
 		//Make the menu button "Examples" and add elements to it
 		JMenu exampleMenu = new JMenu("Examples");
-		
+
 		for(File f:JavaHelper.listFoldersInFolder(examplesDir)) {
 			JMenuItem category = new JMenu(f.getName());
 			for(File sub:JavaHelper.listFilesForFolder(f)) {
@@ -189,7 +191,7 @@ public class Main implements ActionListener, KeyListener{
 		}
 
 		menuBar.add(exampleMenu); //TODO Make examples
-		 
+
 		//Make the menu button "Options" and add elements to it
 		JMenu mOptionsMenu = new JMenu("Options");
 
@@ -274,28 +276,44 @@ public class Main implements ActionListener, KeyListener{
 				Stage stage = new Stage(StageStyle.UTILITY);
 				WebView wv2 = new WebView();
 				stage.setScene(new Scene(wv2));
-				stage.show();
+				//stage.show();
 				WebEngine engine = wv2.getEngine();
+				stage.show();
 				
 				engine.getLoadWorker().stateProperty().addListener(
 						new ChangeListener<Worker.State>() {
 							public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
 								if (newState == Worker.State.SUCCEEDED) {
-									// web page is loaded. If it's the tutorial,
-									// then set up communication between the tutorial and the JsFunctions java class.
+									// web page is loaded. 
 									JSObject windowObject = (JSObject) engine.executeScript("window");
 									JSObject tutorial = (JSObject) engine.executeScript("window.document.getElementById('scratchforge_tutorial')");
+
 									if (tutorial != null) {
+										stage.setTitle("Tutorial");
+
+										//If it's the tutorial, then set up communication between the tutorial and the JsFunctions java class.
 										windowObject.setMember("java_app", jsFunctions);
 										jsFunctions.setTutorialWindowObject(windowObject);
 									}
+									
 								}
 							}
 						});
-				
+
+				stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+					@Override
+					public void handle(WindowEvent event) {
+						if(tutorial) {
+							event.consume();
+						}
+						
+					}
+				});
+
 				return engine;
 			}
 		});
+
 
 		webEngine.load(f.toURI().toString());
 		root.getChildren().add(webView);
@@ -359,7 +377,7 @@ public class Main implements ActionListener, KeyListener{
 				if(name.endsWith(".blockmod")) { //TODO: Open .blockmod
 					//Example
 					PLog.info("Name: " + name);
-					
+
 				}
 
 			}
@@ -485,7 +503,7 @@ public class Main implements ActionListener, KeyListener{
 		}
 		else {
 			Platform.runLater(() -> {
-			startTutorial();
+				startTutorial();
 			});
 		}
 	}
@@ -511,7 +529,7 @@ public class Main implements ActionListener, KeyListener{
 			return;
 		}
 	}
-	
+
 	static class Progress {
 		public static final int START = 1;
 		public static final int BLOCKS = 2;
@@ -521,13 +539,13 @@ public class Main implements ActionListener, KeyListener{
 		public static final int START = 0;*/
 		public static final int FINISH = 100;
 	}
-	
+
 	private void startTutorial() {
 		tutorial = true;
 		Config.setBoolean(ConfigKeys.TUTORIAL_ENABLED, true);
 		jsFunctions.openTutorialPages();
 	}
-	
+
 	/*private void finishTutorial(){
 		tutorial = false;
 		config.setBoolean(ConfigProperty.TUTORIAL, false);
