@@ -45,4 +45,5 @@ function pause() {
 function restart() {
     var video = document.getElementById("video");
     video.currentTime = 0;
+    pause();
 }
