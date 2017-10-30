@@ -2,6 +2,10 @@ var video;
 
 function onLoad() {
     video = document.getElementById("video");
+     $('#video').on('ended',function(){
+      console.log('Video has ended!');
+      pause();
+    });
 }
 
 $(document).on("click", "a", function(event) {
