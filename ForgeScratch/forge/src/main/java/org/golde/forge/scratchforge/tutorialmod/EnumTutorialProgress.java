@@ -19,11 +19,11 @@ public enum EnumTutorialProgress {
 	}
 	
 	public String getInstructions() {
-		return  EnumChatFormatting.AQUA + PREFIX + instructions;
+		return instructions == null ? null : EnumChatFormatting.AQUA + PREFIX + instructions;
 	}
 	
 	public String getSuccessMessage() {
-		return EnumChatFormatting.GREEN + PREFIX + successMessage;
+		return successMessage == null ? null : EnumChatFormatting.GREEN + PREFIX + successMessage;
 	}
 	
 	public int getId() {

@@ -13,6 +13,7 @@ import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.golde.forge.scratchforge.mainmod.Config;
+import org.golde.forge.scratchforge.mainmod.Config.ConfigKeys;
 import org.golde.forge.scratchforge.mainmod.Language;
 //import org.golde.forge.scratchforge.mainmod.Config;
 //import org.golde.forge.scratchforge.mainmod.Language;
@@ -213,7 +214,7 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 	{
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
 		this.buttonList.add(new GuiButton(6, width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, "Mods"));
-		if(Config.isMultiplayerButtonEnabled()) {
+		if(Config.getBoolean(ConfigKeys.MINECRAFT_MP_ENABLED)) {
 			this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
 		}
 	}
@@ -237,7 +238,7 @@ public class GuiNewMainMenu extends GuiScreen implements GuiYesNoCallback{
 
 		if (button.id == 2)
 		{
-			this.mc.displayGuiScreen(new GuiMultiplayer(this));
+			this.mc.displayGuiScreen(Config.getBoolean(ConfigKeys.MINECRAFT_MP_RESTRICTED) ? new GuiNewMultiplayer() : new GuiMultiplayer(this));
 		}
 
 		if (button.id == 4)

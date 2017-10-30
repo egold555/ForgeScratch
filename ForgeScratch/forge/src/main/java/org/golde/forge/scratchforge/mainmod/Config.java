@@ -2,82 +2,111 @@ package org.golde.forge.scratchforge.mainmod;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Properties;
 
 import org.golde.forge.scratchforge.base.helpers.PLog;
+import org.golde.forge.scratchforge.mainmod.Config.ConfigKeys.ConfigKey;
+
 
 public class Config {
 
-	private static boolean multiplayer = true;
-	private static boolean multiplayerLimited = false;
-	private static boolean tutorial = false;
-	private static int tutorialPlace = -1;
-	
 	private static Properties prop = new Properties();
-	private static InputStream input = null;
-	private static OutputStream output = null;
-	private static File configDir;
+	private static final String CONFIG_NAME = "ScratchForge.properties";
+	private static File configFileLocation = null;
+
+	public static final class ConfigKeys {
+		
+		static class ConfigKey {
+			public final String key;
+			public final Object defaultValue;
+			public ConfigKey(String key, Object defaultValue) {
+				this.key = key;
+				this.defaultValue = defaultValue;
+			}
+		}
+		
+		public static final ConfigKey MINECRAFT_RAM = new ConfigKey("minecraft.ram", 8);
+		public static final ConfigKey MINECRAFT_MP_ENABLED = new ConfigKey("minecraft.multiplayer.enabled", true);
+		public static final ConfigKey MINECRAFT_MP_RESTRICTED = new ConfigKey("minecraft.multiplayer.restricted", false);
+		public static final ConfigKey TUTORIAL_ENABLED = new ConfigKey("scratchforge.tutorial.enabled", false);
+		public static final ConfigKey TUTORIAL_PLACE = new ConfigKey("scratchforge.tutorial.place", 1);
+	}
+
+	public static boolean getBoolean(ConfigKey key) {
+		load();
+		String got = prop.getProperty(key.key);
+		if(got == null) {
+			return (boolean)key.defaultValue;
+		}
+		return Boolean.parseBoolean(got);
+	}
+
+	public static int getInt(ConfigKey key) {
+		load();
+		String got = prop.getProperty(key.key);
+		if(got == null) {
+			return (int)key.defaultValue;
+		}
+		return Integer.parseInt(got);
+	}
+
+	public static String getString(ConfigKey key) {
+		load();
+		String got = prop.getProperty(key.key);
+		if(got == null) {
+			return (String)key.defaultValue;
+		}
+		return got;
+	}
+
+	public static void setBoolean(ConfigKey key, boolean value) {
+		load();
+		prop.setProperty(key.key, "" + value);
+		save();
+	}
 	
-	public static void load(File theconfigDir) {
-		configDir = theconfigDir;
+	public static void setInt(ConfigKey key, int value) {
+		load();
+		prop.setProperty(key.key, "" + value);
+		save();
+	}
+	
+	public static void setString(ConfigKey key, String value) {
+		load();
+		prop.setProperty(key.key, value);
+		save();
+	}
+
+	private static void load() {
 		try {
-			multiplayer = Boolean.parseBoolean(get("CLIENT_MULTIPLAYER_ENABLED"));
-			multiplayerLimited = Boolean.parseBoolean(get("CLIENT_MULTIPLAYER_LIMITED"));
-			tutorial = Boolean.parseBoolean(get("TUTORIAL"));
-			tutorialPlace = Integer.parseInt(get("TUTORIALPLACE"));
+			FileInputStream in = new FileInputStream(new File(configFileLocation, CONFIG_NAME));
+			prop.load(in);
+			in.close();
+		}
+		catch(FileNotFoundException e) {
+			prop.clear();
+			return;
 		}
 		catch(Exception e) {
 			PLog.error(e, "Failed to load config!");
 		}
 	}
-	
-	private static String get(String setting) {
+
+	private static void save() {
 		try {
-			input = new FileInputStream(new File(configDir, "config.properties"));
-			prop.load(input);
-			String result = prop.getProperty(setting);
-			input.close();
-			return result;
+			FileOutputStream out = new FileOutputStream(new File(configFileLocation, CONFIG_NAME));
+			prop.store(out, "Only modify this if you know what your doing. Incorrect values WILL cause problems!");
+			out.close();
 		}
 		catch(Exception e) {
-			PLog.error(e, "Failed to read setting " + setting + "!");
-			return "0";
+			PLog.error(e, "Failed to save config!");
 		}
 	}
 	
-	private static void setString(String setting, String to) {
-		try {
-			output = new FileOutputStream("config.properties");
-			prop.setProperty(setting.toUpperCase(), to);
-			prop.store(output, null);
-			output.close();
-		}
-		catch(Exception e) {
-			PLog.error(e, "Failed to set " + setting.toUpperCase() + " to " + to + "!");
-		}
+	public static void setConfigFileLocation(File configFileLocation) {
+		Config.configFileLocation = configFileLocation;
 	}
-	
-	public static void updateTutorialPlace() {
-		setString("TUTORIALPLACE", "" + (Integer.parseInt(get("TUTORIALPLACE")) + 1));
-	}
-	
-	public static boolean isMultiplayerButtonEnabled() {
-		return multiplayer;
-	}
-	
-	public static boolean isMultiplayerLimitedToLan() {
-		return multiplayerLimited;
-	}
-	
-	public static boolean isTutorial() {
-		return tutorial;
-	}
-	
-	public static int getTutorialPlace() {
-		return tutorialPlace;
-	}
-	
+
 }

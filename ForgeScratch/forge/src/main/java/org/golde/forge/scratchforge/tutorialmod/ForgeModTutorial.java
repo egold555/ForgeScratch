@@ -1,6 +1,7 @@
 package org.golde.forge.scratchforge.tutorialmod;
 
 import org.golde.forge.scratchforge.mainmod.Config;
+import org.golde.forge.scratchforge.mainmod.Config.ConfigKeys;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -22,7 +23,7 @@ public class ForgeModTutorial {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		if(Config.isTutorial()) {PROXY.init(event, Config.getTutorialPlace());}
+		if(Config.getBoolean(ConfigKeys.TUTORIAL_ENABLED)) {PROXY.init(event, Config.getInt(ConfigKeys.TUTORIAL_PLACE));}
 	}
 	
 	

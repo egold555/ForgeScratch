@@ -8,6 +8,7 @@ import java.util.Set;
 import org.golde.forge.scratchforge.base.helpers.JavaHelpers;
 import org.golde.forge.scratchforge.base.helpers.ModHelpers;
 import org.golde.forge.scratchforge.base.helpers.PLog;
+import org.golde.forge.scratchforge.mainmod.Config.ConfigKeys;
 import org.golde.forge.scratchforge.mainmod.guis.GuiMessage;
 import org.golde.forge.scratchforge.mainmod.guis.GuiNewIngameOptions;
 import org.golde.forge.scratchforge.mainmod.guis.GuiNewMainMenu;
@@ -41,8 +42,7 @@ public class ClientProxy extends CommonProxy{
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 		//Mod Config Folder -> Minecraft Dir - > For dir -> root
-		PLog.info(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile().getAbsolutePath());
-		Config.load(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile());
+		Config.setConfigFileLocation(event.getModConfigurationDirectory().getParentFile().getParentFile().getParentFile());
 
 		ModHelpers.addTranslation(ForgeModScratchForge.CREATIVE_TAB.getTranslatedTabLabel(), ForgeModScratchForge.MOD_NAME);
 	}
@@ -118,13 +118,13 @@ public class ClientProxy extends CommonProxy{
 
 		//Custom main menu screen
 		if(event.gui instanceof GuiMainMenu) {
-			if(Config.isTutorial()) {return;}
+			if(Config.getBoolean(ConfigKeys.TUTORIAL_ENABLED)) {return;}
 			event.gui = new GuiNewMainMenu();
 		}
 
 		//Custom ingame options to get rid of forge test
 		if(event.gui instanceof GuiIngameMenu) {
-			if(Config.isTutorial()) {return;}
+			if(Config.getBoolean(ConfigKeys.TUTORIAL_ENABLED)) {return;}
 			event.gui = new GuiNewIngameOptions();
 		}
 
@@ -150,7 +150,7 @@ public class ClientProxy extends CommonProxy{
 		}
 
 		//If is limited, display custom screen
-		if(Config.isMultiplayerLimitedToLan()) {
+		if(Config.getBoolean(ConfigKeys.MINECRAFT_MP_RESTRICTED)) {
 			if(event.gui instanceof GuiMultiplayer) {
 				event.gui = new GuiNewMultiplayer();
 			}
