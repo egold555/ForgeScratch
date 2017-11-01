@@ -3570,7 +3570,7 @@ Blockly.Java['mcentity'] = function(block) {
   '/*BEGIN:' + value_name + '*/\n' +
   '/*type:entity*/\n' +
   '/*model:'+ dropdown_model + '*/\n' +
-  'public static class Mcentity_' + value_name + ' extends EntityCreature {\n' +
+  'public static class Mcentity_' + value_name + ' extends EntityCreatureBase {\n' +
   '    public static final String RAW_NAME = "' + raw_value_name + '";\n' +
   '    public static final String NAME = "' + value_name + '";\n' +
   '    public static final boolean SPAWN_NATURALLY = ' + checkbox_spawn_naturally + ';\n' +

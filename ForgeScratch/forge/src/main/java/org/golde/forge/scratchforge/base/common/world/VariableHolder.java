@@ -6,4 +6,5 @@ import net.minecraft.nbt.NBTTagCompound;
 public class VariableHolder {
 	public EntityLiving entity;
 	public NBTTagCompound nbt;
+	public float damage;
 }

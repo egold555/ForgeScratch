@@ -216,7 +216,7 @@ public class CommonProxy {
 
 	/*type:entity*/
 	/*model:Biped*/
-	public static class Mcentity_Test extends EntityCreature {
+	public static class Mcentity_Test extends EntityCreatureBase {
 		public static final String RAW_NAME = "Test";
 		public static final String NAME = "Test";
 		public static final boolean SPAWN_NATURALLY = false;
@@ -232,53 +232,16 @@ public class CommonProxy {
 		protected boolean isAIEnabled() {
 			return this.tasks.taskEntries.size() > 0;
 		}
-
-		//Attack entity event
-		@Override
-		public boolean attackEntityFrom(DamageSource source, float damage) {
-
-			final VariableHolder variableHolder = new VariableHolder();
-			variableHolder.entity = this;
-			
-			if(source.isFireDamage()) {
-				//Fire damage
-			}
-			else if(source.isExplosion()) {
-				//explosion event
-			}
-			else if(source.isMagicDamage()) {
-				//Potion damage
-			}
-			else if(source.isProjectile()) {
-				//Arrows
-			}
-			else {
-				Entity damager = source.getEntity();
-				if(damager != null) {
-
-					if(damager instanceof EntityPlayer) {
-						//Player damaged
-					}
-					else {
-						//Entity did damage (wolf)
-					}
-
-
-				}
-				else {
-					//Fall damage or other
-				}
-			}
-
-
-			return super.attackEntityFrom(source, damage);
-		}
+		
+		
+		
 
 		@Override
 		public void onDeath(DamageSource source) {
 
 			final VariableHolder variableHolder = new VariableHolder();
 			variableHolder.entity = this;
+			World world = this.worldObj;
 
 			super.onDeath(source);
 		}
