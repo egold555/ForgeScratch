@@ -5613,3 +5613,100 @@ Blockly.Java['mcaction_fire_entity'] = function(block) {
   var code = 'if(variableHolder.entity != null){entity.setFire((int)' + value_seconds + ');}\n';
   return code;
 };
+
+Blockly.Blocks['mcentityoptions_ondamage_player'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_ondamage_player",
+  "message0": "On Damage From Player %1 %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "action"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Blocks['mcentityoptions_ondamage_select'] = {
+  
+  init: function() {
+    this.jsonInit({
+      "type": "mcentityoptions_ondamage_select",
+  "message0": "On Damage From: %1 %2 %3",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "FROM",
+      "options": [
+        [
+          "Fire",
+          "Fire"
+        ],
+        [
+          "Explosion",
+          "Explosion"
+        ],
+        [
+          "Potion",
+          "Potion"
+        ],
+        [
+          "Arrow",
+          "Arrow"
+        ],
+        [
+          "Player",
+          "Player"
+        ],
+        [
+          "Creature",
+          "Creature"
+        ],
+        [
+          "Other",
+          "Other"
+        ]
+      ]
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "CODE",
+      "check": "action"
+    }
+  ],
+  "previousStatement": "mcentityoptions",
+  "nextStatement": "mcentityoptions",
+  "colour": COLOR_CONSTRUCTOR_OPTION,
+  "tooltip": "",
+  "helpUrl": ""
+    });
+  }
+};
+
+/*
+
+Blockly.Blocks['name'] = {
+  
+  init: function() {
+    this.jsonInit({
+      
+    });
+  }
+};
+
+*/
