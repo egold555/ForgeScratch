@@ -37,7 +37,6 @@ import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(modid=ForgeModScratchForge.MOD_ID, value=Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 
 	@Override
@@ -52,13 +51,14 @@ public class ClientProxy extends CommonProxy{
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(this);
+		ModItems.registerRenders();
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
         //ModBlocks.initModels();
         ModItems.initModels();
-    }
+    }*/
 
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
@@ -87,7 +87,7 @@ public class ClientProxy extends CommonProxy{
 		if(failedTextures.size() > 0) {
 			String failed = JavaHelpers.joinStrings(new ArrayList<String>(failedTextures), ", ", 0);
 			EntityPlayer player = event.player;
-			if(player != null) {player.sendMessage(new TextComponentString(Language.CHAT_MISSING_TEXTURES.replace("%failed%", failed)));}
+			if(player != null) {player.addChatMessage(new TextComponentString(Language.CHAT_MISSING_TEXTURES.replace("%failed%", failed)));}
 		}
 	}
 

@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.base.common.item;
+/*package org.golde.forge.scratchforge.base.common.item;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -66,17 +66,17 @@ public class SpawnEgg extends ItemBase{
 		return s;
 	}
 
-	/*@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_)
 	{
 		EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo)ENTITY_EGGS.get(Integer.valueOf(p_82790_1_.getItemDamage()));
 		return entityegginfo != null ? (p_82790_2_ == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
-	}*/
+	}
 
-	/**
+	*//**
 	 * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
 	 * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-	 */
+	 *//*
 	public EnumActionResult onItemUse(EntityPlayer p_onItemUse_1_, World p_onItemUse_2_, BlockPos p_onItemUse_3_, EnumHand p_onItemUse_4_, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_)
 	{
 		ItemStack itemstack = p_onItemUse_1_.getHeldItem(p_onItemUse_4_);
@@ -258,3 +258,4 @@ public class SpawnEgg extends ItemBase{
 	}
 
 }
+*/

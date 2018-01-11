@@ -28,11 +28,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid=ForgeModScratchForge.MOD_ID)
 public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
-		
+		ModItems.initItems();
 	}
 	
 	public void init(FMLInitializationEvent event) {
@@ -49,16 +48,6 @@ public class CommonProxy {
 			server.setOnlineMode(false);
 			
 		}
-	}
-	
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event) {
-	    event.getRegistry().register(new DebugItem());
-	}
-	
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Item> event) {
-		
 	}
 	
 	public static class DebugItem extends ItemBase {
@@ -87,7 +76,7 @@ public class CommonProxy {
 		}
 
 		@Override
-		public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float dx, float dy, float dz) {
+		public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float dx, float dy, float dz) {
 
 			if(world.isRemote) {
 				List<String> l = new ArrayList<String>();
@@ -110,11 +99,11 @@ public class CommonProxy {
 
 				for(String s:l)
 				{
-					if(player != null) {player.sendMessage(new TextComponentString(s));}
+					if(player != null) {player.addChatMessage(new TextComponentString(s));}
 				}
 			}
 
-			return super.onItemUse(player, world, pos, hand, facing, dx, dy, dz);
+			return super.onItemUse(stack, player, world, pos, hand, facing, dx, dy, dz);
 		}
 
 	}

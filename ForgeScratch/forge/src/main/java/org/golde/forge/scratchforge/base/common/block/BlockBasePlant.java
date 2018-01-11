@@ -9,14 +9,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -41,6 +45,15 @@ public class BlockBasePlant extends BlockReed {
 		this.requiresWater = needsWaterToGen;
 		this.doesGenerateInWorld = doesGenInWorld;
 		this.growHeight = maxGrowHeight;
+
+		GameRegistry.register(this);
+		ItemBlock item = new ItemBlock(this);
+		item.setRegistryName(this.getRegistryName());
+		GameRegistry.register(item);
+	}
+	
+	public void registerRender() {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
 	}
 
 	@Override

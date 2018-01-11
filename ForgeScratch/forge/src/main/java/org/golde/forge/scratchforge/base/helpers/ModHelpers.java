@@ -48,7 +48,7 @@ public class ModHelpers {
 		if(world.isRemote) {return null;}
 		EntityLiving theEntity = getEntity(world, entity);
 		theEntity.setPosition(x + 0.5f, y + 1, z + 0.5f);
-		world.spawnEntity(theEntity);
+		world.spawnEntityInWorld(theEntity);
 		return theEntity;
 	}
 

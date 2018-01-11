@@ -8,12 +8,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems {
 
-	@GameRegistry.ObjectHolder("scratchforge:debugger")
 	public static DebugItem debugger;
 
-	@SideOnly(Side.CLIENT)
-	public static void initModels() {
-		debugger.initModel();
+	public static void initItems() {
+		debugger = new DebugItem();
+	}
+	
+	public static void registerRenders() {
+		debugger.registerRender();
 	}
 
 }

@@ -10,9 +10,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +32,15 @@ public class BlockBaseFlower extends BlockFlower{
 		this.setHardness(0.01F);
         this.setResistance(2.0F);
         setCreativeTab(creatibeTab);
+
+        GameRegistry.register(this);
+		ItemBlock item = new ItemBlock(this);
+		item.setRegistryName(this.getRegistryName());
+		GameRegistry.register(item);
+	}
+	
+	public void registerRender() {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
 	}
 
 	@SideOnly(Side.CLIENT)

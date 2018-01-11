@@ -45,11 +45,11 @@ public abstract class GuiAbstractMessage extends GuiBase{
 		{
 			if (offset >= spaceAvailable)
 			{
-				drawCenteredString(fontRenderer, "...", width / 2, offset, 16777215);
+				drawCenteredString(fontRendererObj, "...", width / 2, offset, 16777215);
 				break;
 			}
 			if (!line.isEmpty()) {
-				drawCenteredString(fontRenderer, line, width / 2, offset, 16777215);
+				drawCenteredString(fontRendererObj, line, width / 2, offset, 16777215);
 			}
 			offset += 10;
 		}

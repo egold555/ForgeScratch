@@ -109,15 +109,15 @@ public class GuiNewLan extends GuiBase{
 		{
 			if (offset >= spaceAvailable)
 			{
-				drawCenteredString(fontRenderer, "...", width / 2, offset, 16777215);
+				drawCenteredString(fontRendererObj, "...", width / 2, offset, 16777215);
 				break;
 			}
 			if (!line.isEmpty()) {
-				drawCenteredString(fontRenderer, line, width / 2, offset, 16777215);
+				drawCenteredString(fontRendererObj, line, width / 2, offset, 16777215);
 			}
 			offset += 10;
 		}
-		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.otherPlayers", new Object[0]), this.width / 2, this.height - 120, 16777215);
+		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.otherPlayers", new Object[0]), this.width / 2, this.height - 120, 16777215);
 	}
 
 }

@@ -77,7 +77,7 @@ public class JavaHelpers {
 		return (int) Long.parseLong(hex, 16);
 	}
 
-	public static void sendRequest(String ip, String args, String getOrPost) {
+	public static void sendRequest(final String ip, final String args, final String getOrPost) {
 
 		new Runnable() {
 

@@ -27,21 +27,6 @@ public abstract class AbstractCommand implements ICommand {
 	}
 
 	@Override
-	public List<String> getAliases() {
-		return new ArrayList<String>();
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer arg0, ICommandSender arg1, String[] arg2, BlockPos arg3) {
-		return new ArrayList<String>();
-	}
-
-	@Override
-	public String getUsage(ICommandSender arg0) {
-		return "/" + getName();
-	}
-
-	@Override
 	public int compareTo(ICommand o) { //What does this do?
 		return 0;
 	}

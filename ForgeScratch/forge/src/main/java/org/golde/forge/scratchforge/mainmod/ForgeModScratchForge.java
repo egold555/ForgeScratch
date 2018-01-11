@@ -20,8 +20,8 @@ public class ForgeModScratchForge {
 	public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_NAME.replaceFirst(" ", "_")) {
 
 		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(Items.BOOK);
+		public Item getTabIconItem() {
+			return Items.BOOK;
 		}
 
 	};
