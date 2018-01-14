@@ -1,4 +1,4 @@
-package org.golde.forge.scratchforge.mods./*Mod Package*/;
+package org.golde.forge.scratchforge.mods.hello;
 
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
@@ -100,10 +100,10 @@ import io.netty.channel.*;
 @Mod(modid = ForgeMod.MOD_ID, name=ForgeMod.MOD_NAME, version="1.0")
 public class ForgeMod implements IWorldGenerator{
     
-	public static final String MOD_NAME = "/*Mod Template*/";
-	public static final String MOD_ID = "sf_/*Mod Package*/";
+	public static final String MOD_NAME = "hello";
+	public static final String MOD_ID = "sf_hello";
 	public static final String BLOCK_ID = MOD_ID + ":";
-    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods./*Mod Package*/";
+    public static final String MOD_PACKAGE = "org.golde.forge.scratchforge.mods.hello";
     
     @SidedProxy(clientSide = MOD_PACKAGE + ".ClientProxy", serverSide = MOD_PACKAGE + ".CommonProxy")
 	public static CommonProxy PROXY;

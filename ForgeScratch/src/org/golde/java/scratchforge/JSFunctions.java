@@ -1,10 +1,7 @@
 package org.golde.java.scratchforge;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -39,24 +36,21 @@ public class JSFunctions {
 	private File forgeScratch;
 	private File forgeModsIn;
 	private File forgeAssets;
-	private File modAssets;
-	private JSObject javaApp;
+	private JSObject jsBlockly;
 	private String javaHome = System.getenv("JAVA_HOME");
-	private String MOD_NAME;
 
 	public JSFunctions() {
-		this.javaApp = Main.getInstance().window;
+		this.jsBlockly = Main.getInstance().window;
 		this.forgeDir = Main.getInstance().forge_folder;
 		this.forgeScratch = new File(forgeDir, "forgescratch");
 		this.forgeModsIn = new File(forgeDir, "src\\main\\java\\org\\golde\\forge\\scratchforge\\mods");
 		this.forgeAssets = new File(forgeDir, "src\\main\\resources\\assets");
-		
 	}
 
 	public String saveXML() {
 		createMod();
 
-		String blocklyXML = (String) javaApp.call("saveXML");
+		String blocklyXML = (String) jsBlockly.call("saveXML");
 
 		String textures = "";
 		for(Texture texture: Main.getInstance().modManager.getMod(Main.getInstance().MOD_NAME).getTextures()) {
@@ -109,7 +103,7 @@ public class JSFunctions {
 		}
 
 		String blockly = nodeToString(((Element)rootElement.getElementsByTagName("blockly").item(0)).getElementsByTagName("xml").item(0));
-		javaApp.call("loadXML", blockly);
+		jsBlockly.call("loadXML", blockly);
 	}
 
 	private static String nodeToString(Node node) throws Exception{
@@ -139,21 +133,20 @@ public class JSFunctions {
 
 	private void createMod()
 	{
-		createModFromCode((String) javaApp.call("getBlocklyCode"));
+		createModFromCode((String) jsBlockly.call("getBlocklyCode"));
 	}
 
 	private void createModFromCode(String sfGenCode)
 	{
 		PLog.info("Fixing code....");
-		MOD_NAME = JavaHelper.makeJavaId(Main.getInstance().MOD_NAME);
-		this.modAssets = new File(forgeAssets, "sf_" + MOD_NAME);
+		String projectName = Main.getInstance().MOD_NAME.replace(" ", "_");
 		try {
 			CodeParser codeParser = new CodeParser();
 			codeParser.parseCode(fixCode(sfGenCode));
 
 
 			//Setup basic variables
-			File projectFolder = new File(forgeModsIn, MOD_NAME);
+			File projectFolder = new File(forgeModsIn, JavaHelper.makeJavaId(projectName));
 			JavaHelper.copyEverythingInAFolder(new File(forgeScratch, "Template"), projectFolder);
 			String fileToReplace = "";
 
@@ -168,8 +161,9 @@ public class JSFunctions {
 			List<CodeComponent> recipeComponents = findComponents(codeParser, EnumObjectType.Recipes);
 
 			//================== [ Forge Mod.java Replacement] ==================
+
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ForgeMod.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
 			fileToReplace = fileToReplace.replace("/*Mod Template*/", Main.getInstance().MOD_NAME);
 
@@ -178,47 +172,25 @@ public class JSFunctions {
 			JavaHelper.writeFile(new File(projectFolder, "ForgeMod.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
-			
-			//================== [ Mod Items.java Replacement] ==================
-			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModItems.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
-
-			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
-			fileToReplace = fileToReplace.replace("/*Variables - Item - Models*/", initModel(itemComponents));
-			
-			//write the file
-			JavaHelper.writeFile(new File(projectFolder, "ModItems.java"), fileToReplace);
-			//=============================== [ END ] ===============================
-			
-			//================== [ Mod Blocks.java Replacement] ==================
-			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ModBlocks.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
-			
-			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
-			fileToReplace = fileToReplace.replace("/*Variables - Block - Models*/", initModel(blockComponents));
-			
-			//write the file
-			JavaHelper.writeFile(new File(projectFolder, "ModBlocks.java"), fileToReplace);
-			//=============================== [ END ] ===============================
 
 
-			//================== [ Forge CommonProxy.java Replacement ] ==================
+			//================== [ Forge CommonProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"CommonProxy.java"));
 
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 
-			
+			fileToReplace = fileToReplace.replace("/*Variables - Block*/", variables(blockComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Block*/", constructorCalls(blockComponents));
 
-			//fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
-			//fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
-			//fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
+			fileToReplace = fileToReplace.replace("/*Variables - BlockFlower*/", variables(blockFlowerComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockFlower*/", constructorCalls(blockFlowerComponents));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Flowers*/", worldGenCalls(blockFlowerComponents));
 
-			//fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
-			//fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
-			//fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
+			fileToReplace = fileToReplace.replace("/*Variables - BlockPlant*/", variables(blockPlantComponents));
+			fileToReplace = fileToReplace.replace("/*Constructor calls - BlockPlant*/", constructorCalls(blockPlantComponents));
+			fileToReplace = fileToReplace.replace("/*WorldGen - Overworld - Plant*/", worldGenCalls(blockPlantComponents));
 
-			
+			fileToReplace = fileToReplace.replace("/*Variables - Item*/", variables(itemComponents));
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Item*/", constructorCalls(itemComponents));
 
 			fileToReplace = fileToReplace.replace("/*Constructor calls - Command*/", registerCommandConstructors(commandComponents));
@@ -236,15 +208,12 @@ public class JSFunctions {
 
 			//================== [ Forge ClientProxy.java Replacement] ==================
 			fileToReplace = JavaHelper.readFile(new File(projectFolder,"ClientProxy.java"));
-			fileToReplace = fileToReplace.replace("/*Mod Package*/", MOD_NAME);
+			fileToReplace = fileToReplace.replace("/*Mod Package*/", JavaHelper.makeJavaId(Main.getInstance().MOD_NAME));
 			fileToReplace = fileToReplace.replace("/*Entity Rendering*/", registerEntityRenderer(entityComponents));
 			JavaHelper.writeFile(new File(projectFolder, "ClientProxy.java"), fileToReplace);
 			//=============================== [ END ] ===============================
 
-			writeComponentJson(EnumJsonType.ITEM, itemComponents);
-			writeComponentJson(EnumJsonType.BLOCK, blockComponents);
-			writeComponentJson(EnumJsonType.BLOCK_ITEM, blockComponents);
-			writeComponentJson(EnumJsonType.BLOCK_STATE, blockComponents);
+
 
 			Main.getInstance().modManager.scanDirectoriesForMods();
 
@@ -257,35 +226,20 @@ public class JSFunctions {
 
 	}
 
-	
-
 	public void run(String sfGenCode) {
 		createModFromCode(sfGenCode);
 		pause(true);
-		
-		//The crazy hacky ways that I come up with to get the program to do what....
-		new Thread() {
-			public void run() {
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				Platform.runLater(() -> {
-					try {
-						JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
-						pause(false);
-					}
-					catch(Exception e) {
-						pause(false);
-						PLog.error(e, "Failed to start forge!");
-						showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
-					}
-				});
-
+		Platform.runLater(() -> {
+			try {
+				JavaHelper.runCMD(forgeDir, "\"" + javaHome + "/bin/java.exe\" -Xincgc -Xmx4G -Xms4G \"-Dorg.gradle.appname=gradlew\" -classpath \"gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain runClient" + (Main.getInstance().offlineMode ? " --offline" : ""));
+				
 			}
-		}.start();
+			catch(Exception e) {
+				PLog.error(e, "Failed to start forge!");
+				showToast(EnumToast.ERROR_PROGRAM, "Failed to start forge: " + e.getMessage());
+			}
+		});
+
 
 	}
 
@@ -294,26 +248,16 @@ public class JSFunctions {
 		return codeParser.getComponentsOfType(type.clazz);
 	}
 
-	private String variables(List<CodeComponent> components) {
+	private String variables(List<CodeComponent> blockComponents) {
 		String result = "";
 
-		for (CodeComponent component: components) {
-			result += "@GameRegistry.ObjectHolder(ForgeMod.MOD_ID + \":" + component.getName().toLowerCase() + "\")\n" + "public static " + className(component) + " " + variableName(component) + ";" + "\n\n";
+		for (CodeComponent component: blockComponents) {
+			result += "static " + className(component) + " " + variableName(component) + ";" + "\n";
 		}
 
 		return result;
 	}
 
-	private String initModel(List<CodeComponent> components) {
-		String result = "";
-
-		for (CodeComponent component: components) {
-			result += variableName(component) + ".initModel();\n";
-		}
-
-		return result;
-	}
-	
 	private String placeGenericCode(List<CodeComponent> components) {
 		String result = "";
 
@@ -343,12 +287,21 @@ public class JSFunctions {
 		String result = "";
 
 		for (CodeComponent component: components) {
-			//result += variableName(component) + " = new " + className(component) + "();" + "\n";
-			result += "event.getRegistry().register(new " + className(component) + "());" + "\n";
+			result += variableName(component) + " = new " + className(component) + "();" + "\n";
 		}
 
 		return result;
 	}
+
+	/*private String constructorCallsWithoutVariable(List<CodeComponent> components) {
+		String result = "";
+
+		for (CodeComponent component: components) {
+			result += "new " + className(component) + "();" + "\n";
+		}
+
+		return result;
+	}*/
 
 	private String registerCommandConstructors(List<CodeComponent> components) {
 		String result = "";
@@ -414,43 +367,6 @@ public class JSFunctions {
 		code = code.replace("CREATIVE_TAB", "ForgeMod.CREATIVE_TAB");
 		return code;
 	}
-	
-	private void writeComponentJson(EnumJsonType type, List<CodeComponent> components) throws IOException {
-		for(CodeComponent component:components) {
-			String json = getJson(type, component.getName());
-			String placedAt = "";
-			
-			if(type == EnumJsonType.BLOCK || type == EnumJsonType.ITEM) {
-				placedAt = "models/" + type.toString();
-			}
-			else if(type == EnumJsonType.BLOCK_ITEM) {
-				placedAt = "models/item";
-			}
-			else if(type == EnumJsonType.BLOCK_STATE) {
-				placedAt = "blockstates";
-			}
-			else {
-				PLog.error("Invallid JSON: " + type.name());
-			}
-			JavaHelper.writeFile(new File(new File(modAssets, placedAt), component.getName().toLowerCase()+ ".json"), json);
-		}
-		
-	}
-	
-	private enum EnumJsonType{
-		BLOCK, BLOCK_STATE, BLOCK_ITEM, ITEM;
-		
-		@Override
-		public String toString() {
-			return name().toLowerCase();
-		}
-	}
-	private String getJson(EnumJsonType type, String name) throws IOException {
-		String json = JavaHelper.readFile(new File(new File(new File(forgeScratch, "Template Assets"), "default/json"), type.toString() + ".json"));
-		json = json.replace("*name*", name.toLowerCase());
-		json = json.replace("*mod*", "sf_" + MOD_NAME.toLowerCase());
-		return json;
-	}
 
 	private String variableName(CodeComponent component) {
 		return "mc" + component.getType() + "_" + component.getName();
@@ -478,13 +394,11 @@ public class JSFunctions {
 	};
 
 	public void showToast(EnumToast type, String message) {
-		javaApp.call("sendToast", type.id, message);
+		jsBlockly.call("sendToast", type.id, message);
 	}
 
 	public void pause(boolean value) {
-		javaApp.call("togglePause", value);
+		jsBlockly.call("togglePause", value);
 	}
-
-
 
 }

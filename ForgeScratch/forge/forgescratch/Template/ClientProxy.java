@@ -1,6 +1,5 @@
 package org.golde.forge.scratchforge.mods./*Mod Package*/;
 
-
 import org.golde.forge.scratchforge.base.common.block.*;
 import org.golde.forge.scratchforge.base.common.item.*;
 import org.golde.forge.scratchforge.base.common.world.*;
@@ -63,6 +62,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.*;
 import net.minecraft.world.chunk.storage.*;
+import net.minecraft.world.demo.*;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.layer.*;
@@ -85,11 +85,10 @@ import net.minecraftforge.event.world.*;
 import net.minecraftforge.oredict.*;
 
 import net.minecraftforge.fml.client.*;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.fml.client.event.*;
+import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.eventhandler.*;
-import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.registry.*;
 import net.minecraftforge.fml.common.network.*;
@@ -104,29 +103,24 @@ import java.lang.*;
 import io.netty.buffer.*;
 import io.netty.channel.*;
 
-@Mod.EventBusSubscriber(modid=ForgeMod.MOD_ID, value=Side.CLIENT)
 public class ClientProxy extends CommonProxy {
     
     @Override
     public void preInit(FMLPreInitializationEvent event){
         super.preInit(event);
+        //ModHelpers.addTranslation(ForgeMod.CREATIVE_TAB.getTranslatedTabLabel(), ForgeMod.MOD_NAME);
         
         /* Entity Rendering Code */
-        
+        /*Entity Rendering*/
     }
     
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        ModItems.initModels();
-    }
-    
-    static class CustomEntityRenderer extends RenderLiving{
+    /*static class CustomEntityRenderer extends RenderLiving{
 
     	private ResourceLocation texture;
     	double sx, sy, sz, tx, ty, tz;
     	
 		public CustomEntityRenderer(ModelBase model, String textureName, double sx, double sy, double sz, double tx, double ty, double tz) {
-			super(Minecraft.getMinecraft().getRenderManager(), model, 0);
+			super(model, 0);
 			texture = new ResourceLocation(ForgeMod.MOD_ID, "textures/entities/" + textureName + ".png");
 			this.sx = sx;
 			this.sy = sy;
@@ -147,6 +141,6 @@ public class ClientProxy extends CommonProxy {
 			return texture;
 		}
     	
-    }
+    }*/
     
 }
